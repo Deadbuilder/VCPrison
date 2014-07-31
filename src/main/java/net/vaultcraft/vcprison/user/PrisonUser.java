@@ -33,7 +33,7 @@ public class PrisonUser {
             @Override
             public void run() {
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", player.getUniqueId().toString());
-                if(dbObject != null) {
+                if (dbObject != null) {
                     rank = dbObject.get("Rank") == 0.0 ? Rank.A : Rank.fromCost((Double) dbObject.get("Rank"));
                 }
             }
@@ -57,7 +57,6 @@ public class PrisonUser {
     }
 
     public static void remove(Player player) {
-        if(async_player_map.contains(player)) {
             final PrisonUser user = PrisonUser.fromPlayer(player);
             Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
                 public void run() {
@@ -68,15 +67,14 @@ public class PrisonUser {
                         VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
                     else
                         VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
+                    Logger.debug(VCPrison.getInstance(), "Remove Player");
                 }
             });
             async_player_map.remove(player);
-        }
     }
 
     public static void disable() {
         for(Player player : Bukkit.getOnlinePlayers()) {
-            if (async_player_map.contains(player)) {
                 final PrisonUser user = PrisonUser.fromPlayer(player);
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 dbObject.put("Rank", user.getRank().getCost());
@@ -86,8 +84,8 @@ public class PrisonUser {
                     VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
                 else
                     VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
+                Logger.debug(VCPrison.getInstance(), "Remove Player");
                 async_player_map.remove(player);
-            }
         }
     }
 }
