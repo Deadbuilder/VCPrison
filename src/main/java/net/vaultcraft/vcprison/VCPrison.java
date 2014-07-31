@@ -29,7 +29,7 @@ public class VCPrison extends JavaPlugin {
 
     public void onDisable() {
         for(Player player : Bukkit.getOnlinePlayers()) {
-            PrisonUser.disable(player);
+            PrisonUser.disable();
         }
     }
 
