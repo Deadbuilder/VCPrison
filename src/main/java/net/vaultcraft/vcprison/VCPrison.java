@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison;
 
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
+import net.vaultcraft.vcprison.listener.PrisonUserListener;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,12 +18,14 @@ public class VCPrison extends JavaPlugin {
         instance = this;
 
         new AsyncChatListener();
+        new PrisonUserListener();
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            new PrisonUser(player);
+        }
     }
 
     public void onDisable() {
-        for(Player player : Bukkit.getOnlinePlayers()) {
-            PrisonUser.disable();
-        }
+        PrisonUser.disable();
     }
 
     public static VCPrison getInstance() {
