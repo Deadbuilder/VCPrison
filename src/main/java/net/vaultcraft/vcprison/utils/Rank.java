@@ -49,4 +49,8 @@ public enum Rank {
     public double getCost() {
         return cost;
     }
+
+    public boolean higherThan(Rank other) {
+        return other.getCost() <= this.getCost();
+    }
 }
