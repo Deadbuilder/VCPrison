@@ -30,7 +30,6 @@ public class PrisonUser {
         this.user = User.fromPlayer(player);
         async_player_map.put(player, this);
         Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
-            @Override
             public void run() {
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", player.getUniqueId().toString());
                 if(dbObject != null) {
