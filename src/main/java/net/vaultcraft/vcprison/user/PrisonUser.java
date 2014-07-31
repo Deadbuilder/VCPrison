@@ -5,7 +5,6 @@ import net.vaultcraft.shade.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.utils.Rank;
 import net.vaultcraft.vcutils.VCUtils;
-import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -78,7 +77,6 @@ public class PrisonUser {
             DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
             dbObject.put("UUID", user.getPlayer().getUniqueId().toString());
             dbObject.put("Rank", user.getRank().getCost());
-            VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
             DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
             if (dbObject1 == null)
                 VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
