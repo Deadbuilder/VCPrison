@@ -5,7 +5,6 @@ import net.vaultcraft.shade.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.utils.Rank;
 import net.vaultcraft.vcutils.VCUtils;
-import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -68,7 +67,6 @@ public class PrisonUser {
                     VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
                 else
                     VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
-                Logger.debug(VCPrison.getInstance(), "Remove Player");
             }
         });
         async_player_map.remove(player);
@@ -86,7 +84,6 @@ public class PrisonUser {
                 VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
             else
                 VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
-            Logger.debug(VCPrison.getInstance(), "Remove Player");
             async_player_map.remove(player);
         }
     }
