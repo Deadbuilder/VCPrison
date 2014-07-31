@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * Created by tacticalsk8er on 7/31/2014.
@@ -23,7 +24,7 @@ public class PrisonUserListener implements Listener {
     }
 
     @EventHandler
-    public void onQuit(PlayerJoinEvent event) {
+    public void onQuit(PlayerQuitEvent event) {
         PrisonUser.remove(event.getPlayer());
     }
 }
