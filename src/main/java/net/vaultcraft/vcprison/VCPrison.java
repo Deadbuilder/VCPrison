@@ -1,6 +1,12 @@
 package net.vaultcraft.vcprison;
 
+import net.vaultcraft.vcprison.commands.VCRankup;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
+import net.vaultcraft.vcprison.user.PrisonUser;
+import net.vaultcraft.vcutils.command.CommandManager;
+import net.vaultcraft.vcutils.user.Group;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -13,7 +19,18 @@ public class VCPrison extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        CommandManager.addCommand(new VCRankup("rankup", Group.COMMON, "nextrank"));
         new AsyncChatListener();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            new PrisonUser(player);
+        }
+    }
+
+    public void onDisable() {
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            PrisonUser.disable(player);
+        }
     }
 
     public static VCPrison getInstance() {

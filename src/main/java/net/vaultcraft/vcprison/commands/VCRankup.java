@@ -6,6 +6,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 /**
@@ -28,5 +29,21 @@ public class VCRankup extends ICommand {
 
         double balance = user.getUser().getMoney();
         Rank next = Rank.next(user.getRank());
+
+        if (balance >= next.getCost()) {
+            //rankup
+            user.setRank(next);
+            user.getUser().setMoney(balance-next.getCost());
+
+            Form.at(player, Prefix.SUCCESS, "You ranked up to &e"+next.toString()+Prefix.SUCCESS.getChatColor()+"!");
+            for (Player pl : Bukkit.getOnlinePlayers()) {
+                if (pl.equals(player))
+                    continue;
+
+                Form.at(pl, "&e"+player.getName()+" "+Prefix.VAULT_CRAFT.getChatColor()+"ranked up to &e"+next.toString()+Prefix.VAULT_CRAFT.getChatColor()+"!");
+            }
+        } else {
+            Form.at(player, Prefix.ERROR, "You do not have enough to rankup! &e$"+(next.getCost()-balance)+Prefix.ERROR+" left!");
+        }
     }
 }
