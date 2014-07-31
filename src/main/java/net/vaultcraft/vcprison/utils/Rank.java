@@ -1,7 +1,5 @@
 package net.vaultcraft.vcprison.utils;
 
-import org.bukkit.ChatColor;
-
 /**
  * Created by Connor on 7/30/14. Designed for the VCPrison project.
  */
@@ -52,5 +50,13 @@ public enum Rank {
 
     public boolean higherThan(Rank other) {
         return other.getCost() <= this.getCost();
+    }
+
+    public static Rank fromCost(double cost) {
+        for(Rank rank : values()) {
+            if(rank.getCost() == cost)
+                return rank;
+        }
+        return A;
     }
 }

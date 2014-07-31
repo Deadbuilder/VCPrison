@@ -45,7 +45,7 @@ public class PrisonUser {
         this.rank = rank;
     }
 
-    public void remove(Player player) {
+    public static void remove(Player player) {
         if(async_player_map.contains(player)) {
             async_player_map.remove(player);
             Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
@@ -57,7 +57,7 @@ public class PrisonUser {
         }
     }
 
-    public void disable(Player player) {
+    public static void disable(Player player) {
         if(async_player_map.contains(player)) {
             async_player_map.remove(player);
         }
