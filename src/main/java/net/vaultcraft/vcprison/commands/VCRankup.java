@@ -43,7 +43,7 @@ public class VCRankup extends ICommand {
                 Form.at(pl, "&e"+player.getName()+" "+Prefix.VAULT_CRAFT.getChatColor()+"ranked up to &e"+next.toString()+Prefix.VAULT_CRAFT.getChatColor()+"!");
             }
         } else {
-            Form.at(player, Prefix.ERROR, "You do not have enough to rankup! &e$"+(next.getCost()-balance)+Prefix.ERROR+" left!");
+            Form.at(player, Prefix.ERROR, "You do not have enough to rankup! &e$"+(next.getCost()-balance)+Prefix.ERROR.getChatColor()+" left!");
         }
     }
 }
