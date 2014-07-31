@@ -56,35 +56,35 @@ public class PrisonUser {
     }
 
     public static void remove(Player player) {
-            final PrisonUser user = PrisonUser.fromPlayer(player);
-            Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
-                public void run() {
-                    DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
-                    dbObject.put("Rank", user.getRank().getCost());
-                    DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
-                    if(dbObject1 == null)
-                        VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
-                    else
-                        VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
-                    Logger.debug(VCPrison.getInstance(), "Remove Player");
-                }
-            });
-            async_player_map.remove(player);
-    }
-
-    public static void disable() {
-        for(Player player : Bukkit.getOnlinePlayers()) {
-                final PrisonUser user = PrisonUser.fromPlayer(player);
+        final PrisonUser user = PrisonUser.fromPlayer(player);
+        Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
+            public void run() {
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 dbObject.put("Rank", user.getRank().getCost());
-                VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
                 DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 if(dbObject1 == null)
                     VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
                 else
                     VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
                 Logger.debug(VCPrison.getInstance(), "Remove Player");
-                async_player_map.remove(player);
+            }
+        });
+        async_player_map.remove(player);
+    }
+
+    public static void disable() {
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            final PrisonUser user = PrisonUser.fromPlayer(player);
+            DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
+            dbObject.put("Rank", user.getRank().getCost());
+            VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
+            DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
+            if(dbObject1 == null)
+                VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
+            else
+                VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
+            Logger.debug(VCPrison.getInstance(), "Remove Player");
+            async_player_map.remove(player);
         }
     }
 }
