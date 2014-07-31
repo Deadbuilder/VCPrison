@@ -59,7 +59,6 @@ public class PrisonUser {
         if(async_player_map.contains(player)) {
             final PrisonUser user = PrisonUser.fromPlayer(player);
             Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
-                @Override
                 public void run() {
                     DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "Users", "UUID", user.getPlayer().getUniqueId().toString());
                     dbObject.put("Rank", user.getRank().getCost());
