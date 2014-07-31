@@ -15,14 +15,16 @@ public class PrisonUser {
 
     private static volatile ConcurrentHashMap<Player, PrisonUser> async_player_map = new ConcurrentHashMap<>();
 
-    private Player player;
+    public static PrisonUser fromPlayer(Player player) {
+        return async_player_map.get(player);
+    }
+
     private User user;
-    private Rank rank;
+    private Rank rank = Rank.A;
 
     public PrisonUser(Player player) {
-        this.player = player;
-        async_player_map.put(player, this);
         this.user = User.fromPlayer(player);
+        async_player_map.put(player, this);
         Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
             @Override
             public void run() {
@@ -31,8 +33,8 @@ public class PrisonUser {
         });
     }
 
-    public Player getPlayer() {
-        return player;
+    public User getUser() {
+        return user;
     }
 
     public Rank getRank() {
@@ -41,10 +43,6 @@ public class PrisonUser {
 
     public void setRank(Rank rank) {
         this.rank = rank;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public void remove(Player player) {

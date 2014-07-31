@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison;
 
+import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -11,6 +12,8 @@ public class VCPrison extends JavaPlugin {
 
     public void onEnable() {
         instance = this;
+
+        new AsyncChatListener();
     }
 
     public static VCPrison getInstance() {

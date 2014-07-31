@@ -1,9 +1,12 @@
 package net.vaultcraft.vcprison.listener;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.user.PrisonUser;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -17,9 +20,12 @@ public class AsyncChatListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onAsyncChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
+        PrisonUser user = PrisonUser.fromPlayer(player);
 
+        String format = event.getFormat();
+        event.setFormat(ChatColor.translateAlternateColorCodes('&', user.getRank().getPrefix()+"&r "+format));
     }
 }
