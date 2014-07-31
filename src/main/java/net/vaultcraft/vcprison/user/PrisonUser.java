@@ -1,7 +1,10 @@
 package net.vaultcraft.vcprison.user;
 
+import net.vaultcraft.shade.mongodb.BasicDBObject;
+import net.vaultcraft.shade.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.utils.Rank;
+import net.vaultcraft.vcutils.VCUtils;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,13 +25,16 @@ public class PrisonUser {
     private User user;
     private Rank rank = Rank.A;
 
-    public PrisonUser(Player player) {
+    public PrisonUser(final Player player) {
         this.user = User.fromPlayer(player);
         async_player_map.put(player, this);
         Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
             @Override
             public void run() {
-
+                DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", player.getUniqueId().toString());
+                if(dbObject != null) {
+                    rank = dbObject.get("Rank") == null ? Rank.A : Rank.fromCost((Double) dbObject.get("Rank"));
+                }
             }
         });
     }
@@ -47,18 +53,25 @@ public class PrisonUser {
 
     public static void remove(Player player) {
         if(async_player_map.contains(player)) {
-            async_player_map.remove(player);
+            final PrisonUser user = PrisonUser.fromPlayer(player);
             Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-
+                    BasicDBObject dbObject = new BasicDBObject();
+                    dbObject.put("Rank", user.getRank().getCost());
+                    VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
                 }
             });
+            async_player_map.remove(player);
         }
     }
 
     public static void disable(Player player) {
         if(async_player_map.contains(player)) {
+            final PrisonUser user = PrisonUser.fromPlayer(player);
+            BasicDBObject dbObject = new BasicDBObject();
+            dbObject.put("Rank", user.getRank().getCost());
+            VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
             async_player_map.remove(player);
         }
     }
