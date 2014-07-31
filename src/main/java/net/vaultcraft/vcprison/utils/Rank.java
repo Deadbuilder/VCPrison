@@ -53,4 +53,13 @@ public enum Rank {
     public boolean higherThan(Rank other) {
         return other.getCost() <= this.getCost();
     }
+
+    public static Rank next(Rank previous) {
+        for (Rank r : values()) {
+            if (r.getCost() > previous.getCost())
+                return r;
+        }
+
+        return previous;
+    }
 }
