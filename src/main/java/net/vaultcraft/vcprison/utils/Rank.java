@@ -20,17 +20,17 @@ public enum Rank {
     N("&7&l<&4N&7&l>", 250000000.0),
     O("&7&l<&0O&7&l>", 500000000.0),
     P("&7&l<&5P&7&l>", 1000000000.0),
-    Q("&7&l<&6Ⓠ&7&l>", 2000000000.0),
-    R("&7&l<&aⓇ&7&l>", 4000000000.0),
-    S("&7&l<&dⓈ&7&l>", 10000000000.0),
-    T("&7&l<&cⓉ&7&l>", 20000000000.0),
-    U("&7&l<&4Ⓤ&7&l>", 50000000000.0),
-    V("&7&l<&9Ⓥ&7&l>", 120000000000.0),
-    W("&7&l<&bⓌ&7&l>", 300000000000.0),
-    X("&7&l<&8Ⓧ&7&l>", 500000000000.0),
-    Y("&6&l<&eⓎ&6&l>", 800000000000.0),
-    Z("&8&l<&5Ⓩ&8&l>", 1000000000000.0), //now I know my ABC's next time won't you sing with me
-    FREE("&5&l<&7&nⒻⓇⒺⒺ&5&l>", 2000000000000.0);
+    Q("&f&l<&6Q&f&l>", 2000000000.0),
+    R("&f&l<&aR&f&l>", 4000000000.0),
+    S("&f&l<&dS&f&l>", 10000000000.0),
+    T("&f&l<&cT&f&l>", 20000000000.0),
+    U("&f&l<&4U&f&l>", 50000000000.0),
+    V("&f&l<&9V&f&l>", 120000000000.0),
+    W("&f&l<&bW&f&l>", 300000000000.0),
+    X("&f&l<&8X&f&l>", 500000000000.0),
+    Y("&6&l<&eY&6&l>", 800000000000.0),
+    Z("&8&l<&5Z&8&l>", 1000000000000.0), //now I know my ABC's next time won't you sing with me
+    FREE("&5&l<&7&lFREE&5&l>", 2000000000000.0);
 
     private String prefix;
     private double cost;
@@ -61,9 +61,9 @@ public enum Rank {
         return previous;
     }
 
-    public static Rank fromCost(double cost) {
-        for(Rank rank : values()) {
-            if(rank.getCost() == cost)
+    public static Rank fromName(String name) {
+        for (Rank rank : values()) {
+            if (rank.toString().equals(name.toUpperCase()))
                 return rank;
         }
         return A;
