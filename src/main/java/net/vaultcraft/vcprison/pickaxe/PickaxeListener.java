@@ -2,8 +2,11 @@ package net.vaultcraft.vcprison.pickaxe;
 
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.user.PrisonUser;
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -14,7 +17,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  * Created by tacticalsk8er on 8/1/2014.
@@ -30,15 +36,106 @@ public class PickaxeListener implements Listener {
         if (event.getCurrentItem() != null)
             if (event.getCurrentItem().getType() == Material.DIAMOND_PICKAXE)
                 event.setCancelled(true);
-        if(event.getAction() == InventoryAction.HOTBAR_SWAP) {
+        if (event.getAction() == InventoryAction.HOTBAR_SWAP) {
             event.setCancelled(true);
         }
 
+        if (event.getView().getTopInventory() != null) {
+            Inventory inventory = event.getView().getTopInventory();
+            if (inventory.getName().contains("Pickaxe")) {
+                event.setCancelled(true);
+                Player player = (Player) event.getWhoClicked();
+                Pickaxe pickaxe = PrisonUser.fromPlayer((Player) event.getWhoClicked()).getPickaxe();
+                if(event.getCurrentItem() != null) {
+                    if(event.getCurrentItem().getItemMeta() != null) {
+                        if (event.getCurrentItem().getItemMeta().getDisplayName() != null) {
+                            String itemName = event.getCurrentItem().getItemMeta().getDisplayName();
+
+                            switch (itemName) {
+                                case "Efficiency":
+                                    if(pickaxe.getPICK_POINTS() < 1) {
+                                        Form.at(player, Prefix.ERROR, "You don't have enough Pickaxe Stat Points!");
+                                        break;
+                                    }
+                                    pickaxe.setDIG_SPEED_LEVEL(pickaxe.getDIG_SPEED_LEVEL() + 1);
+                                    pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 1);
+                                    Form.at(player, Prefix.SUCCESS, "You bought one level of Efficiency!");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Fortune":
+                                    if(pickaxe.getPICK_POINTS() < 1) {
+                                        Form.at(player, Prefix.ERROR, "You don't have enough Pickaxe Stat Points!");
+                                        break;
+                                    }
+                                    pickaxe.setFORTUNE_LEVEL(pickaxe.getFORTUNE_LEVEL() + 1);
+                                    pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 1);
+                                    Form.at(player, Prefix.SUCCESS, "You bought one level of Fortune!");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Haste":
+                                    if(pickaxe.getHASTE_LEVEL() == 4) {
+                                        Form.at(player, Prefix.ERROR, "You have hit the level limit for Haste!");
+                                        break;
+                                    }
+                                    if(pickaxe.getPICK_POINTS() < 5) {
+                                        Form.at(player, Prefix.ERROR, "You don't have enough Pickaxe Stat Points!");
+                                        break;
+                                    }
+                                    pickaxe.setHASTE_LEVEL(pickaxe.getHASTE_LEVEL() + 1);
+                                    pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 5);
+                                    Form.at(player, Prefix.SUCCESS, "You bought one level of Haste!");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Auto Smelt":
+                                    if(pickaxe.getPICK_POINTS() < 8) {
+                                        Form.at(player, Prefix.ERROR, "You don't have enough Pickaxe Stat Points!");
+                                        break;
+                                    }
+                                    pickaxe.setHAS_AUTO_SMELT(true);
+                                    pickaxe.setAUTO_SMELT(true);
+                                    pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 8);
+                                    Form.at(player, Prefix.SUCCESS, "You bought Auto Smelt. You can toggle this on and off in the Pickaxe Stats menu.");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Toggle Auto Smelt Off":
+                                    pickaxe.setAUTO_SMELT(false);
+                                    Form.at(player, Prefix.SUCCESS, "You turned off Auto Smelt.");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Toggle Auto Smelt On":
+                                    pickaxe.setAUTO_SMELT(true);
+                                    Form.at(player, Prefix.SUCCESS, "You turned on Auto Smelt.");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @EventHandler
     public void onHotbarHover(PlayerItemHeldEvent event) {
+        if(event.getNewSlot() == 0) {
+            Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+            if(pickaxe.getHASTE_LEVEL() > 0) {
+                event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, pickaxe.getHASTE_LEVEL() - 1, false));
+            }
+        }
 
+        if(event.getPreviousSlot() == 0) {
+            Player player = event.getPlayer();
+            if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
+                player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+            }
+        }
     }
 
     @EventHandler
@@ -50,7 +147,10 @@ public class PickaxeListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
-
+            if(event.getPlayer().getItemInHand().getType() == Material.DIAMOND_PICKAXE) {
+                Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+                event.getPlayer().openInventory(pickaxe.getStatsMenu());
+            }
         }
     }
 
