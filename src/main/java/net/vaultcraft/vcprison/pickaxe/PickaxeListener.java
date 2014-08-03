@@ -88,6 +88,7 @@ public class PickaxeListener implements Listener {
                                     Form.at(player, Prefix.SUCCESS, "You bought one level of Haste!");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
                                     player.openInventory(pickaxe.getStatsMenu());
+                                    player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, pickaxe.getHASTE_LEVEL(), false));
                                     break;
                                 case "Auto Smelt":
                                     if(pickaxe.getPICK_POINTS() < 8) {
@@ -148,18 +149,22 @@ public class PickaxeListener implements Listener {
                                     Form.at(player, Prefix.SUCCESS, "You bought Night Vision. You can toggle this on and off in the Pickaxe Stats menu.");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
                                     player.openInventory(pickaxe.getStatsMenu());
+                                    player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false));
                                     break;
                                 case "Toggle Night Vision Off":
                                     pickaxe.setNIGHT_VISION(false);
                                     Form.at(player, Prefix.SUCCESS, "You turned off Night Vision.");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
                                     player.openInventory(pickaxe.getStatsMenu());
+                                    if(player.hasPotionEffect(PotionEffectType.NIGHT_VISION))
+                                        player.removePotionEffect(PotionEffectType.NIGHT_VISION);
                                     break;
                                 case "Toggle Night Vision On":
                                     pickaxe.setNIGHT_VISION(true);
                                     Form.at(player, Prefix.SUCCESS, "You turned on Night Vision.");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
                                     player.openInventory(pickaxe.getStatsMenu());
+                                    player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false));
                                     break;
                             }
                         }

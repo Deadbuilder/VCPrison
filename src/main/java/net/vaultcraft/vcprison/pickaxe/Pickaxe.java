@@ -263,7 +263,7 @@ public class Pickaxe {
 
         if(HAS_SILK_TOUCH) {
             if(SILK_TOUCH) {
-                ItemStack autoSmeltItem = new ItemStack(Material.STRING);
+                ItemStack autoSmeltItem = new ItemStack(Material.WEB);
                 autoSmeltItem = ItemUtils.setName(autoSmeltItem, "Toggle Silk Touch Off");
                 inventory.setItem(4, autoSmeltItem);
             } else {
@@ -272,7 +272,7 @@ public class Pickaxe {
                 inventory.setItem(4, autoSmeltItem);
             }
         } else {
-            ItemStack autoSmeltItem = new ItemStack(Material.STRING);
+            ItemStack autoSmeltItem = new ItemStack(Material.WEB);
             autoSmeltItem = ItemUtils.setName(autoSmeltItem, "Silk Touch");
             List<String> lore3 = new ArrayList<>();
             lore3.add("Adds Silk Touch to your pick.");
