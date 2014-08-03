@@ -162,6 +162,8 @@ public class PickaxeListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if(event.isCancelled())
+            return;
         event.setCancelled(true);
         ItemStack item = new ItemStack(changeType(event.getBlock().getType()));
         PrisonUser user = PrisonUser.fromPlayer(event.getPlayer());

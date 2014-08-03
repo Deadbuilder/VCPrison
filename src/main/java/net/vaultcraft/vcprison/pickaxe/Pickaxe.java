@@ -168,7 +168,7 @@ public class Pickaxe {
     }
 
     public int getFortuneItems() {
-        int items = (int) ((Math.random() * FORTUNE_LEVEL) / 2);
+        int items = (int) ((Math.random() * FORTUNE_LEVEL) / 1.2);
         if(items == 0)
             return 1;
         else

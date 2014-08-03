@@ -25,6 +25,7 @@ public class PrisonUser {
 
     private User user;
     private Rank rank = Rank.A;
+    private int prestige;
     private Pickaxe pickaxe;
 
     public PrisonUser(final Player player) {
@@ -35,6 +36,7 @@ public class PrisonUser {
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", player.getUniqueId().toString());
                 if (dbObject != null) {
                     rank = dbObject.get("Rank") == null ? Rank.A : Rank.fromName((String) dbObject.get("Rank"));
+                    prestige = dbObject.get("Prestige") == null ? 0 : (int) dbObject.get("Prestige");
                 }
             }
         });
@@ -66,6 +68,42 @@ public class PrisonUser {
         this.rank = rank;
     }
 
+    public int getPrestige() {
+        return prestige;
+    }
+
+    //① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩
+    public String getPrestigePrefix() {
+        switch (prestige) {
+            case 1:
+                return "&6①";
+            case 2:
+                return "&6②";
+            case 3:
+                return "&6③";
+            case 4:
+                return "&6④";
+            case 5:
+                return "&6⑤";
+            case 6:
+                return "&6⑥";
+            case 7:
+                return "&6⑦";
+            case 8:
+                return "&6⑧";
+            case 9:
+                return "&6⑨";
+            case 10:
+                return "&6⑩";
+            default:
+                return "";
+        }
+    }
+
+    public void setPrestige(int prestige) {
+        this.prestige = prestige;
+    }
+
     public Pickaxe getPickaxe() {
         return pickaxe;
     }
@@ -78,6 +116,7 @@ public class PrisonUser {
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 dbObject.put("UUID", user.getPlayer().getUniqueId().toString());
                 dbObject.put("Rank", user.getRank().toString());
+                dbObject.put("Prestige", user.getPrestige());
                 DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 if (dbObject1 == null)
                     VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
@@ -96,6 +135,7 @@ public class PrisonUser {
             DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
             dbObject.put("UUID", user.getPlayer().getUniqueId().toString());
             dbObject.put("Rank", user.getRank().toString());
+            dbObject.put("Prestige", user.getPrestige());
             DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
             if (dbObject1 == null)
                 VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);

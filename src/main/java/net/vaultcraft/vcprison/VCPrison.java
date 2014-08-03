@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison;
 
+import net.vaultcraft.vcprison.commands.VCPrestige;
 import net.vaultcraft.vcprison.commands.VCRankup;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
@@ -22,6 +23,7 @@ public class VCPrison extends JavaPlugin {
         instance = this;
 
         CommandManager.addCommand(new VCRankup("rankup", Group.COMMON, "nextrank"));
+        CommandManager.addCommand(new VCPrestige("prestige", Group.COMMON, "startover"));
         new AsyncChatListener();
         new PrisonUserListener();
         new PickaxeListener();
