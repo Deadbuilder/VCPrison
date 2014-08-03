@@ -2,6 +2,7 @@ package net.vaultcraft.vcprison;
 
 import net.vaultcraft.vcprison.commands.VCPrestige;
 import net.vaultcraft.vcprison.commands.VCRankup;
+import net.vaultcraft.vcprison.furance.FurnaceListener;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
 import net.vaultcraft.vcprison.pickaxe.PickaxeListener;
@@ -27,6 +28,7 @@ public class VCPrison extends JavaPlugin {
         new AsyncChatListener();
         new PrisonUserListener();
         new PickaxeListener();
+        new FurnaceListener();
 
         for(Player player : Bukkit.getOnlinePlayers()) {
             new PrisonUser(player);
