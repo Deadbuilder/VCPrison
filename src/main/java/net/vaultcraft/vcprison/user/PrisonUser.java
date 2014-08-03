@@ -3,6 +3,7 @@ package net.vaultcraft.vcprison.user;
 import net.vaultcraft.shade.mongodb.BasicDBObject;
 import net.vaultcraft.shade.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.pickaxe.Pickaxe;
 import net.vaultcraft.vcprison.utils.Rank;
 import net.vaultcraft.vcutils.VCUtils;
 import net.vaultcraft.vcutils.user.User;
@@ -24,6 +25,8 @@ public class PrisonUser {
 
     private User user;
     private Rank rank = Rank.A;
+    private int prestige;
+    private Pickaxe pickaxe;
 
     public PrisonUser(final Player player) {
         this.user = User.fromPlayer(player);
@@ -33,9 +36,20 @@ public class PrisonUser {
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", player.getUniqueId().toString());
                 if (dbObject != null) {
                     rank = dbObject.get("Rank") == null ? Rank.A : Rank.fromName((String) dbObject.get("Rank"));
+                    prestige = dbObject.get("Prestige") == null ? 0 : (int) dbObject.get("Prestige");
                 }
             }
         });
+        Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                if (user.getUserdata("Pickaxe") != null)
+                    pickaxe = new Pickaxe(player, user.getUserdata("Pickaxe"));
+                else
+                    pickaxe = new Pickaxe(player);
+                player.getInventory().setItem(0, pickaxe.getPickaxe());
+            }
+        }, 20l);
     }
 
     public Player getPlayer() {
@@ -54,13 +68,55 @@ public class PrisonUser {
         this.rank = rank;
     }
 
+    public int getPrestige() {
+        return prestige;
+    }
+
+    //① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩
+    public String getPrestigePrefix() {
+        switch (prestige) {
+            case 1:
+                return "&6①";
+            case 2:
+                return "&6②";
+            case 3:
+                return "&6③";
+            case 4:
+                return "&6④";
+            case 5:
+                return "&6⑤";
+            case 6:
+                return "&6⑥";
+            case 7:
+                return "&6⑦";
+            case 8:
+                return "&6⑧";
+            case 9:
+                return "&6⑨";
+            case 10:
+                return "&6⑩";
+            default:
+                return "";
+        }
+    }
+
+    public void setPrestige(int prestige) {
+        this.prestige = prestige;
+    }
+
+    public Pickaxe getPickaxe() {
+        return pickaxe;
+    }
+
     public static void remove(Player player) {
         final PrisonUser user = PrisonUser.fromPlayer(player);
+        user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());
         Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
             public void run() {
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 dbObject.put("UUID", user.getPlayer().getUniqueId().toString());
                 dbObject.put("Rank", user.getRank().toString());
+                dbObject.put("Prestige", user.getPrestige());
                 DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 if (dbObject1 == null)
                     VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
@@ -68,20 +124,24 @@ public class PrisonUser {
                     VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
             }
         });
+        player.getInventory().setItem(0, null);
         async_player_map.remove(player);
     }
 
     public static void disable() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             final PrisonUser user = PrisonUser.fromPlayer(player);
+            user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());
             DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
             dbObject.put("UUID", user.getPlayer().getUniqueId().toString());
             dbObject.put("Rank", user.getRank().toString());
+            dbObject.put("Prestige", user.getPrestige());
             DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
             if (dbObject1 == null)
                 VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
             else
                 VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
+            player.getInventory().setItem(0, null);
             async_player_map.remove(player);
         }
     }

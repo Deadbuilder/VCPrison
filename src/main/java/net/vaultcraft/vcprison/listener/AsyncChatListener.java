@@ -26,6 +26,6 @@ public class AsyncChatListener implements Listener {
         PrisonUser user = PrisonUser.fromPlayer(player);
 
         String format = event.getFormat();
-        event.setFormat(ChatColor.translateAlternateColorCodes('&', user.getRank().getPrefix()+"&r "+format));
+        event.setFormat(ChatColor.translateAlternateColorCodes('&',user.getPrestigePrefix() + user.getRank().getPrefix()+"&r "+format));
     }
 }

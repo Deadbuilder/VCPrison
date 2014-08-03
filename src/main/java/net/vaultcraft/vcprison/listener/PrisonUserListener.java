@@ -4,7 +4,6 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -18,7 +17,7 @@ public class PrisonUserListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         new PrisonUser(event.getPlayer());
     }
