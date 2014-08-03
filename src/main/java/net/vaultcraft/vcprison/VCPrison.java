@@ -3,6 +3,7 @@ package net.vaultcraft.vcprison;
 import net.vaultcraft.vcprison.commands.VCRankup;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
+import net.vaultcraft.vcprison.mine.MineLoader;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.user.Group;
@@ -27,6 +28,8 @@ public class VCPrison extends JavaPlugin {
         for(Player player : Bukkit.getOnlinePlayers()) {
             new PrisonUser(player);
         }
+
+        MineLoader.loadMines();
     }
 
     public void onDisable() {
