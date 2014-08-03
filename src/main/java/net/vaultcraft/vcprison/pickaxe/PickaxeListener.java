@@ -113,6 +113,54 @@ public class PickaxeListener implements Listener {
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
                                     player.openInventory(pickaxe.getStatsMenu());
                                     break;
+                                case "Silk Touch":
+                                    if(pickaxe.getPICK_POINTS() < 8) {
+                                        Form.at(player, Prefix.ERROR, "You don't have enough Pickaxe Stat Points!");
+                                        break;
+                                    }
+                                    pickaxe.setHAS_SILK_TOUCH(true);
+                                    pickaxe.setSILK_TOUCH(true);
+                                    pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 8);
+                                    Form.at(player, Prefix.SUCCESS, "You bought Silk Touch. You can toggle this on and off in the Pickaxe Stats menu.");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Toggle Silk Touch Off":
+                                    pickaxe.setSILK_TOUCH(false);
+                                    Form.at(player, Prefix.SUCCESS, "You turned off Silk Touch.");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Toggle Silk Touch On":
+                                    pickaxe.setSILK_TOUCH(true);
+                                    Form.at(player, Prefix.SUCCESS, "You turned on Silk Touch.");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Night Vision":
+                                    if(pickaxe.getPICK_POINTS() < 8) {
+                                        Form.at(player, Prefix.ERROR, "You don't have enough Pickaxe Stat Points!");
+                                        break;
+                                    }
+                                    pickaxe.setHAS_NIGHT_VISION(true);
+                                    pickaxe.setNIGHT_VISION(true);
+                                    pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 8);
+                                    Form.at(player, Prefix.SUCCESS, "You bought Night Vision. You can toggle this on and off in the Pickaxe Stats menu.");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Toggle Night Vision Off":
+                                    pickaxe.setNIGHT_VISION(false);
+                                    Form.at(player, Prefix.SUCCESS, "You turned off Night Vision.");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
+                                case "Toggle Night Vision On":
+                                    pickaxe.setNIGHT_VISION(true);
+                                    Form.at(player, Prefix.SUCCESS, "You turned on Night Vision.");
+                                    player.getInventory().setItem(0, pickaxe.getPickaxe());
+                                    player.openInventory(pickaxe.getStatsMenu());
+                                    break;
                             }
                         }
                     }
@@ -125,16 +173,18 @@ public class PickaxeListener implements Listener {
     public void onHotbarHover(PlayerItemHeldEvent event) {
         if(event.getNewSlot() == 0) {
             Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
-            if(pickaxe.getHASTE_LEVEL() > 0) {
+            if(pickaxe.getHASTE_LEVEL() > 0)
                 event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, pickaxe.getHASTE_LEVEL() - 1, false));
-            }
+            if(pickaxe.isNIGHT_VISION())
+                event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false));
         }
 
         if(event.getPreviousSlot() == 0) {
             Player player = event.getPlayer();
-            if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
+            if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING))
                 player.removePotionEffect(PotionEffectType.FAST_DIGGING);
-            }
+            if(player.hasPotionEffect(PotionEffectType.NIGHT_VISION))
+                player.removePotionEffect(PotionEffectType.NIGHT_VISION);
         }
     }
 
@@ -167,6 +217,8 @@ public class PickaxeListener implements Listener {
         event.setCancelled(true);
         ItemStack item = new ItemStack(changeType(event.getBlock().getType()));
         PrisonUser user = PrisonUser.fromPlayer(event.getPlayer());
+        if(user.getPickaxe().isSILK_TOUCH())
+            item.setType(event.getBlock().getType());
         int amount = 1;
         if (user.getPlayer().getItemInHand().getType() == Material.DIAMOND_PICKAXE) {
             user.getPickaxe().mineBlock();
@@ -186,13 +238,9 @@ public class PickaxeListener implements Listener {
                 return true;
             case DIAMOND:
                 return true;
-            case IRON_ORE:
-                return true;
             case IRON_INGOT:
                 return true;
             case GOLD_INGOT:
-                return true;
-            case GOLD_ORE:
                 return true;
             case EMERALD:
                 return true;

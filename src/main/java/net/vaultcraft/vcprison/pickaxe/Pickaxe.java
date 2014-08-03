@@ -21,25 +21,23 @@ import java.util.List;
 public class Pickaxe {
 
     private Player player;
-    private int DIG_SPEED_LEVEL;
-    private int FORTUNE_LEVEL;
-    private int HASTE_LEVEL;
-    private boolean HAS_AUTO_SMELT;
-    private boolean AUTO_SMELT;
+    private int DIG_SPEED_LEVEL = 5;
+    private int FORTUNE_LEVEL= 5;
+    private int HASTE_LEVEL = 0;
+    private boolean HAS_AUTO_SMELT = false;
+    private boolean AUTO_SMELT = false;
+    private boolean HAS_NIGHT_VISION = false;
+    private boolean NIGHT_VISION = false;
+    private boolean HAS_SILK_TOUCH = false;
+    private boolean SILK_TOUCH = false;
 
-    private int PICK_LEVEL;
-    private int BLOCKS_MINED;
-    private int PICK_POINTS;
+    private int PICK_LEVEL = 1;
+    private int BLOCKS_MINED = 0;
+    private int PICK_POINTS = 0;
 
 
     public Pickaxe(Player player) {
         this.player = player;
-        DIG_SPEED_LEVEL = 5;
-        FORTUNE_LEVEL = 5;
-        HASTE_LEVEL = 0;
-        PICK_LEVEL = 1;
-        BLOCKS_MINED = 0;
-        PICK_POINTS = 0;
     }
 
     public Pickaxe(Player player, String s) {
@@ -72,6 +70,18 @@ public class Pickaxe {
                 case "AUTO_SMELT":
                     AUTO_SMELT = Boolean.parseBoolean(value[1]);
                     break;
+                case "HAS_SILK_TOUCH":
+                    HAS_SILK_TOUCH = Boolean.parseBoolean(value[1]);
+                    break;
+                case "SILK_TOUCH":
+                    SILK_TOUCH = Boolean.parseBoolean(value[1]);
+                    break;
+                case "HAS_NIGHT_VISION":
+                    HAS_NIGHT_VISION = Boolean.parseBoolean(value[1]);
+                    break;
+                case "NIGHT_VISION":
+                    NIGHT_VISION = Boolean.parseBoolean(value[1]);
+                    break;
             }
         }
     }
@@ -85,11 +95,15 @@ public class Pickaxe {
             lore.add(ChatColor.GRAY + "Haste " + HASTE_LEVEL);
         if(AUTO_SMELT)
             lore.add(ChatColor.GRAY + "Auto Smelt");
+        if(NIGHT_VISION)
+            lore.add(ChatColor.GRAY + "Night Vision");
         lore.add("Exp: " + Form.at(BLOCKS_MINED) + " / " + Form.at(toNextLevel(PICK_LEVEL)));
         itemMeta.setLore(lore);
         itemMeta.addEnchant(Enchantment.DIG_SPEED, DIG_SPEED_LEVEL, true);
         itemMeta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, FORTUNE_LEVEL, true);
         itemMeta.addEnchant(Enchantment.DURABILITY, 50, true);
+        if(SILK_TOUCH)
+            itemMeta.addEnchant(Enchantment.SILK_TOUCH, 1, true);
         pick.setItemMeta(itemMeta);
         return pick;
     }
@@ -130,6 +144,30 @@ public class Pickaxe {
         return AUTO_SMELT;
     }
 
+    public void setHAS_NIGHT_VISION(boolean HAS_NIGHT_VISION) {
+        this.HAS_NIGHT_VISION = HAS_NIGHT_VISION;
+    }
+
+    public void setNIGHT_VISION(boolean NIGHT_VISION) {
+        this.NIGHT_VISION = NIGHT_VISION;
+    }
+
+    public boolean isNIGHT_VISION() {
+        return NIGHT_VISION;
+    }
+
+    public void setHAS_SILK_TOUCH(boolean HAS_SLIK_TOUCH) {
+        this.HAS_SILK_TOUCH = HAS_SLIK_TOUCH;
+    }
+
+    public void setSILK_TOUCH(boolean SLIK_TOUCH) {
+        this.SILK_TOUCH = SLIK_TOUCH;
+    }
+
+    public boolean isSILK_TOUCH() {
+        return SILK_TOUCH;
+    }
+
     public void setPICK_POINTS(int PICK_POINTS) {
         this.PICK_POINTS = PICK_POINTS;
     }
@@ -140,7 +178,7 @@ public class Pickaxe {
 
     public void mineBlock() {
         BLOCKS_MINED++;
-        if(BLOCKS_MINED == toNextLevel(PICK_LEVEL)) {
+        if(BLOCKS_MINED >= toNextLevel(PICK_LEVEL)) {
             BLOCKS_MINED = 0;
             PICK_LEVEL++;
             PICK_POINTS++;
@@ -157,14 +195,14 @@ public class Pickaxe {
 
     public int toNextLevel(int level) {
         if(level < 50)
-            return (600 + (600 * (level - 1)));
+            return (600 + (600 * (level - 1))) / 100;
         else
-            return 30000;
+            return 30000 / 100;
     }
 
     @Override
     public String toString() {
-        return "DIG_SPEED_LEVEL|" + DIG_SPEED_LEVEL + ".FORTUNE_LEVEL|" + FORTUNE_LEVEL +".HASTE_LEVEL|" + HASTE_LEVEL + ".PICK_LEVEL|" + PICK_LEVEL + ".BLOCKS_MINED|" + BLOCKS_MINED + ".PICK_POINTS|" + PICK_POINTS + ".HAS_AUTO_SMELT|" + HAS_AUTO_SMELT + ".AUTO_SMELT|" + AUTO_SMELT;
+        return "DIG_SPEED_LEVEL|" + DIG_SPEED_LEVEL + ".FORTUNE_LEVEL|" + FORTUNE_LEVEL +".HASTE_LEVEL|" + HASTE_LEVEL + ".PICK_LEVEL|" + PICK_LEVEL + ".BLOCKS_MINED|" + BLOCKS_MINED + ".PICK_POINTS|" + PICK_POINTS + ".HAS_AUTO_SMELT|" + HAS_AUTO_SMELT + ".AUTO_SMELT|" + AUTO_SMELT + ".HAS_SILK_TOUCH|" + HAS_SILK_TOUCH + ".SILK_TOUCH|" + SILK_TOUCH + ".HAS_NIGHT_VISION|" + HAS_NIGHT_VISION + ".NIGHT_VISION|" + NIGHT_VISION;
     }
 
     public int getFortuneItems() {
@@ -221,6 +259,46 @@ public class Pickaxe {
             lore3.add("Cost: 8");
             autoSmeltItem = ItemUtils.setLore(autoSmeltItem, lore3);
             inventory.setItem(3, autoSmeltItem);
+        }
+
+        if(HAS_SILK_TOUCH) {
+            if(SILK_TOUCH) {
+                ItemStack autoSmeltItem = new ItemStack(Material.STRING);
+                autoSmeltItem = ItemUtils.setName(autoSmeltItem, "Toggle Silk Touch Off");
+                inventory.setItem(4, autoSmeltItem);
+            } else {
+                ItemStack autoSmeltItem = new ItemStack(Material.STRING);
+                autoSmeltItem = ItemUtils.setName(autoSmeltItem, "Toggle Silk Touch On");
+                inventory.setItem(4, autoSmeltItem);
+            }
+        } else {
+            ItemStack autoSmeltItem = new ItemStack(Material.STRING);
+            autoSmeltItem = ItemUtils.setName(autoSmeltItem, "Silk Touch");
+            List<String> lore3 = new ArrayList<>();
+            lore3.add("Adds Silk Touch to your pick.");
+            lore3.add("Cost: 8");
+            autoSmeltItem = ItemUtils.setLore(autoSmeltItem, lore3);
+            inventory.setItem(4, autoSmeltItem);
+        }
+
+        if(HAS_NIGHT_VISION) {
+            if(NIGHT_VISION) {
+                ItemStack autoSmeltItem = new ItemStack(Material.EYE_OF_ENDER);
+                autoSmeltItem = ItemUtils.setName(autoSmeltItem, "Toggle Night Vision Off");
+                inventory.setItem(5, autoSmeltItem);
+            } else {
+                ItemStack autoSmeltItem = new ItemStack(Material.ENDER_PEARL);
+                autoSmeltItem = ItemUtils.setName(autoSmeltItem, "Toggle Night Vision On");
+                inventory.setItem(5, autoSmeltItem);
+            }
+        } else {
+            ItemStack autoSmeltItem = new ItemStack(Material.EYE_OF_ENDER);
+            autoSmeltItem = ItemUtils.setName(autoSmeltItem, "Night Vision");
+            List<String> lore3 = new ArrayList<>();
+            lore3.add("Have night vision when you hold your pick.");
+            lore3.add("Cost: 8");
+            autoSmeltItem = ItemUtils.setLore(autoSmeltItem, lore3);
+            inventory.setItem(5, autoSmeltItem);
         }
 
         return inventory;
