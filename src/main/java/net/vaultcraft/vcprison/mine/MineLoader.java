@@ -86,7 +86,7 @@ public class MineLoader {
         for (Player player : mine.getArea().getMax().getWorld().getPlayers()) {
             if (mine.getArea().isInArea(player.getLocation())) {
                 Location tp = player.getLocation().clone();
-                tp.setY(mine.getArea().getMax().getY());
+                tp.setY(mine.getArea().getMax().getY()+1);
                 player.teleport(tp);
             }
         }
