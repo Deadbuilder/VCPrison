@@ -50,6 +50,7 @@ public class PickaxeListener implements Listener {
                     if(event.getCurrentItem().getItemMeta() != null) {
                         if (event.getCurrentItem().getItemMeta().getDisplayName() != null) {
                             String itemName = event.getCurrentItem().getItemMeta().getDisplayName();
+                            ItemStack up = event.getCurrentItem();
 
                             switch (itemName) {
                                 case "Efficiency":
@@ -61,7 +62,7 @@ public class PickaxeListener implements Listener {
                                     pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 1);
                                     Form.at(player, Prefix.SUCCESS, "You bought one level of Efficiency!");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
-                                    player.openInventory(pickaxe.getStatsMenu());
+                                    up.setAmount(up.getAmount()+1);
                                     break;
                                 case "Fortune":
                                     if(pickaxe.getPICK_POINTS() < 1) {
@@ -72,7 +73,7 @@ public class PickaxeListener implements Listener {
                                     pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 1);
                                     Form.at(player, Prefix.SUCCESS, "You bought one level of Fortune!");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
-                                    player.openInventory(pickaxe.getStatsMenu());
+                                    up.setAmount(up.getAmount()+1);
                                     break;
                                 case "Haste":
                                     if(pickaxe.getHASTE_LEVEL() == 4) {
@@ -87,8 +88,7 @@ public class PickaxeListener implements Listener {
                                     pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 5);
                                     Form.at(player, Prefix.SUCCESS, "You bought one level of Haste!");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
-                                    player.openInventory(pickaxe.getStatsMenu());
-                                    player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, pickaxe.getHASTE_LEVEL(), false));
+                                    up.setAmount(up.getAmount()+1);
                                     break;
                                 case "Auto Smelt":
                                     if(pickaxe.getPICK_POINTS() < 8) {
@@ -100,7 +100,7 @@ public class PickaxeListener implements Listener {
                                     pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 8);
                                     Form.at(player, Prefix.SUCCESS, "You bought Auto Smelt. You can toggle this on and off in the Pickaxe Stats menu.");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
-                                    player.openInventory(pickaxe.getStatsMenu());
+                                    up.setAmount(up.getAmount()+1);
                                     break;
                                 case "Toggle Auto Smelt Off":
                                     pickaxe.setAUTO_SMELT(false);
@@ -149,22 +149,18 @@ public class PickaxeListener implements Listener {
                                     Form.at(player, Prefix.SUCCESS, "You bought Night Vision. You can toggle this on and off in the Pickaxe Stats menu.");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
                                     player.openInventory(pickaxe.getStatsMenu());
-                                    player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false));
                                     break;
                                 case "Toggle Night Vision Off":
                                     pickaxe.setNIGHT_VISION(false);
                                     Form.at(player, Prefix.SUCCESS, "You turned off Night Vision.");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
                                     player.openInventory(pickaxe.getStatsMenu());
-                                    if(player.hasPotionEffect(PotionEffectType.NIGHT_VISION))
-                                        player.removePotionEffect(PotionEffectType.NIGHT_VISION);
                                     break;
                                 case "Toggle Night Vision On":
                                     pickaxe.setNIGHT_VISION(true);
                                     Form.at(player, Prefix.SUCCESS, "You turned on Night Vision.");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
                                     player.openInventory(pickaxe.getStatsMenu());
-                                    player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false));
                                     break;
                             }
                         }
@@ -275,8 +271,6 @@ public class PickaxeListener implements Listener {
                 return Material.IRON_INGOT;
             case GOLD_ORE:
                 return Material.GOLD_INGOT;
-            case COBBLESTONE:
-                return Material.STONE;
             default:
                 return type;
         }
