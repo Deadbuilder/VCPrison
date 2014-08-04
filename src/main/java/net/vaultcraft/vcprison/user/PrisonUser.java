@@ -76,25 +76,25 @@ public class PrisonUser {
     public String getPrestigePrefix() {
         switch (prestige) {
             case 1:
-                return "&6①";
+                return "&f/&6①&f/ ";
             case 2:
-                return "&6②";
+                return "&f/&6②&f/ ";
             case 3:
-                return "&6③";
+                return "&f/&6③&f/ ";
             case 4:
-                return "&6④";
+                return "&f/&6④&f/ ";
             case 5:
-                return "&6⑤";
+                return "&f/&6⑤&f/ ";
             case 6:
-                return "&6⑥";
+                return "&f/&6⑥&f/ ";
             case 7:
-                return "&6⑦";
+                return "&f/&6⑦&f/ ";
             case 8:
-                return "&6⑧";
+                return "&f/&6⑧&f/ ";
             case 9:
-                return "&6⑨";
+                return "&f/&6⑨&f/ ";
             case 10:
-                return "&6⑩";
+                return "&f/&6⑩&f/ ";
             default:
                 return "";
         }

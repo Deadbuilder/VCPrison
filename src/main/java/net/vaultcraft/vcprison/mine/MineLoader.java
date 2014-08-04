@@ -3,11 +3,14 @@ package net.vaultcraft.vcprison.mine;
 import net.minecraft.util.org.apache.commons.io.FileUtils;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.utils.Rank;
+import net.vaultcraft.vcutils.protection.Area;
 import net.vaultcraft.vcutils.protection.ProtectionManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.vaultcraft.vcutils.uncommon.FireworkEffectPlayer;
+import org.bukkit.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.FireworkMeta;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,6 +38,9 @@ public class MineLoader {
                 file.mkdir();
 
             for (String line : FileUtils.readLines(file)) {
+                if (line.startsWith("#"))
+                    continue;
+
                 line = line.toLowerCase().replace(" ", "");
                 HashMap<String, Object> data = new HashMap<>();
                 if (line.contains("rank")) {
@@ -46,7 +52,7 @@ public class MineLoader {
                     HashMap<Material, Double> blcks = new HashMap<>();
                     for (String key : blocks.split(",")) {
                         String use = key.replaceAll("[\\),\\(]", "");
-                        double percent = Double.parseDouble(use.split("[\\%]")[0]);
+                        double percent = Double.parseDouble(use.split("%")[0]);
                         Material type = Material.getMaterial(use.split("%")[1].toUpperCase());
                         blcks.put(type, percent);
                     }
@@ -86,9 +92,36 @@ public class MineLoader {
         for (Player player : mine.getArea().getMax().getWorld().getPlayers()) {
             if (mine.getArea().isInArea(player.getLocation())) {
                 Location tp = player.getLocation().clone();
-                tp.setY(mine.getArea().getMax().getY());
+                tp.setY(mine.getArea().getMax().getY()+1);
                 player.teleport(tp);
             }
+        }
+
+        //just for the fun
+        Area area = mine.getArea();
+        int y = area.getMax().getBlockY()+1;
+        int dist = area.getMax().getBlockX()-area.getMin().getBlockX();
+        int xStart = area.getMin().getBlockX();
+        int zStart = area.getMin().getBlockZ();
+
+        Location[] all = new Location[4];
+        all[0] = new Location(area.getMax().getWorld(), xStart, y, zStart);
+        all[1] = new Location(area.getMax().getWorld(), xStart+dist, y, zStart+dist);
+        all[2] = new Location(area.getMax().getWorld(), xStart, y, zStart+dist);
+        all[3] = new Location(area.getMax().getWorld(), xStart+dist, y, zStart);
+
+        for (Location loc : all) {
+            Firework fw = (Firework)loc.getWorld().spawnEntity(loc, EntityType.FIREWORK);
+            FireworkEffect effect = FireworkEffect.builder()
+                    .withColor(Color.fromRGB((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)))
+                    .with(FireworkEffect.Type.BALL_LARGE)
+                    .withTrail()
+                    .withFade(Color.fromRGB((int) (Math.random() * 255), (int) (Math.random() * 255), (int) (Math.random() * 255)))
+                    .build();
+            FireworkMeta m = fw.getFireworkMeta();
+            m.addEffect(effect);
+            m.setPower(2);
+            fw.setFireworkMeta(m);
         }
     }
 

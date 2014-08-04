@@ -1,5 +1,8 @@
 package net.vaultcraft.vcprison.utils;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
+
 /**
  * Created by Connor on 7/30/14. Designed for the VCPrison project.
  */
