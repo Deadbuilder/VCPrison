@@ -35,7 +35,7 @@ public class MineLoader {
 
             File file = new File(folder, ".mines");
             if (!(file.exists()))
-                file.mkdir();
+                file.createNewFile();
 
             for (String line : FileUtils.readLines(file)) {
                 if (line.startsWith("#"))
