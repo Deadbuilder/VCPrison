@@ -51,7 +51,6 @@ public class PickaxeListener implements Listener {
                         if (event.getCurrentItem().getItemMeta().getDisplayName() != null) {
                             String itemName = event.getCurrentItem().getItemMeta().getDisplayName();
                             ItemStack up = event.getCurrentItem();
-                            up.setAmount(up.getAmount()+1);
 
                             switch (itemName) {
                                 case "Efficiency":
@@ -63,7 +62,7 @@ public class PickaxeListener implements Listener {
                                     pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 1);
                                     Form.at(player, Prefix.SUCCESS, "You bought one level of Efficiency!");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
-                                    event.getInventory().setItem(event.getSlot(), up);
+                                    up.setAmount(up.getAmount()+1);
                                     break;
                                 case "Fortune":
                                     if(pickaxe.getPICK_POINTS() < 1) {
@@ -74,7 +73,7 @@ public class PickaxeListener implements Listener {
                                     pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 1);
                                     Form.at(player, Prefix.SUCCESS, "You bought one level of Fortune!");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
-                                    event.getInventory().setItem(event.getSlot(), up);
+                                    up.setAmount(up.getAmount()+1);
                                     break;
                                 case "Haste":
                                     if(pickaxe.getHASTE_LEVEL() == 4) {
@@ -89,7 +88,7 @@ public class PickaxeListener implements Listener {
                                     pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 5);
                                     Form.at(player, Prefix.SUCCESS, "You bought one level of Haste!");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
-                                    event.getInventory().setItem(event.getSlot(), up);
+                                    up.setAmount(up.getAmount()+1);
                                     break;
                                 case "Auto Smelt":
                                     if(pickaxe.getPICK_POINTS() < 8) {
@@ -101,7 +100,7 @@ public class PickaxeListener implements Listener {
                                     pickaxe.setPICK_POINTS(pickaxe.getPICK_POINTS() - 8);
                                     Form.at(player, Prefix.SUCCESS, "You bought Auto Smelt. You can toggle this on and off in the Pickaxe Stats menu.");
                                     player.getInventory().setItem(0, pickaxe.getPickaxe());
-                                    event.getInventory().setItem(event.getSlot(), up);
+                                    up.setAmount(up.getAmount()+1);
                                     break;
                                 case "Toggle Auto Smelt Off":
                                     pickaxe.setAUTO_SMELT(false);
