@@ -4,6 +4,7 @@ import net.vaultcraft.shade.mongodb.BasicDBObject;
 import net.vaultcraft.shade.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.pickaxe.Pickaxe;
+import net.vaultcraft.vcprison.pickaxe.PickaxePerk;
 import net.vaultcraft.vcprison.utils.Rank;
 import net.vaultcraft.vcutils.VCUtils;
 import net.vaultcraft.vcutils.user.User;
@@ -26,7 +27,7 @@ public class PrisonUser {
     private User user;
     private Rank rank = Rank.A;
     private int prestige;
-    private Pickaxe pickaxe;
+    private Pickaxe pickaxe = null;
 
     public PrisonUser(final Player player) {
         this.user = User.fromPlayer(player);
@@ -40,16 +41,6 @@ public class PrisonUser {
                 }
             }
         });
-        Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                if (user.getUserdata("Pickaxe") != null)
-                    pickaxe = new Pickaxe(player, user.getUserdata("Pickaxe"));
-                else
-                    pickaxe = new Pickaxe(player);
-                player.getInventory().setItem(0, pickaxe.getPickaxe());
-            }
-        }, 20l);
     }
 
     public Player getPlayer() {
@@ -108,8 +99,15 @@ public class PrisonUser {
         return pickaxe;
     }
 
-    public static void remove(Player player) {
+    public void setPickaxe(Pickaxe pickaxe) {
+        this.pickaxe = pickaxe;
+    }
+
+    public static void remove(final Player player) {
         final PrisonUser user = PrisonUser.fromPlayer(player);
+        for(PickaxePerk perk : PickaxePerk.getPerks()) {
+            perk.onEnd(player);
+        }
         user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());
         Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
             public void run() {
@@ -131,6 +129,9 @@ public class PrisonUser {
     public static void disable() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             final PrisonUser user = PrisonUser.fromPlayer(player);
+            for(PickaxePerk perk : PickaxePerk.getPerks()) {
+                perk.onEnd(player);
+            }
             user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());
             DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
             dbObject.put("UUID", user.getPlayer().getUniqueId().toString());

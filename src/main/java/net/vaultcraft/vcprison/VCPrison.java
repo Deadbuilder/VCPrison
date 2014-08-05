@@ -9,12 +9,13 @@ import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
 import net.vaultcraft.vcprison.mine.Mine;
 import net.vaultcraft.vcprison.mine.MineLoader;
-import net.vaultcraft.vcprison.pickaxe.PickaxeListener;
+import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,6 +38,13 @@ public class VCPrison extends JavaPlugin {
         new PrisonUserListener();
         new PickaxeListener();
         new FurnaceListener();
+
+        PickaxePerk.addPerk(new EfficiencyPerk(Material.STONE, "Efficiency", 1, 5, -1, "Adds a level of efficiency to your pick."), 0);
+        PickaxePerk.addPerk(new FortunePerk(Material.DIAMOND, "Fortune", 1, 5, -1, "Adds a level of fortune to your pick."), 1);
+        PickaxePerk.addPerk(new HastePerk(Material.DIAMOND_PICKAXE, "Haste", 5, 0, 4, "Adds a level of haste when you have your pick selected."), 2);
+        PickaxePerk.addPerk(new AutoSmeltPerk(Material.FIRE, Material.FIRE, Material.FURNACE, "Auto Smelt", 8, false, "Smelt things as you go!", "Toggable"), 3);
+        PickaxePerk.addPerk(new SilkTouchPerk(Material.WEB, Material.WEB, Material.STRING, "Silk Touch", 8, false, "Adds the Silk Touch enchanment to your pick.", "Toggable"), 4);
+        PickaxePerk.addPerk(new NightVisionPerk(Material.EYE_OF_ENDER, Material.EYE_OF_ENDER, Material.ENDER_PEARL, "Night Vision", 8, false, "Adds night vision when you have your pick selected.", "Toggable"), 5);
 
         for(Player player : Bukkit.getOnlinePlayers()) {
             new PrisonUser(player);
