@@ -24,8 +24,11 @@ public class FortunePerk extends PickaxePerk {
 
     @Override
     public ItemStack onBreak(Player player, BlockBreakEvent event, ItemStack itemStack, int level) {
-        if(isFortuneBlock(itemStack.getType()))
-            itemStack.setAmount(fortune(level));
+        if (isFortuneBlock(itemStack.getType()))
+            if (itemStack.getType() == Material.REDSTONE || itemStack.getType() == Material.INK_SACK)
+                itemStack.setAmount(fortune(level) * 2);
+            else
+                itemStack.setAmount(fortune(level));
         return itemStack;
     }
 
@@ -34,6 +37,10 @@ public class FortunePerk extends PickaxePerk {
             case COAL:
                 return true;
             case DIAMOND:
+                return true;
+            case REDSTONE:
+                return true;
+            case INK_SACK:
                 return true;
             case IRON_INGOT:
                 return true;
@@ -48,7 +55,7 @@ public class FortunePerk extends PickaxePerk {
 
     public int fortune(int level) {
         int fortune = (int) ((Math.random() * level) / 1.2);
-        if(fortune == 0)
+        if (fortune == 0)
             return 1;
         return fortune;
     }

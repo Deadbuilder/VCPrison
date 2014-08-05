@@ -25,11 +25,15 @@ public class HastePerk extends PickaxePerk {
 
     @Override
     public void onPurchase(Player player, int level) {
+        if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING))
+            player.removePotionEffect(PotionEffectType.FAST_DIGGING);
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, level - 1, false));
     }
 
     @Override
     public void onHoverOn(Player player, int level) {
+        if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING))
+            player.removePotionEffect(PotionEffectType.FAST_DIGGING);
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, level - 1, false));
     }
 

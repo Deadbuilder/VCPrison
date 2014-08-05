@@ -124,8 +124,8 @@ public class Pickaxe {
             return 30000 / 100;
     }
 
-    public void mineBlock() {
-        blocksMined++;
+    public void mineBlock(Material material) {
+        blocksMined += BlockExp.fromMaterial(material).getExp();
         if (blocksMined >= toNextLevel(level)) {
             blocksMined = 0;
             level++;

@@ -5,13 +5,13 @@ import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.user.UserLoadedEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,6 +19,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -175,7 +176,12 @@ public class PickaxeListener implements Listener {
         if (event.getPlayer().getInventory().getHeldItemSlot() != 0)
             return;
         event.setCancelled(true);
-        ItemStack item = new ItemStack(changeType(event.getBlock().getType()));
+        ItemStack item;
+        if(event.getBlock().getType() == Material.LAPIS_ORE)
+            item = new ItemStack(Material.INK_SACK, 1, (short) 4);
+        else
+            item = new ItemStack(changeType(event.getBlock().getType()));
+
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
             if (pickaxe.getPerkLevel(perk) == 0)
@@ -185,15 +191,44 @@ public class PickaxeListener implements Listener {
                     continue;
             item = perk.onBreak(event.getPlayer(), event, item, pickaxe.getPerkLevel(perk));
         }
-        pickaxe.mineBlock();
+        pickaxe.mineBlock(item.getType());
         event.getBlock().setType(Material.AIR);
+        spawnExp(item.getType(), event.getBlock().getWorld(), event.getPlayer().getLocation());
         event.getPlayer().getInventory().addItem(item);
+    }
+
+    public void spawnExp(Material type, World world, Location location) {
+        ExperienceOrb experienceOrb = world.spawn(location, ExperienceOrb.class);
+        switch (type) {
+            case COAL:
+                experienceOrb.setExperience(5);
+                break;
+            case REDSTONE:
+                experienceOrb.setExperience(10);
+                break;
+            case INK_SACK:
+                experienceOrb.setExperience(10);
+                break;
+            case DIAMOND:
+                experienceOrb.setExperience(15);
+                break;
+            case EMERALD:
+                experienceOrb.setExperience(20);
+                break;
+            default:
+                experienceOrb.remove();
+                break;
+        }
     }
 
     public Material changeType(Material type) {
         switch (type) {
             case COAL_ORE:
                 return Material.COAL;
+            case REDSTONE_ORE:
+                return Material.REDSTONE;
+            case GLOWING_REDSTONE_ORE:
+                return Material.REDSTONE;
             case DIAMOND_ORE:
                 return Material.DIAMOND;
             case EMERALD_ORE:
@@ -213,5 +248,17 @@ public class PickaxeListener implements Listener {
         } else {
             user.setPickaxe(new Pickaxe(user.getPlayer()));
         }
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        Pickaxe pickaxe = PrisonUser.fromPlayer(event.getEntity()).getPickaxe();
+        event.getDrops().remove(pickaxe.getPickaxe());
+    }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+        Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+        event.getPlayer().getInventory().setItem(0, pickaxe.getPickaxe());
     }
 }
