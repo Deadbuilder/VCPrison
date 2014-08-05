@@ -3,6 +3,7 @@ package net.vaultcraft.vcprison;
 import net.vaultcraft.vcprison.commands.VCPrestige;
 import net.vaultcraft.vcprison.commands.VCRankup;
 import net.vaultcraft.vcprison.commands.VCReset;
+import net.vaultcraft.vcprison.commands.VCWarp;
 import net.vaultcraft.vcprison.furance.FurnaceListener;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
@@ -30,6 +31,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCRankup("rankup", Group.COMMON, "nextrank"));
         CommandManager.addCommand(new VCPrestige("prestige", Group.COMMON, "startover"));
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
+        CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines"));
 
         new AsyncChatListener();
         new PrisonUserListener();
