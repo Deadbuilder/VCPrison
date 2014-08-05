@@ -44,7 +44,7 @@ public class WarpGUI {
         int start = 27;
 
         for (int i = start; i < make.getSize(); i++) {
-            make.setItem(i, RANK_ITEMS[start-27]);
+            make.setItem(i, RANK_ITEMS[i-27]);
         }
 
         return make;
@@ -55,9 +55,6 @@ public class WarpGUI {
     static {
         int pos = 0;
         for (Rank rank : Rank.values()) {
-
-            System.out.println(rank.getMascot().toString());
-
             ItemStack set = new ItemStack(rank.getMascot(), pos+1);
             ItemMeta meta = set.getItemMeta();
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', rank.getPrefix()));

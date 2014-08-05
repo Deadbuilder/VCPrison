@@ -1,7 +1,5 @@
 package net.vaultcraft.vcprison.utils;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Material;
 
 /**
@@ -9,8 +7,8 @@ import org.bukkit.Material;
  */
 public enum Rank {
     A("&7&l<&fA&7&l>", 0.0, Material.DIRT),
-    B("&7&l<&7B&7&l>", 400000.0, Material.STONE),
-    C("&7&l<&8C&7&l>", 600000.0, Material.COBBLESTONE),
+    B("&7&l<&7B&7&l>", 400000.0, Material.COBBLESTONE),
+    C("&7&l<&8C&7&l>", 600000.0, Material.STONE),
     D("&7&l<&dD&7&l>", 900000.0, Material.WOOD),
     E("&7&l<&eE&7&l>", 1500000.0, Material.SAND),
     F("&7&l<&bF&7&l>", 2500000.0, Material.LOG),
