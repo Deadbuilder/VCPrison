@@ -7,11 +7,13 @@ import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -44,9 +46,9 @@ public class PrisonUserListener implements Listener {
                     return;
 
                 mine.tickBlocks();
-                mine.reset();
 
                 if (mine.getPercent() > 0.5) {
+                    mine.reset();
                     Runnable sync = new Runnable() {
                         public void run() {
                             MineLoader.resetMine(mine);
@@ -60,5 +62,15 @@ public class PrisonUserListener implements Listener {
             }
         };
         Bukkit.getScheduler().scheduleAsyncDelayedTask(VCPrison.getInstance(), async);
+    }
+
+    @EventHandler
+    public void onSignUpdate(SignChangeEvent event) {
+        if (event.getPlayer().isOp()) {
+            int x = -1;
+            for (String line : event.getLines()) {
+                event.setLine(++x, ChatColor.translateAlternateColorCodes('&', line));
+            }
+        }
     }
 }

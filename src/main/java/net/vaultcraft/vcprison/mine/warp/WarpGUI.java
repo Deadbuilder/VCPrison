@@ -54,7 +54,15 @@ public class WarpGUI implements Listener {
 
         int start = 27;
 
-        for (int i = start; i < make.getSize(); i++) {
+        int rank = 1;
+        for (Rank r : Rank.values()) {
+            if (r.equals(user.getRank()))
+                break;
+
+            rank++;
+        }
+
+        for (int i = start; i < rank+27; i++) {
             make.setItem(i, RANK_ITEMS[i-27]);
         }
 
@@ -100,6 +108,9 @@ public class WarpGUI implements Listener {
 
             Player click = (Player)event.getWhoClicked();
             int slot = event.getSlot();
+
+            if (event.getCurrentItem() == null || event.getCurrentItem().getType().equals(Material.AIR))
+                return;
 
             Rank bySlot = findRankBySlot(slot-27);
             Location find = WarpLoader.getWarpLocation(bySlot);

@@ -1,9 +1,6 @@
 package net.vaultcraft.vcprison;
 
-import net.vaultcraft.vcprison.commands.VCPrestige;
-import net.vaultcraft.vcprison.commands.VCRankup;
-import net.vaultcraft.vcprison.commands.VCReset;
-import net.vaultcraft.vcprison.commands.VCWarp;
+import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.furance.FurnaceListener;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
@@ -12,12 +9,16 @@ import net.vaultcraft.vcprison.mine.MineLoader;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
+import net.vaultcraft.vcprison.sign.SignLoader;
+import net.vaultcraft.vcprison.sign.SignManager;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.command.CommandManager;
+import net.vaultcraft.vcutils.file.FileController;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -35,6 +36,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCPrestige("prestige", Group.COMMON, "startover"));
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
         CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines"));
+        CommandManager.addCommand(new VCAddSign("addsign", Group.DEVELOPER, "signadd", "makesign"));
 
         new AsyncChatListener();
         new PrisonUserListener();
@@ -58,6 +60,9 @@ public class VCPrison extends JavaPlugin {
         MineLoader.loadMines();
         WarpLoader.loadWarps();
 
+        FileController fc = new SignLoader();
+        fc.load();
+
         Runnable resetSchedule = new Runnable() {
             @Override
             public void run() {
@@ -68,10 +73,30 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, resetSchedule, 20*900, 20*900);
+
+        //reset at start
+        for (Mine mine : MineLoader.getMines()) {
+            MineLoader.resetMine(mine);
+        }
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Mines reset!"));
+
+        Runnable minePercentUpdate = new Runnable() {
+            public void run() {
+                for (Mine mine : MineLoader.getMines()) {
+                    if (SignManager.fromMeta("mine%" + mine.getRank().toString()) == null)
+                        continue;
+
+                    SignManager.updateSigns("mine%"+mine.getRank().toString(), "&m---&c=&0&m---", "&5Percent Mined", "&8&l&n"+((int)(mine.getPercent()*100))+"%", "&m---&c=&0&m---");
+                }
+            }
+        };
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20 * 5, 20 * 5);
     }
 
     public void onDisable() {
         PrisonUser.disable();
+
+        SignLoader.getInstance().save();
     }
 
     public static VCPrison getInstance() {
