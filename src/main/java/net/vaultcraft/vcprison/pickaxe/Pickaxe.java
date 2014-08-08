@@ -142,7 +142,7 @@ public class Pickaxe {
     }
 
     public Inventory getStatsMenu() {
-        int rows = (int) Math.ceil(((perkLevels.size() + 1.0) / 9.0));
+        int rows = (int) Math.ceil(((perkLevels.size() + 2.0) / 9.0));
         Inventory inventory = Bukkit.getServer().createInventory(null, 9 * rows, "Pickaxe Perks");
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
             if (perk.isTogglable()) {
@@ -155,12 +155,13 @@ public class Pickaxe {
                         continue;
                     }
                 }
+                inventory.addItem(perk.getIcon());
+                continue;
             }
-            ItemStack icon = perk.getIcon();
-            icon.setAmount(perkLevels.get(perk) == 0 ? 1 : perkLevels.get(perk));
-            inventory.addItem(icon);
+            inventory.addItem(perk.getIcon(perkLevels.get(perk)));
         }
         inventory.addItem(getPointsIcon());
+        inventory.addItem(getWarpIcon());
         return inventory;
     }
 
@@ -169,6 +170,15 @@ public class Pickaxe {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&2&lPerk Points: " + pickPoints));
         itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&2Click to get a Perk Point Item")));
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    public ItemStack getWarpIcon() {
+        ItemStack itemStack = new ItemStack(Material.COMPASS);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lMine Warps"));
+        itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&6Click to open mine warps.")));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

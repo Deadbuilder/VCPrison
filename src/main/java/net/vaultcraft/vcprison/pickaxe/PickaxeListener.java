@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.pickaxe;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
@@ -78,7 +79,12 @@ public class PickaxeListener implements Listener {
                 return;
             }
         }
-        PickaxePerk perk = PickaxePerk.getPerkFromName(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName().replace("Toggle Off ", "").replace("Toggle On ", "")));
+        if(event.getCurrentItem().getItemMeta().getDisplayName().contains("Warps")) {
+            player.closeInventory();
+            player.openInventory(WarpGUI.create(PrisonUser.fromPlayer(player)));
+            return;
+        }
+        PickaxePerk perk = PickaxePerk.getPerkFromName(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName().replace("Toggle Off ", "").replace("Toggle On ", "").replaceAll(" \\d+", "").replace(" Max", "")));
         if (pickaxe.getPerkLevel(perk) == perk.getMaxLevel()) {
             Form.at(player, Prefix.ERROR, "Pickaxe perk is at it highest level!");
             return;
@@ -102,7 +108,7 @@ public class PickaxeListener implements Listener {
             return;
         }
         pickaxe.addPerkLevel(player, perk);
-        event.getCurrentItem().setAmount(pickaxe.getPerkLevel(perk));
+        perkMenu.setItem(event.getSlot(), perk.getIcon(pickaxe.getPerkLevel(perk)));
         perkMenu.setItem(PickaxePerk.getPerks().size(), pickaxe.getPointsIcon());
     }
 

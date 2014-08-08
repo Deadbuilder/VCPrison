@@ -38,8 +38,8 @@ public class PickaxePerk {
     }
 
     public static PickaxePerk getPerkFromName(String name) {
-        for(PickaxePerk perk : getPerks()) {
-            if(perk.getNoColorName().equalsIgnoreCase(name))
+        for (PickaxePerk perk : getPerks()) {
+            if (perk.getNoColorName().equalsIgnoreCase(name))
                 return perk;
         }
         return null;
@@ -50,10 +50,10 @@ public class PickaxePerk {
         this.name = ChatColor.translateAlternateColorCodes('&', name);
         this.noColorName = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', name));
         List<String> loreList = new ArrayList<>();
-        for(String s : lore)
+        for (String s : lore)
             loreList.add(ChatColor.translateAlternateColorCodes('&', s));
         loreList.add("Cost: " + cost);
-        if(maxLevel >= 0)
+        if (maxLevel >= 0)
             loreList.add("Max Level: " + maxLevel);
         this.lore = loreList;
         this.cost = cost;
@@ -72,13 +72,13 @@ public class PickaxePerk {
         this.name = ChatColor.translateAlternateColorCodes('&', name);
         this.noColorName = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', name));
         List<String> loreList = new ArrayList<>();
-        for(String s : lore)
+        for (String s : lore)
             loreList.add(ChatColor.translateAlternateColorCodes('&', s));
         loreList.add("Cost: " + cost);
         this.lore = loreList;
         this.cost = cost;
         this.togglable = true;
-        if(initState)
+        if (initState)
             this.initLevel = 1;
         else
             this.initLevel = 0;
@@ -113,6 +113,19 @@ public class PickaxePerk {
         ItemStack itemStack = new ItemStack(icon);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(name);
+        itemMeta.setLore(lore);
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    public ItemStack getIcon(int level) {
+        level++;
+        ItemStack itemStack = new ItemStack(icon);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if (level > maxLevel && maxLevel >= 0)
+            itemMeta.setDisplayName(name + " Max");
+        else
+            itemMeta.setDisplayName(name + " " + level);
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         return itemStack;
