@@ -18,7 +18,7 @@ public class WarpLoader {
 
     private static HashMap<Rank, Location> warps = new HashMap<>();
 
-    public static void loadMines() {
+    public static void loadWarps() {
         try {
             //load
             File folder = VCPrison.getInstance().getDataFolder();

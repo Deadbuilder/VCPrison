@@ -58,6 +58,7 @@ public class MineLoader {
 
                 Rank rank = (Rank)data.get("rank");
                 Mine mine = new Mine(rank, ProtectionManager.getInstance().getArea(rank.toString()).getArea());
+                mine.setInitialBlocks(BlockCollection.iterator(mine.getArea()).size());
                 mines.put(mine, new BlockCollection((HashMap<Material, Double>)data.get("blocks")));
             }
         } catch (Exception ex) {
@@ -120,6 +121,8 @@ public class MineLoader {
             m.setPower(2);
             fw.setFireworkMeta(m);
         }
+
+        mine.reset();
     }
 
     public static Collection<Mine> getMines() {
@@ -129,6 +132,14 @@ public class MineLoader {
     public static Mine fromRank(Rank rank) {
         for (Mine mine : mines.keySet()) {
             if (mine.getRank().equals(rank))
+                return mine;
+        }
+        return null;
+    }
+
+    public static Mine fromLocation(Location location) {
+        for (Mine mine : mines.keySet()) {
+            if (mine.getArea().isInArea(location))
                 return mine;
         }
         return null;

@@ -9,6 +9,8 @@ import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
 import net.vaultcraft.vcprison.mine.Mine;
 import net.vaultcraft.vcprison.mine.MineLoader;
+import net.vaultcraft.vcprison.mine.warp.WarpGUI;
+import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.command.CommandManager;
@@ -39,6 +41,8 @@ public class VCPrison extends JavaPlugin {
         new PickaxeListener();
         new FurnaceListener();
 
+        new WarpGUI();
+
         PickaxePerk.addPerk(new EfficiencyPerk(Material.STONE, "Efficiency", 1, 5, -1, "Adds a level of efficiency to your pick."), 0);
         PickaxePerk.addPerk(new FortunePerk(Material.DIAMOND, "Fortune", 1, 5, -1, "Adds a level of fortune to your pick."), 1);
         PickaxePerk.addPerk(new HastePerk(Material.DIAMOND_PICKAXE, "Haste", 5, 0, 4, "Adds a level of haste when you have your pick selected."), 2);
@@ -52,6 +56,8 @@ public class VCPrison extends JavaPlugin {
         }
 
         MineLoader.loadMines();
+        WarpLoader.loadWarps();
+
         Runnable resetSchedule = new Runnable() {
             @Override
             public void run() {
