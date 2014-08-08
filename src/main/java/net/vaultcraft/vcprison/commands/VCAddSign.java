@@ -1,10 +1,10 @@
 package net.vaultcraft.vcprison.commands;
 
-import net.vaultcraft.vcprison.sign.SignLoader;
-import net.vaultcraft.vcprison.sign.SignManager;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
+import net.vaultcraft.vcutils.sign.SignLoader;
+import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
