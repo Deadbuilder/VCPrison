@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.pickaxe;
 
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -23,8 +24,8 @@ public class SilkTouchPerk extends PickaxePerk {
     }
 
     @Override
-    public ItemStack onBreak(Player player, BlockBreakEvent event, ItemStack itemStack, int level) {
-        itemStack.setType(event.getBlock().getType());
+    public ItemStack onBreak(Player player, BlockBreakEvent event, Block block, ItemStack itemStack, int level) {
+        itemStack.setType(block.getType());
         return itemStack;
     }
 }

@@ -2,6 +2,7 @@ package net.vaultcraft.vcprison.pickaxe;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
@@ -181,7 +182,7 @@ public class PickaxePerk {
 
     }
 
-    public ItemStack onBreak(Player player, BlockBreakEvent event, ItemStack itemStack, int level) {
+    public ItemStack onBreak(Player player, BlockBreakEvent event, Block block, ItemStack itemStack, int level) {
         return itemStack;
     }
 

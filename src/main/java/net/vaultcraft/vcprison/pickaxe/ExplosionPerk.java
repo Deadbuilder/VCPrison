@@ -28,8 +28,14 @@ public class ExplosionPerk extends PickaxePerk {
     }
 
     @Override
-    public ItemStack onBreak(final Player player, final BlockBreakEvent event, ItemStack itemStack, final int level) {
-        if (Math.random()*300 < (level > 18 ? (level/1.5) : level)) {
+    public List<String> changeLore(Player player, List<String> lore, int level) {
+        lore.add(ChatColor.GRAY + getNoColorName() + " " + level);
+        return lore;
+    }
+
+    @Override
+    public ItemStack onBreak(Player player, final BlockBreakEvent event, Block block, ItemStack itemStack, final int level) {
+        if (Math.random() * 300 < (level > 18 ? (level / 1.5) : level)) {
             final Mine hit = MineLoader.fromLocation(event.getBlock().getLocation());
             if (hit == null)
                 return itemStack;
@@ -40,8 +46,10 @@ public class ExplosionPerk extends PickaxePerk {
                     final List<Block> scanned = Lists.newArrayList();
                     for (Block bx : fromExplosion) {
                         if (!(ProtectionManager.getInstance().getState(FlagType.BLOCK_BREAK, bx.getLocation()).isCancelled())) {
-                            scanned.add(bx);
-                            hit.tickBlocks();
+                            if(!event.getBlock().getLocation().equals(bx.getLocation())) {
+                                scanned.add(bx);
+                                hit.tickBlocks();
+                            }
                         }
                     }
 
@@ -50,19 +58,35 @@ public class ExplosionPerk extends PickaxePerk {
                             Location block = event.getBlock().getLocation();
                             block.getWorld().playSound(block, Sound.EXPLODE, 3, 0);
                             Particles.HUGE_EXPLOSION.sendToLocation(block, 0F, 0F, 0F, 1, 1);
-                            for (Block b : scanned) {
-                                player.getInventory().addItem(new ItemStack(b.getType()));
-                                b.getWorld().playEffect(b.getLocation(), Effect.STEP_SOUND, b.getTypeId(), b.getData());
-                                b.setType(Material.AIR);
+                            for (Block block1 : scanned) {
+                                ItemStack item;
+                                if (block1.getType() == Material.LAPIS_ORE)
+                                    item = new ItemStack(Material.INK_SACK, 1, (short) 4);
+                                else
+                                    item = new ItemStack(PickaxeListener.changeType(block1.getType()));
+                                Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+                                for (PickaxePerk perk : PickaxePerk.getPerks()) {
+                                    if (perk.getNoColorName().contains("Explosion"))
+                                        continue;
+                                    if (pickaxe.getPerkLevel(perk) == 0)
+                                        continue;
+                                    if (perk.isTogglable())
+                                        if (!pickaxe.getToggle(perk))
+                                            continue;
+                                    item = perk.onBreak(event.getPlayer(), event, block1, item, pickaxe.getPerkLevel(perk));
+                                }
+                                pickaxe.mineBlock(item.getType());
+                                block1.setType(Material.AIR);
+                                PickaxeListener.spawnExp(item.getType(), block1.getWorld(), event.getPlayer().getLocation());
+                                event.getPlayer().getInventory().addItem(item);
                             }
                         }
                     };
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), sync);
+                    Bukkit.getScheduler().runTask(VCPrison.getInstance(), sync);
                 }
             };
-            Bukkit.getScheduler().scheduleAsyncDelayedTask(VCPrison.getInstance(), async);
+            Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), async);
         }
-
         return itemStack;
     }
 }

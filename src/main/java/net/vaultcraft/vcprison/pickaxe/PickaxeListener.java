@@ -189,7 +189,6 @@ public class PickaxeListener implements Listener {
             item = new ItemStack(Material.INK_SACK, 1, (short) 4);
         else
             item = new ItemStack(changeType(event.getBlock().getType()));
-
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
             if (pickaxe.getPerkLevel(perk) == 0)
@@ -197,7 +196,7 @@ public class PickaxeListener implements Listener {
             if (perk.isTogglable())
                 if (!pickaxe.getToggle(perk))
                     continue;
-            item = perk.onBreak(event.getPlayer(), event, item, pickaxe.getPerkLevel(perk));
+            item = perk.onBreak(event.getPlayer(), event, event.getBlock(), item, pickaxe.getPerkLevel(perk));
         }
         pickaxe.mineBlock(item.getType());
         event.getBlock().setType(Material.AIR);
@@ -205,7 +204,7 @@ public class PickaxeListener implements Listener {
         event.getPlayer().getInventory().addItem(item);
     }
 
-    public void spawnExp(Material type, World world, Location location) {
+    public static void spawnExp(Material type, World world, Location location) {
         ExperienceOrb experienceOrb = world.spawn(location, ExperienceOrb.class);
         switch (type) {
             case COAL:
@@ -229,7 +228,7 @@ public class PickaxeListener implements Listener {
         }
     }
 
-    public Material changeType(Material type) {
+    public static Material changeType(Material type) {
         switch (type) {
             case COAL_ORE:
                 return Material.COAL;
