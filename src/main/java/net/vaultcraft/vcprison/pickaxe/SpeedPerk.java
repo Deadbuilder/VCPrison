@@ -48,4 +48,9 @@ public class SpeedPerk extends PickaxePerk {
     public void onPurchase(Player player, int level) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false));
     }
+
+    @Override
+    public void onEnd(Player player) {
+        player.removePotionEffect(PotionEffectType.SPEED);
+    }
 }

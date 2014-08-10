@@ -41,4 +41,9 @@ public class HastePerk extends PickaxePerk {
     public void onHoverOff(Player player, int level) {
         player.removePotionEffect(PotionEffectType.FAST_DIGGING);
     }
+
+    @Override
+    public void onEnd(Player player) {
+        player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+    }
 }
