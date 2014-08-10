@@ -19,6 +19,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by tacticalsk8er on 7/30/2014.
  */
@@ -81,12 +83,24 @@ public class VCPrison extends JavaPlugin {
                     if (SignManager.fromMeta("mine%" + mine.getRank().toString()) == null)
                         continue;
 
-                    SignManager.updateSigns("mine%"+mine.getRank().toString(), "&m---&c=&0&m---", "&5Percent Mined", "&8&l&n"+((int)(mine.getPercent()*100))+"%", "&m---&c=&0&m---");
+                    SignManager.updateSigns("mine%"+mine.getRank().toString(), "&m---&c=&0&m---", "&5Percent Mined", "&8&l&n"+(df.format(mine.getPercent() * 100))+"%", "&m---&c=&0&m---");
                 }
             }
         };
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20 * 5, 20 * 5);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
+
+        Runnable daytime = new Runnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.setPlayerTime(6000, true);
+                }
+            }
+        };
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, daytime, 20*60, 20*60);
     }
+
+    private static DecimalFormat df = new DecimalFormat("0.00");
 
     public void onDisable() {
         PrisonUser.disable();

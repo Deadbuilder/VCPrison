@@ -16,6 +16,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
 
 /**
  * Created by tacticalsk8er on 7/31/2014.
@@ -72,5 +73,11 @@ public class PrisonUserListener implements Listener {
                 event.setLine(++x, ChatColor.translateAlternateColorCodes('&', line));
             }
         }
+    }
+
+    @EventHandler
+    public void onWeatherChange(WeatherChangeEvent event) {
+        if (!event.getWorld().hasStorm())
+            event.setCancelled(true);
     }
 }
