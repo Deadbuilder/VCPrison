@@ -119,9 +119,9 @@ public class Pickaxe {
 
     public int toNextLevel(int level) {
         if (level < 50)
-            return (600 + (600 * (level - 1)));
+            return (600 + (600 * (level - 1))) / 100;
         else
-            return (30000 + (1500 * (level - 50)));
+            return (30000 + (1500 * (level - 50))) / 10000;
     }
 
     public void mineBlock(Material material) {

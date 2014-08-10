@@ -47,4 +47,9 @@ public class NightVisionPerk extends PickaxePerk {
     public void onPurchase(Player player, int level) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false));
     }
+
+    @Override
+    public void onEnd(Player player) {
+        player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+    }
 }
