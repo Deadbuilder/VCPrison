@@ -99,6 +99,10 @@ public class PickaxeListener implements Listener {
                     perkMenu.setItem(event.getSlot(), perk.getToggleOn());
                 return;
             }
+            if (pickaxe.getPickPoints() < perk.getCost()) {
+                Form.at(player, Prefix.ERROR, "You don't have enough perk points to buy this perk!");
+                return;
+            }
             pickaxe.addPerkToggle(player, perk);
             perkMenu.setItem(event.getSlot(), perk.getToggleOff());
             perkMenu.setItem(PickaxePerk.getPerks().size(), pickaxe.getPointsIcon());
