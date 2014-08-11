@@ -33,7 +33,7 @@ public class VCAddSign extends ICommand {
         }
 
         Sign sign = (Sign)at.getBlock().getState();
-        SignManager.addSign(sign, args[0]);
+        SignManager.addSign(sign.getLocation(), args[0]);
 
         SignLoader.getInstance().save();
         Form.at(player, Prefix.SUCCESS, "Sign added with meta: &e"+args[0]+Prefix.SUCCESS.getChatColor()+"!");
