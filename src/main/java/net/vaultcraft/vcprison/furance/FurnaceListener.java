@@ -52,7 +52,7 @@ public class FurnaceListener implements Listener {
                     return;
                 }
                 int ticks = blocks/4;
-                Form.at(event.getPlayer(), Prefix.VAULT_CRAFT, "Smelting your items please wait... (" + ticks/20.0 + " seconds)");
+                Form.at(event.getPlayer(), Prefix.VAULT_CRAFT, "Smelting your items, please wait... &e&n(" + ticks/20.0 + " seconds)");
                 BukkitTask task;
                 task = Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), new Runnable() {
                     @Override

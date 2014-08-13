@@ -1,4 +1,4 @@
-package net.vaultcraft.vcprison.mine.worth;
+package net.vaultcraft.vcprison.worth;
 
 import net.minecraft.util.org.apache.commons.io.FileUtils;
 import net.vaultcraft.vcprison.VCPrison;
@@ -33,16 +33,15 @@ public class ItemWorthLoader {
                 if(line.startsWith("#"))
                     continue;
 
-                line = line.replaceAll(" ", "").toLowerCase();
+                line = line.replace(" ", "").toLowerCase();
                 if(line.contains("rank")) {
                     Rank rank = Rank.fromName(findInsideMap(line, "rank"));
                     String worth = findInsideMap(line, "worth");
 
                     HashMap<Material, Double> mineWorth = new HashMap<>();
-                    for(String s: worth.split(",")) {
-                        String use = s.replaceAll("[\\(,\\)]", "");
-                        Material material = Material.getMaterial(use.split("\\|")[0]);
-                        double price = Double.parseDouble(use.split("\\|")[1]);
+                    for(String s : worth.split(",")) {
+                        Material material = Material.getMaterial(s.split("\\|")[0]);
+                        double price = Double.parseDouble(s.split("\\|")[1]);
                         mineWorth.put(material, price);
                     }
                     itemWorth.put(MineLoader.fromRank(rank), mineWorth);
@@ -73,11 +72,19 @@ public class ItemWorthLoader {
     }
 
     public static double getWorth(Mine mine, Material material) {
-        return itemWorth.get(mine).get(material);
+        HashMap<Material, Double> parse = itemWorth.get(mine);
+        if (parse == null)
+            return -1;
+
+        return (parse.containsKey(material) ? parse.get(material) : -1);
     }
 
     public static double getWorth(Rank rank, Material material) {
-        return itemWorth.get(MineLoader.fromRank(rank)).get(material);
+        HashMap<Material, Double> parse = itemWorth.get(MineLoader.fromRank(rank));
+        if (parse == null)
+            return -1;
+
+        return (parse.containsKey(material) ? parse.get(material) : -1);
     }
 }
 

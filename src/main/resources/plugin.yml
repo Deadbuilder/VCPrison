@@ -9,5 +9,5 @@ name: VCPrison
 version: 1.0
 load: POSTWORLD
 authors: [IModZombies4Fun, Tacticalsk8er]
-softdepend: [VCUtils, VCEssentials]
+softdepend: [VCUtils, VCEssentials, Citizens]
 main: net.vaultcraft.vcprison.VCPrison

@@ -8,9 +8,10 @@ import net.vaultcraft.vcprison.mine.Mine;
 import net.vaultcraft.vcprison.mine.MineLoader;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
-import net.vaultcraft.vcprison.mine.worth.ItemWorthLoader;
+import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.user.PrisonUser;
+import net.vaultcraft.vcprison.worth.WardenManager;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
@@ -36,7 +37,6 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCPrestige("prestige", Group.COMMON, "startover"));
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
         CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines"));
-        CommandManager.addCommand(new VCAddSign("addsign", Group.DEVELOPER, "signadd", "makesign"));
 
         new AsyncChatListener();
         new PrisonUserListener();
@@ -61,6 +61,8 @@ public class VCPrison extends JavaPlugin {
         MineLoader.loadMines();
         WarpLoader.loadWarps();
         ItemWorthLoader.loadItemWorth();
+
+        new WardenManager();
 
         Runnable resetSchedule = new Runnable() {
             @Override
