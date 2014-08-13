@@ -5,6 +5,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -53,6 +54,7 @@ public class FurnaceListener implements Listener {
                 }
                 int ticks = blocks/4;
                 Form.at(event.getPlayer(), Prefix.VAULT_CRAFT, "Smelting your items, please wait... &e&n(" + ticks/20.0 + " seconds)");
+                event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.FIRE, 1, 1);
                 BukkitTask task;
                 task = Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), new Runnable() {
                     @Override

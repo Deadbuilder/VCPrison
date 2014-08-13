@@ -86,5 +86,17 @@ public class ItemWorthLoader {
 
         return (parse.containsKey(material) ? parse.get(material) : -1);
     }
+
+    public static HashMap<Mine, HashMap<Material, Double>> getAll() {
+        return itemWorth;
+    }
+
+    public static HashMap<Material, Double> getAll(Mine mine) {
+        return itemWorth.get(mine);
+    }
+
+    public static HashMap<Material, Double> getAll(Rank rank) {
+        return itemWorth.get(MineLoader.fromRank(rank));
+    }
 }
 
