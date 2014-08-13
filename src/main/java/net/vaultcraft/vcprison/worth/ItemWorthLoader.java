@@ -40,7 +40,7 @@ public class ItemWorthLoader {
 
                     HashMap<Material, Double> mineWorth = new HashMap<>();
                     for(String s : worth.split(",")) {
-                        Material material = Material.getMaterial(s.split("\\|")[0]);
+                        Material material = Material.getMaterial(s.split("\\|")[0].toUpperCase());
                         double price = Double.parseDouble(s.split("\\|")[1]);
                         mineWorth.put(material, price);
                     }

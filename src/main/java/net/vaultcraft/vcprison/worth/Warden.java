@@ -67,11 +67,6 @@ public class Warden {
         int worth = 0;
         int ticks = 0;
 
-        final ISDC dc = new ISDC();
-        dc.worth = worth;
-        dc.ticks = ticks;
-        resume.put(player.getName(), dc);
-
         for (ItemStack inv : player.getInventory().getContents()) {
             if (inv == null)
                 continue;
@@ -81,7 +76,7 @@ public class Warden {
                 continue;
 
             worth+=(add*inv.getAmount());
-            ticks+=(group.hasPermission(Group.WOLF) ? (group.hasPermission(Group.CREEPER) ? 0 : 10) : 40);
+            ticks+=(group.hasPermission(Group.WOLF) ? (group.hasPermission(Group.CREEPER) ? 0 : 5) : 20);
             player.getInventory().remove(inv);
         }
 
@@ -91,6 +86,11 @@ public class Warden {
             Form.atCharacter(player, Prefix.CHARACTER, "You don't have an items to sell me!", "WARDEN");
             return;
         }
+
+        final ISDC dc = new ISDC();
+        dc.worth = worth;
+        dc.ticks = ticks;
+        resume.put(player.getName(), dc);
 
         String date = (DateUtil.fromTime(TimeUnit.SECONDS, ticks/20));
         Form.atCharacter(player, Prefix.CHARACTER, "I'm selling your items, it will take about &e&n" + (date.equals("") ? "0 seconds" : date), "WARDEN");
@@ -139,7 +139,7 @@ public class Warden {
         public void onPlayerJoin(PlayerJoinEvent event) {
             final Player player = event.getPlayer();
             final User user = User.fromPlayer(player);
-            ISDC c = resume.get(player);
+            ISDC c = resume.get(player.getName());
             if (c == null)
                 return;
 
@@ -158,7 +158,8 @@ public class Warden {
                     user.setMoney(user.getMoney()+finalWorth);
                     Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$" + Form.at(finalWorth) + Prefix.SUCCESS.getChatColor() + "!", "WARDEN");
                     player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
-                    resume.remove(player);
+                    resume.remove(player.getName());
+                    selling.remove(player);
                 }
             }, c.ticks);
 
