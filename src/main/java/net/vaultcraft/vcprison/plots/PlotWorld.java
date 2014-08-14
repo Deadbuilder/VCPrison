@@ -1,7 +1,5 @@
 package net.vaultcraft.vcprison.plots;
 
-import net.vaultcraft.vcprison.VCPrison;
-import net.vaultcraft.vcutils.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -18,7 +16,6 @@ public class PlotWorld {
         wc.generator(new PlotGen());
         wc.generateStructures(false);
         plotWorld = Bukkit.getServer().createWorld(wc);
-        Logger.debug(VCPrison.getInstance(), "Created World");
     }
 
     public static World getPlotWorld() {
