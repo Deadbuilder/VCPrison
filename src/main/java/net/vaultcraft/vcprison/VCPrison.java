@@ -1,6 +1,9 @@
 package net.vaultcraft.vcprison;
 
-import net.vaultcraft.vcprison.commands.*;
+import net.vaultcraft.vcprison.commands.VCPrestige;
+import net.vaultcraft.vcprison.commands.VCRankup;
+import net.vaultcraft.vcprison.commands.VCReset;
+import net.vaultcraft.vcprison.commands.VCWarp;
 import net.vaultcraft.vcprison.furance.FurnaceListener;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
@@ -8,9 +11,10 @@ import net.vaultcraft.vcprison.mine.Mine;
 import net.vaultcraft.vcprison.mine.MineLoader;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
-import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
+import net.vaultcraft.vcprison.plots.PlotWorld;
 import net.vaultcraft.vcprison.user.PrisonUser;
+import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.WardenManager;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.sign.SignManager;
@@ -37,6 +41,8 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCPrestige("prestige", Group.COMMON, "startover"));
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
         CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines"));
+
+        new PlotWorld("PlotWorld");
 
         new AsyncChatListener();
         new PrisonUserListener();

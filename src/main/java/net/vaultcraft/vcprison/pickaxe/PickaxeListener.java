@@ -5,7 +5,6 @@ import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
-import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.*;
 import org.bukkit.entity.ExperienceOrb;
@@ -18,7 +17,10 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,7 +32,6 @@ import java.util.HashMap;
 public class PickaxeListener implements Listener {
 
     public PickaxeListener() {
-        Logger.debug(VCPrison.getInstance(), "Created Listener");
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
@@ -254,13 +255,10 @@ public class PickaxeListener implements Listener {
 
     @EventHandler
     public void onUserLoad(UserLoadedEvent event) {
-        Logger.debug(VCPrison.getInstance(), "Event Called");
         PrisonUser user = PrisonUser.fromPlayer(event.getUser().getPlayer());
         if (event.getUser().getUserdata("Pickaxe") != null) {
-            Logger.debug(VCPrison.getInstance(), "Pickaxe Found");
             user.setPickaxe(new Pickaxe(user.getPlayer(), event.getUser().getUserdata("Pickaxe")));
         } else {
-            Logger.debug(VCPrison.getInstance(), "Creating new pickaxe");
             user.setPickaxe(new Pickaxe(user.getPlayer()));
         }
     }
