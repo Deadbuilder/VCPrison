@@ -82,8 +82,8 @@ public class Warden {
 
         player.updateInventory();
 
-        if (worth == 0 || ticks == 0) {
-            Form.atCharacter(player, Prefix.CHARACTER, "You don't have an items to sell me!", "WARDEN");
+        if (worth == 0) {
+            Form.atCharacter(player, Prefix.CHARACTER, "You don't have any items to sell me!", "WARDEN");
             return;
         }
 
