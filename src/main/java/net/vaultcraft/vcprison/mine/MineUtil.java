@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,12 +18,12 @@ import java.util.LinkedHashMap;
  * Created by Connor on 8/1/14. Designed for the VCPrison project.
  */
 
-public class BlockCollection {
+public class MineUtil {
 
     private LinkedHashMap<Material, Double> reset = new LinkedHashMap<>();
     private double max;
 
-    public BlockCollection(HashMap<Material, Double> reset) {
+    public MineUtil(HashMap<Material, Double> reset) {
         double total = 0.0;
         for (Material material : reset.keySet()) {
             double chance = reset.get(material);
@@ -31,7 +32,7 @@ public class BlockCollection {
         max = total;
     }
 
-    public void reset(final Collection<Block> blocks) {
+    public void reset(final Collection<Block> blocks, final Mine mine) {
         Runnable async = new Runnable() {
             public void run() {
                 HashMap<Block, Material> fixed_reset_blocks = new HashMap<>();
@@ -57,6 +58,14 @@ public class BlockCollection {
                         for (Block $k : clone.keySet()) {
                             Material $v = clone.get($k);
                             $k.setType($v);
+                        }
+
+                        for (Player player : mine.getArea().getMax().getWorld().getPlayers()) {
+                            if (mine.getArea().isInArea(player.getLocation())) {
+                                Location tp = player.getLocation().clone();
+                                tp.setY(mine.getArea().getMax().getY()+1);
+                                player.teleport(tp);
+                            }
                         }
                     }
                 };

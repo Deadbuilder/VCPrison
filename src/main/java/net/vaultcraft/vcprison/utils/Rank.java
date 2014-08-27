@@ -69,6 +69,17 @@ public enum Rank {
         return previous;
     }
 
+    public static Rank last(Rank current) {
+        Rank remember = Rank.A;
+        for (Rank r : values()) {
+            if (r == current)
+                return remember;
+            remember = r;
+        }
+
+        return remember;
+    }
+
     public static Rank fromName(String name) {
         for (Rank rank : values()) {
             if (rank.toString().equals(name.toUpperCase()))

@@ -6,6 +6,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
+import net.vaultcraft.vcutils.user.User;
 import org.bukkit.entity.Player;
 
 /**
@@ -19,6 +20,11 @@ public class VCWarp extends ICommand {
     }
 
     public void processCommand(Player player, String[] args) {
+        if (args.length > 0 && User.fromPlayer(player).getGroup().hasPermission(Group.DEVELOPER)) {
+            Form.at(player, "Location("+player.getWorld().getName()+","+player.getLocation().getX()+","+player.getLocation().getY()+","+player.getLocation().getZ()+","+player.getLocation().getYaw()+","+player.getLocation().getPitch());
+            return;
+        }
+
         PrisonUser user = PrisonUser.fromPlayer(player);
 
         player.openInventory(WarpGUI.create(user));

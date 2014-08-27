@@ -15,12 +15,11 @@ import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.plots.PlotWorld;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
-import net.vaultcraft.vcprison.worth.WardenManager;
+import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -68,24 +67,7 @@ public class VCPrison extends JavaPlugin {
         WarpLoader.loadWarps();
         ItemWorthLoader.loadItemWorth();
 
-        new WardenManager();
-
-        Runnable resetSchedule = new Runnable() {
-            @Override
-            public void run() {
-                for (Mine mine : MineLoader.getMines()) {
-                    MineLoader.resetMine(mine);
-                }
-                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Mines reset!"));
-            }
-        };
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, resetSchedule, 20*900, 20*900);
-
-        //reset at start
-        for (Mine mine : MineLoader.getMines()) {
-            MineLoader.resetMine(mine);
-        }
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Mines reset!"));
+        new Warden();
 
         Runnable minePercentUpdate = new Runnable() {
             public void run() {

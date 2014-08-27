@@ -36,22 +36,13 @@ public class Warden {
     private static HashMap<Player, BukkitTask> selling = new HashMap<>();
     private static HashMap<String, ISDC> resume = new HashMap<>();
 
-    private NPC capture;
+    public Warden() {
+        wl = new WardenListener();
 
-    public Warden(NPC npc) {
-        if (wl == null) {
-            wl = new WardenListener();
-            Bukkit.getPluginManager().registerEvents(wl, VCPrison.getInstance());
-        }
-
-        this.capture = npc;
+        Bukkit.getPluginManager().registerEvents(wl, VCPrison.getInstance());
     }
 
-    public NPC getNPCContainer() {
-        return capture;
-    }
-
-    public void sell(final Player player) {
+    public static void sell(final Player player) {
         //read inventory and determine sell time based on rank
         if (selling.containsKey(player)) {
             Form.at(player, Prefix.ERROR, "You are currently selling items right now.");
@@ -76,9 +67,11 @@ public class Warden {
                 continue;
 
             worth+=(add*inv.getAmount());
-            ticks+=(group.hasPermission(Group.WOLF) ? (group.hasPermission(Group.CREEPER) ? 0 : 5) : 20);
+            ticks+=(20*getSellTimeMultiplier(group));
             player.getInventory().remove(inv);
         }
+
+        ticks = (ticks < 0 ? 0 : ticks);
 
         player.updateInventory();
 
@@ -109,6 +102,7 @@ public class Warden {
                 Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$"+Form.at(finalWorth)+Prefix.SUCCESS.getChatColor()+"!", "WARDEN");
                 player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
                 selling.remove(player);
+                resume.remove(player.getName());
             }
         }, ticks);
         selling.put(player, task);
@@ -116,21 +110,32 @@ public class Warden {
 
     private double getMultiplier(Group group) {
         switch (group) {
-            case SILVERFISH:
             case WOLF:
-                return 1.5;
+                return 1.25;
             case SLIME:
-            case PIGMAN:
                 return 1.75;
             case SKELETON:
-            case CREEPER:
                 return 2.0;
             case ENDERMAN:
                 return 2.5;
             case ENDERDRAGON:
-                return 3.2;
+                return 3.5;
         }
         return 1;
+    }
+
+    private static double getSellTimeMultiplier(Group group) {
+        double val = 1;
+        if (group.hasPermission(Group.WOLF))
+            val = 2;
+        else return 1;
+        if (group.hasPermission(Group.SLIME))
+            val = 3;
+        if (group.hasPermission(Group.SKELETON))
+            val = 4;
+        if (group.hasPermission(Group.ENDERMAN))
+            val = 5;
+        return -1;
     }
 
     private static class WardenListener implements Listener {
@@ -172,15 +177,7 @@ public class Warden {
         @EventHandler
         public void onEntityInteract(PlayerInteractEntityEvent event) {
             if (event.getRightClicked().getType().equals(EntityType.VILLAGER)) {
-                NPC npc = CitizensAPI.getNPCRegistry().getNPC(event.getRightClicked());
-                if (npc == null)
-                    return;
-
-                Warden fromNPC = WardenManager.fromNPC(npc);
-                if (fromNPC == null) //odd
-                    return;
-
-                fromNPC.sell(event.getPlayer());
+                Warden.sell(event.getPlayer());
             }
         }
     }

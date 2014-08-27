@@ -8,7 +8,6 @@ import net.vaultcraft.vcutils.protection.ProtectionManager;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import java.io.File;
@@ -21,7 +20,7 @@ import java.util.HashMap;
 
 public class MineLoader {
 
-    private static HashMap<Mine, BlockCollection> mines = new HashMap<>();
+    private static HashMap<Mine, MineUtil> mines = new HashMap<>();
 
     public static void loadMines() {
         try {
@@ -58,8 +57,8 @@ public class MineLoader {
 
                 Rank rank = (Rank)data.get("rank");
                 Mine mine = new Mine(rank, ProtectionManager.getInstance().getArea(rank.toString()).getArea());
-                mine.setInitialBlocks(BlockCollection.iterator(mine.getArea()).size());
-                mines.put(mine, new BlockCollection((HashMap<Material, Double>)data.get("blocks")));
+                mine.setInitialBlocks(MineUtil.iterator(mine.getArea()).size());
+                mines.put(mine, new MineUtil((HashMap<Material, Double>)data.get("blocks")));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -86,14 +85,7 @@ public class MineLoader {
     }
 
     public static void resetMine(Mine mine) {
-        mines.get(mine).reset(BlockCollection.iterator(mine.getArea()));
-        for (Player player : mine.getArea().getMax().getWorld().getPlayers()) {
-            if (mine.getArea().isInArea(player.getLocation())) {
-                Location tp = player.getLocation().clone();
-                tp.setY(mine.getArea().getMax().getY()+1);
-                player.teleport(tp);
-            }
-        }
+        mines.get(mine).reset(MineUtil.iterator(mine.getArea()), mine);
 
         //just for the fun
         Area area = mine.getArea();
