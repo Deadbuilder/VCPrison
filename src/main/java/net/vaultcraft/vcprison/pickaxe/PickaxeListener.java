@@ -135,6 +135,8 @@ public class PickaxeListener implements Listener {
             }
         }
 
+
+
         if (event.getPreviousSlot() == 0) {
             for (PickaxePerk perk : PickaxePerk.getPerks()) {
                 if (pickaxe.getPerkLevel(perk) == 0)
