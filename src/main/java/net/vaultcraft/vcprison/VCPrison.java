@@ -41,7 +41,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
         CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines"));
 
-        new PlotWorld("PlotWorld");
+        new PlotWorld();
 
         new AsyncChatListener();
         new PrisonUserListener();
@@ -96,6 +96,7 @@ public class VCPrison extends JavaPlugin {
 
     public void onDisable() {
         PrisonUser.disable();
+        PlotWorld.getPlotManager().savePlots();
     }
 
     public static VCPrison getInstance() {

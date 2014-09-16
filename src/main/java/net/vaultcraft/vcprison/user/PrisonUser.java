@@ -91,6 +91,25 @@ public class PrisonUser {
         }
     }
 
+    public int getPlotLimit() {
+        switch (user.getGroup()) {
+           case COMMON:
+               return 1;
+           case WOLF:
+               return 2;
+           case SLIME:
+               return 3;
+           case SKELETON:
+               return 4;
+           case ENDERMAN:
+               return 5;
+           case ENDERDRAGON:
+               return 10;
+           default:
+               return 1;
+        }
+    }
+
     public void setPrestige(int prestige) {
         this.prestige = prestige;
     }
