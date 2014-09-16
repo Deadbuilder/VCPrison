@@ -10,15 +10,21 @@ import org.bukkit.WorldCreator;
 public class PlotWorld {
 
     private static World plotWorld;
+    private static PlotManager plotManager;
 
-    public PlotWorld(String name) {
-        WorldCreator wc = new WorldCreator(name);
+    public PlotWorld() {
+        WorldCreator wc = new WorldCreator(PlotInfo.worldName);
         wc.generator(new PlotGen());
         wc.generateStructures(false);
+        plotManager = new PlotManager();
         plotWorld = Bukkit.getServer().createWorld(wc);
     }
 
     public static World getPlotWorld() {
         return plotWorld;
+    }
+
+    public static PlotManager getPlotManager() {
+        return plotManager;
     }
 }

@@ -58,17 +58,18 @@ public class PlotGen extends ChunkGenerator {
             for (int y = 80; y < 128; y++) {
                 for (int z = 0; z < 16; z++) {
                     if (chunkX % 2 == 0) {
-                        if (cells.getBlock(new Vector(x, y - 80, z)).getId() != 0)
+                        if (cells.getBlock(new Vector(x, y - 80, z)).getId() != 0 && cells.getBlock(new Vector(x, y - 80, z)).getId() != 50)
                             if (cells.getBlock(new Vector(x, y - 80, z)).getData() == 0)
                                 setBlock(result, x, y, z, (byte) cells.getBlock(new Vector(x, y - 80, z)).getId());
                     } else {
-                        if (hallway.getBlock(new Vector(x, y - 80, z)).getId() != 0)
+                        if (hallway.getBlock(new Vector(x, y - 80, z)).getId() != 0 && cells.getBlock(new Vector(x, y - 80, z)).getId() != 50)
                             if (hallway.getBlock(new Vector(x, y - 80, z)).getData() == 0)
                                 setBlock(result, x, y, z, (byte) hallway.getBlock(new Vector(x, y - 80, z)).getId());
                     }
                 }
             }
         }
+        PlotWorld.getPlotManager().addNewPlots(world.getChunkAt(chunkX, chunkX));
         return result;
     }
 

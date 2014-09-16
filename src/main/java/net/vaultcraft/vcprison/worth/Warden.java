@@ -1,7 +1,5 @@
 package net.vaultcraft.vcprison.worth;
 
-import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.npc.NPC;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.utils.Rank;
@@ -128,13 +126,13 @@ public class Warden {
         double val = 1;
         if (group.hasPermission(Group.WOLF))
             val = 2;
-        else return 1;
         if (group.hasPermission(Group.SLIME))
             val = 3;
         if (group.hasPermission(Group.SKELETON))
             val = 4;
         if (group.hasPermission(Group.ENDERMAN))
             val = 5;
+        else return 1;
         return -1;
     }
 
