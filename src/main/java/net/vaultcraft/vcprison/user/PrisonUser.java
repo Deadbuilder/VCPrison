@@ -92,7 +92,7 @@ public class PrisonUser {
     }
 
     public int getPlotLimit() {
-        switch (user.getGroup()) {
+        switch (user.getGroup().getHighest()) {
            case COMMON:
                return 1;
            case WOLF:

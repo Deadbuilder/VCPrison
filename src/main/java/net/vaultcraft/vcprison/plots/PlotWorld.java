@@ -11,12 +11,14 @@ public class PlotWorld {
 
     private static World plotWorld;
     private static PlotManager plotManager;
+    private static PlotMenu plotMenu;
 
     public PlotWorld() {
         WorldCreator wc = new WorldCreator(PlotInfo.worldName);
         wc.generator(new PlotGen());
         wc.generateStructures(false);
         plotManager = new PlotManager();
+        plotMenu = new PlotMenu();
         plotWorld = Bukkit.getServer().createWorld(wc);
     }
 
@@ -26,5 +28,9 @@ public class PlotWorld {
 
     public static PlotManager getPlotManager() {
         return plotManager;
+    }
+
+    public static PlotMenu getPlotMenu() {
+        return plotMenu;
     }
 }

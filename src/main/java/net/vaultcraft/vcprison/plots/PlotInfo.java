@@ -16,8 +16,8 @@ public class PlotInfo {
     public static String worldName = "PlotWorld";
     @ClassConfig.Config(path = "Plots.PlotRegions")
     public static List<String> plotRegions = new ArrayList<>(Arrays.asList("2 84 3,13 85 12", "2 88 3,13 89 12"));
-    @ClassConfig.Config(path = "Plots.WorldBoarderRaduis")
-    public static int worldBoarderRaduis = 50;
+    @ClassConfig.Config(path = "Plots.WorldBoarderRadius")
+    public static int worldBoarderRadius = 50;
 
     public static List<CuboidSelection> getPlotCubiods() {
         List<CuboidSelection> cuboidSelections = new ArrayList<>();
@@ -25,8 +25,10 @@ public class PlotInfo {
             String[] locations = s.split(",");
             String[] location1String = locations[0].split(" ");
             String[] location2String = locations[1].split(" ");
-            Location location1 = new Location(PlotWorld.getPlotWorld(), Double.parseDouble(location1String[0]), Double.parseDouble(location1String[1]), Double.parseDouble(location1String[2]));
-            Location location2 = new Location(PlotWorld.getPlotWorld(), Double.parseDouble(location2String[0]), Double.parseDouble(location2String[1]), Double.parseDouble(location1String[2]));
+            Location location1 = new Location(PlotWorld.getPlotWorld(), Double.parseDouble(location1String[0]),
+                    Double.parseDouble(location1String[1]), Double.parseDouble(location1String[2]));
+            Location location2 = new Location(PlotWorld.getPlotWorld(), Double.parseDouble(location2String[0]),
+                    Double.parseDouble(location2String[1]), Double.parseDouble(location1String[2]));
             cuboidSelections.add(new CuboidSelection(PlotWorld.getPlotWorld(), location1, location2));
         }
         return cuboidSelections;

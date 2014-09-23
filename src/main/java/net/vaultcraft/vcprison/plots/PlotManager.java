@@ -4,13 +4,14 @@ import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import net.minecraft.util.com.google.gson.Gson;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.VCUtils;
+import net.vaultcraft.vcutils.config.ClassConfig;
 import net.vaultcraft.vcutils.database.sql.MySQL;
 import net.vaultcraft.vcutils.database.sql.Statements;
 import net.vaultcraft.vcutils.database.sqlite.SQLite;
 import net.vaultcraft.vcutils.logging.Logger;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,15 +51,18 @@ public class PlotManager {
         });
     }
 
-    public Plot getAvaliblePlot() {
+    public Plot getAvailablePlot() {
         for (Plot plot : plots) {
             if (!plot.hasOwner())
-                if (plot.getChunkX() <= PlotInfo.worldBoarderRaduis || plot.getChunkX() >= -PlotInfo.worldBoarderRaduis
-                        || plot.getChunkZ() <= PlotInfo.worldBoarderRaduis
-                        || plot.getChunkZ() >= -PlotInfo.worldBoarderRaduis)
+                if (plot.getChunkX() <= PlotInfo.worldBoarderRadius || plot.getChunkX() >= -PlotInfo.worldBoarderRadius
+                        || plot.getChunkZ() <= PlotInfo.worldBoarderRadius
+                        || plot.getChunkZ() >= -PlotInfo.worldBoarderRadius)
                     return plot;
         }
-        return null;
+        PlotInfo.worldBoarderRadius += 1;
+        ClassConfig.updateConfig(PlotInfo.class, VCPrison.getInstance().getConfig());
+        VCPrison.getInstance().saveConfig();
+        return this.getAvailablePlot();
     }
 
     public List<Plot> getPlots() {
@@ -74,7 +78,7 @@ public class PlotManager {
         }
     }
 
-    public List<Plot> getPlayerPlots(Player player) {
+    public List<Plot> getPlayerPlots(OfflinePlayer player) {
         List<Plot> playerPlots = new ArrayList<>();
         String playerUUID = player.getUniqueId().toString();
         for (Plot plot : plots)
