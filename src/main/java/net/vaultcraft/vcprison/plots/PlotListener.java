@@ -25,7 +25,8 @@ public class PlotListener implements Listener {
         if(!e.getPlayer().getWorld().getName().equalsIgnoreCase(PlotInfo.worldName))
             return;
         Chunk chunk = e.getTo().getChunk();
-        if(chunk.getX() > PlotInfo.worldBoarderRaduis || chunk.getX() < -PlotInfo.worldBoarderRaduis || chunk.getZ() > PlotInfo.worldBoarderRaduis || chunk.getZ() < -PlotInfo.worldBoarderRaduis)
+        if(chunk.getX() > PlotInfo.worldBoarderRadius || chunk.getX() < -PlotInfo.worldBoarderRadius
+                || chunk.getZ() > PlotInfo.worldBoarderRadius || chunk.getZ() < -PlotInfo.worldBoarderRadius)
             e.getPlayer().teleport(e.getFrom());
     }
 

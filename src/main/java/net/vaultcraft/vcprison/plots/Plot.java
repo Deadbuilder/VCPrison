@@ -1,6 +1,13 @@
 package net.vaultcraft.vcprison.plots;
 
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.IncompleteRegionException;
+import com.sk89q.worldedit.MaxChangedBlocksException;
+import com.sk89q.worldedit.blocks.BaseBlock;
+import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
+import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcutils.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -65,5 +72,27 @@ public class Plot {
 
     public int getChunkZ() {
         return chunkZ;
+    }
+
+    public void setPlotSpawn(Location plotSpawn) {
+        this.plotSpawn = plotSpawn;
+    }
+
+    public List<String> getCanBuildUUIDs() {
+        return canBuildUUIDs;
+    }
+
+    public boolean delete() {
+        ownerUUID = "";
+        canBuildUUIDs.clear();
+        plotSpawn = plotArea.getMinimumPoint();
+        EditSession editSession = new EditSession(BukkitUtil.getLocalWorld(PlotWorld.getPlotWorld()), -1);
+        try {
+            editSession.setBlocks(plotArea.getRegionSelector().getRegion(), new BaseBlock(0));
+        } catch (MaxChangedBlocksException | IncompleteRegionException e) {
+            Logger.error(VCPrison.getInstance(), e);
+            return false;
+        }
+        return true;
     }
 }
