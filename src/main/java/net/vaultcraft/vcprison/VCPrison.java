@@ -4,11 +4,15 @@ import net.vaultcraft.vcprison.commands.VCPrestige;
 import net.vaultcraft.vcprison.commands.VCRankup;
 import net.vaultcraft.vcprison.commands.VCReset;
 import net.vaultcraft.vcprison.commands.VCWarp;
+import net.vaultcraft.vcprison.crate.CrateFile;
+import net.vaultcraft.vcprison.crate.CrateListener;
+import net.vaultcraft.vcprison.crate.MineCrateInjector;
 import net.vaultcraft.vcprison.furance.FurnaceListener;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
 import net.vaultcraft.vcprison.mine.Mine;
 import net.vaultcraft.vcprison.mine.MineLoader;
+import net.vaultcraft.vcprison.mine.MineUtil;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
@@ -34,6 +38,7 @@ public class VCPrison extends JavaPlugin {
     private static VCPrison instance;
 
     public void onEnable() {
+
         instance = this;
 
         CommandManager.addCommand(new VCRankup("rankup", Group.COMMON, "nextrank"));
@@ -43,10 +48,15 @@ public class VCPrison extends JavaPlugin {
 
         new PlotWorld();
 
+        CrateFile.getInstance().load();
+
         new AsyncChatListener();
         new PrisonUserListener();
         new PickaxeListener();
         new FurnaceListener();
+        new CrateListener();
+
+        MineUtil.createBlockInjector(new MineCrateInjector());
 
         new WarpGUI();
 

@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by Connor on 8/1/14. Designed for the VCPrison project.
@@ -21,6 +22,8 @@ import java.util.LinkedHashMap;
 public class MineUtil {
 
     private LinkedHashMap<Material, Double> reset = new LinkedHashMap<>();
+    private static List<BlockInjector> injectors = Lists.newArrayList();
+
     private double max;
 
     public MineUtil(HashMap<Material, Double> reset) {
@@ -30,6 +33,10 @@ public class MineUtil {
             this.reset.put(material, total+=chance);
         }
         max = total;
+    }
+
+    public static void createBlockInjector(BlockInjector injector) {
+        injectors.add(injector);
     }
 
     public void reset(final Collection<Block> blocks, final Mine mine) {
@@ -53,9 +60,16 @@ public class MineUtil {
                 }
 
                 final HashMap<Block, Material> clone = (HashMap<Block, Material>) fixed_reset_blocks.clone();
+
                 Runnable sync = new Runnable() {
                     public void run() {
-                        for (Block $k : clone.keySet()) {
+                        block: for (Block $k : clone.keySet()) {
+                            for (BlockInjector injector : injectors) {
+                                if (injector.doGenerate()) {
+                                    injector.setBlock($k.getLocation());
+                                    continue block;
+                                }
+                            }
                             Material $v = clone.get($k);
                             $k.setType($v);
                         }
