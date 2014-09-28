@@ -12,6 +12,7 @@ import net.vaultcraft.vcprison.mine.MineLoader;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
+import net.vaultcraft.vcprison.plots.PlotCommands;
 import net.vaultcraft.vcprison.plots.PlotWorld;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
@@ -40,6 +41,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCPrestige("prestige", Group.COMMON, "startover"));
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
         CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines"));
+        CommandManager.addCommand(new PlotCommands("plot", Group.COMMON, "p", "cell", "plots"));
 
         new PlotWorld();
 

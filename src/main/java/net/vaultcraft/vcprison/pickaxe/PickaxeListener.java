@@ -275,6 +275,7 @@ public class PickaxeListener implements Listener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
-        event.getPlayer().getInventory().setItem(0, pickaxe.getPickaxe());
+        if(pickaxe.isInUse())
+            event.getPlayer().getInventory().setItem(0, pickaxe.getPickaxe());
     }
 }

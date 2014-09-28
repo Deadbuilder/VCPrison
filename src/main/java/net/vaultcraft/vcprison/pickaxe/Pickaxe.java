@@ -25,6 +25,7 @@ public class Pickaxe {
     private int level = 1;
     private int blocksMined = 0;
     private int pickPoints = 0;
+    private boolean inUse = true;
 
     private HashMap<PickaxePerk, Integer> perkLevels = new HashMap<>();
     private HashMap<PickaxePerk, Boolean> perkToggle = new HashMap<>();
@@ -264,5 +265,19 @@ public class Pickaxe {
             sb.append(perk.getNoColorName()).append("|").append(perkLevels.get(perk)).append(".");
         }
         return sb.toString();
+    }
+
+    public void setInUse(boolean inUse) {
+        if(!inUse) {
+            this.inUse = false;
+            player.getInventory().setItem(0, new ItemStack(Material.AIR));
+        } else {
+            this.inUse = false;
+            player.getInventory().setItem(0, getPickaxe());
+        }
+    }
+
+    public boolean isInUse() {
+        return inUse;
     }
 }
