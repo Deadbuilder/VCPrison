@@ -44,5 +44,6 @@ public class VCAddCrateItem extends ICommand {
 
         CrateFile.crateItems.add(ci);
         Form.at(player, Prefix.SUCCESS, "Crate item added with a &e"+percent+"%"+Prefix.SUCCESS.getChatColor()+" chance!");
+        CrateFile.getInstance().save();
     }
 }

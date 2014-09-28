@@ -5,6 +5,7 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.protection.Area;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -45,6 +46,10 @@ public class MineUtil {
                 HashMap<Block, Material> fixed_reset_blocks = new HashMap<>();
                 for (Block block : blocks) {
                     //pick material
+                    Chunk c = block.getWorld().getChunkAt(block);
+                    if (!c.isLoaded())
+                        c.load();
+
                     Material use = null;
                     double random = (Math.random()*max);
                     for (Material m : reset.keySet()) {

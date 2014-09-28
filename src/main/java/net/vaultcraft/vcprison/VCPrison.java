@@ -1,9 +1,6 @@
 package net.vaultcraft.vcprison;
 
-import net.vaultcraft.vcprison.commands.VCPrestige;
-import net.vaultcraft.vcprison.commands.VCRankup;
-import net.vaultcraft.vcprison.commands.VCReset;
-import net.vaultcraft.vcprison.commands.VCWarp;
+import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
 import net.vaultcraft.vcprison.crate.MineCrateInjector;
@@ -45,7 +42,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCPrestige("prestige", Group.COMMON, "startover"));
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
         CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines"));
-
+        CommandManager.addCommand(new VCAddCrateItem("addcrateitem", Group.DEVELOPER, "aci"));
         new PlotWorld();
 
         CrateFile.getInstance().load();
@@ -76,6 +73,16 @@ public class VCPrison extends JavaPlugin {
         MineLoader.loadMines();
         WarpLoader.loadWarps();
         ItemWorthLoader.loadItemWorth();
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+            @Override
+            public void run() {
+                for (Mine mine : MineLoader.getMines()) {
+                    MineLoader.resetMine(mine);
+                    System.out.println("Mine: "+mine.getRank().toString()+" reset stage: COMPLETE!");
+                }
+            }
+        }, 5l);
 
         new Warden();
 

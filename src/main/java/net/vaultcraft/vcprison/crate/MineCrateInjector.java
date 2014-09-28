@@ -22,7 +22,7 @@ public class MineCrateInjector implements BlockInjector {
     }
 
     public boolean doGenerate() {
-        return (Math.random()*100) <= 0.001;
+        return (Math.random()*100) <= 0.01;
     }
 
     public void setBlock(Location loc) {
