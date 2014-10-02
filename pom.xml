@@ -24,6 +24,34 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <minimizeJar>true</minimizeJar>
+                    <relocations>
+                        <relocation>
+                            <pattern>mkremins</pattern>
+                            <shadedPattern>${project.groupId}.shade.mkremins</shadedPattern>
+                        </relocation>
+                    </relocations>
+                    <artifactSet>
+                        <includes>
+                            <include>mkremins:fanciful</include>
+                        </includes>
+                    </artifactSet>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -57,6 +85,14 @@
         <repository>
             <id>citizens-snapshots</id>
             <url>http://repo.citizensnpcs.co</url>
+        </repository>
+        <repository>
+            <id>fanciful-mvn-repo</id>
+            <url>https://raw.github.com/mkremins/fanciful/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
         </repository>
     </repositories>
 
@@ -111,6 +147,12 @@
             <groupId>net.citizensnpcs</groupId>
             <artifactId>citizens</artifactId>
             <version>2.0.13-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mkremins</groupId>
+            <artifactId>fanciful</artifactId>
+            <version>0.1.5</version>
         </dependency>
     </dependencies>
 </project>
