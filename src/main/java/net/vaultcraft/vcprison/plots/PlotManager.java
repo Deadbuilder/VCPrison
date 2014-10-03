@@ -9,6 +9,7 @@ import net.vaultcraft.vcutils.database.sql.MySQL;
 import net.vaultcraft.vcutils.database.sql.Statements;
 import net.vaultcraft.vcutils.database.sqlite.SQLite;
 import net.vaultcraft.vcutils.logging.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -24,6 +25,7 @@ import java.util.List;
 public class PlotManager {
 
     private List<Plot> plots = new ArrayList<>();
+    private List<Chunk> newPlots = new ArrayList<>();
     private SQLite sqLite = VCUtils.getInstance().getSqlite();
 
     public PlotManager() {
@@ -88,13 +90,21 @@ public class PlotManager {
     }
 
     public void generatePlots() {
-
+        Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                if(newPlots.size() > 0) {
+                    Chunk chunk = newPlots.get(0);
+                    for(CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods())
+                        plots.add(new Plot(cuboidSelection, chunk.getX(), chunk.getZ()));
+                    newPlots.remove(0);
+                }
+            }
+        }, 0, 5);
     }
 
     public void addNewPlots(Chunk chunk) {
-        for(CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods()) {
-            plots.add(new Plot(cuboidSelection, chunk.getX(), chunk.getZ()));
-        }
+        newPlots.add(chunk);
     }
 
     public Plot getPlotFromLocation(Location location) {

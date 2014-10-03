@@ -20,6 +20,7 @@ public class PlotWorld {
         plotManager = new PlotManager();
         plotMenu = new PlotMenu();
         plotWorld = Bukkit.getServer().createWorld(wc);
+        plotManager.generatePlots();
     }
 
     public static World getPlotWorld() {
