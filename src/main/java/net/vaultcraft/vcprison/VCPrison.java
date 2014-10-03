@@ -4,6 +4,7 @@ import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
 import net.vaultcraft.vcprison.crate.MineCrateInjector;
+import net.vaultcraft.vcprison.ffa.FFAPlayer;
 import net.vaultcraft.vcprison.furance.FurnaceListener;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
@@ -13,6 +14,7 @@ import net.vaultcraft.vcprison.mine.MineUtil;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
+import net.vaultcraft.vcprison.plots.PlotCommands;
 import net.vaultcraft.vcprison.plots.PlotWorld;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
@@ -43,6 +45,8 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
         CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines"));
         CommandManager.addCommand(new VCAddCrateItem("addcrateitem", Group.DEVELOPER, "aci"));
+        CommandManager.addCommand(new PlotCommands("plot", Group.COMMON, "p", "cell", "plots"));
+
         new PlotWorld();
 
         CrateFile.getInstance().load();
@@ -114,6 +118,13 @@ public class VCPrison extends JavaPlugin {
     public void onDisable() {
         PrisonUser.disable();
         PlotWorld.getPlotManager().savePlots();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            FFAPlayer ffa = FFAPlayer.getFFAPlayerFromPlayer(player);
+
+            if (ffa.isPlaying())
+                ffa.endFFA();
+        }
     }
 
     public static VCPrison getInstance() {

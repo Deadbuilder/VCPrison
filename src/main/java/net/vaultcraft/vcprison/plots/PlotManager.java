@@ -87,6 +87,10 @@ public class PlotManager {
         return playerPlots;
     }
 
+    public void generatePlots() {
+
+    }
+
     public void addNewPlots(Chunk chunk) {
         for(CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods()) {
             plots.add(new Plot(cuboidSelection, chunk.getX(), chunk.getZ()));
