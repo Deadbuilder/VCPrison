@@ -2,6 +2,8 @@ package net.vaultcraft.vcprison.pickaxe;
 
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
+import net.vaultcraft.vcutils.user.Group;
+import net.vaultcraft.vcutils.user.User;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Firework;
@@ -120,13 +122,27 @@ public class Pickaxe {
 
     public int toNextLevel(int level) {
         if (level < 50)
-            return (600 + (600 * (level - 1))) / 100;
+            return (600 + (600 * (level - 1)));
         else
-            return (30000 + (1500 * (level - 50))) / 10000;
+            return (30000 + (1500 * (level - 50)));
+    }
+
+    public float getDonorMultiplier(User user) {
+        if(user.getGroup().hasPermission(Group.ENDERDRAGON))
+            return 2;
+        if(user.getGroup().hasPermission(Group.ENDERMAN))
+            return 1.8f;
+        if(user.getGroup().hasPermission(Group.SKELETON))
+            return 1.6f;
+        if(user.getGroup().hasPermission(Group.SLIME))
+            return 1.4f;
+        if(user.getGroup().hasPermission(Group.WOLF))
+            return 1.2f;
+        return 1;
     }
 
     public void mineBlock(Material material) {
-        blocksMined += BlockExp.fromMaterial(material).getExp();
+        blocksMined += BlockExp.fromMaterial(material).getExp() * getDonorMultiplier(User.fromPlayer(player));
         if (blocksMined >= toNextLevel(level)) {
             blocksMined = 0;
             level++;
