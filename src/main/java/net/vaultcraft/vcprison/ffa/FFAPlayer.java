@@ -1,7 +1,10 @@
 package net.vaultcraft.vcprison.ffa;
 
+import net.vaultcraft.vcprison.ffa.event.FFAJoinEvent;
+import net.vaultcraft.vcprison.ffa.event.FFALeaveEvent;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -77,6 +80,8 @@ public class FFAPlayer {
         player.getInventory().setItem(0, FFAItems.startingSword);
 
         player.updateInventory();
+
+        Bukkit.getPluginManager().callEvent(new FFAJoinEvent(this));
     }
 
     public void endFFA() {
@@ -84,5 +89,6 @@ public class FFAPlayer {
         player.getInventory().clear();
         player.getInventory().setContents(saved);
 
+        Bukkit.getPluginManager().callEvent(new FFALeaveEvent(this));
     }
 }

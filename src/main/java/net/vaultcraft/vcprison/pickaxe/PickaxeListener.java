@@ -54,11 +54,11 @@ public class PickaxeListener implements Listener {
             return;
         if (!perkMenu.getName().equalsIgnoreCase("Pickaxe Perks"))
             return;
-        if (event.getClickedInventory() == null)
+        if (event.getInventory() == null)
             return;
-        if (event.getClickedInventory().getName() == null)
+        if (event.getInventory().getName() == null)
             return;
-        if (!event.getClickedInventory().getName().equalsIgnoreCase("Pickaxe Perks"))
+        if (!event.getInventory().getName().equalsIgnoreCase("Pickaxe Perks"))
             return;
         if (event.getCurrentItem() == null)
             return;
