@@ -13,6 +13,7 @@
                 <excludes>
                     <exclude>bukkit.jar</exclude>
                     <exclude>spigot.jar</exclude>
+                    <exclude>craftbukkit.jar</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -97,7 +98,7 @@
         </repository>
         <repository>
             <id>fanciful-mvn-repo</id>
-            <url>https://raw.github.com/mkremins/fanciful/mvn-repo/</url>
+            <url>https://raw.github.com/mkremins/fanciful/mvn-repo</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
@@ -116,6 +117,14 @@
             <version>1.7.9-R0.1-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/spigot.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.7.10-R0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/craftbukkit.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -146,6 +155,8 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+
 
         <dependency>
             <groupId>net.vaultcraft</groupId>
