@@ -3,6 +3,7 @@ package net.vaultcraft.vcprison.user;
 import net.vaultcraft.shade.mongodb.BasicDBObject;
 import net.vaultcraft.shade.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.ffa.FFAPlayer;
 import net.vaultcraft.vcprison.pickaxe.Pickaxe;
 import net.vaultcraft.vcprison.pickaxe.PickaxePerk;
 import net.vaultcraft.vcprison.utils.Rank;
@@ -41,6 +42,7 @@ public class PrisonUser {
                 }
             }
         });
+        new FFAPlayer(player);
     }
 
     public Player getPlayer() {
@@ -143,6 +145,7 @@ public class PrisonUser {
         });
         player.getInventory().setItem(0, null);
         async_player_map.remove(player);
+        FFAPlayer.removePlayer(player);
     }
 
     public static void disable() {
