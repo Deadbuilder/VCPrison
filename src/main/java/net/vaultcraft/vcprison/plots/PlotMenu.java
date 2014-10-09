@@ -98,7 +98,7 @@ public class PlotMenu implements Listener {
             return;
         }
 
-        if(name.equalsIgnoreCase(ChatColor.GREEN + "Get a new cell")) {
+        if(name.equalsIgnoreCase(ChatColor.GREEN + "Get a new cell.")) {
             addNewPlot((Player) e.getWhoClicked());
         }
     }
