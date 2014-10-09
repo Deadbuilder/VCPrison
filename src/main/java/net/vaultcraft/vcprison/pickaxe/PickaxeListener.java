@@ -173,12 +173,14 @@ public class PickaxeListener implements Listener {
                 if (event.getPlayer().getItemInHand().getItemMeta() != null) {
                     if (event.getPlayer().getItemInHand().getItemMeta().getDisplayName() != null) {
                         if (event.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&6&lRight Click: &2&lAdd Perk Point"))) {
-                            if (event.getPlayer().getItemInHand().getAmount() != 1)
-                                event.getPlayer().getItemInHand().setAmount(event.getPlayer().getItemInHand().getAmount() - 1);
-                            else
-                                event.getPlayer().getInventory().remove(event.getPlayer().getItemInHand());
-                            PrisonUser.fromPlayer(event.getPlayer()).getPickaxe().setPickPoints(PrisonUser.fromPlayer(event.getPlayer()).getPickaxe().getPickPoints() + 1);
-                            Form.at(event.getPlayer(), Prefix.SUCCESS, "You have added a perk point!");
+                            if(PrisonUser.fromPlayer(event.getPlayer()).getPickaxe().isInUse()) {
+                                if (event.getPlayer().getItemInHand().getAmount() != 1)
+                                    event.getPlayer().getItemInHand().setAmount(event.getPlayer().getItemInHand().getAmount() - 1);
+                                else
+                                    event.getPlayer().getInventory().remove(event.getPlayer().getItemInHand());
+                                PrisonUser.fromPlayer(event.getPlayer()).getPickaxe().setPickPoints(PrisonUser.fromPlayer(event.getPlayer()).getPickaxe().getPickPoints() + 1);
+                                Form.at(event.getPlayer(), Prefix.SUCCESS, "You have added a perk point to your pickaxe!");
+                            }
                         }
                     }
                 }
@@ -199,6 +201,8 @@ public class PickaxeListener implements Listener {
         else
             item = new ItemStack(changeType(event.getBlock().getType()));
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+        if(!pickaxe.isInUse())
+            return;
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
             if (pickaxe.getPerkLevel(perk) == 0)
                 continue;
