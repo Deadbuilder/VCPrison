@@ -6,6 +6,8 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
 import net.vaultcraft.vcprison.pickaxe.Pickaxe;
 import net.vaultcraft.vcprison.pickaxe.PickaxePerk;
+import net.vaultcraft.vcprison.sword.Sword;
+import net.vaultcraft.vcprison.sword.SwordPerk;
 import net.vaultcraft.vcprison.utils.Rank;
 import net.vaultcraft.vcutils.VCUtils;
 import net.vaultcraft.vcutils.user.User;
@@ -29,6 +31,7 @@ public class PrisonUser {
     private Rank rank = Rank.A;
     private int prestige;
     private Pickaxe pickaxe = null;
+    private Sword sword = null;
 
     public PrisonUser(final Player player) {
         this.user = User.fromPlayer(player);
@@ -124,9 +127,20 @@ public class PrisonUser {
         this.pickaxe = pickaxe;
     }
 
+    public Sword getSword() {
+        return sword;
+    }
+
+    public void setSword(Sword sword) {
+        this.sword = sword;
+    }
+
     public static void remove(final Player player) {
         final PrisonUser user = PrisonUser.fromPlayer(player);
         for(PickaxePerk perk : PickaxePerk.getPerks()) {
+            perk.onEnd(player);
+        }
+        for(SwordPerk perk : SwordPerk.getPerks()) {
             perk.onEnd(player);
         }
         user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());
@@ -152,6 +166,9 @@ public class PrisonUser {
         for (Player player : Bukkit.getOnlinePlayers()) {
             final PrisonUser user = PrisonUser.fromPlayer(player);
             for(PickaxePerk perk : PickaxePerk.getPerks()) {
+                perk.onEnd(player);
+            }
+            for(SwordPerk perk : SwordPerk.getPerks()) {
                 perk.onEnd(player);
             }
             user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());

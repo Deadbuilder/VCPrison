@@ -51,7 +51,7 @@ public class Warden {
         final PrisonUser pUser = PrisonUser.fromPlayer(player);
 
         Rank rank = pUser.getRank();
-        Group group = user.getGroup();
+        Group.GroupHandler group = user.getGroup();
 
         int worth = 0;
         int ticks = 0;
@@ -122,7 +122,7 @@ public class Warden {
         return 1;
     }
 
-    private static double getSellTimeMultiplier(Group group) {
+    private static double getSellTimeMultiplier(Group.GroupHandler group) {
         double val = 1;
         if (group.hasPermission(Group.WOLF))
             val = 2;

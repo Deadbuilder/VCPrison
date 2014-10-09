@@ -30,7 +30,7 @@ public class FFAHandler {
 
         double bounty = ffaDead.bounty*=(ffaDead.equals(doubleBounty) ? 2 : 1);
 
-        switch (ffaKill.getUser().getGroup()) {
+        switch (ffaKill.getUser().getGroup().getHighest()) {
             case ENDERDRAGON:
                 bounty*=3.0;
                 break;
