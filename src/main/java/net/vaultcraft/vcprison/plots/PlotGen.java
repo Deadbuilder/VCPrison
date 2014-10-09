@@ -13,6 +13,7 @@ import org.bukkit.generator.ChunkGenerator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ public class PlotGen extends ChunkGenerator {
 
     CuboidClipboard cells;
     CuboidClipboard hallway;
+    List<Integer[]> generatedChunks;
 
     public PlotGen() {
         try {
@@ -30,6 +32,7 @@ public class PlotGen extends ChunkGenerator {
             hallway = CuboidClipboard.loadSchematic(new File(VCPrison.getInstance().getDataFolder(), "hallway.schematic"));
             cells.rotate2D(90);
             hallway.rotate2D(90);
+            generatedChunks = new ArrayList<>();
         } catch (DataException | IOException e) {
             Logger.error(VCPrison.getInstance(), e);
         }
@@ -69,7 +72,8 @@ public class PlotGen extends ChunkGenerator {
                 }
             }
         }
-        PlotWorld.getPlotManager().addNewPlots(world.getChunkAt(chunkX, chunkX));
+        //PlotWorld.getPlotManager().addNewPlots(world.getChunkAt(chunkX, chunkX)); //Nice stack overflow bro
+        generatedChunks.add(new Integer[] {chunkX, chunkY});
         return result;
     }
 
@@ -80,5 +84,11 @@ public class PlotGen extends ChunkGenerator {
             result[y >> 4] = new byte[4096];
         }
         result[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = blkid;
+    }
+
+    public void addGeneratedPlots() {
+        for(Integer[] iArr : generatedChunks) {
+            PlotWorld.getPlotManager().addNewPlots(PlotWorld.getPlotWorld().getChunkAt(iArr[0], iArr[1]));
+        }
     }
 }
