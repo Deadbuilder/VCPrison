@@ -22,7 +22,7 @@ public class SwordListener implements Listener {
     public void onUserLoad(UserLoadedEvent event) {
         PrisonUser user = PrisonUser.fromPlayer(event.getUser().getPlayer());
         if (event.getUser().getUserdata("Pickaxe") != null) {
-            user.setSword(new Sword(user.getPlayer(), event.getUser().getUserdata("Sword")));
+            //user.setSword(new Sword(user.getPlayer(), event.getUser().getUserdata("Sword")));
         } else {
             user.setSword(new Sword(user.getPlayer()));
         }
