@@ -31,7 +31,7 @@ public class PlotMenu implements Listener {
 
         if (player.isOnline()) {
             if (player.getPlayer().equals(openPlayer)) {
-                int rows = (int) Math.ceil(((plots.size() + 1.0) / 9.0));
+                int rows = ((int) (plots.size() / 9.0)) * 9 + 9;
                 inventory = Bukkit.createInventory(null, rows, ChatColor.GREEN + "Your Cells");
                 inventory.setItem(plots.size(), addPlotItem());
             }
