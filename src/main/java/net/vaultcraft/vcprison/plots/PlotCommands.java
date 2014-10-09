@@ -23,8 +23,10 @@ public class PlotCommands extends ICommand {
 
     @Override
     public void processCommand(Player player, String[] args) {
-        if(args.length == 0)
+        if(args.length == 0) {
             executePlot(player);
+            return;
+        }
         switch (args[0].toLowerCase()) {
             case "setspawn":
                 executeSetSpawn(player);
