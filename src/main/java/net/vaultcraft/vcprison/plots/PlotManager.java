@@ -54,6 +54,9 @@ public class PlotManager {
     }
 
     public Plot getAvailablePlot() {
+        if(plots.size() <= 0) {
+            return null;
+        }
         for (Plot plot : plots) {
             if (!plot.hasOwner())
                 if (plot.getChunkX() <= PlotInfo.worldBoarderRadius || plot.getChunkX() >= -PlotInfo.worldBoarderRadius
