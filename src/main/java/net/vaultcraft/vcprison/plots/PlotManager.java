@@ -29,9 +29,9 @@ public class PlotManager {
     private SQLite sqLite = VCUtils.getInstance().getSqlite();
 
     public PlotManager() {
-        sqLite.updateThread.add(Statements.TABLE_SQLITE.getSql("Plots", "JSON TEXT"));
+        sqLite.doUpdate(Statements.TABLE_SQLITE.getSql("Plots", "JSON TEXT"));
         Logger.log(VCPrison.getInstance(), "Loading plots...");
-        sqLite.addQuery(Statements.QUERYALL.getSql("Plots"), new MySQL.ISqlCallback() {
+        sqLite.doQuery(Statements.QUERYALL.getSql("Plots"), new MySQL.ISqlCallback() {
             @Override
             public void onSuccess(ResultSet resultSet) {
                 Gson gson = new Gson();
@@ -75,11 +75,11 @@ public class PlotManager {
     }
 
     public void savePlots() {
-        sqLite.updateThread.add("DELETE FROM Plots");
+        sqLite.doUpdate("DELETE FROM Plots");
         Gson gson = new Gson();
         for (Plot plot : plots) {
             String json = gson.toJson(plot);
-            sqLite.updateThread.add(Statements.INSERT.getSql("Plots", json));
+            sqLite.doUpdate(Statements.INSERT.getSql("Plots", json));
         }
     }
 
