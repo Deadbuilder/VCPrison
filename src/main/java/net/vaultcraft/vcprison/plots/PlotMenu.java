@@ -61,6 +61,7 @@ public class PlotMenu implements Listener {
         List<String> lore = new ArrayList<>();
         lore.add("Location: " + plot.getPlotSpawn().getBlockX() + "," + plot.getPlotSpawn().getBlockY() + "," + plot.getPlotSpawn().getBlockZ());
         itemMeta.setLore(lore);
+        itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 
