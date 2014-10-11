@@ -24,8 +24,8 @@ public class GangManager implements Listener {
     private static HashMap<String, Gang> gangs = new HashMap<>();
 
     public GangManager() {
-        VCUtils.getInstance().getSqlite().updateThread.add(Statements.TABLE_SQLITE.getSql("Gangs", "Gang"));
-        VCUtils.getInstance().getSqlite().addQuery(Statements.QUERYALL.getSql("Plots"), new MySQL.ISqlCallback() {
+        VCUtils.getInstance().getSqlite().doUpdate(Statements.TABLE_SQLITE.getSql("Gangs", "Gang"));
+        VCUtils.getInstance().getSqlite().doQuery(Statements.QUERYALL.getSql("Plots"), new MySQL.ISqlCallback() {
             @Override
             public void onSuccess(ResultSet resultSet) {
                 Gson gson = new Gson();
