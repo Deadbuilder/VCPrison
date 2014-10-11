@@ -77,12 +77,10 @@ public class PlotManager {
     public void savePlots() {
         sqLite.doUpdate("DELETE FROM Plots");
         Gson gson = new Gson();
-        StringBuilder sb = new StringBuilder();
         for (Plot plot : plots) {
             String json = gson.toJson(plot);
-            sb.append(Statements.INSERT_SQLITE.getSql("Plots", "JSON", '"' + Statements.makeSqlSafe(json) + '"')).append(";\n");
+            sqLite.doUpdate(Statements.INSERT_SQLITE.getSql("Plots", "JSON", '"' + Statements.makeSqlSafe(json) + '"'));
         }
-        sqLite.doUpdate(sb.toString());
     }
 
     public List<Plot> getPlayerPlots(OfflinePlayer player) {
