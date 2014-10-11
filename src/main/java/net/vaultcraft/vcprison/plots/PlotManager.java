@@ -29,7 +29,7 @@ public class PlotManager {
     private SQLite sqLite = VCUtils.getInstance().getSqlite();
 
     public PlotManager() {
-        sqLite.updateThread.add(Statements.TABLE_SQLITE.getSql("Plots", "LONGTEXT JSON"));
+        sqLite.updateThread.add(Statements.TABLE_SQLITE.getSql("Plots", "JSON TEXT"));
         Logger.log(VCPrison.getInstance(), "Loading plots...");
         sqLite.addQuery(Statements.QUERYALL.getSql("Plots"), new MySQL.ISqlCallback() {
             @Override
