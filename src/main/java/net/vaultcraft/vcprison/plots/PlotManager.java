@@ -80,7 +80,7 @@ public class PlotManager {
         StringBuilder sb = new StringBuilder();
         for (Plot plot : plots) {
             String json = gson.toJson(plot);
-            sb.append(Statements.INSERT.getSql("Plots", json)).append(";\n");
+            sb.append(Statements.INSERT_SQLITE.getSql("Plots", "JSON", json)).append(";\n");
         }
         sqLite.doUpdate(sb.toString());
     }
