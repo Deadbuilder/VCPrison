@@ -21,14 +21,16 @@ public class Plot {
 
     private String ownerUUID = "";
     private List<String> canBuildUUIDs = new ArrayList<>();
-    private Location plotSpawn;
-    private CuboidSelection plotArea;
+    private String plotSpawn;
+    private String plotArea;
     private int chunkX;
     private int chunkZ;
 
     public Plot(CuboidSelection plotArea, int chunkX, int chunkZ) {
-        this.plotArea = plotArea;
-        this.plotSpawn = plotArea.getMinimumPoint();
+        Location minPoint = plotArea.getMinimumPoint();
+        Location maxPoint = plotArea.getMaximumPoint();
+        this.plotArea = locationToString(minPoint) + "," + locationToString(maxPoint);
+        this.plotSpawn = locationToString(minPoint);
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
     }
@@ -59,11 +61,12 @@ public class Plot {
     }
 
     public Location getPlotSpawn() {
-        return plotSpawn;
+        return locationFromString(plotSpawn);
     }
 
     public CuboidSelection getPlotArea() {
-        return plotArea;
+        String[] parts = plotArea.split(",");
+        return new CuboidSelection(PlotWorld.getPlotWorld(), locationFromString(parts[0]), locationFromString(parts[1]));
     }
 
     public int getChunkX() {
@@ -75,7 +78,7 @@ public class Plot {
     }
 
     public void setPlotSpawn(Location plotSpawn) {
-        this.plotSpawn = plotSpawn;
+        this.plotSpawn = locationToString(plotSpawn);
     }
 
     public List<String> getCanBuildUUIDs() {
@@ -85,14 +88,23 @@ public class Plot {
     public boolean delete() {
         ownerUUID = "";
         canBuildUUIDs.clear();
-        plotSpawn = plotArea.getMinimumPoint();
+        plotSpawn = locationToString(getPlotArea().getMinimumPoint());
         EditSession editSession = new EditSession(BukkitUtil.getLocalWorld(PlotWorld.getPlotWorld()), -1);
         try {
-            editSession.setBlocks(plotArea.getRegionSelector().getRegion(), new BaseBlock(0));
+            editSession.setBlocks(getPlotArea().getRegionSelector().getRegion(), new BaseBlock(0));
         } catch (MaxChangedBlocksException | IncompleteRegionException e) {
             Logger.error(VCPrison.getInstance(), e);
             return false;
         }
         return true;
+    }
+
+    private Location locationFromString(String s) {
+        String[] parts = s.split(" ");
+        return new Location(PlotWorld.getPlotWorld(), Double.parseDouble(parts[0]), Double.parseDouble(parts[1]), Double.parseDouble(parts[2]));
+    }
+
+    private String locationToString(Location l) {
+        return l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ();
     }
 }

@@ -54,7 +54,7 @@ public class PlotManager {
     }
 
     public Plot getAvailablePlot() {
-        if(plots.size() <= 0) {
+        if (plots.size() <= 0) {
             return null;
         }
         for (Plot plot : plots) {
@@ -77,10 +77,12 @@ public class PlotManager {
     public void savePlots() {
         sqLite.doUpdate("DELETE FROM Plots");
         Gson gson = new Gson();
+        StringBuilder sb = new StringBuilder();
         for (Plot plot : plots) {
             String json = gson.toJson(plot);
-            sqLite.doUpdate(Statements.INSERT.getSql("Plots", json));
+            sb.append(Statements.INSERT.getSql("Plots", json)).append(";\n");
         }
+        sqLite.doUpdate(sb.toString());
     }
 
     public List<Plot> getPlayerPlots(OfflinePlayer player) {
@@ -96,9 +98,9 @@ public class PlotManager {
         Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(), new Runnable() {
             @Override
             public void run() {
-                if(newPlots.size() > 0) {
+                if (newPlots.size() > 0) {
                     Chunk chunk = newPlots.get(0);
-                    for(CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods())
+                    for (CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods())
                         plots.add(new Plot(cuboidSelection, chunk.getX(), chunk.getZ()));
                     newPlots.remove(0);
                 }
@@ -111,8 +113,8 @@ public class PlotManager {
     }
 
     public Plot getPlotFromLocation(Location location) {
-        for(Plot plot : plots) {
-            if(plot.getPlotArea().contains(location))
+        for (Plot plot : plots) {
+            if (plot.getPlotArea().contains(location))
                 return plot;
         }
         return null;
