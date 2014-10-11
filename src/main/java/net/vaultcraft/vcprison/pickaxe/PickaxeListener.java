@@ -162,6 +162,16 @@ public class PickaxeListener implements Listener {
     }
 
     @EventHandler
+    public void onFullInventory(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if(player.getItemInHand().equals(Material.DIAMOND_PICKAXE)) {
+            if(!player.getInventory().contains(Material.AIR)) {
+                Form.at(player, Prefix.WARNING, "Your inventory is full!");
+            }
+        }
+    }
+
+    @EventHandler
     public void onClick(PlayerInteractEvent event) {
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
         if (event.getAction().name().contains("RIGHT") && event.getPlayer().getInventory().getHeldItemSlot() == 0) {
