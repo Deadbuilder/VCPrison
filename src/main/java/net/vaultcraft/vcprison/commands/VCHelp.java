@@ -24,8 +24,8 @@ public class VCHelp extends ICommand {
     public static final ItemStack MINES = build(Material.DIAMOND_PICKAXE, "&d&lMines", "&7Mines are where you collect", "&7materials to sell! Use the", "&7command &6/warp &7to view" + "&7the mining GUI.", "&7Rank up using &6/rankup&7!");
     public static final ItemStack CELLS = build(Material.IRON_FENCE, "&d&lCells", "&7Cells are where you call home.", "&7Use the command &6/plot &7for", "&7further usage. You can build,", "&7farm and sell items in your", "&7cells!");
     public static final ItemStack GANGS = build(Material.DIAMOND_HELMET, "&d&lGangs", "&7Gangs are groups of prisoners.", "&7Without a group you are left", "&7unprotected. Use the command", "&6/gang &7for more information.");
-    public static final ItemStack SHOP = build(Material.EMERALD, "&d&lShop", "&7The shop is located at the", "&7spawn. Use the command &6/spawn", "to get there! You can buy", "&7all prison items there.");
-    public static final ItemStack FFA = build(Material.DIAMOND_SWORD, "&d&lFFA", "&7FFA or Free For All is", "&7where prisoners go to fight.", "&7Upgrade your sword and use", "&7armor! Watch your back." + "&7Use &6/ffa &7 for more", "&7information.");
+    public static final ItemStack SHOP = build(Material.EMERALD, "&d&lShop", "&7The shop is located at the", "&7spawn. Use the command &6/spawn", "&7to get there! You can buy", "&7all prison items there.");
+    public static final ItemStack FFA = build(Material.DIAMOND_SWORD, "&d&lFFA", "&7FFA or Free For All is", "&7where prisoners go to fight.", "&7Upgrade your sword and use", "&7armor! Watch your back. Use" + "&6/ffa &7 for more information.");
 
     public static Inventory phelp = Bukkit.createInventory(null, 9, "VaultCraft - Prison Guide");
 
@@ -65,7 +65,7 @@ public class VCHelp extends ICommand {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if(event.getInventory().getTitle().equalsIgnoreCase("VaultCraft - Prison Guide")) {
+        if(player.getOpenInventory().getTitle().equals("VaultCraft - Prison Guide")) {
             event.setCancelled(true);
         }
     }
