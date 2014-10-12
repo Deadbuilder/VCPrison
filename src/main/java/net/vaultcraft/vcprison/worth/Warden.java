@@ -88,20 +88,18 @@ public class Warden {
 
         final int finalWorth = worth;
 
-        BukkitTask task = Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), new Runnable() {
-            public void run() {
-                if (!(player.isOnline())) {
-                    //handle players who quit
-                    return;
-                    //ez ^
-                }
-
-                user.setMoney(user.getMoney()+finalWorth);
-                Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$"+Form.at(finalWorth)+Prefix.SUCCESS.getChatColor()+"!", "WARDEN");
-                player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
-                selling.remove(player);
-                resume.remove(player.getName());
+        BukkitTask task = Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), () -> {
+            if (!(player.isOnline())) {
+                //handle players who quit
+                return;
+                //ez ^
             }
+
+            user.setMoney(user.getMoney()+finalWorth);
+            Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$"+Form.at(finalWorth)+Prefix.SUCCESS.getChatColor()+"!", "WARDEN");
+            player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
+            selling.remove(player);
+            resume.remove(player.getName());
         }, ticks);
         selling.put(player, task);
     }

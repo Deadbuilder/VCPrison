@@ -22,6 +22,7 @@ public class PlotWorld {
         wc.generateStructures(false);
         plotManager = new PlotManager();
         plotMenu = new PlotMenu();
+        plotGenerator = new PlotGen();
         plotWorld = Bukkit.getServer().createWorld(wc);
         plotGenerator.addGeneratedPlots();
         plotManager.generatePlots();
