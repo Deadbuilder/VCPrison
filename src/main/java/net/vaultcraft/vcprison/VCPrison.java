@@ -47,6 +47,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCAddCrateItem("addcrateitem", Group.DEVELOPER, "aci"));
         CommandManager.addCommand(new PlotCommands("plot", Group.COMMON, "p", "cell", "plots", "plotme"));
         CommandManager.addCommand(new VCHelp("help", Group.COMMON));
+        CommandManager.addCommand(new VCRules("rules", Group.COMMON));
 
         new PlotWorld();
 
