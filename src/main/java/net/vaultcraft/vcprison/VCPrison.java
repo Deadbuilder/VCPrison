@@ -50,6 +50,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCHelp("help", Group.COMMON));
         CommandManager.addCommand(new VCRules("rules", Group.COMMON));
         CommandManager.addCommand(new GangCommands("gang", Group.COMMON, "gangs", "f", "team"));
+        CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON, "dp"));
 
         new PlotWorld();
 
