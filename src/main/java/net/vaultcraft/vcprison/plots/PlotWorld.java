@@ -17,12 +17,12 @@ public class PlotWorld {
 
     public PlotWorld() {
         WorldCreator wc = new WorldCreator(PlotInfo.worldName);
-
+        plotGenerator = new PlotGen();
+        
         wc.generator(plotGenerator);
         wc.generateStructures(false);
         plotManager = new PlotManager();
         plotMenu = new PlotMenu();
-        plotGenerator = new PlotGen();
         plotWorld = Bukkit.getServer().createWorld(wc);
         plotGenerator.addGeneratedPlots();
         plotManager.generatePlots();

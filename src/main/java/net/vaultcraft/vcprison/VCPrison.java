@@ -6,6 +6,7 @@ import net.vaultcraft.vcprison.crate.CrateListener;
 import net.vaultcraft.vcprison.crate.MineCrateInjector;
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
 import net.vaultcraft.vcprison.furance.FurnaceListener;
+import net.vaultcraft.vcprison.gangs.GangCommands;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
 import net.vaultcraft.vcprison.mine.Mine;
@@ -48,6 +49,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new PlotCommands("plot", Group.COMMON, "p", "cell", "plots", "plotme"));
         CommandManager.addCommand(new VCHelp("help", Group.COMMON));
         CommandManager.addCommand(new VCRules("rules", Group.COMMON));
+        CommandManager.addCommand(new GangCommands("gang", Group.COMMON, "gangs", "f", "team"));
 
         new PlotWorld();
 
