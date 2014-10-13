@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.commands;
 
 import com.google.common.collect.Lists;
+import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Bukkit;
@@ -8,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +21,7 @@ import java.util.List;
  * Created by CraftFest on 10/9/2014.
  */
 
-public class VCHelp extends ICommand {
+public class VCHelp extends ICommand implements Listener {
 
     public static final ItemStack MINES = build(Material.DIAMOND_PICKAXE, "&d&lMines", "&7Mines are where you collect", "&7materials to sell! Use the", "&7command &6/warp &7to view", "&7the mining GUI.", "&7Rank up using &6/rankup&7!");
     public static final ItemStack CELLS = build(Material.IRON_FENCE, "&d&lCells", "&7Cells are where you call home.", "&7Use the command &6/plot &7for", "&7further usage. You can build,", "&7farm and sell items in your", "&7cells!");
@@ -31,6 +33,7 @@ public class VCHelp extends ICommand {
 
     public VCHelp(String name, Group permission, String... aliases) {
         super(name, permission, aliases);
+        Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
     @Override
