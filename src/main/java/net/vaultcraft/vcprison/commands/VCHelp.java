@@ -64,10 +64,8 @@ public class VCHelp extends ICommand {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        Player player = (Player) event.getWhoClicked();
-        if(player.getOpenInventory().getTitle().equals("VaultCraft - Prison Guide")) {
+        if(event.getInventory().getName().equals("VaultCraft - Prison Guide"))
             event.setCancelled(true);
-        }
     }
 
 }
