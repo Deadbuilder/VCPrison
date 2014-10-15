@@ -24,7 +24,7 @@ public class VCDropParty extends ICommand {
         if (args.length == 0) {
             int left = (int) ServerEventHandler.getTimeRemaining(dp.getDropEvent());
 
-            Form.at(player, Prefix.VAULT_CRAFT, "The drop party will begin in " + MMSS(left) + "!");
+            Form.at(player, Prefix.VAULT_CRAFT, "The drop party will begin in " + MMSS(left/20) + "!");
         }
 
         switch (args[0].toLowerCase()) {
