@@ -12,15 +12,25 @@ import org.bukkit.plugin.Plugin;
 public class DropParty extends InnerPlugin {
 
     private ServerEvent dropEvent;
+    private static DropParty instance;
 
     @Override
     public void onEnable() {
+        instance = this;
         dropEvent = new DropEvent();
     }
 
     @Override
     public void onDisable() {
 
+    }
+
+    public DropEvent getDropEvent() {
+        return (DropEvent) dropEvent;
+    }
+
+    public static DropParty getInstance() {
+        return instance;
     }
 
     @Override
