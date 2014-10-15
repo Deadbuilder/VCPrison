@@ -4,6 +4,7 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.events.ServerEvent;
 import net.vaultcraft.vcutils.events.TimeUnit;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -26,6 +27,8 @@ public class DropEvent extends ServerEvent implements Listener {
     }
 
     public void onEvent(Plugin plugin) {
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP PARTY&7: &fThe drop party is now starting!"));
+        
         Locations.world.setStorm(true);
         Locations.world.setWeatherDuration(20 * 60 * 5); // 5 minutes
         running = true;
