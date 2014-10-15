@@ -20,6 +20,7 @@ import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.command.CommandManager;
+import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Bukkit;
@@ -79,6 +80,8 @@ public class VCPrison extends JavaPlugin {
         MineLoader.loadMines();
         WarpLoader.loadWarps();
         ItemWorthLoader.loadItemWorth();
+
+        VCPluginManager.register(this);
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
             @Override

@@ -1,5 +1,7 @@
 package net.vaultcraft.vcprison.event;
 
+import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcutils.events.ServerEvent;
 import net.vaultcraft.vcutils.innerplugin.InnerPlugin;
 import org.bukkit.plugin.Plugin;
 
@@ -9,18 +11,20 @@ import org.bukkit.plugin.Plugin;
  */
 public class DropParty extends InnerPlugin {
 
-    @java.lang.Override
-    public void onEnable() {
+    private ServerEvent dropEvent;
 
+    @Override
+    public void onEnable() {
+        dropEvent = new DropEvent();
     }
 
-    @java.lang.Override
+    @Override
     public void onDisable() {
 
     }
 
-    @java.lang.Override
+    @Override
     public Plugin getWrapperPlugin() {
-        return null;
+        return VCPrison.getInstance();
     }
 }
