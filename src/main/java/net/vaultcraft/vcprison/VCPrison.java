@@ -21,6 +21,7 @@ import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.command.CommandManager;
+import net.vaultcraft.vcutils.events.ServerEventHandler;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
@@ -35,6 +36,8 @@ import java.text.DecimalFormat;
  * Created by tacticalsk8er on 7/30/2014.
  */
 public class VCPrison extends JavaPlugin {
+
+    private static ServerEventHandler eventHandler;
 
     private static VCPrison instance;
 
@@ -55,6 +58,8 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCDropParty("dp", Group.ADMIN, "dropparty"));
 
         new PlotWorld();
+
+        eventHandler = new ServerEventHandler(this);
 
         CrateFile.getInstance().load();
 
@@ -120,6 +125,10 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, daytime, 20*60, 20*60);
+    }
+
+    public static ServerEventHandler getEventHandler() {
+        return eventHandler;
     }
 
     private static DecimalFormat df = new DecimalFormat("0.00");

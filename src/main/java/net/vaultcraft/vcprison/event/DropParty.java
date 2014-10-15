@@ -18,6 +18,7 @@ public class DropParty extends InnerPlugin {
     public void onEnable() {
         instance = this;
         dropEvent = new DropEvent();
+        VCPrison.getEventHandler().addEvent(dropEvent);
     }
 
     @Override
