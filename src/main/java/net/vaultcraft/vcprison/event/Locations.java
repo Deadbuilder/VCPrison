@@ -29,6 +29,6 @@ public class Locations {
     public static final Location center = build("-3839.5,86.0,0.5");
 
     private static Location build(String in) {
-        return new Location(world, Double.parseDouble(in.split(",")[0]), Double.parseDouble(in.split(",")[1]), Double.parseDouble(in.split(",")[1]));
+        return new Location(world, Double.parseDouble(in.split(",")[0]), Double.parseDouble(in.split(",")[1]), Double.parseDouble(in.split(",")[2]));
     }
 }

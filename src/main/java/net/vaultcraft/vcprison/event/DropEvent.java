@@ -27,15 +27,14 @@ public class DropEvent extends ServerEvent implements Listener {
     }
 
     public void onEvent(Plugin plugin) {
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP PARTY&7: &fThe drop party is now starting!"));
-        
-        Locations.world.setStorm(true);
-        Locations.world.setWeatherDuration(20 * 60 * 5); // 5 minutes
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party is now starting!"));
+
         running = true;
 
         int p1IndexDelay = 0;
+
         for (Location loc : Locations.pillars) {
-            p1IndexDelay+=10;
+            p1IndexDelay+=5;
             Runnable run = new Runnable() {
                 public void run() {
                     FallingBlock f1 = Locations.world.spawnFallingBlock(loc.clone().add(0, 100, 0), Material.COBBLE_WALL, (byte)0);

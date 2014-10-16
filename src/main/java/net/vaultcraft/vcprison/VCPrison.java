@@ -93,11 +93,18 @@ public class VCPrison extends JavaPlugin {
         VCPluginManager.register(this);
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+            int pos = 60;
             @Override
             public void run() {
                 for (Mine mine : MineLoader.getMines()) {
-                    MineLoader.resetMine(mine);
-                    System.out.println("Mine: "+mine.getRank().toString()+" reset stage: COMPLETE!");
+                    Runnable delay = new Runnable() {
+                        @Override
+                        public void run() {
+                            MineLoader.resetMine(mine);
+                            System.out.println("Mine: "+mine.getRank().toString()+" reset stage: COMPLETE!");
+                        }
+                    };
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.this, delay, pos+=60);
                 }
             }
         }, 5l);
