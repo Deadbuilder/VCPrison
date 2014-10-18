@@ -88,9 +88,9 @@ public class PlotManager {
     }
 
     public void generatePlots() {
-        System.out.println(newPlots.size());
         task = Bukkit.getScheduler().runTaskTimer(VCPrison.getInstance(), () -> {
             if (newPlots.size() > 0) {
+                System.out.println(newPlots.size());
                 Chunk chunk = newPlots.pop();
                 Gson gson = new Gson();
                 for (CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods()) {
