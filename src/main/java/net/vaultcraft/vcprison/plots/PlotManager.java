@@ -30,8 +30,10 @@ public class PlotManager {
     public PlotManager() {
         ConfigurationSection section = VCPrison.getInstance().getConfig().getConfigurationSection("Plots.GenPlots");
         Gson gson = new Gson();
-        for(String key : section.getKeys(false)) {
-            plots.put(key, gson.fromJson(section.getString(key), Plot.class));
+        if(section != null) {
+            for (String key : section.getKeys(false)) {
+                plots.put(key, gson.fromJson(section.getString(key), Plot.class));
+            }
         }
         task2 = Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(),
                 () -> VCPrison.getInstance().saveConfig(),  18000l, 18000l);
