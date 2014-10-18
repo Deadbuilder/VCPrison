@@ -38,7 +38,7 @@ public class CrateListener implements Listener {
 
             if (!(block.getState() instanceof Chest))
                 return;
-            
+
             player.playSound(block.getLocation(), Sound.ITEM_BREAK, 1, 0);
             Chest chest = (Chest)event.getBlock().getState();
             for (ItemStack stack : chest.getInventory().getContents()) {

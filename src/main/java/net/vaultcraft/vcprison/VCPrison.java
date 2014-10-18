@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison;
 
+import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
@@ -25,12 +26,14 @@ import net.vaultcraft.vcutils.events.ServerEventHandler;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
+import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * Created by tacticalsk8er on 7/30/2014.
@@ -151,6 +154,16 @@ public class VCPrison extends JavaPlugin {
             if (ffa.isPlaying())
                 ffa.endFFA();
         }
+    }
+
+    public static List<Player> getStaff() {
+        List<Player> staff = Lists.newArrayList();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (User.fromPlayer(player) != null && User.fromPlayer(player).getGroup() != null)
+                if (User.fromPlayer(player).getGroup().hasPermission(Group.HELPER))
+                    staff.add(player);
+        }
+        return staff;
     }
 
     public static VCPrison getInstance() {
