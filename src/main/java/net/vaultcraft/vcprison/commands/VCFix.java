@@ -56,6 +56,8 @@ public class VCFix extends ICommand {
                 return (2 * 60);
             case ENDERDRAGON:
                 return (60);
+            default:
+                return 1;
         }
     }
 
