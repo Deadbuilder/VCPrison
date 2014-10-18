@@ -7,12 +7,14 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryAction;
@@ -293,5 +295,15 @@ public class PickaxeListener implements Listener {
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
         if(pickaxe.isInUse())
             event.getPlayer().getInventory().setItem(0, pickaxe.getPickaxe());
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent event) {
+        event.setCancelled(true);
+        Entity player = event.getEntity();
+        if (event.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
+            Location location = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
+            player.teleport(location);
+        }
     }
 }
