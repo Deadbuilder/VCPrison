@@ -18,6 +18,7 @@ import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.plots.PlotWorld;
+import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
@@ -114,6 +115,7 @@ public class VCPrison extends JavaPlugin {
         }, 5l);
 
         new Warden();
+        PrisonScoreboard.init();
 
         Runnable minePercentUpdate = new Runnable() {
             public void run() {
