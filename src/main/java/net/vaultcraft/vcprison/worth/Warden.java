@@ -104,22 +104,6 @@ public class Warden {
         selling.put(player, task);
     }
 
-    private double getMultiplier(Group group) {
-        switch (group) {
-            case WOLF:
-                return 1.25;
-            case SLIME:
-                return 1.75;
-            case SKELETON:
-                return 2.0;
-            case ENDERMAN:
-                return 2.5;
-            case ENDERDRAGON:
-                return 3.5;
-        }
-        return 1;
-    }
-
     private static double getSellTimeMultiplier(Group.GroupHandler group) {
         double val = 1;
         if (group.hasPermission(Group.WOLF))

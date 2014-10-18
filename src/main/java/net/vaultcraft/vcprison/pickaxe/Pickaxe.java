@@ -129,6 +129,8 @@ public class Pickaxe {
 
     public float getDonorMultiplier(User user) {
         if(user.getGroup().hasPermission(Group.ENDERDRAGON))
+            return 2.5f;
+        if(user.getGroup().hasPermission(Group.WITHER))
             return 2;
         if(user.getGroup().hasPermission(Group.ENDERMAN))
             return 1.8f;

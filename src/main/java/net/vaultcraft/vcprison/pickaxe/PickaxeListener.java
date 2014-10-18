@@ -67,6 +67,8 @@ public class PickaxeListener implements Listener {
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
         Pickaxe pickaxe = PrisonUser.fromPlayer(player).getPickaxe();
+        if(!pickaxe.isInUse())
+            return;
         if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Perk Points:")) {
             if (pickaxe.getPickPoints() == 0) {
                 Form.at(player, Prefix.ERROR, "You have no perk points!");
@@ -124,6 +126,10 @@ public class PickaxeListener implements Listener {
     @EventHandler
     public void onHotbarHover(PlayerItemHeldEvent event) {
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+        if(pickaxe == null)
+            return;
+        if(!pickaxe.isInUse())
+            return;
         if (event.getNewSlot() == 0) {
             for (PickaxePerk perk : PickaxePerk.getPerks()) {
                 if (pickaxe.getPerkLevel(perk) == 0)
@@ -162,19 +168,12 @@ public class PickaxeListener implements Listener {
     }
 
     @EventHandler
-    public void onFullInventory(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        int first = player.getInventory().firstEmpty();
-        if(player.getItemInHand().equals(Material.DIAMOND_PICKAXE)) {
-            if(first == -1) {
-                Form.at(player, Prefix.WARNING, "Your inventory is full!");
-            }
-        }
-    }
-
-    @EventHandler
     public void onClick(PlayerInteractEvent event) {
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+        if(pickaxe == null)
+            return;
+        if(!pickaxe.isInUse())
+            return;
         if (event.getAction().name().contains("RIGHT") && event.getPlayer().getInventory().getHeldItemSlot() == 0) {
             event.getPlayer().openInventory(pickaxe.getStatsMenu());
         }
@@ -226,6 +225,8 @@ public class PickaxeListener implements Listener {
         event.getBlock().setType(Material.AIR);
         spawnExp(item.getType(), event.getBlock().getWorld(), event.getPlayer().getLocation());
         event.getPlayer().getInventory().addItem(item);
+        if(event.getPlayer().getInventory().firstEmpty() == -1)
+            Form.at(event.getPlayer(), Prefix.WARNING, "Your inventory is full!");
     }
 
     public static void spawnExp(Material type, World world, Location location) {

@@ -10,6 +10,7 @@ import net.vaultcraft.vcprison.sword.Sword;
 import net.vaultcraft.vcprison.sword.SwordPerk;
 import net.vaultcraft.vcprison.utils.Rank;
 import net.vaultcraft.vcutils.VCUtils;
+import net.vaultcraft.vcutils.user.Group;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -97,22 +98,20 @@ public class PrisonUser {
     }
 
     public int getPlotLimit() {
-        switch (user.getGroup().getHighest()) {
-           case COMMON:
-               return 1;
-           case WOLF:
-               return 2;
-           case SLIME:
-               return 3;
-           case SKELETON:
-               return 4;
-           case ENDERMAN:
-               return 5;
-           case ENDERDRAGON:
-               return 10;
-           default:
-               return 1;
-        }
+        Group.GroupHandler group = user.getGroup();
+        if(group.hasPermission(Group.ENDERMAN))
+            return 15;
+        if(group.hasPermission(Group.WITHER))
+            return 10;
+        if(group.hasPermission(Group.ENDERMAN))
+            return 5;
+        if(group.hasPermission(Group.SKELETON))
+            return 4;
+        if(group.hasPermission(Group.SLIME))
+            return 3;
+        if(group.hasPermission(Group.WOLF))
+            return 2;
+        return 1;
     }
 
     public void setPrestige(int prestige) {
@@ -143,7 +142,8 @@ public class PrisonUser {
         for(SwordPerk perk : SwordPerk.getPerks()) {
             perk.onEnd(player);
         }
-        user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());
+        if(user.getPickaxe() != null)
+            user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());
         Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
             public void run() {
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());

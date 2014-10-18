@@ -26,7 +26,7 @@ public class PlotWorld {
         plotWorld = Bukkit.getServer().createWorld(wc);
         plotGenerator.addGeneratedPlots();
         plotManager.generatePlots();
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(VCPrison.getInstance(), plotGenerator::addGeneratedPlots, 0, 20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(VCPrison.getInstance(), plotGenerator::addGeneratedPlots, 0, 1200);
     }
 
     public static World getPlotWorld() {

@@ -68,9 +68,11 @@ public class VCGangs extends ICommand {
                 if(User.fromPlayer(player).getGroup().hasPermission(Group.ADMIN))
                     disbandGang(player, args);
                 return;
+            default:
+                Form.at(player, Prefix.ERROR, "Please enter a correct argument.");
+                sendHelp(player);
+                break;
         }
-
-        player.sendMessage("Something happened");
     }
 
     public void sendHelp(Player sender) {
@@ -270,6 +272,7 @@ public class VCGangs extends ICommand {
         }
         gang.addMember(sender.getUniqueId().toString());
         sender.sendMessage(ChatColor.GREEN + "Success: " + ChatColor.WHITE + "You have joined the " + gang.getGangName() + " gang.");
+        gangInvites.remove(sender.getName());
     }
 
     public void allyGang(Player sender, String[] args) {

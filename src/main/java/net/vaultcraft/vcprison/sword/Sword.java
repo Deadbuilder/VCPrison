@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.sword;
 
 import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Firework;
@@ -142,6 +143,60 @@ public class Sword {
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lRight Click: &2&lAdd Perk Point"));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
+    }
+
+    public void addPerkLevel(Player player, SwordPerk perk) {
+        int level = perkLevels.get(perk) + 1;
+        perkLevels.remove(perk);
+        perkLevels.put(perk, level);
+        perk.onPurchase(player, getPerkLevel(perk));
+        swordPoints -= perk.getCost();
+        Form.at(player, Prefix.SUCCESS, "You bought one level of " + perk.getName());
+        player.getInventory().setItem(0, getSword());
+    }
+
+    public void addPerkToggle(Player player, SwordPerk perk) {
+        perkLevels.remove(perk);
+        perkLevels.put(perk, 1);
+        perkToggle.remove(perk);
+        perkToggle.put(perk, true);
+        perk.onToggleOn(player);
+        perk.onPurchase(player, 1);
+        swordPoints -= perk.getCost();
+        Form.at(player, Prefix.SUCCESS, "You bought " + perk.getName() + ". You can toggle this on and off in the perk menu.");
+        player.getInventory().setItem(0, getSword());
+    }
+
+    public void togglePerk(Player player, SwordPerk perk) {
+        boolean toggle = !perkToggle.get(perk);
+        perkToggle.remove(perk);
+        perkToggle.put(perk, toggle);
+        if(toggle) {
+            perk.onToggleOn(player);
+            player.getInventory().setItem(0, getSword());
+            Form.at(player, Prefix.SUCCESS, "You toggled " + perk.getName() + " on!");
+        } else {
+            perk.onToggleOff(player);
+            player.getInventory().setItem(0, getSword());
+            Form.at(player, Prefix.SUCCESS, "You toggled " + perk.getName() + " off!");
+        }
+
+    }
+
+    public int getPerkLevel(SwordPerk perk) {
+        return perkLevels.get(perk);
+    }
+
+    public boolean getToggle(SwordPerk perk) {
+        return perkToggle.get(perk);
+    }
+
+    public int getSwordPoints() {
+        return swordPoints;
+    }
+
+    public void setSwordPoints(int pickPoints) {
+        this.swordPoints = pickPoints;
     }
 
     public boolean isInUse() {

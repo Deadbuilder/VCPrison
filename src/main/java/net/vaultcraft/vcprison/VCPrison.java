@@ -56,6 +56,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCGangs("gang", Group.COMMON, "gangs", "f", "team"));
         CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON));
         CommandManager.addCommand(new VCDropParty("dp", Group.ADMIN, "dropparty"));
+        CommandManager.addCommand(new VCFix("fix", Group.WOLF, "repair"));
 
         new PlotWorld();
 
@@ -142,7 +143,7 @@ public class VCPrison extends JavaPlugin {
 
     public void onDisable() {
         PrisonUser.disable();
-        PlotWorld.getPlotManager().savePlots();
+        PlotWorld.getPlotManager().disable();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             FFAPlayer ffa = FFAPlayer.getFFAPlayerFromPlayer(player);

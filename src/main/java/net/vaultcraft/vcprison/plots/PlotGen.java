@@ -5,7 +5,6 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.data.DataException;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.logging.Logger;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
@@ -13,7 +12,7 @@ import org.bukkit.generator.ChunkGenerator;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -32,7 +31,7 @@ public class PlotGen extends ChunkGenerator {
             hallway = CuboidClipboard.loadSchematic(new File(VCPrison.getInstance().getDataFolder(), "hallway.schematic"));
             cells.rotate2D(90);
             hallway.rotate2D(90);
-            generatedChunks = new ArrayList<>();
+            generatedChunks = new LinkedList<>();
         } catch (DataException | IOException e) {
             Logger.error(VCPrison.getInstance(), e);
         }
@@ -72,7 +71,6 @@ public class PlotGen extends ChunkGenerator {
                 }
             }
         }
-        //PlotWorld.getPlotManager().addNewPlots(world.getChunkAt(chunkX, chunkX)); //Nice stack overflow bro
         generatedChunks.add(new Integer[] {chunkX, chunkY});
         return result;
     }
@@ -87,8 +85,10 @@ public class PlotGen extends ChunkGenerator {
     }
 
     public void addGeneratedPlots() {
-        for(Integer[] iArr : generatedChunks) {
+        for(int i = 0; i < generatedChunks.size(); i++) {
+            Integer[] iArr = generatedChunks.get(0);
             PlotWorld.getPlotManager().addNewPlots(PlotWorld.getPlotWorld().getChunkAt(iArr[0], iArr[1]));
+            generatedChunks.remove(0);
         }
     }
 }
