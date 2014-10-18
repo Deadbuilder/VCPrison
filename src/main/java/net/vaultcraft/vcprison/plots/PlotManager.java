@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -27,7 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class PlotManager {
 
     private volatile List<Plot> plots = new CopyOnWriteArrayList<>();
-    private List<Chunk> newPlots = new ArrayList<>();
+    private LinkedList<Chunk> newPlots = new LinkedList<>();
     private SQLite sqLite = VCUtils.getInstance().getSqlite();
     private BukkitTask task = null;
 
@@ -87,17 +88,17 @@ public class PlotManager {
     }
 
     public void generatePlots() {
+        System.out.println(newPlots.size());
         task = Bukkit.getScheduler().runTaskTimer(VCPrison.getInstance(), () -> {
             if (newPlots.size() > 0) {
-                Chunk chunk = newPlots.get(0);
+                Chunk chunk = newPlots.pop();
                 Gson gson = new Gson();
                 for (CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods()) {
                     Plot plot = new Plot(cuboidSelection, chunk.getX(), chunk.getZ());
                     plots.add(plot);
-                    sqLite.doUpdate(Statements.INSERT_SQLITE.getSql("Plots", "UUID, JSON", "?, ?"), plot.getPlotUUID(), gson.toJson(plot));
-                    System.out.println(gson.toJson(plot));
+                    Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(),
+                            () -> sqLite.doUpdate(Statements.INSERT_SQLITE.getSql("Plots", "UUID, JSON", "?, ?"), plot.getPlotUUID(), gson.toJson(plot)));
                 }
-                newPlots.remove(0);
             }
         }, 0, 5);
     }
