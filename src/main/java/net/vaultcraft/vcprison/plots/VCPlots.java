@@ -14,10 +14,10 @@ import java.util.UUID;
 /**
  * Created by tacticalsk8er on 8/31/2014.
  */
-public class PlotCommands extends ICommand {
+public class VCPlots extends ICommand {
 
 
-    public PlotCommands(String name, Group permission, String... aliases) {
+    public VCPlots(String name, Group permission, String... aliases) {
         super(name, permission, aliases);
     }
 

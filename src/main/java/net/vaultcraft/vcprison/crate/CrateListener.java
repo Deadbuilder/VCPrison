@@ -1,11 +1,9 @@
 package net.vaultcraft.vcprison.crate;
 
+import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.mine.Mine;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Item;
@@ -17,6 +15,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 /**
  * Created by Connor Hollasch on 9/26/14.
  */
@@ -26,6 +26,8 @@ public class CrateListener implements Listener {
     public CrateListener() {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
+
+    public static List<Location> crates = Lists.newArrayList();
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBreak(BlockBreakEvent event) {
@@ -55,9 +57,12 @@ public class CrateListener implements Listener {
     public void onInventoryOpen(InventoryOpenEvent event) {
         if (event.getInventory().getHolder() instanceof Chest) {
             Chest chest = (Chest)event.getInventory().getHolder();
-            onBlockBreak(new BlockBreakEvent(chest.getBlock(), (Player) event.getPlayer()));
-            ((Player) event.getPlayer()).playEffect(chest.getLocation(), Effect.STEP_SOUND, Material.CHEST.getId());
-            chest.getBlock().setType(Material.AIR);
+            if (crates.contains(chest.getLocation())) {
+                crates.remove(chest.getLocation());
+                onBlockBreak(new BlockBreakEvent(chest.getBlock(), (Player) event.getPlayer()));
+                ((Player) event.getPlayer()).playEffect(chest.getLocation(), Effect.STEP_SOUND, Material.CHEST.getId());
+                chest.getBlock().setType(Material.AIR);
+            }
         }
     }
 }

@@ -32,6 +32,8 @@ public class MineCrateInjector implements BlockInjector {
         loc.getBlock().setType(Material.CHEST);
         Chest chest = (Chest)loc.getBlock().getState();
 
+        CrateListener.crates.add(chest.getLocation());
+
         Inventory inv = chest.getInventory();
         inv.clear();
 
