@@ -221,6 +221,8 @@ public class PickaxeListener implements Listener {
         event.getBlock().setType(Material.AIR);
         spawnExp(item.getType(), event.getBlock().getWorld(), event.getPlayer().getLocation());
         event.getPlayer().getInventory().addItem(item);
+        if(event.getPlayer().getInventory().firstEmpty() == -1)
+            Form.at(event.getPlayer(), Prefix.WARNING, "Your inventory is full!");
     }
 
     public static void spawnExp(Material type, World world, Location location) {
