@@ -24,17 +24,17 @@ public class VCFix extends ICommand {
     private HashMap<Player, Long> cooldown = new HashMap<>();
 
     public void processCommand(Player player, String[] args) {
-        if (cooldown.containsKey(player)) {
-            long x = cooldown.get(player);
+        if (User.fromPlayer(player).hasUserdata("fixCooldown")) {
+            long x = Long.parseLong(User.fromPlayer(player).getUserdata("fixCooldown"));
             if (x < System.currentTimeMillis())
-                cooldown.remove(player);
+                User.fromPlayer(player).removeUserdata("fixCooldown");
             else {
                 Form.at(player, Prefix.ERROR, "You cannot use this command for another " + DateUtil.fromTime(TimeUnit.SECONDS, (double)((x-System.currentTimeMillis())/1000)));
                 return;
             }
         }
 
-        cooldown.put(player, System.currentTimeMillis() + (1000 * 60 * getMultiplier(User.fromPlayer(player).getGroup().getHighest())));
+        User.fromPlayer(player).addUserdata("fixCooldown", String.valueOf(System.currentTimeMillis() + (1000 * 60 * getMultiplier(User.fromPlayer(player).getGroup().getHighest()))));
 
         repairItems(player.getInventory().getContents());
         repairItems(player.getInventory().getArmorContents());
