@@ -21,6 +21,8 @@ import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.command.CommandManager;
+import net.vaultcraft.vcutils.events.ServerEventHandler;
+import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Bukkit;
@@ -34,6 +36,8 @@ import java.text.DecimalFormat;
  * Created by tacticalsk8er on 7/30/2014.
  */
 public class VCPrison extends JavaPlugin {
+
+    private static ServerEventHandler eventHandler;
 
     private static VCPrison instance;
 
@@ -50,8 +54,13 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCHelp("help", Group.COMMON));
         CommandManager.addCommand(new VCRules("rules", Group.COMMON));
         CommandManager.addCommand(new GangCommands("gang", Group.COMMON, "gangs", "f", "team"));
+        CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON));
+        CommandManager.addCommand(new VCDropParty("dp", Group.ADMIN, "dropparty"));
+        CommandManager.addCommand(new VCFix("fix", Group.WOLF, "repair"));
 
         new PlotWorld();
+
+        eventHandler = new ServerEventHandler(this);
 
         CrateFile.getInstance().load();
 
@@ -82,12 +91,21 @@ public class VCPrison extends JavaPlugin {
         WarpLoader.loadWarps();
         ItemWorthLoader.loadItemWorth();
 
+        VCPluginManager.register(this);
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+            int pos = 60;
             @Override
             public void run() {
                 for (Mine mine : MineLoader.getMines()) {
-                    MineLoader.resetMine(mine);
-                    System.out.println("Mine: "+mine.getRank().toString()+" reset stage: COMPLETE!");
+                    Runnable delay = new Runnable() {
+                        @Override
+                        public void run() {
+                            MineLoader.resetMine(mine);
+                            System.out.println("Mine: "+mine.getRank().toString()+" reset stage: COMPLETE!");
+                        }
+                    };
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.this, delay, pos+=60);
                 }
             }
         }, 5l);
@@ -115,6 +133,10 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, daytime, 20*60, 20*60);
+    }
+
+    public static ServerEventHandler getEventHandler() {
+        return eventHandler;
     }
 
     private static DecimalFormat df = new DecimalFormat("0.00");
