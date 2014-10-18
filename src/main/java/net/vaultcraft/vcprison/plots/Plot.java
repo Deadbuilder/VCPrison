@@ -43,10 +43,8 @@ public class Plot {
         this.plotSpawn = locationToString(minPoint);
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
-        Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(), () -> {
-            VCUtils.getInstance().getSqlite().doUpdate(Statements.UPDATE.getSql("Plots", "JSON=?", "UUID=?"), gson.toJson(this), this.plotUUID);
-            System.out.println(gson.toJson(this));
-        }, 1200l, 1200l);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(),
+                () -> VCUtils.getInstance().getSqlite().doUpdate(Statements.UPDATE.getSql("Plots", "JSON=?", "UUID=?"), gson.toJson(this), this.plotUUID), 1200l, 1200l);
     }
 
     public void setOwnerUUID(String ownerUUID) {
