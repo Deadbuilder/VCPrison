@@ -5,7 +5,6 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.data.DataException;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.logging.Logger;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
@@ -72,7 +71,6 @@ public class PlotGen extends ChunkGenerator {
                 }
             }
         }
-        //PlotWorld.getPlotManager().addNewPlots(world.getChunkAt(chunkX, chunkX)); //Nice stack overflow bro
         generatedChunks.add(new Integer[] {chunkX, chunkY});
         return result;
     }

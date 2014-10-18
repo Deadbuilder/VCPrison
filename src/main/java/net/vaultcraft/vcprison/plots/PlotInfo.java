@@ -16,7 +16,7 @@ public class PlotInfo {
     public static String worldName = "PlotWorld";
     @ClassConfig.Config(path = "Plots.PlotRegions")
     public static List<String> plotRegions = new ArrayList<>(Arrays.asList("2 84 3,13 85 12", "2 88 3,13 89 12"));
-    @ClassConfig.Config(path = "Plots.WorldBoarderRadius")
+    @ClassConfig.Config(path = "Plots.WorldBorderRadius")
     public static int worldBoarderRadius = 50;
 
     public static List<CuboidSelection> getPlotCubiods() {

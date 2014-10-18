@@ -6,19 +6,25 @@ import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
+import net.minecraft.util.com.google.gson.Gson;
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcutils.VCUtils;
+import net.vaultcraft.vcutils.database.sql.Statements;
 import net.vaultcraft.vcutils.logging.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tacticalsk8er on 8/31/2014.
  */
 public class Plot {
 
+    private String plotUUID = "";
     private String ownerUUID = "";
     private List<String> canBuildUUIDs = new ArrayList<>();
     private String plotSpawn;
@@ -27,12 +33,17 @@ public class Plot {
     private int chunkZ;
 
     public Plot(CuboidSelection plotArea, int chunkX, int chunkZ) {
-        Location minPoint = plotArea.getMinimumPoint();
-        Location maxPoint = plotArea.getMaximumPoint();
+        Location minPoint = PlotWorld.getPlotWorld().getChunkAt(chunkX, chunkZ).getBlock(plotArea.getMinimumPoint().getBlockX(),
+                plotArea.getMinimumPoint().getBlockY(), plotArea.getMinimumPoint().getBlockZ()).getLocation();
+        Location maxPoint = PlotWorld.getPlotWorld().getChunkAt(chunkX, chunkZ).getBlock(plotArea.getMaximumPoint().getBlockX(),
+                plotArea.getMaximumPoint().getBlockY(), plotArea.getMaximumPoint().getBlockZ()).getLocation();
+        this.plotUUID = UUID.randomUUID().toString();
         this.plotArea = locationToString(minPoint) + "," + locationToString(maxPoint);
         this.plotSpawn = locationToString(minPoint);
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
+        Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(), () ->
+                VCUtils.getInstance().getSqlite().doUpdate(Statements.UPDATE.getSql("Plots", "JSON=?", "UUID=?"), new Gson().toJson(this), this.plotUUID), 1200l, 1200l);
     }
 
     public void setOwnerUUID(String ownerUUID) {
@@ -106,5 +117,9 @@ public class Plot {
 
     private String locationToString(Location l) {
         return l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ();
+    }
+
+    public String getPlotUUID() {
+        return plotUUID;
     }
 }

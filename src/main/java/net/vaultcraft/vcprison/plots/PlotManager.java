@@ -29,7 +29,7 @@ public class PlotManager {
     private SQLite sqLite = VCUtils.getInstance().getSqlite();
 
     public PlotManager() {
-        sqLite.doUpdate(Statements.TABLE_SQLITE.getSql("Plots", "JSON TEXT"));
+        sqLite.doUpdate(Statements.TABLE_SQLITE.getSql("Plots", "UUID TEXT", "JSON TEXT"));
         Logger.log(VCPrison.getInstance(), "Loading plots...");
         sqLite.doQuery(Statements.QUERYALL.getSql("Plots"), new MySQL.ISqlCallback() {
             @Override
@@ -74,15 +74,6 @@ public class PlotManager {
         return plots;
     }
 
-    public void savePlots() {
-        sqLite.doUpdate("DELETE FROM Plots");
-        Gson gson = new Gson();
-        for (Plot plot : plots) {
-            String json = gson.toJson(plot);
-            sqLite.doUpdate(Statements.INSERT_SQLITE.getSql("Plots", "JSON", "?"), json);
-        }
-    }
-
     public List<Plot> getPlayerPlots(OfflinePlayer player) {
         List<Plot> playerPlots = new ArrayList<>();
         String playerUUID = player.getUniqueId().toString();
@@ -93,15 +84,15 @@ public class PlotManager {
     }
 
     public void generatePlots() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                if (newPlots.size() > 0) {
-                    Chunk chunk = newPlots.get(0);
-                    for (CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods())
-                        plots.add(new Plot(cuboidSelection, chunk.getX(), chunk.getZ()));
-                    newPlots.remove(0);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(), () -> {
+            if (newPlots.size() > 0) {
+                Chunk chunk = newPlots.get(0);
+                for (CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods()) {
+                    Plot plot = new Plot(cuboidSelection, chunk.getX(), chunk.getZ());
+                    plots.add(plot);
+                    sqLite.doUpdate(Statements.INSERT_SQLITE.getSql("Plots", "UUID, JSON", "?, ?"), plot.getPlotUUID(), new Gson().toJson(plot));
                 }
+                newPlots.remove(0);
             }
         }, 0, 5);
     }
