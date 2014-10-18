@@ -48,13 +48,13 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCRankup("rankup", Group.COMMON, "nextrank"));
         CommandManager.addCommand(new VCPrestige("prestige", Group.COMMON, "startover"));
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
-        CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines"));
+        CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines", "warps"));
         CommandManager.addCommand(new VCAddCrateItem("addcrateitem", Group.DEVELOPER, "aci"));
         CommandManager.addCommand(new VCPlots("plot", Group.COMMON, "p", "cell", "plots", "plotme"));
         CommandManager.addCommand(new VCHelp("help", Group.COMMON));
         CommandManager.addCommand(new VCRules("rules", Group.COMMON));
         CommandManager.addCommand(new VCGangs("gang", Group.COMMON, "gangs", "f", "team"));
-        CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON));
+        CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON, "shop"));
         CommandManager.addCommand(new VCDropParty("dp", Group.ADMIN, "dropparty"));
         CommandManager.addCommand(new VCFix("fix", Group.WOLF, "repair"));
 
