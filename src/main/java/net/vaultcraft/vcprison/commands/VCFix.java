@@ -1,5 +1,7 @@
 package net.vaultcraft.vcprison.commands;
 
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.entity.Player;
@@ -24,6 +26,7 @@ public class VCFix extends ICommand {
             try
             {
                     player.getInventory().getItem(i).setDurability((short) 0);
+                Form.at(player, Prefix.SUCCESS, "Fixed all items!");
             }
             catch(Exception e)
             {

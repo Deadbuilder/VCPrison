@@ -1,5 +1,7 @@
 package net.vaultcraft.vcprison.commands;
 
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Bukkit;
@@ -18,5 +20,6 @@ public class VCSpawn extends ICommand {
     public void processCommand(Player player, String[] args) {
         Location location = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
         player.teleport(location);
+        Form.at(player, Prefix.SUCCESS, "Teleported to spawn!");
     }
 }
