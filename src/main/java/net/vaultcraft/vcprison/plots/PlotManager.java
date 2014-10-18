@@ -92,8 +92,7 @@ public class PlotManager {
                 for (CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods()) {
                     Plot plot = new Plot(cuboidSelection, chunk.getX(), chunk.getZ());
                     plots.add(plot);
-                    Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(),
-                            () -> sqLite.doUpdate(Statements.INSERT_SQLITE.getSql("Plots", "UUID, JSON", "?, ?"), plot.getPlotUUID(), new Gson().toJson(plot)));
+                    sqLite.doUpdate(Statements.INSERT_SQLITE.getSql("Plots", "UUID, JSON", "?, ?"), plot.getPlotUUID(), new Gson().toJson(plot));
                 }
                 newPlots.remove(0);
             }
