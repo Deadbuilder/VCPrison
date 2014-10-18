@@ -65,7 +65,7 @@ public class VCFix extends ICommand {
         for (ItemStack i : stacks) {
             if (i == null)
                 return;
-            
+
             if (i.getType().isBlock() || i.getType().getMaxDurability() < 1)
                 return;
 
