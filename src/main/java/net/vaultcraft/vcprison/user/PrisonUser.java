@@ -46,6 +46,7 @@ public class PrisonUser {
                 }
             }
         });
+        pickaxe = new Pickaxe(player);
         new FFAPlayer(player);
     }
 
