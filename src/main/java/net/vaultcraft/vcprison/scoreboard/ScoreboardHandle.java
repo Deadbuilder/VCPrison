@@ -31,10 +31,10 @@ public class ScoreboardHandle implements Runnable {
         text.put(10, "&7{rank}");
         text.put(9, "  ");
         text.put(8, "&5Balance");
-        text.put(7, "&7${balance}" + user.getUser().getMoney());
+        text.put(7, "&7${balance}");
         text.put(6, "   ");
         text.put(5, "&5Rankup Cost");
-        text.put(4, "&7${next}" + (user.getRank().next(user.getRank()).getCost() - user.getRank().getCost()));
+        text.put(4, "&7${next}");
         text.put(3, "    ");
         text.put(2, "&5Online Staff");
         text.put(1, "&7{staff}");
@@ -62,6 +62,8 @@ public class ScoreboardHandle implements Runnable {
             use = use.replace("{balance}", user.getUser().getMoney()+"");
             use = use.replace("{next}", (user.getRank().next(user.getRank()).getCost() - user.getRank().getCost())+"");
             use = use.replace("{staff}", VCPrison.getStaff().size()+"");
+
+            score.setName(ChatColor.translateAlternateColorCodes('&', use));
         }
     }
 }
