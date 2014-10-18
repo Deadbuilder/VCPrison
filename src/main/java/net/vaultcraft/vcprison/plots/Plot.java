@@ -8,8 +8,6 @@ import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import net.minecraft.util.com.google.gson.Gson;
 import net.vaultcraft.vcprison.VCPrison;
-import net.vaultcraft.vcutils.VCUtils;
-import net.vaultcraft.vcutils.database.sql.Statements;
 import net.vaultcraft.vcutils.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -44,7 +42,7 @@ public class Plot {
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
         Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(),
-                () -> VCUtils.getInstance().getSqlite().doUpdate(Statements.UPDATE.getSql("Plots", "JSON=?", "UUID=?"), gson.toJson(this), this.plotUUID), 1200l, 1200l);
+                () -> VCPrison.getInstance().getConfig().set("Plots.GenPlots." + this.plotUUID, gson.toJson(this)), 1200l, 1200l);
     }
 
     public void setOwnerUUID(String ownerUUID) {
