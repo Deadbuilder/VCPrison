@@ -53,8 +53,10 @@ public class PlotListener implements Listener {
         if(block == null)
             return;
         Plot plot = PlotWorld.getPlotManager().getPlotFromLocation(block.getLocation());
-        if(plot == null)
+        if(plot == null) {
+            e.setCancelled(true);
             return;
+        }
         if(plot.canBuild(e.getPlayer()))
             return;
         e.setCancelled(true);
