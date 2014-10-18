@@ -68,7 +68,7 @@ public class Pickaxe {
                 if(PickaxePerk.getPerkFromName(value[0]) != null) {
                     perkLevels.put(PickaxePerk.getPerkFromName(value[0]), Integer.parseInt(value[1]));
                     PickaxePerk.getPerkFromName(value[0]).onStart(player, Integer.parseInt(value[1]));
-                    if(player.getInventory().getHeldItemSlot() == 0)
+                    if(player.getInventory().getHeldItemSlot() == 0 && Integer.parseInt(value[1]) > 0)
                         PickaxePerk.getPerkFromName(value[0]).onHoverOn(player, Integer.parseInt(value[1]));
                     else
                         PickaxePerk.getPerkFromName(value[0]).onHoverOff(player, Integer.parseInt(value[1]));

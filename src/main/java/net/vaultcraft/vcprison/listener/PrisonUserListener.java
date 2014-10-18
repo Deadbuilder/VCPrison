@@ -22,6 +22,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -123,5 +124,16 @@ public class PrisonUserListener implements Listener {
     public void onWeatherChange(WeatherChangeEvent event) {
         if (!event.getWorld().hasStorm())
             event.setCancelled(true);
+    }
+
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent event) {
+        event.setCancelled(true);
+        Entity player = event.getEntity();
+        if (event.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
+            Location location = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
+            player.teleport(location);
+        }
     }
 }
