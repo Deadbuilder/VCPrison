@@ -18,6 +18,7 @@ import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.plots.PlotWorld;
+import net.vaultcraft.vcprison.plots.VCPlots;
 import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
