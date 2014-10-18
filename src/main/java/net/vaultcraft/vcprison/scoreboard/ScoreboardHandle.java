@@ -25,7 +25,6 @@ public class ScoreboardHandle implements Runnable {
     public ScoreboardHandle(Player player) {
         board = new VCScoreboard(player);
         this.player = player;
-        PrisonUser user = PrisonUser.fromPlayer(player);
         text.put(12, " ");
         text.put(11, "&5Current Rank");
         text.put(10, "&7{rank}");

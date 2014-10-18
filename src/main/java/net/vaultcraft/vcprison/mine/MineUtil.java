@@ -118,7 +118,7 @@ public class MineUtil {
         for (int x = xMin; x <= xMax; x++) {
             for (int y = yMin; y <= yMax; y++) {
                 for (int z = zMin; z <= zMax; z++) {
-                    Block hit = new Location(min.getWorld(), x, y, z).getBlock();
+                    Block hit = min.getWorld().getBlockAt(x, y, z);
                     blocks.add(hit);
                 }
             }
