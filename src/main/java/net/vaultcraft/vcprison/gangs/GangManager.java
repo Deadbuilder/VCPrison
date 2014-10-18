@@ -2,18 +2,19 @@ package net.vaultcraft.vcprison.gangs;
 
 import net.minecraft.util.com.google.gson.Gson;
 import net.vaultcraft.vcprison.VCPrison;
-import net.vaultcraft.vcutils.VCUtils;
-import net.vaultcraft.vcutils.database.sql.MySQL;
-import net.vaultcraft.vcutils.database.sql.Statements;
-import net.vaultcraft.vcutils.logging.Logger;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.scheduler.BukkitTask;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -22,30 +23,25 @@ import java.util.HashMap;
 public class GangManager implements Listener {
 
     private static HashMap<String, Gang> gangs = new HashMap<>();
+    private static FileConfiguration gangsConfig = YamlConfiguration.loadConfiguration(new File(VCPrison.getInstance().getDataFolder(), "gangs.yml"));
+    private static BukkitTask task = null;
 
     public GangManager() {
-        VCUtils.getInstance().getSqlite().doUpdate(Statements.TABLE_SQLITE.getSql("Gangs", "Gang"));
-        VCUtils.getInstance().getSqlite().doQuery(Statements.QUERYALL.getSql("Plots"), new MySQL.ISqlCallback() {
-            @Override
-            public void onSuccess(ResultSet resultSet) {
-                Gson gson = new Gson();
-                try {
-                    while (resultSet.next()) {
-                        String json = resultSet.getString("JSON");
-                        Gang gang = gson.fromJson(json, Gang.class);
-                        gangs.put(gang.getGangName(), gang);
+        ConfigurationSection section = gangsConfig.getConfigurationSection("Gangs");
+        Gson gson = new Gson();
+        if(section != null) {
+            for (String key : section.getKeys(false)) {
+                gangs.put(key, gson.fromJson(section.getString(key), Gang.class));
+            }
+        }
+        task = Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(),
+                () -> {
+                    try {
+                        gangsConfig.save(new File(VCPrison.getInstance().getDataFolder(), "gangs.yml"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    Logger.log(VCPrison.getInstance(), "Gangs loaded.");
-                } catch (SQLException e) {
-                    Logger.error(VCPrison.getInstance(), e);
-                }
-            }
-
-            @Override
-            public void onFailure(SQLException e) {
-                Logger.error(VCPrison.getInstance(), e);
-            }
-        });
+                },  18000l, 18000l);
     }
 
     public static Gang getGang(String name) {
@@ -119,5 +115,19 @@ public class GangManager implements Listener {
                 return;
             }
         }
+    }
+
+    public static void disable() {
+        if(task != null)
+            task.cancel();
+        try {
+            gangsConfig.save(new File(VCPrison.getInstance().getDataFolder(), "gangs.yml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static FileConfiguration getGangsConfig() {
+        return gangsConfig;
     }
 }

@@ -1,5 +1,7 @@
 package net.vaultcraft.vcprison.gangs;
 
+import net.minecraft.util.com.google.gson.Gson;
+import net.vaultcraft.vcprison.VCPrison;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -17,11 +19,14 @@ public class Gang {
     private List<String> alliedGangs = new ArrayList<>();
     private List<String> enemyGangs = new ArrayList<>();
     private boolean friendlyFire = false;
+    private static Gson gson = new Gson();
 
     public Gang(String gangName, String ownerUUID) {
         this.gangName = gangName;
         this.ownerUUID = ownerUUID;
         GangManager.getGangs().put(gangName.toLowerCase(), this);
+        Bukkit.getScheduler().runTaskTimer(VCPrison.getInstance(),
+                () -> GangManager.getGangsConfig().set("Gangs." + gangName, gson.toJson(this)), 1200l, 1200l);
     }
 
     public String getGangName() {

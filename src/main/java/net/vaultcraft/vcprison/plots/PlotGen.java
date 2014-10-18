@@ -71,7 +71,8 @@ public class PlotGen extends ChunkGenerator {
                 }
             }
         }
-        generatedChunks.add(new Integer[] {chunkX, chunkY});
+        if(chunkX % 2 == 0)
+            generatedChunks.add(new Integer[] {chunkX, chunkY});
         return result;
     }
 

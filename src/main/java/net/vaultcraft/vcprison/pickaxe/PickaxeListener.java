@@ -67,6 +67,8 @@ public class PickaxeListener implements Listener {
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
         Pickaxe pickaxe = PrisonUser.fromPlayer(player).getPickaxe();
+        if(pickaxe == null)
+            return;
         if(!pickaxe.isInUse())
             return;
         if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Perk Points:")) {
@@ -211,6 +213,8 @@ public class PickaxeListener implements Listener {
         else
             item = new ItemStack(changeType(event.getBlock().getType()));
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+        if(pickaxe == null)
+            return;
         if(!pickaxe.isInUse())
             return;
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
