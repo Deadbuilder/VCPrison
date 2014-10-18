@@ -20,14 +20,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Vector;
 
 /**
  * Created by tacticalsk8er on 8/31/2014.
  */
 public class PlotManager {
 
-    private volatile List<Plot> plots = new CopyOnWriteArrayList<>();
+    private volatile Vector<Plot> plots = new Vector<>();
     private LinkedList<Chunk> newPlots = new LinkedList<>();
     private SQLite sqLite = VCUtils.getInstance().getSqlite();
     private BukkitTask task = null;
@@ -90,7 +90,6 @@ public class PlotManager {
     public void generatePlots() {
         task = Bukkit.getScheduler().runTaskTimer(VCPrison.getInstance(), () -> {
             if (newPlots.size() > 0) {
-                System.out.println(newPlots.size());
                 Chunk chunk = newPlots.pop();
                 Gson gson = new Gson();
                 for (CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods()) {

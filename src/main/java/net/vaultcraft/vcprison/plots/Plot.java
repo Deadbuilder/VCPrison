@@ -24,6 +24,7 @@ import java.util.UUID;
  */
 public class Plot {
 
+    private static Gson gson = new Gson();
     private String plotUUID = "";
     private String ownerUUID = "";
     private List<String> canBuildUUIDs = new ArrayList<>();
@@ -42,8 +43,8 @@ public class Plot {
         this.plotSpawn = locationToString(minPoint);
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
-        Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(), () ->
-                VCUtils.getInstance().getSqlite().doUpdate(Statements.UPDATE.getSql("Plots", "JSON=?", "UUID=?"), new Gson().toJson(this), this.plotUUID), 1200l, 1200l);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(),
+                () -> VCUtils.getInstance().getSqlite().doUpdate(Statements.UPDATE.getSql("Plots", "JSON=?", "UUID=?"), gson.toJson(this), this.plotUUID), 1200l, 1200l);
     }
 
     public void setOwnerUUID(String ownerUUID) {
