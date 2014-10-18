@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison;
 
+import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
@@ -17,7 +18,7 @@ import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.plots.PlotWorld;
-import net.vaultcraft.vcprison.plots.VCPlots;
+import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
@@ -26,12 +27,14 @@ import net.vaultcraft.vcutils.events.ServerEventHandler;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
+import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * Created by tacticalsk8er on 7/30/2014.
@@ -51,7 +54,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
         CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines", "warps"));
         CommandManager.addCommand(new VCAddCrateItem("addcrateitem", Group.DEVELOPER, "aci"));
-        CommandManager.addCommand(new VCPlots("plot", Group.COMMON, "p", "cell", "plots", "plotme"));
+        //CommandManager.addCommand(new VCPlots("plot", Group.COMMON, "p", "cell", "plots", "plotme"));
         CommandManager.addCommand(new VCHelp("help", Group.COMMON));
         CommandManager.addCommand(new VCRules("rules", Group.COMMON));
         CommandManager.addCommand(new VCGangs("gang", Group.COMMON, "gangs", "f", "team"));
@@ -112,6 +115,7 @@ public class VCPrison extends JavaPlugin {
         }, 5l);
 
         new Warden();
+        PrisonScoreboard.init();
 
         Runnable minePercentUpdate = new Runnable() {
             public void run() {
@@ -153,6 +157,16 @@ public class VCPrison extends JavaPlugin {
             if (ffa.isPlaying())
                 ffa.endFFA();
         }
+    }
+
+    public static List<Player> getStaff() {
+        List<Player> staff = Lists.newArrayList();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (User.fromPlayer(player) != null && User.fromPlayer(player).getGroup() != null)
+                if (User.fromPlayer(player).getGroup().hasPermission(Group.HELPER))
+                    staff.add(player);
+        }
+        return staff;
     }
 
     public static VCPrison getInstance() {
