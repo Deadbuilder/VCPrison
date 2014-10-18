@@ -59,7 +59,7 @@ public class ScoreboardHandle implements Runnable {
 
             use = use.replace("{rank}", user.getRank().toString());
             use = use.replace("{balance}", user.getUser().getMoney()+"");
-            use = use.replace("{next}", (user.getRank().next(user.getRank()).getCost() - user.getRank().getCost())+"");
+            use = use.replace("{next}", (user.getRank().next(user.getRank()).getCost()+""));
             use = use.replace("{staff}", VCPrison.getStaff().size()+"");
 
             score.setName(ChatColor.translateAlternateColorCodes('&', use));
