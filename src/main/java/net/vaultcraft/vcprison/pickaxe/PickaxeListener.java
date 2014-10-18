@@ -170,6 +170,8 @@ public class PickaxeListener implements Listener {
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+        if(pickaxe == null)
+            return;
         if(!pickaxe.isInUse())
             return;
         if (event.getAction().name().contains("RIGHT") && event.getPlayer().getInventory().getHeldItemSlot() == 0) {

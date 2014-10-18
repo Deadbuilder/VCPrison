@@ -142,7 +142,8 @@ public class PrisonUser {
         for(SwordPerk perk : SwordPerk.getPerks()) {
             perk.onEnd(player);
         }
-        user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());
+        if(user.getPickaxe() != null)
+            user.getUser().addUserdata("Pickaxe", user.getPickaxe().toString());
         Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), new Runnable() {
             public void run() {
                 DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
