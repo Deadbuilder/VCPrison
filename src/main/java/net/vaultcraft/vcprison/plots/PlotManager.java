@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +28,7 @@ public class PlotManager {
     private List<Plot> plots = new ArrayList<>();
     private List<Chunk> newPlots = new ArrayList<>();
     private SQLite sqLite = VCUtils.getInstance().getSqlite();
+    private BukkitTask task = null;
 
     public PlotManager() {
         sqLite.doUpdate(Statements.TABLE_SQLITE.getSql("Plots", "UUID TEXT, JSON TEXT"));
@@ -84,13 +86,14 @@ public class PlotManager {
     }
 
     public void generatePlots() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(), () -> {
+        task = Bukkit.getScheduler().runTaskTimer(VCPrison.getInstance(), () -> {
             if (newPlots.size() > 0) {
                 Chunk chunk = newPlots.get(0);
                 for (CuboidSelection cuboidSelection : PlotInfo.getPlotCubiods()) {
                     Plot plot = new Plot(cuboidSelection, chunk.getX(), chunk.getZ());
                     plots.add(plot);
-                    sqLite.doUpdate(Statements.INSERT_SQLITE.getSql("Plots", "UUID, JSON", "?, ?"), plot.getPlotUUID(), new Gson().toJson(plot));
+                    Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(),
+                            () -> sqLite.doUpdate(Statements.INSERT_SQLITE.getSql("Plots", "UUID, JSON", "?, ?"), plot.getPlotUUID(), new Gson().toJson(plot)));
                 }
                 newPlots.remove(0);
             }
@@ -107,5 +110,10 @@ public class PlotManager {
                 return plot;
         }
         return null;
+    }
+
+    public void disable() {
+        if(task != null)
+            task.cancel();
     }
 }

@@ -143,6 +143,7 @@ public class VCPrison extends JavaPlugin {
 
     public void onDisable() {
         PrisonUser.disable();
+        PlotWorld.getPlotManager().disable();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             FFAPlayer ffa = FFAPlayer.getFFAPlayerFromPlayer(player);

@@ -126,6 +126,8 @@ public class PickaxeListener implements Listener {
     @EventHandler
     public void onHotbarHover(PlayerItemHeldEvent event) {
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+        if(pickaxe == null)
+            return;
         if(!pickaxe.isInUse())
             return;
         if (event.getNewSlot() == 0) {
