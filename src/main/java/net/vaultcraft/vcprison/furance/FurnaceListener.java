@@ -52,7 +52,7 @@ public class FurnaceListener implements Listener {
                     Form.at(event.getPlayer(), Prefix.ERROR, "You have no blocks that need to be smelted!");
                     return;
                 }
-                int ticks = blocks/4;
+                int ticks = (int) Math.ceil(blocks*.5);
                 Form.at(event.getPlayer(), Prefix.VAULT_CRAFT, "Smelting your items, please wait... &e&n(" + ticks/20.0 + " seconds)");
                 event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.FIRE, 1, 1);
                 BukkitTask task;
