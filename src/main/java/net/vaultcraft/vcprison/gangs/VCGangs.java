@@ -16,13 +16,13 @@ import java.util.*;
 /**
  * Created by tacticalsk8er on 10/1/2014.
  */
-public class GangCommands extends ICommand {
+public class VCGangs extends ICommand {
 
     private HashMap<String, List<String>> gangInvites = new HashMap<>();
     private HashMap<String, List<String>> allyInvites = new HashMap<>();
     private HashMap<String, List<String>> neutralRequests = new HashMap<>();
 
-    public GangCommands(String name, Group permission, String... aliases) {
+    public VCGangs(String name, Group permission, String... aliases) {
         super(name, permission, aliases);
     }
 

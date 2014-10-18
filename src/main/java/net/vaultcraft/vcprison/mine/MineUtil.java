@@ -9,6 +9,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -69,12 +70,19 @@ public class MineUtil {
                 Runnable sync = new Runnable() {
                     public void run() {
                         block: for (Block $k : clone.keySet()) {
+
+                            if ($k.getType().equals(Material.CHEST)) {
+                                Chest chest = (Chest)$k.getState();
+                                chest.getInventory().clear();
+                                chest.update();
+                            }
                             for (BlockInjector injector : injectors) {
                                 if (injector.doGenerate()) {
                                     injector.setBlock($k.getLocation());
                                     continue block;
                                 }
                             }
+
                             Material $v = clone.get($k);
                             $k.setType($v);
                         }
