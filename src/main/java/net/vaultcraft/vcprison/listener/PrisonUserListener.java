@@ -6,6 +6,7 @@ import net.vaultcraft.vcprison.ffa.FFAHandler;
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
 import net.vaultcraft.vcprison.mine.Mine;
 import net.vaultcraft.vcprison.mine.MineLoader;
+import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
@@ -28,6 +29,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 /**
  * Created by tacticalsk8er on 7/31/2014.
@@ -41,6 +43,7 @@ public class PrisonUserListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         new PrisonUser(event.getPlayer());
+        PrisonScoreboard.addPlayer(event.getPlayer());
     }
 
     @EventHandler
