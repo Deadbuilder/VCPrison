@@ -12,7 +12,7 @@ import org.bukkit.generator.ChunkGenerator;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +31,7 @@ public class PlotGen extends ChunkGenerator {
             hallway = CuboidClipboard.loadSchematic(new File(VCPrison.getInstance().getDataFolder(), "hallway.schematic"));
             cells.rotate2D(90);
             hallway.rotate2D(90);
-            generatedChunks = new ArrayList<>();
+            generatedChunks = new LinkedList<>();
         } catch (DataException | IOException e) {
             Logger.error(VCPrison.getInstance(), e);
         }
@@ -85,8 +85,10 @@ public class PlotGen extends ChunkGenerator {
     }
 
     public void addGeneratedPlots() {
-        for(Integer[] iArr : generatedChunks) {
+        for(int i = 0; i < generatedChunks.size(); i++) {
+            Integer[] iArr = generatedChunks.get(0);
             PlotWorld.getPlotManager().addNewPlots(PlotWorld.getPlotWorld().getChunkAt(iArr[0], iArr[1]));
+            generatedChunks.remove(0);
         }
     }
 }
