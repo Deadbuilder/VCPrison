@@ -226,6 +226,7 @@ public class PrisonUser {
                 async_player_map.remove(player);
             } catch (Exception e) {
                 e.printStackTrace();
+                continue;
             }
         }
     }
