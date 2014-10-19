@@ -185,7 +185,7 @@ public class Pickaxe {
     }
 
     public ItemStack getPointsIcon() {
-        ItemStack itemStack = new ItemStack(Material.EMERALD);
+        ItemStack itemStack = new ItemStack(Material.DOUBLE_PLANT);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&2&lPerk Points: " + pickPoints));
         itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&2Click to get a Perk Point Item")));
@@ -203,7 +203,7 @@ public class Pickaxe {
     }
 
     public static ItemStack getAddPointItem() {
-        ItemStack itemStack = new ItemStack(Material.EMERALD);
+        ItemStack itemStack = new ItemStack(Material.DOUBLE_PLANT);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lRight Click: &2&lAdd Perk Point"));
         itemStack.setItemMeta(itemMeta);
