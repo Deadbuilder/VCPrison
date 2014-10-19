@@ -97,6 +97,8 @@ public class VCPrison extends JavaPlugin {
         WarpLoader.loadWarps();
         ItemWorthLoader.loadItemWorth();
 
+        new GangManager();
+
         VCPluginManager.register(this);
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
