@@ -92,6 +92,7 @@ public class PrisonShopListener implements Listener {
                 inv.addItem(si.getItemStack());
             }
             inShop.add(event.getPlayer());
+            event.getPlayer().openInventory(inv);
         }
     }
 
