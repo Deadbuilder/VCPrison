@@ -167,6 +167,8 @@ public class PrisonUser {
 
     public static void remove(final Player player) {
         final PrisonUser user = PrisonUser.fromPlayer(player);
+        if(user == null)
+            return;
         if(user.isRemoving())
             return;
         user.setRemoving(true);
@@ -200,6 +202,8 @@ public class PrisonUser {
         for (Player player : Bukkit.getOnlinePlayers()) {
             try {
                 final PrisonUser user = PrisonUser.fromPlayer(player);
+                if(user == null)
+                    continue;
                 for (PickaxePerk perk : PickaxePerk.getPerks()) {
                     perk.onEnd(player);
                 }
