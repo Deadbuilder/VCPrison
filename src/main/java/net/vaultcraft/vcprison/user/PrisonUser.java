@@ -198,27 +198,31 @@ public class PrisonUser {
 
     public static void disable() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            final PrisonUser user = PrisonUser.fromPlayer(player);
-            for(PickaxePerk perk : PickaxePerk.getPerks()) {
-                perk.onEnd(player);
+            try {
+                final PrisonUser user = PrisonUser.fromPlayer(player);
+                for (PickaxePerk perk : PickaxePerk.getPerks()) {
+                    perk.onEnd(player);
+                }
+                for (SwordPerk perk : SwordPerk.getPerks()) {
+                    perk.onEnd(player);
+                }
+                user.getTask().cancel();
+                user.getUser().getAllUserdata().remove("Pickaxe");
+                DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
+                dbObject.put("UUID", user.getPlayer().getUniqueId().toString());
+                dbObject.put("Rank", user.getRank().toString());
+                dbObject.put("Prestige", user.getPrestige());
+                dbObject.put("Pickaxe", user.getPickaxe().toString());
+                DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
+                if (dbObject1 == null)
+                    VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
+                else
+                    VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
+                player.getInventory().setItem(0, null);
+                async_player_map.remove(player);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            for(SwordPerk perk : SwordPerk.getPerks()) {
-                perk.onEnd(player);
-            }
-            user.getTask().cancel();
-            user.getUser().getAllUserdata().remove("Pickaxe");
-            DBObject dbObject = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
-            dbObject.put("UUID", user.getPlayer().getUniqueId().toString());
-            dbObject.put("Rank", user.getRank().toString());
-            dbObject.put("Prestige", user.getPrestige());
-            dbObject.put("Pickaxe", user.getPickaxe().toString());
-            DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
-            if (dbObject1 == null)
-                VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
-            else
-                VCUtils.getInstance().getMongoDB().update("VaultCraft", "PrisonUsers", dbObject1, dbObject);
-            player.getInventory().setItem(0, null);
-            async_player_map.remove(player);
         }
     }
 }
