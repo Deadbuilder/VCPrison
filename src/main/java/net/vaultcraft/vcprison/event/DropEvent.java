@@ -27,7 +27,7 @@ public class DropEvent extends ServerEvent implements Listener {
     }
 
     public void onEvent(Plugin plugin) {
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party is now starting!"));
+        /*Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party is now starting!"));
 
         running = true;
 
@@ -47,7 +47,7 @@ public class DropEvent extends ServerEvent implements Listener {
                 }
             };
             Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), run, p1IndexDelay);
-        }
+        }*/
     }
 
     public void onTick(Plugin plugin, int i) {

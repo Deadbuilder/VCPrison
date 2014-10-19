@@ -26,6 +26,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by tacticalsk8er on 8/3/2014.
@@ -200,6 +201,8 @@ public class PickaxeListener implements Listener {
         }
     }
 
+    private HashSet<Player> warnCooloff = new HashSet<>();
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBreak(BlockBreakEvent event) {
         if (event.isCancelled())
@@ -229,8 +232,20 @@ public class PickaxeListener implements Listener {
         event.getBlock().setType(Material.AIR);
         spawnExp(item.getType(), event.getBlock().getWorld(), event.getPlayer().getLocation());
         event.getPlayer().getInventory().addItem(item);
-        if(event.getPlayer().getInventory().firstEmpty() == -1)
+        if(event.getPlayer().getInventory().firstEmpty() == -1) {
+            if (warnCooloff.contains(event.getPlayer()))
+                return;
+
             Form.at(event.getPlayer(), Prefix.WARNING, "Your inventory is full!");
+            warnCooloff.add(event.getPlayer());
+
+            Runnable r = new Runnable() {
+                public void run() {
+                    warnCooloff.remove(event.getPlayer());
+                }
+            };
+            Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), r, 20);
+        }
     }
 
     public static void spawnExp(Material type, World world, Location location) {
@@ -279,11 +294,8 @@ public class PickaxeListener implements Listener {
     @EventHandler
     public void onUserLoad(UserLoadedEvent event) {
         PrisonUser user = PrisonUser.fromPlayer(event.getUser().getPlayer());
-        if (event.getUser().getUserdata("Pickaxe") != null) {
+        if (event.getUser().getUserdata("Pickaxe") != null)
             user.setPickaxe(new Pickaxe(user.getPlayer(), event.getUser().getUserdata("Pickaxe")));
-        } else {
-            user.setPickaxe(new Pickaxe(user.getPlayer()));
-        }
     }
 
     @EventHandler
