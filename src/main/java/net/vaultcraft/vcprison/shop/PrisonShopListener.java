@@ -30,22 +30,20 @@ public class PrisonShopListener implements Listener {
 
     private static List<Player> inShop = new ArrayList<>();
     private final ArrayList<ShopItem> items = new ArrayList<ShopItem>() {{
-        add(new ShopItem(Material.LEATHER_HELMET, 1000, "", "Leather Helmet", 1));
-        add(new ShopItem(Material.LEATHER_CHESTPLATE, 1500, "", "Leather Chestplate", 1));
-        add(new ShopItem(Material.LEATHER_LEGGINGS, 1500, "", "Leather Leggings", 1));
-        add(new ShopItem(Material.LEATHER_BOOTS, 1000, "", "Leather Boots", 1));
-        add(new ShopItem(Material.IRON_HELMET, 3000, "", "Iron Helmet", 1));
-        add(new ShopItem(Material.IRON_CHESTPLATE, 4500, "", "Iron Chestplate", 1));
-        add(new ShopItem(Material.IRON_LEGGINGS, 4500, "", "Iron Leggings", 1));
-        add(new ShopItem(Material.IRON_BOOTS, 3000, "", "Iron Boots", 1));
-        add(new ShopItem(Material.DIAMOND_HELMET, 6000, "", "Diamond Helmet", 1));
-        add(new ShopItem(Material.DIAMOND_CHESTPLATE, 8000, "", "Diamond Chestplate", 1));
-        add(new ShopItem(Material.DIAMOND_LEGGINGS, 8000, "", "Diamond Leggings", 1));
-        add(new ShopItem(Material.DIAMOND_BOOTS, 6000, "", "Diamond Boots", 1));
-        add(new ShopItem(Material.BED, 3000, "", "Bed", 1));
+        add(new ShopItem(Material.SMOOTH_BRICK, 3000, "", "Stone Brick", 16));
+        add(new ShopItem(Material.TORCH, 50000, "", "Torch", 4));
+        add(new ShopItem(Material.ICE, 5000, "", "Chest", 1));
+        add(new ShopItem(Material.IRON_FENCE, 4000, "", "Iron Bars", 8));
+        add(new ShopItem(Material.ENCHANTMENT_TABLE, 4000, "", "Enchantment Table", 1));
+        add(new ShopItem(Material.BED, 20000, "", "Bed", 1));
         add(new ShopItem(Material.ENDER_CHEST, 50000, "", "Ender Chest", 1));
-        add(new ShopItem(Material.CHEST, 5000, "", "Chest", 1));
-        add(new ShopItem(Material.SMOOTH_BRICK, 4000, "", "Stone Bricks", 64));
+        add(new ShopItem(Material.CHEST, 6000, "", "Chest", 2));
+        add(new ShopItem(Material.GLOWSTONE, 8000, "", "Glowstone", 8));
+        add(new ShopItem(Material.BOOK_AND_QUILL, 10000, "", "Book and Quill", 1));
+        add(new ShopItem(Material.DIRT, 16000, "", "Dirt", 16));
+        add(new ShopItem(Material.SAND, 16000, "", "Sand", 16));
+        add(new ShopItem(Material.DIAMOND_HOE, 10000, "", "Diamond Hoe", 1));
+        add(new ShopItem(Material.SEEDS, 4000, "", "Seeds", 1));
     }};
 
 
@@ -132,5 +130,11 @@ public class PrisonShopListener implements Listener {
 
             ((Player) event.getWhoClicked()).updateInventory();
         }
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if(event.getInventory().getName().equals("Prison Shop"))
+            event.setCancelled(true);
     }
 }
