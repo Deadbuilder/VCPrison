@@ -294,11 +294,8 @@ public class PickaxeListener implements Listener {
     @EventHandler
     public void onUserLoad(UserLoadedEvent event) {
         PrisonUser user = PrisonUser.fromPlayer(event.getUser().getPlayer());
-        if (event.getUser().getUserdata("Pickaxe") != null) {
+        if (event.getUser().getUserdata("Pickaxe") != null)
             user.setPickaxe(new Pickaxe(user.getPlayer(), event.getUser().getUserdata("Pickaxe")));
-        } else {
-            user.setPickaxe(new Pickaxe(user.getPlayer()));
-        }
     }
 
     @EventHandler
