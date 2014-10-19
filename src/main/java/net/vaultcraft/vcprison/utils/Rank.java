@@ -7,9 +7,9 @@ import org.bukkit.Material;
  */
 public enum Rank {
     A("&7&l<&fA&7&l>", 0.0, Material.DIRT),
-    B("&7&l<&7B&7&l>", 300000.0, Material.COBBLESTONE),
-    C("&7&l<&8C&7&l>", 540000.0, Material.STONE),
-    D("&7&l<&dD&7&l>", 972000.0, Material.WOOD),
+    B("&7&l<&7B&7&l>", 200000.0, Material.COBBLESTONE),
+    C("&7&l<&8C&7&l>", 500000.0, Material.STONE),
+    D("&7&l<&dD&7&l>", 800000.0, Material.WOOD),
     E("&7&l<&eE&7&l>", 1749600.0, Material.SAND),
     F("&7&l<&bF&7&l>", 3149280.0, Material.LOG),
     G("&7&l<&9G&7&l>", 5668704.0, Material.COAL_ORE),
