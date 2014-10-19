@@ -110,6 +110,9 @@ public class PrisonShopListener implements Listener {
             if(clickedSlot > items.size()) {
                 return;
             }
+
+            event.setCancelled(true);
+
             ShopItem item = items.get(clickedSlot);
             User user = User.fromPlayer((Player) event.getWhoClicked());
             if(user.getMoney() < item.price) {
@@ -118,9 +121,16 @@ public class PrisonShopListener implements Listener {
                 return;
             }
 
+            if (event.getWhoClicked().getInventory().firstEmpty() == -1) {
+                Form.at((Player)event.getWhoClicked(), Prefix.ERROR, "You have no empty slots in your inventory!");
+                return;
+            }
+
             event.getWhoClicked().getInventory().addItem(new ItemStack(item.itemType, item.quantity));
             user.setMoney(user.getMoney() - item.price);
             Form.at((Player) event.getWhoClicked(), Prefix.SUCCESS, "You bought a "+item.name+" for $"+String.valueOf(item.price)+"!");
+
+            ((Player) event.getWhoClicked()).updateInventory();
         }
     }
 }

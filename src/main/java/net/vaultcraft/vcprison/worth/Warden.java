@@ -65,7 +65,7 @@ public class Warden {
                 continue;
 
             worth+=(add*inv.getAmount());
-            ticks+=(20*getSellTimeMultiplier(group));
+            ticks+=(20/getSellTimeMultiplier(group));
             player.getInventory().remove(inv);
         }
 
@@ -95,7 +95,7 @@ public class Warden {
                 //ez ^
             }
 
-            user.setMoney(user.getMoney()+finalWorth);
+            user.setMoney(user.getMoney()+(finalWorth*getItemWorthMultiplier(user.getGroup())));
             Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$"+Form.at(finalWorth)+Prefix.SUCCESS.getChatColor()+"!", "WARDEN");
             player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
             selling.remove(player);
@@ -114,8 +114,29 @@ public class Warden {
             val = 4;
         if (group.hasPermission(Group.ENDERMAN))
             val = 5;
-        else return 1;
-        return -1;
+        if (group.hasPermission(Group.WITHER))
+            val = 6;
+        if (group.hasPermission(Group.ENDERDRAGON))
+            return -1;
+
+        return val;
+    }
+
+    public static double getItemWorthMultiplier(Group.GroupHandler group) {
+        if (group.hasPermission(Group.WOLF))
+            return 1.25;
+        if (group.hasPermission(Group.SLIME))
+            return 1.75;
+        if (group.hasPermission(Group.SKELETON))
+            return 2.0;
+        if (group.hasPermission(Group.ENDERMAN))
+            return 2.5;
+        if (group.hasPermission(Group.WITHER))
+            return 3.5;
+        if (group.hasPermission(Group.ENDERDRAGON))
+            return 4.0;
+
+        return 1;
     }
 
     private static class WardenListener implements Listener {
@@ -140,7 +161,7 @@ public class Warden {
                         //ez ^
                     }
 
-                    user.setMoney(user.getMoney()+finalWorth);
+                    user.setMoney(user.getMoney()+(finalWorth*getItemWorthMultiplier(user.getGroup())));
                     Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$" + Form.at(finalWorth) + Prefix.SUCCESS.getChatColor() + "!", "WARDEN");
                     player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
                     resume.remove(player.getName());

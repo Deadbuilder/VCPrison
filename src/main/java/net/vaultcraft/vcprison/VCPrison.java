@@ -132,16 +132,6 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
-
-        Runnable daytime = new Runnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.setPlayerTime(6000, true);
-                }
-            }
-        };
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, daytime, 20*60, 20*60);
     }
 
     public static ServerEventHandler getEventHandler() {
