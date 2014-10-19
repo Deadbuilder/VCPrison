@@ -31,7 +31,7 @@ public enum Rank {
     W("&f&l<&bW&f&l>", 68840470000.0, Material.DIAMOND_BLOCK),
     X("&f&l<&8X&f&l>", 123912800000.0, Material.EMERALD_BLOCK),
     Y("&6&l<&eY&6&l>", 223043100000.0, Material.OBSIDIAN),
-    Z("&8&l<&5Z&8&l>", 401477600000.0, Material.BEDROCK), //now I know my ABC's next time won't you sing with me
+    Z("&8&l<&5Z&8&l>", 401477600000.0, Material.BEDROCK),
     FREE("&5&l<&7&lFREE&5&l>", 722659700000.0, Material.BEACON);
 
     private String prefix;
