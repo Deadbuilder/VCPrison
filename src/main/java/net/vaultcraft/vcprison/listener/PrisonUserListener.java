@@ -26,10 +26,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 /**
  * Created by tacticalsk8er on 7/31/2014.
@@ -52,28 +52,31 @@ public class PrisonUserListener implements Listener {
     }
 
     @EventHandler
+    public void onKick(PlayerKickEvent event) {
+        PrisonUser.remove(event.getPlayer());
+    }
+
+    @EventHandler
     public void blockBreak(final BlockBreakEvent event) {
-        Runnable async = new Runnable() {
-            public void run() {
-                Location loc = event.getBlock().getLocation();
-                final Mine mine = MineLoader.fromLocation(loc);
-                if (mine == null)
-                    return;
+        Runnable async = () -> {
+            Location loc = event.getBlock().getLocation();
+            final Mine mine = MineLoader.fromLocation(loc);
+            if (mine == null)
+                return;
 
-                mine.tickBlocks();
+            mine.tickBlocks();
 
-                if (mine.getPercent() > 0.3) {
-                    mine.reset();
-                    Runnable sync = new Runnable() {
-                        public void run() {
-                            MineLoader.resetMine(mine);
-                            for (Player player : Bukkit.getOnlinePlayers()) {
-                                Form.at(player, "Mine: &e"+mine.getRank().toString()+ Prefix.VAULT_CRAFT.getChatColor()+" reset!");
-                            }
+            if (mine.getPercent() > 0.3) {
+                mine.reset();
+                Runnable sync = new Runnable() {
+                    public void run() {
+                        MineLoader.resetMine(mine);
+                        for (Player player : Bukkit.getOnlinePlayers()) {
+                            Form.at(player, "Mine: &e"+mine.getRank().toString()+ Prefix.VAULT_CRAFT.getChatColor()+" reset!");
                         }
-                    };
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), sync);
-                }
+                    }
+                };
+                Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), sync);
             }
         };
         Bukkit.getScheduler().scheduleAsyncDelayedTask(VCPrison.getInstance(), async);
