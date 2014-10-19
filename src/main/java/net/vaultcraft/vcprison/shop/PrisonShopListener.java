@@ -87,11 +87,12 @@ public class PrisonShopListener implements Listener {
     @EventHandler
     public void onEntInteract(PlayerInteractEntityEvent event) {
         if(event.getRightClicked().getType() == EntityType.WITCH && !inShop.contains(event.getPlayer())) {
-            Inventory inv = Bukkit.createInventory(null, 9*(items.size()/9), "Prison Shop");
+            Inventory inv = Bukkit.createInventory(null,  (int)(Math.ceil(items.size()/9))*9, "Prison Shop");
             for(ShopItem si : items) {
                 inv.addItem(si.getItemStack());
             }
             inShop.add(event.getPlayer());
+            event.getPlayer().openInventory(inv);
         }
     }
 
