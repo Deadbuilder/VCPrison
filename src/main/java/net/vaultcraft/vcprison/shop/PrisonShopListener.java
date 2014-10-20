@@ -44,6 +44,8 @@ public class PrisonShopListener implements Listener {
         add(new ShopItem(Material.SAND, 16000, "x16", "Sand", 16));
         add(new ShopItem(Material.DIAMOND_HOE, 10000, "x1", "Diamond Hoe", 1));
         add(new ShopItem(Material.SEEDS, 4000, "x1", "Seeds", 2));
+        add(new ShopItem(Material.LOG, 3000, "x8", "Oak Wood", 16));
+        add(new ShopItem(Material.BOOK, 2000, "x1", "Book", 1));
     }};
 
 
@@ -85,7 +87,7 @@ public class PrisonShopListener implements Listener {
     @EventHandler
     public void onEntInteract(PlayerInteractEntityEvent event) {
         if(event.getRightClicked().getType() == EntityType.WITCH && !inShop.contains(event.getPlayer())) {
-            Inventory inv = Bukkit.createInventory(null,  27, "Prison Shop");
+            Inventory inv = Bukkit.createInventory(null,  27, "VaultCraft Cells Shop");
             for(ShopItem si : items) {
                 inv.addItem(si.getItemStack());
             }
