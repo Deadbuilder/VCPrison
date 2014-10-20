@@ -67,6 +67,9 @@ public class PrisonUserListener implements Listener {
             mine.tickBlocks();
 
             if (mine.getPercent() > 0.3) {
+                if (mine.isResetting())
+                    return;
+
                 mine.reset();
                 Runnable sync = new Runnable() {
                     public void run() {

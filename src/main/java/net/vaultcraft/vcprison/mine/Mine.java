@@ -14,6 +14,8 @@ public class Mine {
     private int totalCount = -1;
     private int blocksBroken;
 
+    private boolean isResetting;
+
     public Mine(Rank rank, Area area) {
         this.rank = rank;
         this.area = area;
@@ -37,6 +39,15 @@ public class Mine {
 
     public void reset() {
         blocksBroken = 0;
+        isResetting = true;
+    }
+
+    public void finish() {
+        isResetting = false;
+    }
+
+    public boolean isResetting() {
+        return isResetting;
     }
 
     public double getPercent() {
