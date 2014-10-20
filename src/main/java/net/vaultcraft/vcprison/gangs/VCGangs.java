@@ -77,37 +77,37 @@ public class VCGangs extends ICommand {
 
     public void sendHelp(Player sender) {
         sender.sendMessage(" ");
-        new FancyMessage("=== Gangs Help ===").color(ChatColor.BLUE).style(ChatColor.UNDERLINE).send(sender);
-        new FancyMessage("Hover - Command Info | Click - Input Command").color(ChatColor.DARK_BLUE).send(sender);
-        new FancyMessage("/gang help").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang help").tooltip("Shows this text.").send(sender);
-        new FancyMessage("/gang create").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang create").tooltip("Creates a new gang if you are not apart of one.")
-                .then(" <name>").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang create").tooltip("<name> = Name of the gang you want to create.").send(sender);
-        new FancyMessage("/gang info").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang info").tooltip("Shows info about your gang or the specified one.")
-                .then(" [name]").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang info").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang info").tooltip("[name] = Name of the gang you want info on. Optional").send(sender);
-        new FancyMessage("/gang invite").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang invite").tooltip("Invites a player to your gang.")
-                .then(" <player_name>").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang invite").tooltip("<player_name> = Name of the player you want to invite.")
-                .then(" [*]").color(ChatColor.BLUE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang invite").tooltip("NOTE | You need to be the owner of the gang to use this command.").send(sender);
-        new FancyMessage("/gang join").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang join").tooltip("Joins the gang you specify if you have been invited.")
-                .then(" <gang_name>").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang join").tooltip("<gang_name> = Name of the gang you want to join.").send(sender);
-        new FancyMessage("/gang kick").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang kick").tooltip("Kicks a member from your gang.")
-                .then(" <name>").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang kick").tooltip("<name> = Name of the player/member you want to kick.")
-                .then(" [*]").color(ChatColor.BLUE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang kick").tooltip("NOTE | You need to be the owner of the gang to use this command.").send(sender);
-        new FancyMessage("/gang leave").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang leave").tooltip("Leave your current gang.")
-                .then(" [*]").color(ChatColor.BLUE).style(ChatColor.ITALIC, ChatColor.BOLD, ChatColor.UNDERLINE).suggest("/gang leave").tooltip("WARNING | If you are the owner of the gang, this command will disband your gang.").send(sender);
-        new FancyMessage("/gang ally").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang ally").tooltip("Allies with the specified gang.")
-                .then(" <gang_name>").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang ally").tooltip("<gang_name> = Name of the gang you want to ally with.")
-                .then(" [*]").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang ally").tooltip("NOTE | Other gang owner needs to be online and accept your allying invitation.")
-                .then("[*]").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang ally").tooltip("NOTE | Use this command to un-ally with a gang.")
-                .then("[*]").color(ChatColor.BLUE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang ally").tooltip("NOTE | You need to be the owner of the gang to use this command.").send(sender);
-        new FancyMessage("/gang enemy").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang enemy").tooltip("Become enemies with the specified gang.")
-                .then(" <gang_name>").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang enemy").tooltip("<gang_name> = Name of the gang you want to become enemies with.")
-                .then(" [*]").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang enemy").tooltip("NOTE | Use this command to become neutral with a gang.")
-                .then("[*]").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang enemy").tooltip("NOTE | In order to become neutral again, the other gang owner needs to be online and accept your offer to become neutral.")
-                .then("[*]").color(ChatColor.BLUE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang enemy").tooltip("NOTE | You need to be the owner of the gang to use this command.").send(sender);
+        new FancyMessage("=== VaultCraft Gangs Help ===").color(ChatColor.DARK_PURPLE).style(ChatColor.UNDERLINE).send(sender);
+        new FancyMessage("Hover - Command Info | Click - Input Command").color(ChatColor.GRAY).send(sender);
+        new FancyMessage("/gang help").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang help").tooltip("Shows this text.").send(sender);
+        new FancyMessage("/gang create").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang create").tooltip("Creates a new gang if you are not apart of one.")
+                .then(" <name>").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang create").tooltip("<name> = Name of the gang you want to create.").send(sender);
+        new FancyMessage("/gang info").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang info").tooltip("Shows info about your gang or the specified one.")
+                .then(" [name]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang info").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang info").tooltip("[name] = Name of the gang you want info on. Optional").send(sender);
+        new FancyMessage("/gang invite").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang invite").tooltip("Invites a player to your gang.")
+                .then(" <player_name>").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang invite").tooltip("<player_name> = Name of the player you want to invite.")
+                .then(" [*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang invite").tooltip("NOTE | You need to be the owner of the gang to use this command.").send(sender);
+        new FancyMessage("/gang join").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang join").tooltip("Joins the gang you specify if you have been invited.")
+                .then(" <gang_name>").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang join").tooltip("<gang_name> = Name of the gang you want to join.").send(sender);
+        new FancyMessage("/gang kick").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang kick").tooltip("Kicks a member from your gang.")
+                .then(" <name>").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang kick").tooltip("<name> = Name of the player/member you want to kick.")
+                .then(" [*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang kick").tooltip("NOTE | You need to be the owner of the gang to use this command.").send(sender);
+        new FancyMessage("/gang leave").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang leave").tooltip("Leave your current gang.")
+                .then(" [*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC, ChatColor.BOLD, ChatColor.UNDERLINE).suggest("/gang leave").tooltip("WARNING | If you are the owner of the gang, this command will disband your gang.").send(sender);
+        new FancyMessage("/gang ally").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang ally").tooltip("Allies with the specified gang.")
+                .then(" <gang_name>").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang ally").tooltip("<gang_name> = Name of the gang you want to ally with.")
+                .then(" [*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang ally").tooltip("NOTE | Other gang owner needs to be online and accept your allying invitation.")
+                .then("[*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang ally").tooltip("NOTE | Use this command to un-ally with a gang.")
+                .then("[*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang ally").tooltip("NOTE | You need to be the owner of the gang to use this command.").send(sender);
+        new FancyMessage("/gang enemy").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang enemy").tooltip("Become enemies with the specified gang.")
+                .then(" <gang_name>").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang enemy").tooltip("<gang_name> = Name of the gang you want to become enemies with.")
+                .then(" [*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang enemy").tooltip("NOTE | Use this command to become neutral with a gang.")
+                .then("[*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang enemy").tooltip("NOTE | In order to become neutral again, the other gang owner needs to be online and accept your offer to become neutral.")
+                .then("[*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang enemy").tooltip("NOTE | You need to be the owner of the gang to use this command.").send(sender);
         if(User.fromPlayer(sender).getGroup().hasPermission(Group.ADMIN))
-            new FancyMessage("/gang disband").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang disband").tooltip("Disband the specified gang.")
-                    .then(" <gang_name>").color(ChatColor.BLUE).style(ChatColor.ITALIC).suggest("/gang disband").tooltip("<gang_name> = Name of the gang you want to disband.")
-                    .then(" [*]").color(ChatColor.BLUE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang disband").tooltip("NOTE | This command can only be used by admins.").send(sender);
+            new FancyMessage("/gang disband").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang disband").tooltip("Disband the specified gang.")
+                    .then(" <gang_name>").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).suggest("/gang disband").tooltip("<gang_name> = Name of the gang you want to disband.")
+                    .then(" [*]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC, ChatColor.BOLD).suggest("/gang disband").tooltip("NOTE | This command can only be used by admins.").send(sender);
         sender.sendMessage(" ");
     }
 
@@ -140,7 +140,7 @@ public class VCGangs extends ICommand {
 
         GangManager.getGangs().put(gangName, new Gang(gangName, sender.getUniqueId().toString()));
         sender.sendMessage(ChatColor.GREEN + "Success: " + ChatColor.WHITE + "You create the " + gangName + " gang.");
-        Bukkit.broadcastMessage("[" + ChatColor.BLUE + "Gangs" + ChatColor.WHITE + "] " + gangName + " has been created.");
+        Bukkit.broadcastMessage(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Gangs" + ChatColor.GRAY + "] " + gangName + " has been created.");
     }
 
     public void infoGang(Player sender, String[] args) {
@@ -218,8 +218,8 @@ public class VCGangs extends ICommand {
             gangInvites.put(player.getName(), invites);
         }
 
-        new FancyMessage(senderGang.getGangName() + " has invited you to join!").color(ChatColor.BLUE).style(ChatColor.BOLD)
-                .then(" [Click here to join]").color(ChatColor.BLUE).style(ChatColor.ITALIC).command("/gang join " + senderGang.getGangName()).send(player);
+        new FancyMessage(senderGang.getGangName() + " has invited you to join!").color(ChatColor.LIGHT_PURPLE).style(ChatColor.BOLD)
+                .then(" [Click here to join]").color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).command("/gang join " + senderGang.getGangName()).send(player);
         sender.sendMessage(ChatColor.GREEN + "Success: " + ChatColor.WHITE + player.getName() + " has been invited to your gang.");
     }
 
@@ -231,10 +231,10 @@ public class VCGangs extends ICommand {
                 return;
             }
             sender.sendMessage(" ");
-            sender.sendMessage(ChatColor.BLUE + "===Gang Invites===");
-            sender.sendRawMessage(ChatColor.DARK_BLUE + "Click on gang name to join them.");
+            sender.sendMessage(ChatColor.DARK_PURPLE + "===Gang Invites===");
+            sender.sendRawMessage(ChatColor.GRAY + "Click on gang name to join them.");
             for (String s : gangInvites.get(sender.getName()))
-                new FancyMessage(s).color(ChatColor.BLUE).style(ChatColor.ITALIC).command("/gang join " + s).tooltip("Click to join " + s + " gang.").send(sender);
+                new FancyMessage(s).color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).command("/gang join " + s).tooltip("Click to join " + s + " gang.").send(sender);
             sender.sendMessage(" ");
             return;
         }
@@ -303,10 +303,10 @@ public class VCGangs extends ICommand {
                 return;
             }
             sender.sendMessage(" ");
-            sender.sendMessage(ChatColor.BLUE + "===Ally Invites===");
-            sender.sendRawMessage(ChatColor.DARK_BLUE + "Click on gang name to become allies with them.");
+            sender.sendMessage(ChatColor.LIGHT_PURPLE + "===Ally Invites===");
+            sender.sendRawMessage(ChatColor.GRAY + "Click on gang name to become allies with them.");
             for (String s : allyInvites.get(senderGang.getGangName()))
-                new FancyMessage(s).color(ChatColor.BLUE).style(ChatColor.ITALIC).command("/gang ally " + s).tooltip("Click to become allies with " + s + " gang.").send(sender);
+                new FancyMessage(s).color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).command("/gang ally " + s).tooltip("Click to become allies with " + s + " gang.").send(sender);
             sender.sendMessage(" ");
             return;
         }
@@ -388,10 +388,10 @@ public class VCGangs extends ICommand {
                 return;
             }
             sender.sendMessage(" ");
-            sender.sendMessage(ChatColor.BLUE + "===Neutral Requests===");
-            sender.sendRawMessage(ChatColor.DARK_BLUE + "Click on gang name to become neutral with them.");
+            sender.sendMessage(ChatColor.DARK_PURPLE + "===Neutral Requests===");
+            sender.sendRawMessage(ChatColor.GRAY + "Click on gang name to become neutral with them.");
             for (String s : neutralRequests.get(senderGang.getGangName()))
-                new FancyMessage(s).color(ChatColor.BLUE).style(ChatColor.ITALIC).command("/gang enemy " + s).tooltip("Click to become allies with " + s + " gang.").send(sender);
+                new FancyMessage(s).color(ChatColor.LIGHT_PURPLE).style(ChatColor.ITALIC).command("/gang enemy " + s).tooltip("Click to become allies with " + s + " gang.").send(sender);
             sender.sendMessage(" ");
             return;
         }
@@ -557,14 +557,14 @@ public class VCGangs extends ICommand {
 
     public void sendGangInfo(Player sender, Gang gang) {
         sender.sendMessage(" ");
-        sender.sendMessage(ChatColor.BLUE + "===" + gang.getGangName() + " Gang Info===");
+        sender.sendMessage(ChatColor.DARK_PURPLE + "===" + gang.getGangName() + " Gang Info===");
         OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(gang.getOwnerUUID()));
         if(player.isOnline())
             sender.sendMessage(ChatColor.GOLD.toString() + ChatColor.ITALIC + "Owner: " + ChatColor.GREEN + player.getName());
         else
             sender.sendMessage(ChatColor.GOLD.toString() + ChatColor.ITALIC + "Owner: " +  ChatColor.RED + player.getName());
         StringBuilder sb = new StringBuilder();
-        sb.append(ChatColor.BLUE).append(ChatColor.ITALIC).append("Members: ");
+        sb.append(ChatColor.LIGHT_PURPLE).append(ChatColor.ITALIC).append("Members: ");
         for (String memberUUID : gang.getMemberUUIDs()) {
             player = Bukkit.getOfflinePlayer(UUID.fromString(memberUUID));
             if(player.isOnline())
