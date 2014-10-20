@@ -121,7 +121,7 @@ public class VCGangs extends ICommand {
 
         for (Map.Entry entry : GangManager.getGangs().entrySet()) {
             String name = (String) entry.getKey();
-            if (name.equals(gangName.toLowerCase())) {
+            if (name.equals(gangName)) {
                 sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.WHITE + "You need to pick a unique gang name.");
                 return;
             }
@@ -262,7 +262,7 @@ public class VCGangs extends ICommand {
         Gang gang = null;
         for (String s : invites) {
             if (s.equalsIgnoreCase(gangName)) {
-                gang = GangManager.getGangs().get(gangName.toLowerCase());
+                gang = GangManager.getGangs().get(gangName);
                 break;
             }
         }
@@ -311,12 +311,12 @@ public class VCGangs extends ICommand {
             return;
         }
 
-        if (!GangManager.getGangs().containsKey(args[1].toLowerCase())) {
+        if (!GangManager.getGangs().containsKey(args[1])) {
             sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.WHITE + "That gang does not exist.");
             return;
         }
 
-        Gang gang = GangManager.getGangs().get(args[1].toLowerCase());
+        Gang gang = GangManager.getGangs().get(args[1]);
 
         if (gang.getAlliedGangs().contains(senderGang.getGangName())) {
             gang.removeAlly(senderGang.getGangName());
@@ -396,12 +396,12 @@ public class VCGangs extends ICommand {
             return;
         }
 
-        if (!GangManager.getGangs().containsKey(args[1].toLowerCase())) {
+        if (!GangManager.getGangs().containsKey(args[1])) {
             sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.WHITE + "That gang does not exist.");
             return;
         }
 
-        Gang gang = GangManager.getGangs().get(args[1].toLowerCase());
+        Gang gang = GangManager.getGangs().get(args[1]);
 
         if (!gang.getEnemyGangs().contains(senderGang.getGangName())) {
             gang.addEnemy(senderGang.getGangName());
@@ -545,12 +545,12 @@ public class VCGangs extends ICommand {
             return;
         }
 
-        if(!GangManager.getGangs().containsKey(args[1].toLowerCase())) {
+        if(!GangManager.getGangs().containsKey(args[1])) {
             sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.WHITE + args[1] + " does not exist.");
             return;
         }
 
-        Gang gang = GangManager.getGangs().get(args[1].toLowerCase());
+        Gang gang = GangManager.getGangs().get(args[1]);
         sender.sendMessage(ChatColor.GREEN + "Success: " + ChatColor.WHITE + gang.getGangName() + " has been disbanded.");
         gang.disband();
     }

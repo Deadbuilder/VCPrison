@@ -98,16 +98,16 @@ public class Gang {
         }
 
         for(String alliedGang : alliedGangs) {
-            Gang gang = GangManager.getGang(alliedGang.toLowerCase());
+            Gang gang = GangManager.getGang(alliedGang);
             gang.removeAlly(gangName);
         }
 
         for(String enemyGang : enemyGangs) {
-            Gang gang = GangManager.getGang(enemyGang.toLowerCase());
+            Gang gang = GangManager.getGang(enemyGang);
             gang.removeEnemy(gangName);
         }
 
-        GangManager.getGangs().remove(gangName.toLowerCase());
+        GangManager.getGangs().remove(gangName);
         memberUUIDs.clear();
         alliedGangs.clear();
         enemyGangs.clear();
