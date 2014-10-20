@@ -70,6 +70,8 @@ public class Gang {
     public void addAlly(String gangName) {
         if(alliedGangs.contains(gangName))
             return;
+        if(enemyGangs.contains(gangName))
+            enemyGangs.remove(gangName);
         alliedGangs.add(gangName);
     }
 
@@ -80,6 +82,8 @@ public class Gang {
     public void addEnemy(String gangName) {
         if(enemyGangs.contains(gangName))
             return;
+        if(alliedGangs.contains(gangName))
+            alliedGangs.remove(gangName);
         enemyGangs.add(gangName);
     }
 
