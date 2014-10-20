@@ -105,7 +105,7 @@ public class PrisonShopListener implements Listener {
     public void onInvClick(InventoryClickEvent event) {
         if(event.getWhoClicked() instanceof Player && inShop.contains(event.getWhoClicked())) {
             event.setCancelled(true);
-            if(!event.getInventory().getName().equals("Prison Shop")) {
+            if(!event.getInventory().getName().equals("Prison Shop") || event.getSlot() != event.getRawSlot()) { //FIXME: This is kinda hackish
                 return;
             }
             int clickedSlot = event.getSlot();
