@@ -166,8 +166,9 @@ public class PickaxeListener implements Listener {
 
     @EventHandler
     public void onCraft(CraftItemEvent event) {
-        if (event.getRecipe().getResult().getType() == Material.DIAMOND_PICKAXE)
+        if(event.getRecipe().getResult().getType() == Material.DIAMOND_PICKAXE || event.getRecipe().getResult().getType() == Material.DIAMOND_SWORD || event.getRecipe().getResult().getType() == Material.IRON_SWORD || event.getRecipe().getResult().getType() == Material.GOLD_SWORD || event.getRecipe().getResult().getType() == Material.STONE_SWORD || event.getRecipe().getResult().getType() == Material.WOOD_SWORD) {
             event.setCancelled(true);
+        }
     }
 
     @EventHandler
