@@ -1,7 +1,5 @@
 package net.vaultcraft.vcprison.shop;
 
-import net.citizensnpcs.api.event.NPCLeftClickEvent;
-import net.citizensnpcs.api.npc.NPC;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
@@ -19,7 +17,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.lang.model.element.Name;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +104,7 @@ public class PrisonShopListener implements Listener {
     public void onInvClick(InventoryClickEvent event) {
         if(event.getWhoClicked() instanceof Player && inShop.contains(event.getWhoClicked())) {
             event.setCancelled(true);
-            if(!event.getInventory().getName().equals("Prison Shop") || event.getSlot() != event.getRawSlot()) { //FIXME: This is kinda hackish
+            if(event.getSlot() != event.getRawSlot()) { //FIXME: This is kinda hackish
                 return;
             }
             int clickedSlot = event.getSlot();
@@ -135,11 +132,5 @@ public class PrisonShopListener implements Listener {
 
             ((Player) event.getWhoClicked()).updateInventory();
         }
-    }
-
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
-        if(event.getInventory().getName().equals("Prison Shop"))
-            event.setCancelled(true);
     }
 }
