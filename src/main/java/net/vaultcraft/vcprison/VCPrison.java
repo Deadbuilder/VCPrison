@@ -99,7 +99,7 @@ public class VCPrison extends JavaPlugin {
         WarpLoader.loadWarps();
         ItemWorthLoader.loadItemWorth();
 
-        //new GangManager();
+        new GangManager();
 
         VCPluginManager.register(this);
 
