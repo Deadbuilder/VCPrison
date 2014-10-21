@@ -74,7 +74,7 @@ public class Warden {
         player.updateInventory();
 
         if (worth == 0) {
-            Form.atCharacter(player, Prefix.CHARACTER, "You don't have any items to sell me!", "WARDEN");
+            Form.atCharacter(player, Prefix.CHARACTER, "You don't have any items to sell me!", "GUARD");
             return;
         }
 
@@ -84,7 +84,7 @@ public class Warden {
         resume.put(player.getName(), dc);
 
         String date = (DateUtil.fromTime(TimeUnit.SECONDS, ticks/20));
-        Form.atCharacter(player, Prefix.CHARACTER, "I'm selling your items, it will take about &e&n" + (date.equals("") ? "0 seconds" : date), "WARDEN");
+        Form.atCharacter(player, Prefix.CHARACTER, "I'm selling your items, it will take about &e&n" + (date.equals("") ? "0 seconds" : date), "GUARD");
 
         final int finalWorth = (int)(worth*getItemWorthMultiplier(user.getGroup()));
 
@@ -96,7 +96,7 @@ public class Warden {
             }
 
             user.setMoney(user.getMoney()+(finalWorth));
-            Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$"+Form.at(finalWorth)+Prefix.SUCCESS.getChatColor()+"!", "WARDEN");
+            Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$"+Form.at(finalWorth)+Prefix.SUCCESS.getChatColor()+"!", "GUARD");
             player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
             selling.remove(player);
             resume.remove(player.getName());
@@ -150,7 +150,7 @@ public class Warden {
             if (c == null)
                 return;
 
-            Form.atCharacter(player, Prefix.CHARACTER, "I'll resume selling your items at once!", "WARDEN");
+            Form.atCharacter(player, Prefix.CHARACTER, "I'll resume selling your items at once!", "GUARD");
 
             final int finalWorth = (int)(c.worth*getItemWorthMultiplier(user.getGroup()));
 
@@ -163,7 +163,7 @@ public class Warden {
                     }
 
                     user.setMoney(user.getMoney()+(finalWorth));
-                    Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$" + Form.at(finalWorth) + Prefix.SUCCESS.getChatColor() + "!", "WARDEN");
+                    Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$" + Form.at(finalWorth) + Prefix.SUCCESS.getChatColor() + "!", "GUARD");
                     player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
                     resume.remove(player.getName());
                     selling.remove(player);
