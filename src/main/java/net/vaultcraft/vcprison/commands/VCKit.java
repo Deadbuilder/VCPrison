@@ -4,6 +4,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
+import net.vaultcraft.vcutils.user.User;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -29,19 +30,19 @@ public class VCKit extends ICommand {
             player.sendMessage(ChatColor.GRAY + "Usage: /kit <kit name>");
         } else if(args.length == 1) {
             if(args[0].equalsIgnoreCase("common")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Common");
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else if(args[0].equalsIgnoreCase("wolf")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Wolf");
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else if(args[0].equalsIgnoreCase("slime")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Slime");
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else if(args[0].equalsIgnoreCase("skeleton")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Skeleton");
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else if(args[0].equalsIgnoreCase("enderman")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Enderman");
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else if(args[0].equalsIgnoreCase("wither")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Wither");
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else if(args[0].equalsIgnoreCase("enderdragon")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "EnderDragon");
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else {
                 Form.at(player, Prefix.ERROR, "That kit does not exist.");
             }
