@@ -28,6 +28,6 @@ public class VCWarp extends ICommand {
         PrisonUser user = PrisonUser.fromPlayer(player);
 
         player.openInventory(WarpGUI.create(user));
-        Form.at(player, Prefix.SUCCESS, "Warp GUI opened!");
+        Form.at(player, Prefix.SUCCESS, "Warp menu opened!");
     }
 }

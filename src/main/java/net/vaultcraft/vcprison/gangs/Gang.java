@@ -70,6 +70,8 @@ public class Gang {
     public void addAlly(String gangName) {
         if(alliedGangs.contains(gangName))
             return;
+        if(enemyGangs.contains(gangName))
+            enemyGangs.remove(gangName);
         alliedGangs.add(gangName);
     }
 
@@ -80,6 +82,8 @@ public class Gang {
     public void addEnemy(String gangName) {
         if(enemyGangs.contains(gangName))
             return;
+        if(alliedGangs.contains(gangName))
+            alliedGangs.remove(gangName);
         enemyGangs.add(gangName);
     }
 
@@ -94,21 +98,21 @@ public class Gang {
         }
 
         for(String alliedGang : alliedGangs) {
-            Gang gang = GangManager.getGang(alliedGang.toLowerCase());
+            Gang gang = GangManager.getGang(alliedGang);
             gang.removeAlly(gangName);
         }
 
         for(String enemyGang : enemyGangs) {
-            Gang gang = GangManager.getGang(enemyGang.toLowerCase());
+            Gang gang = GangManager.getGang(enemyGang);
             gang.removeEnemy(gangName);
         }
 
-        GangManager.getGangs().remove(gangName.toLowerCase());
+        GangManager.getGangs().remove(gangName);
         memberUUIDs.clear();
         alliedGangs.clear();
         enemyGangs.clear();
         ownerUUID = "";
-        Bukkit.broadcastMessage("[" + ChatColor.BLUE + "Gangs" + ChatColor.WHITE + "] " + gangName + " has disbanded!");
+        Bukkit.broadcastMessage(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Gangs" + ChatColor.GRAY + "] " + gangName + " has been disbanded!");
         gangName = "";
     }
 }

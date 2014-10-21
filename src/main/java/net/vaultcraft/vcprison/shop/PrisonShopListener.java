@@ -30,20 +30,22 @@ public class PrisonShopListener implements Listener {
 
     private static List<Player> inShop = new ArrayList<>();
     private final ArrayList<ShopItem> items = new ArrayList<ShopItem>() {{
-        add(new ShopItem(Material.SMOOTH_BRICK, 3000, "", "Stone Brick", 16));
-        add(new ShopItem(Material.TORCH, 50000, "", "Torch", 4));
-        add(new ShopItem(Material.ICE, 5000, "", "Chest", 1));
-        add(new ShopItem(Material.IRON_FENCE, 4000, "", "Iron Bars", 8));
-        add(new ShopItem(Material.ENCHANTMENT_TABLE, 4000, "", "Enchantment Table", 1));
-        add(new ShopItem(Material.BED, 20000, "", "Bed", 1));
-        add(new ShopItem(Material.ENDER_CHEST, 50000, "", "Ender Chest", 1));
-        add(new ShopItem(Material.CHEST, 6000, "", "Chest", 2));
-        add(new ShopItem(Material.GLOWSTONE, 8000, "", "Glowstone", 8));
-        add(new ShopItem(Material.BOOK_AND_QUILL, 10000, "", "Book and Quill", 1));
-        add(new ShopItem(Material.DIRT, 16000, "", "Dirt", 16));
-        add(new ShopItem(Material.SAND, 16000, "", "Sand", 16));
-        add(new ShopItem(Material.DIAMOND_HOE, 10000, "", "Diamond Hoe", 1));
-        add(new ShopItem(Material.SEEDS, 4000, "", "Seeds", 1));
+        add(new ShopItem(Material.SMOOTH_BRICK, 3000, "x16", "Stone Brick", 16));
+        add(new ShopItem(Material.TORCH, 50000, "x4", "Torch", 4));
+        add(new ShopItem(Material.ICE, 5000, "x2", "Ice", 2));
+        add(new ShopItem(Material.IRON_FENCE, 4000, "x8", "Iron Bars", 8));
+        add(new ShopItem(Material.ENCHANTMENT_TABLE, 4000, "x1", "Enchantment Table", 1));
+        add(new ShopItem(Material.BED, 20000, "x1", "Bed", 1));
+        add(new ShopItem(Material.ENDER_CHEST, 50000, "x1", "Ender Chest", 1));
+        add(new ShopItem(Material.CHEST, 6000, "x2", "Chest", 2));
+        add(new ShopItem(Material.GLOWSTONE, 8000, "x8", "Glowstone", 8));
+        add(new ShopItem(Material.BOOK_AND_QUILL, 10000, "x1", "Book and Quill", 1));
+        add(new ShopItem(Material.DIRT, 16000, "x16", "Dirt", 16));
+        add(new ShopItem(Material.SAND, 16000, "x16", "Sand", 16));
+        add(new ShopItem(Material.DIAMOND_HOE, 10000, "x1", "Diamond Hoe", 1));
+        add(new ShopItem(Material.SEEDS, 4000, "x1", "Seeds", 2));
+        add(new ShopItem(Material.LOG, 3000, "x8", "Oak Wood", 16));
+        add(new ShopItem(Material.BOOK, 2000, "x1", "Book", 1));
     }};
 
 
@@ -85,7 +87,7 @@ public class PrisonShopListener implements Listener {
     @EventHandler
     public void onEntInteract(PlayerInteractEntityEvent event) {
         if(event.getRightClicked().getType() == EntityType.WITCH && !inShop.contains(event.getPlayer())) {
-            Inventory inv = Bukkit.createInventory(null,  27, "Prison Shop");
+            Inventory inv = Bukkit.createInventory(null,  27, "VaultCraft Cells Shop");
             for(ShopItem si : items) {
                 inv.addItem(si.getItemStack());
             }
@@ -104,12 +106,15 @@ public class PrisonShopListener implements Listener {
     @EventHandler
     public void onInvClick(InventoryClickEvent event) {
         if(event.getWhoClicked() instanceof Player && inShop.contains(event.getWhoClicked())) {
+            event.setCancelled(true);
+            if(!event.getInventory().getName().equals("Prison Shop") || event.getSlot() != event.getRawSlot()) { //FIXME: This is kinda hackish
+                return;
+            }
             int clickedSlot = event.getSlot();
             if(clickedSlot > items.size()) {
                 return;
             }
 
-            event.setCancelled(true);
 
             ShopItem item = items.get(clickedSlot);
             User user = User.fromPlayer((Player) event.getWhoClicked());
