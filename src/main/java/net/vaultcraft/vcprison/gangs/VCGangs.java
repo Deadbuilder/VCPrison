@@ -118,6 +118,10 @@ public class VCGangs extends ICommand {
         }
 
         String gangName = args[1];
+        if (gangName.length() > 15) {
+            Form.at(sender, Prefix.ERROR, "Your gang can only be 15 characters max!");
+            return;
+        }
 
         for (Map.Entry entry : GangManager.getGangs().entrySet()) {
             String name = (String) entry.getKey();
@@ -136,6 +140,14 @@ public class VCGangs extends ICommand {
                     return;
                 }
             }
+        }
+
+        for (char c : gangName.toCharArray()) {
+            if (Character.isLetterOrDigit(c))
+                continue;
+
+            Form.at(sender, Prefix.ERROR, "Your gang name can only have numbers and letters!");
+            return;
         }
 
         GangManager.getGangs().put(gangName, new Gang(gangName, sender.getUniqueId().toString()));
