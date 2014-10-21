@@ -63,6 +63,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCDropParty("dp", Group.ADMIN, "dropparty"));
         CommandManager.addCommand(new VCFix("fix", Group.WOLF, "repair"));
         CommandManager.addCommand(new VCPoint("point", Group.ADMIN));
+        CommandManager.addCommand(new VCKit("kit", Group.COMMON, "kits"));
 
         new PlotWorld();
 
