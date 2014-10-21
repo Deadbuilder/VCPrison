@@ -139,7 +139,7 @@ public class VCGangs extends ICommand {
         }
 
         GangManager.getGangs().put(gangName, new Gang(gangName, sender.getUniqueId().toString()));
-        sender.sendMessage(ChatColor.GREEN + "Success: " + ChatColor.WHITE + "You create the " + gangName + " gang.");
+        sender.sendMessage(ChatColor.GREEN + "Success: " + ChatColor.WHITE + "You created the " + gangName + " gang.");
         Bukkit.broadcastMessage(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Gangs" + ChatColor.GRAY + "] " + gangName + " has been created.");
     }
 
@@ -495,7 +495,7 @@ public class VCGangs extends ICommand {
         for (Gang gang : GangManager.getGangs().values()) {
             if (gang.getOwnerUUID().equals(sender.getUniqueId().toString())) {
                 gang.disband();
-                sender.sendMessage(ChatColor.GREEN + "Success: " + ChatColor.WHITE + "You have disband your gang.");
+                sender.sendMessage(ChatColor.GREEN + "Success: " + ChatColor.WHITE + "You have disbanded your gang.");
                 return;
             }
             for (String memberUUID : gang.getMemberUUIDs()) {

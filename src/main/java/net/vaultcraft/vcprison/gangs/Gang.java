@@ -112,7 +112,7 @@ public class Gang {
         alliedGangs.clear();
         enemyGangs.clear();
         ownerUUID = "";
-        Bukkit.broadcastMessage("[" + ChatColor.BLUE + "Gangs" + ChatColor.WHITE + "] " + gangName + " has disbanded!");
+        Bukkit.broadcastMessage(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Gangs" + ChatColor.GRAY + "] " + gangName + " has been disbanded!");
         gangName = "";
     }
 }
