@@ -13,6 +13,7 @@ import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.protection.ProtectedArea;
 import net.vaultcraft.vcutils.protection.ProtectionManager;
 import net.vaultcraft.vcutils.protection.flag.FlagType;
+import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -41,9 +42,9 @@ public class PrisonUserListener implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        new PrisonUser(event.getPlayer());
-        PrisonScoreboard.addPlayer(event.getPlayer());
+    public void onUserLoaded(UserLoadedEvent event) {
+        new PrisonUser(event.getUser().getPlayer());
+        PrisonScoreboard.addPlayer(event.getUser().getPlayer());
     }
 
     @EventHandler
