@@ -144,7 +144,7 @@ public class Pickaxe {
     }
 
     public void mineBlock(Material material) {
-        blocksMined += BlockExp.fromMaterial(material).getExp() * getDonorMultiplier(User.fromPlayer(player));
+        blocksMined += Math.ceil((BlockExp.fromMaterial(material).getExp() * getDonorMultiplier(User.fromPlayer(player))));
         if (blocksMined >= toNextLevel(level)) {
             blocksMined = 0;
             level++;

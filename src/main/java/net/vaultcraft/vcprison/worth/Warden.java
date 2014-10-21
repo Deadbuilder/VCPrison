@@ -86,7 +86,7 @@ public class Warden {
         String date = (DateUtil.fromTime(TimeUnit.SECONDS, ticks/20));
         Form.atCharacter(player, Prefix.CHARACTER, "I'm selling your items, it will take about &e&n" + (date.equals("") ? "0 seconds" : date), "WARDEN");
 
-        final int finalWorth = worth;
+        final int finalWorth = (int)(worth*getItemWorthMultiplier(user.getGroup()));
 
         BukkitTask task = Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), () -> {
             if (!(player.isOnline())) {
@@ -95,7 +95,7 @@ public class Warden {
                 //ez ^
             }
 
-            user.setMoney(user.getMoney()+(finalWorth*getItemWorthMultiplier(user.getGroup())));
+            user.setMoney(user.getMoney()+(finalWorth));
             Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$"+Form.at(finalWorth)+Prefix.SUCCESS.getChatColor()+"!", "WARDEN");
             player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
             selling.remove(player);
@@ -123,20 +123,21 @@ public class Warden {
     }
 
     public static double getItemWorthMultiplier(Group.GroupHandler group) {
+        double val = 1;
         if (group.hasPermission(Group.WOLF))
-            return 1.25;
+            val = 1.25;
         if (group.hasPermission(Group.SLIME))
-            return 1.75;
+            val = 1.75;
         if (group.hasPermission(Group.SKELETON))
-            return 2.0;
+            val = 2.0;
         if (group.hasPermission(Group.ENDERMAN))
-            return 2.5;
+            val = 2.5;
         if (group.hasPermission(Group.WITHER))
-            return 3.5;
+            val = 3.5;
         if (group.hasPermission(Group.ENDERDRAGON))
-            return 4.0;
+            val = 4.0;
 
-        return 1;
+        return val;
     }
 
     private static class WardenListener implements Listener {
@@ -151,7 +152,7 @@ public class Warden {
 
             Form.atCharacter(player, Prefix.CHARACTER, "I'll resume selling your items at once!", "WARDEN");
 
-            final int finalWorth = c.worth;
+            final int finalWorth = (int)(c.worth*getItemWorthMultiplier(user.getGroup()));
 
             BukkitTask task = Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), new Runnable() {
                 public void run() {
@@ -161,7 +162,7 @@ public class Warden {
                         //ez ^
                     }
 
-                    user.setMoney(user.getMoney()+(finalWorth*getItemWorthMultiplier(user.getGroup())));
+                    user.setMoney(user.getMoney()+(finalWorth));
                     Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$" + Form.at(finalWorth) + Prefix.SUCCESS.getChatColor() + "!", "WARDEN");
                     player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
                     resume.remove(player.getName());
