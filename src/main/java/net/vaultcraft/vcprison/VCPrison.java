@@ -47,11 +47,12 @@ public class VCPrison extends JavaPlugin {
 
     private static ServerEventHandler eventHandler;
     public static final Location spawn = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
+    public static final Location shop = new Location(Bukkit.getServer().getWorld("world"), -3890.5, 81, 51.5, -314.7f, 2.5f);
     private static HashMap<String, Location> locCommands = new HashMap<>();
 
     static {
         locCommands.put("spawn", spawn);
-        locCommands.put("shop", null);
+        locCommands.put("shop", shop);
     }
 
     private static VCPrison instance;
