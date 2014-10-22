@@ -47,7 +47,6 @@ public class VCPrison extends JavaPlugin {
 
     private static ServerEventHandler eventHandler;
     public static Location spawn;
-
     private static VCPrison instance;
 
     public void onEnable() {
