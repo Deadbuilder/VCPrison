@@ -32,6 +32,9 @@ public class FFAHandler {
 
         switch (ffaKill.getUser().getGroup().getHighest()) {
             case ENDERDRAGON:
+                bounty*=4.0;
+                break;
+            case WITHER:
                 bounty*=3.0;
                 break;
             case ENDERMAN:

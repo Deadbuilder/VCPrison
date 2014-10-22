@@ -24,17 +24,20 @@ import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.command.CommandManager;
+import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.events.ServerEventHandler;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -43,6 +46,13 @@ import java.util.List;
 public class VCPrison extends JavaPlugin {
 
     private static ServerEventHandler eventHandler;
+    public static final Location spawn = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
+    private static HashMap<String, Location> locCommands = new HashMap<>();
+
+    static {
+        locCommands.put("spawn", spawn);
+        locCommands.put("shop", null);
+    }
 
     private static VCPrison instance;
 
@@ -59,7 +69,6 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCHelp("help", Group.COMMON, "?", "pl", "plugins"));
         CommandManager.addCommand(new VCRules("rules", Group.COMMON));
         CommandManager.addCommand(new VCGangs("gang", Group.COMMON, "gangs", "f", "team"));
-        CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON, "shop"));
         CommandManager.addCommand(new VCDropParty("dp", Group.ADMIN, "dropparty"));
         CommandManager.addCommand(new VCFix("fix", Group.WOLF, "repair"));
         CommandManager.addCommand(new VCPoint("point", Group.ADMIN));
@@ -134,6 +143,10 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
+    }
+
+    public static HashMap<String, Location> getTeleportLocations() {
+        return locCommands;
     }
 
     public static ServerEventHandler getEventHandler() {

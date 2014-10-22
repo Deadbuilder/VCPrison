@@ -20,12 +20,14 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -44,6 +46,8 @@ public class PrisonUserListener implements Listener {
     public void onUserLoaded(UserLoadedEvent event) {
         new PrisonUser(event.getUser().getPlayer());
         PrisonScoreboard.addPlayer(event.getUser().getPlayer());
+
+        event.getUser().getPlayer().teleport(VCPrison.spawn);
     }
 
     @EventHandler
@@ -144,5 +148,15 @@ public class PrisonUserListener implements Listener {
             Location location = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
             player.teleport(location);
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
+        Location go = VCPrison.getTeleportLocations().get(event.getMessage().split(" ")[0].toLowerCase());
+        if (go == null)
+            return;
+
+        event.setCancelled(true);
+        Form.at(event.getPlayer(), Prefix.SUCCESS, "You teleported to: " + VCPrison.getTeleportLocations().get(event.getMessage().split(" ")[0]));
     }
 }
