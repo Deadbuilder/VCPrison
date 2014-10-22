@@ -43,18 +43,20 @@ public class CrateListener implements Listener {
 
             player.playSound(block.getLocation(), Sound.ITEM_BREAK, 1, 0);
             Chest chest = (Chest)event.getBlock().getState();
+
             for (ItemStack stack : chest.getInventory().getContents()) {
                 if (stack == null)
                     continue;
 
                 if (player.getInventory().firstEmpty() == -1) {
                     player.getWorld().dropItem(chest.getLocation(), stack);
-                    Form.at(player, Prefix.WARNING, "Your inventory was full so you didn't get crate items!");
                 } else {
                     player.getInventory().addItem(stack);
-                    Form.at(player, Prefix.SUCCESS, "You found a loot crate!");
                 }
             }
+
+            Form.at(player, Prefix.SUCCESS, "You found a loot crate!");
+
             player.updateInventory();
             chest.getInventory().clear();
         }
