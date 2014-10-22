@@ -68,6 +68,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCKit("kit", Group.COMMON, "kits"));
         CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON));
         CommandManager.addCommand(new VCShop("shop", Group.COMMON));
+        CommandManager.addCommand(new VCFFA("ffa", Group.COMMON, "freeforall"));
 
         new PlotWorld();
 

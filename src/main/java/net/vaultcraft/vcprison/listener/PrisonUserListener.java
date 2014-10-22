@@ -17,17 +17,17 @@ import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Hopper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -111,7 +111,7 @@ public class PrisonUserListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         if (FFAPlayer.getFFAPlayerFromPlayer(event.getPlayer()).isPlaying())
-            event.setRespawnLocation(FFAHandler.getFFASpawn());
+            FFAPlayer.getFFAPlayerFromPlayer(event.getPlayer()).endFFA();
     }
 
     @EventHandler
@@ -142,11 +142,16 @@ public class PrisonUserListener implements Listener {
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
-        event.setCancelled(true);
         Entity player = event.getEntity();
         if (event.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
             Location location = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
             player.teleport(location);
         }
+    }
+
+    @EventHandler
+    public void onInventoryOpen(InventoryOpenEvent event) {
+        if (event.getInventory().getHolder() instanceof Hopper)
+            event.setCancelled(true);
     }
 }

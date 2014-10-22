@@ -1,6 +1,8 @@
 package net.vaultcraft.vcprison.commands;
 
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.entity.Player;
@@ -17,5 +19,14 @@ public class VCFFA extends ICommand {
 
     public void processCommand(Player player, String[] strings) {
         FFAPlayer ffa = FFAPlayer.getFFAPlayerFromPlayer(player);
+
+        if (ffa.isPlaying()) {
+            //end
+            ffa.endFFA();
+            Form.at(player, Prefix.SUCCESS, "You have left the FFA!");
+        } else {
+            ffa.beginFFA();
+            Form.at(player, Prefix.SUCCESS, "You have joined the FFA!");
+        }
     }
 }

@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.ffa;
 
+import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.ffa.event.FFAJoinEvent;
 import net.vaultcraft.vcprison.ffa.event.FFALeaveEvent;
 import net.vaultcraft.vcprison.sword.Sword;
@@ -68,7 +69,7 @@ public class FFAPlayer {
     //===================================
 
     public void beginFFA() {
-        player.teleport(FFAHandler.getFFASpawn());
+        player.teleport(FFAHandler.getRandomSpawnLocation());
 
         PrisonUser.fromPlayer(player).getPickaxe().setInUse(false);
         saved = player.getInventory().getContents();
@@ -85,6 +86,8 @@ public class FFAPlayer {
         player.updateInventory();
 
         Bukkit.getPluginManager().callEvent(new FFAJoinEvent(this));
+
+        playing = true;
     }
 
     public void endFFA() {
@@ -93,5 +96,8 @@ public class FFAPlayer {
         player.getInventory().setContents(saved);
 
         Bukkit.getPluginManager().callEvent(new FFALeaveEvent(this));
+        player.teleport(VCPrison.spawn);
+
+        playing = false;
     }
 }
