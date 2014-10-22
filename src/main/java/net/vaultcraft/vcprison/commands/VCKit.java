@@ -4,6 +4,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
+import net.vaultcraft.vcutils.user.User;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -28,20 +29,20 @@ public class VCKit extends ICommand {
             player.sendMessage(ChatColor.GRAY + "- " + ChatColor.LIGHT_PURPLE + "EnderDragon");
             player.sendMessage(ChatColor.GRAY + "Usage: /kit <kit name>");
         } else if(args.length == 1) {
-            if(args[1].equalsIgnoreCase("common")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Common");
-            } else if(args[1].equalsIgnoreCase("wolf")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Wolf");
-            } else if(args[1].equalsIgnoreCase("slime")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Slime");
-            } else if(args[1].equalsIgnoreCase("skeleton")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Skeleton");
-            } else if(args[1].equalsIgnoreCase("enderman")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Enderman");
-            } else if(args[1].equalsIgnoreCase("wither")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "Wither");
-            } else if(args[1].equalsIgnoreCase("enderdragon")) {
-                Form.at(player, Prefix.SUCCESS, "You spawned the kit: " + ChatColor.LIGHT_PURPLE + "EnderDragon");
+            if(args[0].equalsIgnoreCase("common")) {
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
+            } else if(args[0].equalsIgnoreCase("wolf")) {
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
+            } else if(args[0].equalsIgnoreCase("slime")) {
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
+            } else if(args[0].equalsIgnoreCase("skeleton")) {
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
+            } else if(args[0].equalsIgnoreCase("enderman")) {
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
+            } else if(args[0].equalsIgnoreCase("wither")) {
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
+            } else if(args[0].equalsIgnoreCase("enderdragon")) {
+                Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else {
                 Form.at(player, Prefix.ERROR, "That kit does not exist.");
             }

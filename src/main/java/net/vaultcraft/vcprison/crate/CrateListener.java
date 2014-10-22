@@ -3,6 +3,8 @@ package net.vaultcraft.vcprison.crate;
 import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.mine.Mine;
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -47,8 +49,10 @@ public class CrateListener implements Listener {
 
                 if (player.getInventory().firstEmpty() == -1) {
                     player.getWorld().dropItem(chest.getLocation(), stack);
+                    Form.at(player, Prefix.WARNING, "Your inventory was full so you didn't get crate items!");
                 } else {
                     player.getInventory().addItem(stack);
+                    Form.at(player, Prefix.SUCCESS, "You found a loot crate!");
                 }
             }
             player.updateInventory();

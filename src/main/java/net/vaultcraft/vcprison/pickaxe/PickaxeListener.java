@@ -65,6 +65,8 @@ public class PickaxeListener implements Listener {
             return;
         if (event.getCurrentItem().getItemMeta() == null)
             return;
+        if(event.getCurrentItem().getItemMeta().getDisplayName() == null)
+            return;
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
         Pickaxe pickaxe = PrisonUser.fromPlayer(player).getPickaxe();
@@ -128,6 +130,8 @@ public class PickaxeListener implements Listener {
 
     @EventHandler
     public void onHotbarHover(PlayerItemHeldEvent event) {
+        if(PrisonUser.fromPlayer(event.getPlayer()) == null)
+            return;
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
         if(pickaxe == null)
             return;

@@ -4,6 +4,7 @@ import net.minecraft.util.com.google.gson.Gson;
 import net.vaultcraft.vcprison.VCPrison;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,7 @@ public class Gang {
         this.gangName = gangName;
         this.ownerUUID = ownerUUID;
         GangManager.getGangs().put(gangName.toLowerCase(), this);
-        Bukkit.getScheduler().runTaskTimer(VCPrison.getInstance(),
-                () -> GangManager.getGangsConfig().set("Gangs." + gangName, gson.toJson(this)), 1200l, 1200l);
+        new SaveGangTask(this);
     }
 
     public String getGangName() {
@@ -114,5 +114,25 @@ public class Gang {
         ownerUUID = "";
         Bukkit.broadcastMessage(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Gangs" + ChatColor.GRAY + "] " + gangName + " has been disbanded!");
         gangName = "";
+        GangManager.getGangsConfig().set("Gangs." + gangName, null);
+
+    }
+
+    private class SaveGangTask extends BukkitRunnable {
+
+        private Gang gang;
+
+        public SaveGangTask(Gang gang) {
+            this.gang = gang;
+            this.runTaskTimer(VCPrison.getInstance(), 1200l, 1200l);
+        }
+
+        public void run() {
+            if(gang == null || gang.getOwnerUUID().isEmpty()) {
+                this.cancel();
+                return;
+            }
+            GangManager.getGangsConfig().set("Gangs." + gang.getGangName(), Gang.gson.toJson(gang));
+        }
     }
 }
