@@ -257,14 +257,12 @@ public class Pickaxe {
             player.getInventory().setItem(0, getPickaxe());
             Form.at(player, Prefix.SUCCESS, "You toggled " + perk.getName() + " off!");
         }
-
     }
 
     public boolean getToggle(PickaxePerk perk) {
         return perkToggle.get(perk);
     }
 
-    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         int counter = 0;

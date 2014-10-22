@@ -2,6 +2,7 @@ package net.vaultcraft.vcprison.ffa;
 
 import net.vaultcraft.vcprison.ffa.event.FFAJoinEvent;
 import net.vaultcraft.vcprison.ffa.event.FFALeaveEvent;
+import net.vaultcraft.vcprison.sword.Sword;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
@@ -17,6 +18,8 @@ import java.util.HashMap;
 public class FFAPlayer {
 
     private static HashMap<Player, FFAPlayer> ffaPlayers = new HashMap<>();
+
+    private Sword sword;
 
     public static FFAPlayer getFFAPlayerFromPlayer(Player player) {
         return ffaPlayers.get(player);

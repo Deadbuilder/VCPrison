@@ -27,6 +27,9 @@ public class Sword {
     private int swordPoints = 0;
     private boolean inUse = false;
 
+    private int kills;
+    private int deaths;
+
     private HashMap<SwordPerk, Integer> perkLevels = new HashMap<>();
     private HashMap<SwordPerk, Boolean> perkToggle = new HashMap<>();
 
@@ -180,7 +183,6 @@ public class Sword {
             player.getInventory().setItem(0, getSword());
             Form.at(player, Prefix.SUCCESS, "You toggled " + perk.getName() + " off!");
         }
-
     }
 
     public int getPerkLevel(SwordPerk perk) {
@@ -205,5 +207,23 @@ public class Sword {
 
     public void setInUse(boolean inUse) {
         this.inUse = inUse;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Level|").append(level).append(".");
+        sb.append("Kills|").append(kills).append(".");
+        sb.append("Deaths|").append(deaths).append(".");
+        for (SwordPerk perk : perkLevels.keySet()) {
+            if (perk.isTogglable())
+                sb.append(perk.getNoColorName()).append("-Toggle|").append(perkToggle.get(perk)).append(".");
+
+            sb.append(perk.getNoColorName()).append("|").append(perkLevels.get(perk)).append(".");
+        }
+
+        if (sb.toString().endsWith("."))
+            sb.substring(0, sb.length()-1);
+
+        return sb.toString();
     }
 }

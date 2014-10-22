@@ -35,7 +35,7 @@ public class ExplosionPerk extends PickaxePerk {
 
     @Override
     public ItemStack onBreak(Player player, final BlockBreakEvent event, Block block, ItemStack itemStack, final int level) {
-        if (Math.random() * 300 < (level > 18 ? (level / 1.5) : level)) {
+        if (Math.random() * 300 < (level < 18 ? (level / 1.5) : level)) {
             final Mine hit = MineLoader.fromLocation(event.getBlock().getLocation());
             if (hit == null)
                 return itemStack;

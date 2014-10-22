@@ -59,6 +59,7 @@ public class PrisonUser {
                 dbObject.put("Rank",rank.toString());
                 dbObject.put("Prestige", prestige);
                 dbObject.put("Pickaxe", pickaxe.toString());
+                dbObject.put("Sword", sword.toString());
                 DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 if (dbObject1 == null)
                     VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);

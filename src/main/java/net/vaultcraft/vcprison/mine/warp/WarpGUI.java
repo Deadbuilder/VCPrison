@@ -33,6 +33,9 @@ public class WarpGUI implements Listener {
     private static final ItemStack G_SIDEBAR_R = build(Material.GOLD_INGOT, (byte)0, "&c&l<-- Recommended warp");
 
     public static Inventory create(PrisonUser user) {
+        if (user == null)
+            return null;
+
         Rank at = user.getRank();
 
         Inventory make = Bukkit.createInventory(user.getPlayer(), 9*6, "Mine warp menu");
@@ -45,9 +48,7 @@ public class WarpGUI implements Listener {
         make.setItem(9, G_SIDEBAR_L);
         make.setItem(10, G_SIDEBAR_L);
 
-
         make.setItem(13, set);
-
 
         make.setItem(16, G_SIDEBAR_R);
         make.setItem(17, G_SIDEBAR_R);
