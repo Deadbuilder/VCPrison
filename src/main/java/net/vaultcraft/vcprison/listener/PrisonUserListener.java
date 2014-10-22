@@ -157,6 +157,7 @@ public class PrisonUserListener implements Listener {
             return;
 
         event.setCancelled(true);
+        event.getPlayer().teleport(go);
         Form.at(event.getPlayer(), Prefix.SUCCESS, "You teleported to: " + VCPrison.getTeleportLocations().get(event.getMessage().split(" ")[0]));
     }
 }
