@@ -46,6 +46,8 @@ public class PrisonUserListener implements Listener {
     public void onUserLoaded(UserLoadedEvent event) {
         new PrisonUser(event.getUser().getPlayer());
         PrisonScoreboard.addPlayer(event.getUser().getPlayer());
+
+        event.getUser().getPlayer().teleport(VCPrison.spawn);
     }
 
     @EventHandler
