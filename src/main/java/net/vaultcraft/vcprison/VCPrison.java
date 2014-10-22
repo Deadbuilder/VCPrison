@@ -46,13 +46,7 @@ import java.util.List;
 public class VCPrison extends JavaPlugin {
 
     private static ServerEventHandler eventHandler;
-    public static final Location spawn = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
-    private static HashMap<String, Location> locCommands = new HashMap<>();
-
-    static {
-        locCommands.put("spawn", spawn);
-        locCommands.put("shop", null);
-    }
+    public static Location spawn;
 
     private static VCPrison instance;
 
@@ -73,10 +67,13 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCFix("fix", Group.WOLF, "repair"));
         CommandManager.addCommand(new VCPoint("point", Group.ADMIN));
         CommandManager.addCommand(new VCKit("kit", Group.COMMON, "kits"));
+        CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON));
+        CommandManager.addCommand(new VCShop("shop", Group.COMMON));
 
         new PlotWorld();
 
         eventHandler = new ServerEventHandler(this);
+        spawn = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
 
         CrateFile.getInstance().load();
 
@@ -143,10 +140,6 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
-    }
-
-    public static HashMap<String, Location> getTeleportLocations() {
-        return locCommands;
     }
 
     public static ServerEventHandler getEventHandler() {

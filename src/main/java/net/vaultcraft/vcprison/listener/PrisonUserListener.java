@@ -46,8 +46,6 @@ public class PrisonUserListener implements Listener {
     public void onUserLoaded(UserLoadedEvent event) {
         new PrisonUser(event.getUser().getPlayer());
         PrisonScoreboard.addPlayer(event.getUser().getPlayer());
-
-        event.getUser().getPlayer().teleport(VCPrison.spawn);
     }
 
     @EventHandler
@@ -148,16 +146,5 @@ public class PrisonUserListener implements Listener {
             Location location = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
             player.teleport(location);
         }
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        Location go = VCPrison.getTeleportLocations().get(event.getMessage().split(" ")[0].toLowerCase());
-        if (go == null)
-            return;
-
-        event.setCancelled(true);
-        event.getPlayer().teleport(go);
-        Form.at(event.getPlayer(), Prefix.SUCCESS, "You teleported to: " + VCPrison.getTeleportLocations().get(event.getMessage().split(" ")[0]));
     }
 }
