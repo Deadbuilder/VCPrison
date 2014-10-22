@@ -35,7 +35,6 @@ public class Sword {
 
     public Sword(Player player) {
         this.player = player;
-        this.player = player;
         for (SwordPerk perk : SwordPerk.getPerks()) {
             perkLevels.put(perk, perk.getInitLevel());
             if (perk.isTogglable()) {

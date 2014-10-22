@@ -48,6 +48,7 @@ public class PrisonUser {
                 pickaxe = dbObject.get("Pickaxe") == null ? new Pickaxe(player) : new Pickaxe(player, (String) dbObject.get("Pickaxe"));
             }
         });
+        sword = new Sword(player);
         pickaxe = new Pickaxe(player);
         new FFAPlayer(player);
         task = Bukkit.getScheduler().runTaskTimerAsynchronously(VCPrison.getInstance(), () -> {
