@@ -102,9 +102,9 @@ public class Sword {
     }
 
     public ItemStack getSword() {
-        ItemStack pick = new ItemStack(Material.DIAMOND_PICKAXE);
+        ItemStack pick = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta itemMeta = pick.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Prison Sword &e&n[KillStreak " + killstreak + "]"));
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Prison Sword &e&n[Kills " + kills + "]"));
         List<String> lore = new ArrayList<>();
         for (SwordPerk perk : perkLevels.keySet()) {
             if (perk.isTogglable())
@@ -118,7 +118,7 @@ public class Sword {
         itemMeta.addEnchant(Enchantment.DURABILITY, 50, true);
         lore.add("Kills: " + Form.at(kills));
         lore.add("Deaths: " + Form.at(deaths));
-        lore.add("KDR: " + new DecimalFormat("#,###.##").format((kills  * 1.0) / deaths));
+        lore.add("KDR: " + new DecimalFormat("#,###.##").format(((double)kills  * 1.0) / (double)deaths));
         itemMeta.setLore(lore);
         pick.setItemMeta(itemMeta);
         return pick;
@@ -260,7 +260,13 @@ public class Sword {
     }
 
     public void setInUse(boolean inUse) {
-        this.inUse = inUse;
+        if(!inUse) {
+            this.inUse = false;
+            player.getInventory().setItem(0, new ItemStack(Material.AIR));
+        } else {
+            this.inUse = false;
+            player.getInventory().setItem(0, getSword());
+        }
     }
 
     public String toString() {

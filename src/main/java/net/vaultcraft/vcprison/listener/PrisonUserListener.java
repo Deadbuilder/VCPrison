@@ -122,6 +122,8 @@ public class PrisonUserListener implements Listener {
 
         Player killer = FFADamageTracker.getLastDamager(event.getEntity());
         FFAHandler.handleDeath(event.getEntity(), killer);
+
+        event.setDeathMessage(null);
     }
 
     @EventHandler

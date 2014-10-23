@@ -3,12 +3,10 @@ package net.vaultcraft.vcprison.ffa;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.ffa.event.FFAJoinEvent;
 import net.vaultcraft.vcprison.ffa.event.FFALeaveEvent;
-import net.vaultcraft.vcprison.sword.Sword;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -66,20 +64,31 @@ public class FFAPlayer {
     //===================================
 
     public void beginFFA() {
+        PrisonUser user = PrisonUser.fromPlayer(player);
         player.teleport(FFAHandler.getRandomSpawnLocation());
 
-        PrisonUser.fromPlayer(player).getPickaxe().setInUse(false);
+        user.getPickaxe().setInUse(false);
 
         Bukkit.getPluginManager().callEvent(new FFAJoinEvent(this));
+
+        user.getPickaxe().setInUse(false);
+        user.getSword().setInUse(true);
+        player.updateInventory();
+
 
         playing = true;
     }
 
     public void endFFA() {
+        PrisonUser user = PrisonUser.fromPlayer(player);
         //TODO - Sell items that players have from FFA
 
         Bukkit.getPluginManager().callEvent(new FFALeaveEvent(this));
         player.teleport(VCPrison.spawn);
+
+        user.getSword().setInUse(false);
+        user.getPickaxe().setInUse(true);
+        player.updateInventory();
 
         playing = false;
     }
