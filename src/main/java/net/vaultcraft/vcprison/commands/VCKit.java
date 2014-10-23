@@ -128,6 +128,8 @@ public class VCKit extends ICommand {
                 return;
             }
             for(ItemStack i : items) {
+                if(i == null)
+                    continue;
                 player.getInventory().addItem(i);
             }
             Form.at(player, Prefix.SUCCESS, "You have received the " + g.getName() + " kit!");
@@ -155,7 +157,7 @@ public class VCKit extends ICommand {
         }
 
         public ItemStackBuilder(Material type, String displayName, String... lore) {
-            new ItemStackBuilder(type, (byte)0, displayName, lore);
+            this(type, (byte)0, displayName, lore);
         }
 
         public ItemStackBuilder addEnchantment(Enchantment e, int level) {
@@ -164,7 +166,7 @@ public class VCKit extends ICommand {
         }
 
         public ItemStack toItemStack() {
-            return item;
+            return this.item;
         }
     }
 }
