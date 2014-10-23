@@ -101,21 +101,21 @@
       <artifactId>bukkit</artifactId>
       <version>1.7.10-R0.1-SNAPSHOT</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Connor\Desktop\VaultCraft\VCPrison/src/main/resources/bukkit.jar</systemPath>
+      <systemPath>C:\Users\Sean\Github\vcprison/src/main/resources/bukkit.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>craftbukkit</artifactId>
       <version>1.7.10-R0.1-SNAPSHOT</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Connor\Desktop\VaultCraft\VCPrison/src/main/resources/craftbukkit.jar</systemPath>
+      <systemPath>C:\Users\Sean\Github\vcprison/src/main/resources/craftbukkit.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot</artifactId>
       <version>1.7.10-R0.1-SNAPSHOT</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Connor\Desktop\VaultCraft\VCPrison/src/main/resources/spigot.jar</systemPath>
+      <systemPath>C:\Users\Sean\Github\vcprison/src/main/resources/spigot.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.sk89q</groupId>
