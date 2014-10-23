@@ -1,7 +1,8 @@
 package net.vaultcraft.vcprison.user;
 
-import net.vaultcraft.shade.mongodb.BasicDBObject;
-import net.vaultcraft.shade.mongodb.DBObject;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
 import net.vaultcraft.vcprison.pickaxe.Pickaxe;
