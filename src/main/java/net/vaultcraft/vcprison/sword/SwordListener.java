@@ -5,16 +5,13 @@ import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
-import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -32,16 +29,6 @@ public class SwordListener implements Listener {
 
     public SwordListener () {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
-    }
-
-    @EventHandler
-    public void onUserLoad(UserLoadedEvent event) {
-        PrisonUser user = PrisonUser.fromPlayer(event.getUser().getPlayer());
-        if (event.getUser().getUserdata("Pickaxe") != null) {
-            //user.setSword(new Sword(user.getPlayer(), event.getUser().getUserdata("Sword")));
-        } else {
-            user.setSword(new Sword(user.getPlayer()));
-        }
     }
 
     @EventHandler
@@ -136,7 +123,15 @@ public class SwordListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Sword sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
+        if(!sword.isInUse())
+            return;
         event.getDrops().remove(sword.getSword());
+        sword.reset();
+        PrisonUser user = PrisonUser.fromPlayer(event.getEntity().getKiller());
+        if(user != null) {
+            user.getSword().levelUp();
+        }
+
     }
 
     @EventHandler
@@ -153,8 +148,9 @@ public class SwordListener implements Listener {
             if(attackerLevel > 0)
                 perk.onHit(attacker, defender, attackerLevel);
         }
-
-        PrisonUser.fromPlayer(attacker).getSword().hit();
+        Sword sword = PrisonUser.fromPlayer(attacker).getSword();
+        if(sword.isInUse())
+            attacker.getInventory().setItem(0, sword.getSword());
     }
 
     @EventHandler

@@ -47,6 +47,7 @@ public class PrisonUser {
                 rank = dbObject.get("Rank") == null ? Rank.A : Rank.fromName((String) dbObject.get("Rank"));
                 prestige = dbObject.get("Prestige") == null ? 0 : (int) dbObject.get("Prestige");
                 pickaxe = dbObject.get("Pickaxe") == null ? new Pickaxe(player) : new Pickaxe(player, (String) dbObject.get("Pickaxe"));
+                sword = dbObject.get("Sword") == null ? new Sword(player) : new Sword(player, (String) dbObject.get("Sword"));
             }
         });
         sword = new Sword(player);
@@ -190,6 +191,7 @@ public class PrisonUser {
             dbObject.put("Rank", user.getRank().toString());
             dbObject.put("Prestige", user.getPrestige());
             dbObject.put("Pickaxe", user.getPickaxe().toString());
+            dbObject.put("Sword", user.getSword().toString());
             DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
             if (dbObject1 == null)
                 VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);
@@ -220,6 +222,7 @@ public class PrisonUser {
                 dbObject.put("Rank", user.getRank().toString());
                 dbObject.put("Prestige", user.getPrestige());
                 dbObject.put("Pickaxe", user.getPickaxe().toString());
+                dbObject.put("Sword", user.getSword().toString());
                 DBObject dbObject1 = VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 if (dbObject1 == null)
                     VCUtils.getInstance().getMongoDB().insert("VaultCraft", "PrisonUsers", dbObject);

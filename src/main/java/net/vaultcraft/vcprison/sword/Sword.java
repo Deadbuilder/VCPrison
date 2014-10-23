@@ -2,15 +2,16 @@ package net.vaultcraft.vcprison.sword;
 
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,13 +23,12 @@ import java.util.List;
 public class Sword {
 
     private Player player;
-    private int level = 1;
-    private int exp = 0;
+    private int killstreak = 0;
     private int swordPoints = 0;
     private boolean inUse = false;
 
-    private int kills;
-    private int deaths;
+    private int kills = 0;
+    private int deaths = 0;
 
     private HashMap<SwordPerk, Integer> perkLevels = new HashMap<>();
     private HashMap<SwordPerk, Boolean> perkToggle = new HashMap<>();
@@ -52,10 +52,59 @@ public class Sword {
         }
     }
 
+    public Sword(Player player, String s) {
+        this.player = player;
+        if (s.contains(".")) {
+            String[] parts = s.split("\\.");
+            for (String part : parts) {
+                String[] value = part.split("\\|");
+                if (value[0].contains("-Toggle")) {
+                    String perkName = value[0].replace("-Toggle", "");
+                    perkToggle.put(SwordPerk.getPerkFromName(perkName), Boolean.parseBoolean(value[1]));
+                    if(Boolean.parseBoolean(value[1]))
+                        SwordPerk.getPerkFromName(perkName).onToggleOn(player);
+                    continue;
+                }
+                if(SwordPerk.getPerkFromName(value[0]) != null) {
+                    perkLevels.put(SwordPerk.getPerkFromName(value[0]), Integer.parseInt(value[1]));
+                    SwordPerk.getPerkFromName(value[0]).onStart(player, Integer.parseInt(value[1]));
+                    if(player.getInventory().getHeldItemSlot() == 0 && Integer.parseInt(value[1]) > 0)
+                        SwordPerk.getPerkFromName(value[0]).onHoverOn(player, Integer.parseInt(value[1]));
+                    else
+                        SwordPerk.getPerkFromName(value[0]).onHoverOff(player, Integer.parseInt(value[1]));
+                    continue;
+                }
+
+                switch (value[0]) {
+                    case "KillStreak":
+                        killstreak = Integer.parseInt(value[1]);
+                        break;
+                    case "Kills":
+                        kills = Integer.parseInt(value[1]);
+                        break;
+                    case "Deaths":
+                        deaths = Integer.parseInt(value[1]);
+                        break;
+                    case "Points":
+                        swordPoints = Integer.parseInt(value[1]);
+                        break;
+                }
+            }
+        }
+
+        for (SwordPerk perk : SwordPerk.getPerks()) {
+            if (perkLevels.containsKey(perk))
+                continue;
+            perkLevels.put(perk, perk.getInitLevel());
+            if (perk.isTogglable())
+                perkToggle.put(perk, perk.getInitLevel() == 1);
+        }
+    }
+
     public ItemStack getSword() {
         ItemStack pick = new ItemStack(Material.DIAMOND_PICKAXE);
         ItemMeta itemMeta = pick.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Prison Sword &e&n[Level " + level + "]&r &5&oExp: " + Form.at(exp) + " / " + Form.at(toNextLevel(level))));
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Prison Sword &e&n[KillStreak " + killstreak + "]"));
         List<String> lore = new ArrayList<>();
         for (SwordPerk perk : perkLevels.keySet()) {
             if (perk.isTogglable())
@@ -67,34 +116,12 @@ public class Sword {
             itemMeta = perk.changeMeta(player, itemMeta, perkLevels.get(perk));
         }
         itemMeta.addEnchant(Enchantment.DURABILITY, 50, true);
-        lore.add("Exp: " + Form.at(exp) + " / " + Form.at(toNextLevel(level)));
+        lore.add("Kills: " + Form.at(kills));
+        lore.add("Deaths: " + Form.at(deaths));
+        lore.add("KDR: " + new DecimalFormat("#,###.##").format((kills  * 1.0) / deaths));
         itemMeta.setLore(lore);
         pick.setItemMeta(itemMeta);
         return pick;
-    }
-
-    public int toNextLevel(int level) {
-        if (level < 50)
-            return (600 + (600 * (level - 1)));
-        else
-            return (30000 + (1500 * (level - 50)));
-    }
-
-    public void hit() {
-        exp++;
-        if (exp >= toNextLevel(level)) {
-            exp = 0;
-            level++;
-            swordPoints++;
-            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
-            Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
-            FireworkMeta fireworkMeta = firework.getFireworkMeta();
-            fireworkMeta.addEffect(FireworkEffect.builder().withColor(Color.YELLOW).withFade(Color.ORANGE).withTrail().with(FireworkEffect.Type.STAR).build());
-            fireworkMeta.setPower(2);
-            firework.setFireworkMeta(fireworkMeta);
-            Form.at(player, "Your sword leveled up! Shift and double right click to add new stats to the your sword.");
-        }
-        player.getInventory().setItem(0, getSword());
     }
 
     public Inventory getStatsMenu() {
@@ -184,6 +211,34 @@ public class Sword {
         }
     }
 
+    public void levelUp() {
+        killstreak++;
+        swordPoints++;
+        player.sendMessage("");
+    }
+
+    public void reset() {
+        killstreak = 0;
+        swordPoints = 0;
+        perkLevels.clear();
+        perkToggle.clear();
+        for (SwordPerk perk : SwordPerk.getPerks()) {
+            perkLevels.put(perk, perk.getInitLevel());
+            if (perk.isTogglable()) {
+                perkToggle.put(perk, perk.getInitLevel() == 1);
+                if(perk.getInitLevel() == 1)
+                    perk.onToggleOn(player);
+            }
+            if(perk.getInitLevel() > 0) {
+                perk.onStart(player, perk.getInitLevel());
+                if(player.getInventory().getHeldItemSlot() == 0)
+                    perk.onHoverOn(player, perk.getInitLevel());
+                else
+                    perk.onHoverOff(player, perk.getInitLevel());
+            }
+        }
+    }
+
     public int getPerkLevel(SwordPerk perk) {
         return perkLevels.get(perk);
     }
@@ -210,9 +265,10 @@ public class Sword {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Level|").append(level).append(".");
+        sb.append("KillStreak|").append(killstreak).append(".");
         sb.append("Kills|").append(kills).append(".");
         sb.append("Deaths|").append(deaths).append(".");
+        sb.append("Points|").append(swordPoints).append(".");
         for (SwordPerk perk : perkLevels.keySet()) {
             if (perk.isTogglable())
                 sb.append(perk.getNoColorName()).append("-Toggle|").append(perkToggle.get(perk)).append(".");
