@@ -109,7 +109,8 @@ public class VCKit extends ICommand {
                 } else {
                     long timeToWait = (lastGet + 21600000) - System.currentTimeMillis();
                     Form.at(player, Prefix.ERROR, "You need to wait " + String.format("%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeToWait),
-                            TimeUnit.MILLISECONDS.toMinutes(timeToWait)) + " before getting this kit again.");
+                            TimeUnit.MILLISECONDS.toMinutes(timeToWait) -  TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeToWait)))
+                            + " before getting this kit again.");
                     return;
                 }
             }
