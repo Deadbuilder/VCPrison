@@ -148,10 +148,4 @@ public class PrisonUserListener implements Listener {
             player.teleport(location);
         }
     }
-
-    @EventHandler
-    public void onInventoryOpen(InventoryOpenEvent event) {
-        if (event.getInventory().getHolder() instanceof Hopper)
-            event.setCancelled(true);
-    }
 }
