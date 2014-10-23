@@ -67,6 +67,7 @@
           <artifactSet>
             <includes>
               <include>mkremins:fanciful</include>
+              <include>org.mongodb:mongo-java-driver</include>
             </includes>
           </artifactSet>
         </configuration>

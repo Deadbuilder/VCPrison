@@ -20,8 +20,6 @@ public class FFAPlayer {
 
     private static HashMap<Player, FFAPlayer> ffaPlayers = new HashMap<>();
 
-    private Sword sword;
-
     public static FFAPlayer getFFAPlayerFromPlayer(Player player) {
         return ffaPlayers.get(player);
     }
@@ -34,7 +32,6 @@ public class FFAPlayer {
 
     private Player player;
     private boolean playing = false;
-    private ItemStack[] saved;
 
     private User user;
 
@@ -72,18 +69,6 @@ public class FFAPlayer {
         player.teleport(FFAHandler.getRandomSpawnLocation());
 
         PrisonUser.fromPlayer(player).getPickaxe().setInUse(false);
-        saved = player.getInventory().getContents();
-
-        player.getInventory().clear();
-
-        player.getEquipment().setHelmet(FFAItems.startingHelmet);
-        player.getEquipment().setChestplate(FFAItems.startingChestplate);
-        player.getEquipment().setLeggings(FFAItems.startingLeggings);
-        player.getEquipment().setBoots(FFAItems.startingBoots);
-
-        player.getInventory().setItem(0, FFAItems.startingSword);
-
-        player.updateInventory();
 
         Bukkit.getPluginManager().callEvent(new FFAJoinEvent(this));
 
@@ -92,8 +77,6 @@ public class FFAPlayer {
 
     public void endFFA() {
         //TODO - Sell items that players have from FFA
-        player.getInventory().clear();
-        player.getInventory().setContents(saved);
 
         Bukkit.getPluginManager().callEvent(new FFALeaveEvent(this));
         player.teleport(VCPrison.spawn);
