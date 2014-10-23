@@ -70,7 +70,7 @@ public class FFAHandler {
 
     public static Location getRandomSpawnLocation() {
         if (world == null)
-            Bukkit.createWorld(WorldCreator.name("ffa"));
+            world = Bukkit.createWorld(WorldCreator.name("ffa"));
 
         Location find = null;
         while (find == null) {

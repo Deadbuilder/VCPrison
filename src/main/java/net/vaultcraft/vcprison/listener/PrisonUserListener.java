@@ -17,6 +17,7 @@ import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Hopper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -28,9 +29,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 /**
@@ -139,13 +138,19 @@ public class PrisonUserListener implements Listener {
             event.setCancelled(true);
     }
 
-
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
         Entity player = event.getEntity();
         if (event.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
             Location location = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
             player.teleport(location);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if(event.getClickedBlock().getType().equals(Material.ANVIL)) {
+            event.setCancelled(true);
         }
     }
 }

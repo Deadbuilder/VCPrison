@@ -76,6 +76,11 @@ public class VCKit extends ICommand {
                 //player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "SUCCESS" + ChatColor.WHITE + ":" + ChatColor.GRAY + "You spawned the Common kit.");
                 Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else if(args[0].equalsIgnoreCase("wolf")) {
+                //player.getInventory().addItem(WOLF_HELMET);
+                //player.getInventory().addItem(WOLF_CHESTPLATE);
+                //player.getInventory().addItem(WOLF_LEGGINGS);
+                //player.getInventory().addItem(WOLF_BOOTS);
+                //player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "SUCCESS" + ChatColor.WHITE + ":" + ChatColor.GRAY + "You spawned the " + ChatColor.DARK_GRAY +  "Wolf " + ChatColor.GRAY + "kit.");
                 Form.at(player, Prefix.ERROR, "Kits are not yet released.");
             } else if(args[0].equalsIgnoreCase("slime")) {
                 Form.at(player, Prefix.ERROR, "Kits are not yet released.");
