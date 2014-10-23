@@ -67,7 +67,7 @@ public class VCKit extends ICommand {
             add(new ItemStackBuilder(Material.DIAMOND_BOOTS, "&f&lSkeleton Boots").toItemStack());
         }});
 
-        put(Group.ENDERMAN, new ArrayList<ItemStack>() {{
+        put(Group.ENDERDRAGON, new ArrayList<ItemStack>() {{
             add(new ItemStackBuilder(Material.DIAMOND_HELMET, "&5&lEnder&7&lDragon Helmet").toItemStack());
             add(new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&5&lEnder&7&lDragon Chestplate").toItemStack());
             add(new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&5&lEnder&7&lDragon Leggings").toItemStack());
