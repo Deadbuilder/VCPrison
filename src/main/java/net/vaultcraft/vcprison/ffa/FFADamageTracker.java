@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.ffa;
 
+import net.vaultcraft.vcprison.ffa.combatlog.CombatLog;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class FFADamageTracker {
             lastDamage.remove(hurt);
 
         lastDamage.put(hurt, damager);
+        CombatLog.wasTagged(hurt);
     }
 
     public static Player getLastDamager(Player player) {

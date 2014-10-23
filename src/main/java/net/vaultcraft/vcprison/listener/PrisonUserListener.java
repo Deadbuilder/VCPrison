@@ -4,6 +4,7 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.ffa.FFADamageTracker;
 import net.vaultcraft.vcprison.ffa.FFAHandler;
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
+import net.vaultcraft.vcprison.ffa.combatlog.CombatLog;
 import net.vaultcraft.vcprison.mine.Mine;
 import net.vaultcraft.vcprison.mine.MineLoader;
 import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
@@ -51,6 +52,7 @@ public class PrisonUserListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+        CombatLog.handleLeave(event.getPlayer());
         PrisonUser.remove(event.getPlayer());
     }
 
