@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class VCKit extends ICommand {
 
-    private HashMap<Group, ArrayList<ItemStack>> kits = new HashMap<Group, ArrayList<ItemStack>>() {{
+    private LinkedHashMap<Group, ArrayList<ItemStack>> kits = new LinkedHashMap<Group, ArrayList<ItemStack>>() {{
         put(Group.COMMON, new ArrayList<ItemStack>() {{
             add(new ItemStackBuilder(Material.IRON_HELMET, "&7&lCommon Helmet").toItemStack());
             add(new ItemStackBuilder(Material.IRON_CHESTPLATE, "&7&lCommon Chestplate").toItemStack());
@@ -83,7 +84,7 @@ public class VCKit extends ICommand {
         if(args.length == 0) {
             player.sendMessage(ChatColor.DARK_PURPLE + "Available kits" + ChatColor.GRAY + ":");
             for(Group g : kits.keySet()) {
-                player.sendMessage(ChatColor.GRAY + "- " + ChatColor.LIGHT_PURPLE + g.getName());
+                player.sendMessage(ChatColor.GRAY + "- " + g.getChatColor() + ChatColor.BOLD + g.getName());
             }
             player.sendMessage(ChatColor.GRAY + "Usage: /kit <kit name>");
         } else if(args.length == 1) {
@@ -157,7 +158,7 @@ public class VCKit extends ICommand {
         }
 
         public ItemStackBuilder(Material type, String displayName, String... lore) {
-            this(type, (byte)0, displayName, lore);
+            this(type, (byte) 0, displayName, lore);
         }
 
         public ItemStackBuilder addEnchantment(Enchantment e, int level) {
