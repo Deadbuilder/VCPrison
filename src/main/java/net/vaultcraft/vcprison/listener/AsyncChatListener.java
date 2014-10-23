@@ -20,7 +20,7 @@ public class AsyncChatListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onAsyncChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         PrisonUser user = PrisonUser.fromPlayer(player);
