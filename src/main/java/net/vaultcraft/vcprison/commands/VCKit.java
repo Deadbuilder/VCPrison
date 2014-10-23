@@ -34,45 +34,45 @@ public class VCKit extends ICommand {
         }});
 
         put(Group.WOLF, new ArrayList<ItemStack>() {{
-            add(new ItemStackBuilder(Material.IRON_HELMET, "&8&lWolf Helmet").toItemStack());
-            add(new ItemStackBuilder(Material.IRON_CHESTPLATE, "&8&lWolf Chestplate").toItemStack());
-            add(new ItemStackBuilder(Material.IRON_LEGGINGS, "&8&lWolf Leggings").toItemStack());
-            add(new ItemStackBuilder(Material.IRON_BOOTS, "&8&lWolf Boots").toItemStack());
+            add(new ItemStackBuilder(Material.IRON_HELMET, "&8&lWolf Helmet").addEnchantment(Enchantment.DURABILITY, 1).toItemStack());
+            add(new ItemStackBuilder(Material.IRON_CHESTPLATE, "&8&lWolf Chestplate").addEnchantment(Enchantment.DURABILITY, 1).toItemStack());
+            add(new ItemStackBuilder(Material.IRON_LEGGINGS, "&8&lWolf Leggings").addEnchantment(Enchantment.DURABILITY, 1).toItemStack());
+            add(new ItemStackBuilder(Material.IRON_BOOTS, "&8&lWolf Boots").addEnchantment(Enchantment.DURABILITY, 1).toItemStack());
         }});
 
         put(Group.SLIME, new ArrayList<ItemStack>() {{
-            add(new ItemStackBuilder(Material.IRON_HELMET, "&a&lSlime Helmet").toItemStack());
-            add(new ItemStackBuilder(Material.IRON_CHESTPLATE, "&a&lSlime Chestplate").toItemStack());
-            add(new ItemStackBuilder(Material.IRON_LEGGINGS, "&a&lSlime Leggings").toItemStack());
-            add(new ItemStackBuilder(Material.IRON_BOOTS, "&a&lSlime Boots").toItemStack());
+            add(new ItemStackBuilder(Material.IRON_HELMET, "&a&lSlime Helmet").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack());
+            add(new ItemStackBuilder(Material.IRON_CHESTPLATE, "&a&lSlime Chestplate").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack());
+            add(new ItemStackBuilder(Material.IRON_LEGGINGS, "&a&lSlime Leggings").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack());
+            add(new ItemStackBuilder(Material.IRON_BOOTS, "&a&lSlime Boots").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack());
         }});
 
         put(Group.SKELETON, new ArrayList<ItemStack>() {{
-            add(new ItemStackBuilder(Material.DIAMOND_HELMET, "&f&lSkeleton Helmet").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&f&lSkeleton Chestplate").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&f&lSkeleton Leggings").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_BOOTS, "&f&lSkeleton Boots").toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_HELMET, "&f&lSkeleton Helmet").addEnchantment(Enchantment.DURABILITY, 2).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&f&lSkeleton Chestplate").addEnchantment(Enchantment.DURABILITY, 2).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&f&lSkeleton Leggings").addEnchantment(Enchantment.DURABILITY, 2).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_BOOTS, "&f&lSkeleton Boots").addEnchantment(Enchantment.DURABILITY, 2).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack());
         }});
 
         put(Group.ENDERMAN, new ArrayList<ItemStack>() {{
-            add(new ItemStackBuilder(Material.DIAMOND_HELMET, "&5&lEnderman Helmet").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&5&lEnderman Chestplate").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&5&lEnderman Leggings").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_BOOTS, "&5&lEnderman Boots").toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_HELMET, "&5&lEnderman Helmet").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&5&lEnderman Chestplate").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&5&lEnderman Leggings").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_BOOTS, "&5&lEnderman Boots").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).toItemStack());
         }});
 
         put(Group.WITHER, new ArrayList<ItemStack>() {{
-            add(new ItemStackBuilder(Material.DIAMOND_HELMET, "&f&lSkeleton Helmet").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&f&lSkeleton Chestplate").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&f&lSkeleton Leggings").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_BOOTS, "&f&lSkeleton Boots").toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_HELMET, "&e&lWither Helmet").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).addEnchantment(Enchantment.THORNS, 2).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&e&lWither Chestplate").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).addEnchantment(Enchantment.THORNS, 2).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&e&lWither Leggings").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).addEnchantment(Enchantment.THORNS, 2).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_BOOTS, "&e&lWither Boots").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).addEnchantment(Enchantment.THORNS, 2).toItemStack());
         }});
 
         put(Group.ENDERDRAGON, new ArrayList<ItemStack>() {{
-            add(new ItemStackBuilder(Material.DIAMOND_HELMET, "&5&lEnder&7&lDragon Helmet").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&5&lEnder&7&lDragon Chestplate").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&5&lEnder&7&lDragon Leggings").toItemStack());
-            add(new ItemStackBuilder(Material.DIAMOND_BOOTS, "&5&lEnder&7&lDragon Boots").toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_HELMET, "&5&lEnder&7&lDragon Helmet").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.THORNS, 2).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&5&lEnder&7&lDragon Chestplate").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.THORNS, 2).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&5&lEnder&7&lDragon Leggings").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.THORNS, 2).toItemStack());
+            add(new ItemStackBuilder(Material.DIAMOND_BOOTS, "&5&lEnder&7&lDragon Boots").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.THORNS, 2).toItemStack());
         }});
     }};
 
