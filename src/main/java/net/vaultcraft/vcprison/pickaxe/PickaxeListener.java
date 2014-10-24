@@ -103,6 +103,8 @@ public class PickaxeListener implements Listener {
         }
 
         PickaxePerk perk = PickaxePerk.getPerkFromName(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName().replace("Toggle Off ", "").replace("Toggle On ", "").replaceAll(" \\d+", "").replace(" Max", "")));
+        if(perk == null)
+            return;
         if (pickaxe.getPerkLevel(perk) == perk.getMaxLevel()) {
             Form.at(player, Prefix.ERROR, "Pickaxe perk is at it highest level!");
             return;
