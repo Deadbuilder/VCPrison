@@ -114,13 +114,13 @@ public class PrisonUserListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
+        event.setDeathMessage(null);
+        
         if (!FFAPlayer.getFFAPlayerFromPlayer(event.getEntity()).isPlaying())
             return;
 
         Player killer = FFADamageTracker.getLastDamager(event.getEntity());
         FFAHandler.handleDeath(event.getEntity(), killer);
-
-        event.setDeathMessage(null);
     }
 
     @EventHandler
