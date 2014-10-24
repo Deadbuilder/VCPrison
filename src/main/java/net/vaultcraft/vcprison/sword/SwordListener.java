@@ -16,6 +16,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -39,11 +40,18 @@ public class SwordListener implements Listener {
     }
 
     @EventHandler
+    public void onItemDrop(PlayerDropItemEvent event) {
+        if(event.getItemDrop().getItemStack().equals(PrisonUser.fromPlayer(event.getPlayer()).getSword().getSword())) {
+            event.getPlayer().openInventory(PrisonUser.fromPlayer(event.getPlayer()).getSword().getStatsMenu());
+            event.setCancelled(true);
+        }
+
+    }
+
+    @EventHandler
     public void onInvClick(InventoryClickEvent event) {
         if (event.getSlotType() == InventoryType.SlotType.QUICKBAR) {
             if (event.getCurrentItem().getType().name().contains("SWORD")) {
-                if(event.getAction().name().contains("DROP"))
-                    event.getWhoClicked().openInventory(PrisonUser.fromPlayer((Player) event.getWhoClicked()).getSword().getStatsMenu());
                 event.setCancelled(true);
                 return;
             }
