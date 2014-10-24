@@ -26,7 +26,7 @@ public class PortalListener implements Listener {
             if(using.contains(event.getPlayer())) {
                 return;
             }
-            ProtectedArea area = ProtectionManager.getInstance().getRegions().get("ffaportal");
+            ProtectedArea area = ProtectionManager.getInstance().getRegions().get("ffa_portal");
             if(area == null) {
                 return;
             }
