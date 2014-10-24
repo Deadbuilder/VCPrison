@@ -98,7 +98,7 @@ public class PickaxeListener implements Listener {
         }
         if (event.getCurrentItem().getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', "&6&lFF&e&A"))) {
             player.closeInventory();
-            player.performCommand("/ffa");
+            player.performCommand("ffa");
             return;
         }
 
