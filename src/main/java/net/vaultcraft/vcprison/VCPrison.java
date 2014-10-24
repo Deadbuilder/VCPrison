@@ -108,7 +108,7 @@ public class VCPrison extends JavaPlugin {
         SwordPerk.addPerk(new HasteSwordPerk(Material.DIAMOND_PICKAXE, "Haste", 5, 0, 2, "Adds a level of haste when you have your sword selected."), 3);
         SwordPerk.addPerk(new NightVisionSwordPerk(Material.EYE_OF_ENDER, Material.EYE_OF_ENDER, Material.ENDER_PEARL, "Night Vision", 5, false, "Adds night vision when you have your sword selected.", "Toggleable"), 4);
         SwordPerk.addPerk(new SpeedSwordPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 5, false, "Adds Speed when you have your sword selected.", "Toggleable"), 5);
-
+        SwordPerk.addPerk(new ExplosionSwordPerk(Material.TNT, "Explosion", 2, 0, 10, "Adds a level of explosion to your sword."), 6);
         for(Player player : Bukkit.getOnlinePlayers()) {
             new PrisonUser(player);
         }
