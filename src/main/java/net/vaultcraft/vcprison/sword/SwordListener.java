@@ -25,7 +25,7 @@ import org.bukkit.inventory.Inventory;
  */
 public class SwordListener implements Listener {
 
-    public SwordListener () {
+    public SwordListener() {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
@@ -42,11 +42,11 @@ public class SwordListener implements Listener {
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
         Sword sword = PrisonUser.fromPlayer(event.getPlayer()).getSword();
-        if(sword == null)
+        if (sword == null)
             return;
-        if(!sword.isInUse())
+        if (!sword.isInUse())
             return;
-        if(event.getItemDrop().getItemStack().equals(sword.getSword())) {
+        if (event.getItemDrop().getItemStack().equals(sword.getSword())) {
             event.getPlayer().openInventory(sword.getStatsMenu());
             event.setCancelled(true);
         }
@@ -81,12 +81,12 @@ public class SwordListener implements Listener {
             return;
         if (event.getCurrentItem().getItemMeta() == null)
             return;
-        if(event.getCurrentItem().getItemMeta().getDisplayName() == null)
+        if (event.getCurrentItem().getItemMeta().getDisplayName() == null)
             return;
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
         Sword sword = PrisonUser.fromPlayer(player).getSword();
-        if(!sword.isInUse())
+        if (!sword.isInUse())
             return;
         SwordPerk perk = SwordPerk.getPerkFromName(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName().replace("Toggle Off ", "").replace("Toggle On ", "").replaceAll(" \\d+", "").replace(" Max", "")));
         if (sword.getPerkLevel(perk) == perk.getMaxLevel()) {
@@ -124,12 +124,14 @@ public class SwordListener implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         Sword sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
         event.getDrops().remove(sword.getSword());
-        if(!sword.isInUse())
+        if (!sword.isInUse())
             return;
         sword.reset();
 
+        if (FFADamageTracker.getLastDamager(event.getEntity()) == null)
+            return;
         PrisonUser user = PrisonUser.fromPlayer(FFADamageTracker.getLastDamager(event.getEntity()));
-        if(user != null) {
+        if (user != null) {
             user.getSword().levelUp();
             event.getEntity().getKiller().getInventory().setItem(0, user.getSword().getSword());
         }
@@ -137,27 +139,27 @@ public class SwordListener implements Listener {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
-        if(!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
+        if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player))
             return;
         Player defender = (Player) event.getEntity();
         Player attacker = (Player) event.getDamager();
-        for(SwordPerk perk : SwordPerk.getPerks()) {
+        for (SwordPerk perk : SwordPerk.getPerks()) {
             int defenderLevel = PrisonUser.fromPlayer(defender).getSword().getPerkLevel(perk);
             int attackerLevel = PrisonUser.fromPlayer(attacker).getSword().getPerkLevel(perk);
-            if(defenderLevel > 0 && defender.isBlocking())
+            if (defenderLevel > 0 && defender.isBlocking())
                 perk.onDefend(defender, attacker, defenderLevel);
-            if(attackerLevel > 0)
+            if (attackerLevel > 0)
                 perk.onHit(attacker, defender, attackerLevel);
         }
         Sword sword = PrisonUser.fromPlayer(attacker).getSword();
-        if(sword.isInUse())
+        if (sword.isInUse())
             attacker.getInventory().setItem(0, sword.getSword());
     }
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
         Sword sword = PrisonUser.fromPlayer(event.getPlayer()).getSword();
-        if(sword.isInUse())
+        if (sword.isInUse())
             event.getPlayer().getInventory().setItem(0, sword.getSword());
     }
 }
