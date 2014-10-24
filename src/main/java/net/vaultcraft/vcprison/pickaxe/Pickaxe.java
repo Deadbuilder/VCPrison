@@ -221,6 +221,9 @@ public class Pickaxe {
     }
 
     public int getPerkLevel(PickaxePerk perk) {
+        if (perk == null)
+            return 0;
+
         return perkLevels.get(perk);
     }
 
