@@ -57,7 +57,7 @@ public class PrisonUser {
             if(pickaxe != null)
                 user.getAllUserdata().remove("Pickaxe");
             Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), () -> {
-                DBObject dbObject = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query("VaultCraft", "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
+                DBObject dbObject = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString()) == null ? new BasicDBObject() : VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "PrisonUsers", "UUID", user.getPlayer().getUniqueId().toString());
                 dbObject.put("UUID", player.getUniqueId().toString());
                 dbObject.put("Rank",rank.toString());
                 dbObject.put("Prestige", prestige);
