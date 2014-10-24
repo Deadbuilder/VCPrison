@@ -109,13 +109,13 @@ public class GangManager implements Listener {
 
         if(playerGang.getGangName().equals(damagerGang.getGangName())) {
             event.setCancelled(true);
-            Form.at(player, Prefix.WARNING, "You can't hurt somebody in your gang!");
+            Form.at(damager, Prefix.WARNING, "You can't hurt somebody in your gang!");
             return;
         }
 
         for(String gangName : playerGang.getAlliedGangs()) {
             if(gangName.equalsIgnoreCase(damagerGang.getGangName())) {
-                Form.at(player, Prefix.WARNING, "You can't hurt somebody a gang allied with yours!");
+                Form.at(damager, Prefix.WARNING, "You can't hurt somebody a gang allied with yours!");
                 event.setCancelled(true);
                 return;
             }

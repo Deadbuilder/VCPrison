@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.listener;
 
+import net.vaultcraft.vcessentials.VCEssentials;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.protection.ProtectedArea;
 import net.vaultcraft.vcutils.protection.ProtectionManager;
@@ -26,15 +27,19 @@ public class PortalListener implements Listener {
             if(using.contains(event.getPlayer())) {
                 return;
             }
-            ProtectedArea area = ProtectionManager.getInstance().getRegions().get("ffa_portal");
-            if(area == null) {
-                return;
+
+            for (String key : ProtectionManager.getInstance().getRegions().keySet()) {
+                if (!(key.contains("ffa_portal")))
+                    continue;
+
+                ProtectedArea area = ProtectionManager.getInstance().getRegions().get(key);
+                if (area.getArea().isInArea(event.getTo())) {
+                    event.getPlayer().performCommand("redir ffa");
+                    using.add(event.getPlayer());
+                    Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), () -> using.remove(event.getPlayer()), 5);
+                }
             }
-            if(area.getArea().isInArea(event.getTo())) {
-                event.getPlayer().performCommand("redir ffa");
-                using.add(event.getPlayer());
-                Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), () -> using.remove(event.getPlayer()), 5);
-            }
+
         }
     }
 }
