@@ -130,6 +130,7 @@ public class SwordListener implements Listener {
         PrisonUser user = PrisonUser.fromPlayer(event.getEntity().getKiller());
         if(user != null) {
             user.getSword().levelUp();
+            event.getEntity().getKiller().getInventory().setItem(0, user.getSword().getSword());
         }
     }
 
