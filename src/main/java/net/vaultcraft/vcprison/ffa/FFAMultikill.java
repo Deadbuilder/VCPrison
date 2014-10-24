@@ -42,7 +42,6 @@ public class FFAMultikill {
             if (at < System.currentTimeMillis()) {
                 multiKillTimer.remove(killer);
                 killstreak.remove(killer);
-                return;
             }
         }
 
