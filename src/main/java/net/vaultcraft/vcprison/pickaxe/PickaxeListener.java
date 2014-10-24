@@ -97,12 +97,9 @@ public class PickaxeListener implements Listener {
             player.openInventory(WarpGUI.create(PrisonUser.fromPlayer(player)));
             return;
         }
-        if (event.getCurrentItem().getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', "&6&lFF&e&A"))) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', "&6&lFF&e&lA"))) {
             player.closeInventory();
-            //player.performCommand("ffa");
-            FFAPlayer ffa = FFAPlayer.getFFAPlayerFromPlayer(player);
-            ffa.beginFFA();
-            Form.at(player, Prefix.SUCCESS, "You have joined the FFA!");
+            player.performCommand("ffa");
             return;
         }
 

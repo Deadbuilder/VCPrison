@@ -10,6 +10,7 @@ import net.vaultcraft.vcprison.furance.FurnaceListener;
 import net.vaultcraft.vcprison.gangs.GangManager;
 import net.vaultcraft.vcprison.gangs.VCGangs;
 import net.vaultcraft.vcprison.listener.AsyncChatListener;
+import net.vaultcraft.vcprison.listener.PortalListener;
 import net.vaultcraft.vcprison.listener.PrisonUserListener;
 import net.vaultcraft.vcprison.mine.Mine;
 import net.vaultcraft.vcprison.mine.MineLoader;
@@ -88,6 +89,7 @@ public class VCPrison extends JavaPlugin {
         new CrateListener();
         new PrisonShopListener();
         new FFAShopListener();
+        new PortalListener();
 
         MineUtil.createBlockInjector(new MineCrateInjector());
 

@@ -44,6 +44,7 @@ public class GangManager implements Listener {
                         e.printStackTrace();
                     }
                 },  18000l, 18000l);
+        Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
     public static Gang getGang(String name) {
