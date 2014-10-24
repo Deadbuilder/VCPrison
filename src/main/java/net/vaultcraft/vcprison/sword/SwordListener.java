@@ -89,6 +89,8 @@ public class SwordListener implements Listener {
         if (!sword.isInUse())
             return;
         SwordPerk perk = SwordPerk.getPerkFromName(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName().replace("Toggle Off ", "").replace("Toggle On ", "").replaceAll(" \\d+", "").replace(" Max", "")));
+        if(perk == null)
+            return;
         if (sword.getPerkLevel(perk) == perk.getMaxLevel()) {
             Form.at(player, Prefix.ERROR, "Sword perk is at it highest level!");
             return;
