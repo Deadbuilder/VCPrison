@@ -27,6 +27,10 @@ import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.events.ServerEventHandler;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
+import net.vaultcraft.vcutils.protection.Area;
+import net.vaultcraft.vcutils.protection.ProtectedArea;
+import net.vaultcraft.vcutils.protection.ProtectionManager;
+import net.vaultcraft.vcutils.protection.flag.FlagType;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
 import net.vaultcraft.vcutils.user.User;
@@ -148,6 +152,18 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
+
+        {
+            //FFA region hardcode
+            ProtectedArea area = new ProtectedArea(new Area(new Location(Bukkit.getWorld("ffa"), 5000, 5000, 5000), new Location(Bukkit.getWorld("ffa"), -5000, -5000, -5000)));
+            area.setPriority(100);
+            area.addToProtection(FlagType.PVP, false);
+            area.addToProtection(FlagType.CREATURE_SPAWN, true);
+            area.addToProtection(FlagType.ENTITY_DAMAGE, false);
+            area.addToProtection(FlagType.PLAYER_DAMAGE, false);
+
+            ProtectionManager.getInstance().addToProtection("ffa", area);
+        }
     }
 
     public static ServerEventHandler getEventHandler() {

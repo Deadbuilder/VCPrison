@@ -206,6 +206,9 @@ public class Pickaxe {
     public ItemStack getFFAIcon() {
         ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lFF&e&lA"));
+        itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&6Click to teleport to the FFA.")));
+        itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 

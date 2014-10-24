@@ -6,6 +6,7 @@ import net.vaultcraft.vcprison.ffa.event.FFALeaveEvent;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -75,6 +76,7 @@ public class FFAPlayer {
         user.getSword().setInUse(true);
         player.updateInventory();
 
+        player.setGameMode(GameMode.ADVENTURE);
 
         playing = true;
     }
@@ -89,6 +91,8 @@ public class FFAPlayer {
         user.getSword().setInUse(false);
         user.getPickaxe().setInUse(true);
         player.updateInventory();
+
+        player.setGameMode(GameMode.SURVIVAL);
 
         playing = false;
     }

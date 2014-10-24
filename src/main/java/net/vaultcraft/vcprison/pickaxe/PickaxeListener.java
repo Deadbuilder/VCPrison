@@ -96,7 +96,7 @@ public class PickaxeListener implements Listener {
             player.openInventory(WarpGUI.create(PrisonUser.fromPlayer(player)));
             return;
         }
-        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("FFA")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', "&6&lFF&e&A"))) {
             player.closeInventory();
             player.chat("/ffa");
             return;
@@ -153,9 +153,6 @@ public class PickaxeListener implements Listener {
                 perk.onHoverOn(event.getPlayer(), pickaxe.getPerkLevel(perk));
             }
         }
-
-
-
         if (event.getPreviousSlot() == 0) {
             for (PickaxePerk perk : PickaxePerk.getPerks()) {
                 if (pickaxe.getPerkLevel(perk) == 0)
@@ -170,12 +167,7 @@ public class PickaxeListener implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
-        if (event.getItemDrop().getItemStack().getType() == Material.DIAMOND_PICKAXE ||
-                event.getItemDrop().getItemStack().getType() == Material.DIAMOND_SWORD ||
-                event.getItemDrop().getItemStack().getType() == Material.IRON_SWORD ||
-                event.getItemDrop().getItemStack().getType() == Material.GOLD_SWORD ||
-                event.getItemDrop().getItemStack().getType() == Material.STONE_SWORD ||
-                event.getItemDrop().getItemStack().getType() == Material.WOOD_SWORD)
+        if (event.getItemDrop().getItemStack().getType() == Material.DIAMOND_PICKAXE)
             event.setCancelled(true);
     }
 
