@@ -22,7 +22,7 @@ public class ExplosionSwordPerk extends SwordPerk {
         if ((Math.random()*100) < (level*10)) {
             Location at = otherPlayer.getLocation();
             Particles.HUGE_EXPLOSION.sendToLocation(at, 1f, 1f, 1f, 1, 3);
-            otherPlayer.setVelocity(otherPlayer.getVelocity().multiply(new Vector((Math.random()*10) - 5, (Math.random()*10) - 5, (Math.random()*10) - 5)));
+            otherPlayer.setVelocity(new Vector((Math.random()*10) - 5, (Math.random()*10) - 5, (Math.random()*10) - 5));
             at.getWorld().playSound(at, Sound.EXPLODE, 1, 1);
             otherPlayer.damage(3.0);
         }
