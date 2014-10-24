@@ -1,7 +1,7 @@
 package net.vaultcraft.vcprison.ffa.combatlog;
 
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+
 import java.util.HashMap;
 
 /**
@@ -11,16 +11,17 @@ import java.util.HashMap;
 public class CombatLog {
 
     public static HashMap<Player, Long> inPvP = new HashMap<>();
-    public static HashMap<Player, Villager> logged = new HashMap<>();
 
     public static void wasTagged(Player player) {
         if (inPvP.containsKey(player)) {
-            long x = inPvP.get(player);
-            x+=(1000 * 10);
-            inPvP.put(player, x);
+            inPvP.remove(player);
         }
-        else
-            inPvP.put(player, System.currentTimeMillis() + (1000 * 10));
+        inPvP.put(player, System.currentTimeMillis() + (1000 * 10));
+    }
+
+    public static void untag(Player player) {
+        if(inPvP.containsKey(player))
+            inPvP.remove(player);
     }
 
     public static boolean isSafeLogout(Player player) {

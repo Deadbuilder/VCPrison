@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.sword;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.ffa.FFADamageTracker;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
@@ -127,7 +128,7 @@ public class SwordListener implements Listener {
             return;
         sword.reset();
 
-        PrisonUser user = PrisonUser.fromPlayer(event.getEntity().getKiller());
+        PrisonUser user = PrisonUser.fromPlayer(FFADamageTracker.getLastDamager(event.getEntity()));
         if(user != null) {
             user.getSword().levelUp();
             event.getEntity().getKiller().getInventory().setItem(0, user.getSword().getSword());
