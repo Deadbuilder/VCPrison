@@ -1,5 +1,7 @@
 package net.vaultcraft.vcprison.ffa.combatlog;
 
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import java.util.HashMap;
@@ -11,16 +13,16 @@ import java.util.HashMap;
 public class CombatLog {
 
     public static HashMap<Player, Long> inPvP = new HashMap<>();
-    public static HashMap<Player, Villager> logged = new HashMap<>();
 
     public static void wasTagged(Player player) {
         if (inPvP.containsKey(player)) {
-            long x = inPvP.get(player);
-            x+=(1000 * 10);
-            inPvP.put(player, x);
+            inPvP.remove(player);
         }
-        else
-            inPvP.put(player, System.currentTimeMillis() + (1000 * 10));
+        else {
+            Form.at(player, Prefix.WARNING, "You were tagged, you may not logout for another 10 seconds!");
+        }
+
+        inPvP.put(player, System.currentTimeMillis() + (1000 * 10));
     }
 
     public static boolean isSafeLogout(Player player) {
