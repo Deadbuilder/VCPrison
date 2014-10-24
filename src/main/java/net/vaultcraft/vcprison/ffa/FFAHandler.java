@@ -1,6 +1,8 @@
 package net.vaultcraft.vcprison.ffa;
 
 import net.vaultcraft.vcprison.ffa.combatlog.CombatLog;
+import net.vaultcraft.vcprison.user.PrisonUser;
+import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.*;
@@ -54,6 +56,8 @@ public class FFAHandler {
             case WOLF:
                 bounty*=1.2;
         }
+
+        bounty*=(64 * ItemWorthLoader.getWorth(PrisonUser.fromPlayer(killer).getRank(), Material.DIAMOND_BLOCK));
 
         ffaKill.getUser().setMoney(ffaKill.getUser().getMoney() + bounty);
 
