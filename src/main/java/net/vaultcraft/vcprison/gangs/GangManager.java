@@ -2,6 +2,8 @@ package net.vaultcraft.vcprison.gangs;
 
 import net.minecraft.util.com.google.gson.Gson;
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -106,11 +108,13 @@ public class GangManager implements Listener {
 
         if(playerGang.getGangName().equals(damagerGang.getGangName())) {
             event.setCancelled(true);
+            Form.at(player, Prefix.WARNING, "You can't hurt somebody in your gang!");
             return;
         }
 
         for(String gangName : playerGang.getAlliedGangs()) {
             if(gangName.equalsIgnoreCase(damagerGang.getGangName())) {
+                Form.at(player, Prefix.WARNING, "You can't hurt somebody a gang allied with yours!");
                 event.setCancelled(true);
                 return;
             }
