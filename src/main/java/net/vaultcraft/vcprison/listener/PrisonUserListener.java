@@ -151,6 +151,7 @@ public class PrisonUserListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDamage(EntityDamageEvent event) {
         if(!(event.getEntity() instanceof Player)) {
+            //Don't remove the entity!
             return;
         }
 
