@@ -49,7 +49,8 @@ public class SwordListener implements Listener {
             return;
         if (!sword.isInUse())
             return;
-        event.setCancelled(true);
+        if(event.getItemDrop().getItemStack().getType().name().contains("SWORD"))
+            event.setCancelled(true);
         if (event.getItemDrop().getItemStack().equals(sword.getSword())) {
             event.getPlayer().openInventory(sword.getStatsMenu());
         }
