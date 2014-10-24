@@ -110,11 +110,8 @@ public class PrisonUserListener implements Listener {
         if (ProtectionManager.getInstance().getState(FlagType.PVP, hurt.getLocation()).isCancelled())
             return;
 
-        for (ProtectedArea area : ProtectionManager.getInstance().fromLocation(hurt.getLocation())) {
-            if (ProtectionManager.getInstance().getArea("ffa").equals(area)) {
-                //is ffa area
-                FFADamageTracker.setLastDamager((Player)hurt, (Player)damager);
-            }
+        if(hurt.getLocation().getWorld().getName().equalsIgnoreCase("ffa")) {
+            FFADamageTracker.setLastDamager((Player) hurt, (Player) damager);
         }
     }
 
