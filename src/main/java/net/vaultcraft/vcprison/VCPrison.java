@@ -35,9 +35,7 @@ import net.vaultcraft.vcutils.protection.flag.FlagType;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
 import net.vaultcraft.vcutils.user.User;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -123,6 +121,17 @@ public class VCPrison extends JavaPlugin {
 
         VCPluginManager.register(this);
 
+        System.out.println("Loading FFA Region...");
+        World ffaWorld = Bukkit.getServer().createWorld(new WorldCreator("ffa"));
+        ProtectedArea area = new ProtectedArea(new Area(new Location(ffaWorld, -5000, 0, -5000), new Location(ffaWorld, 5000, 256, 5000)));
+        area.setPriority(100);
+        area.addToProtection(FlagType.PVP, false);
+        area.addToProtection(FlagType.CREATURE_SPAWN, true);
+        area.addToProtection(FlagType.ENTITY_DAMAGE, false);
+        area.addToProtection(FlagType.PLAYER_DAMAGE, false);
+
+        ProtectionManager.getInstance().addToProtection("ffa", area);
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
             int pos = 60;
             @Override
@@ -154,20 +163,6 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
-
-        Runnable postWorld = () -> {
-            //FFA region hardcode
-            System.out.println("FFA Region loaded!");
-            ProtectedArea area = new ProtectedArea(new Area(new Location(Bukkit.getWorld("ffa"), -5000, 0, -5000), new Location(Bukkit.getWorld("ffa"), 5000, 256, 5000)));
-            area.setPriority(100);
-            area.addToProtection(FlagType.PVP, false);
-            area.addToProtection(FlagType.CREATURE_SPAWN, true);
-            area.addToProtection(FlagType.ENTITY_DAMAGE, false);
-            area.addToProtection(FlagType.PLAYER_DAMAGE, false);
-
-            ProtectionManager.getInstance().addToProtection("ffa", area);
-        };
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, postWorld, 100L);
     }
 
     public static ServerEventHandler getEventHandler() {

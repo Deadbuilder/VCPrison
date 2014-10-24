@@ -3,7 +3,7 @@ package net.vaultcraft.vcprison.ffa.combatlog;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+
 import java.util.HashMap;
 
 /**
@@ -23,6 +23,11 @@ public class CombatLog {
         }
 
         inPvP.put(player, System.currentTimeMillis() + (1000 * 10));
+    }
+
+    public static void untag(Player player) {
+        if(inPvP.containsKey(player))
+            inPvP.remove(player);
     }
 
     public static boolean isSafeLogout(Player player) {
