@@ -20,13 +20,13 @@ public class VCFFA extends ICommand {
 
     public void processCommand(Player player, String[] strings) {
         FFAPlayer ffa = FFAPlayer.getFFAPlayerFromPlayer(player);
-        if(!CombatLog.isSafeLogout(player)) {
-            Form.at(player, Prefix.ERROR, "You can't leave ffa if you are tagged.");
-            return;
-        }
 
         if (ffa.isPlaying()) {
             //end
+            if(!CombatLog.isSafeLogout(player)) {
+                Form.at(player, Prefix.ERROR, "You can't leave ffa if you are tagged.");
+                return;
+            }
             ffa.endFFA();
             Form.at(player, Prefix.SUCCESS, "You have left the FFA!");
         } else {

@@ -101,7 +101,7 @@ public class GangManager implements Listener {
             return;
         if(damagerGang == null)
             return;
-        if(playerGang.isFriendlyFire() || damagerGang.isFriendlyFire())
+        if(playerGang.isFriendlyFire() && damagerGang.isFriendlyFire())
             return;
 
         if(playerGang.getGangName().equals(damagerGang.getGangName())) {
