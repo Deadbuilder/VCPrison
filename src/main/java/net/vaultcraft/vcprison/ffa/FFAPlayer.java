@@ -8,6 +8,7 @@ import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.HashMap;
 
@@ -73,6 +74,10 @@ public class FFAPlayer {
 
         player.setGameMode(GameMode.ADVENTURE);
 
+        for (PotionEffect effect : player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
+
         playing = true;
     }
 
@@ -89,6 +94,10 @@ public class FFAPlayer {
         player.updateInventory();
 
         player.setGameMode(GameMode.SURVIVAL);
+
+        for (PotionEffect effect : player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
 
         playing = false;
         player.teleport(VCPrison.spawn);
