@@ -19,6 +19,9 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
 
 /**
  * Created by tacticalsk8er on 10/5/2014.
@@ -125,7 +128,10 @@ public class SwordListener implements Listener {
     @EventHandler()
     public void onDeath(PlayerDeathEvent event) {
         Sword sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
-        event.getDrops().remove(sword.getSword());
+        for(ItemStack itemStack : new ArrayList<>(event.getDrops())) {
+            if(itemStack.getType().name().contains("SWORD"))
+                event.getDrops().remove(itemStack);
+        }
         if (!sword.isInUse())
             return;
         sword.reset();
