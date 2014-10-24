@@ -88,6 +88,18 @@ public class PrisonUserListener implements Listener {
     }
 
     @EventHandler
+    public static void onFallDamage(EntityDamageEvent event) {
+        if(!(event.getEntity() instanceof Player))
+            return;
+        if(event.getCause() != EntityDamageEvent.DamageCause.FALL)
+            return;
+        Player player = (Player) event.getEntity();
+        if(!FFAPlayer.getFFAPlayerFromPlayer(player).isPlaying())
+            return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         Entity hurt = event.getEntity();
         Entity damager = event.getDamager();

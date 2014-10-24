@@ -6,8 +6,6 @@ import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.awt.*;
 import java.util.Random;
@@ -72,18 +70,6 @@ public class FFAHandler {
 
         Form.at(ffaKill.getUser().getPlayer(), Prefix.NOTHING, "&6&lYou received &7$"+bounty+" &6&lfrom &7"+ffaDead.getUser().getPlayer().getName()+"'s &6&ldeath!");
         CombatLog.untag(ffaDead.getUser().getPlayer());
-    }
-
-    @EventHandler
-    public static void onDamage(EntityDamageEvent event) {
-        if(!(event.getEntity() instanceof Player))
-            return;
-        if(event.getCause() != EntityDamageEvent.DamageCause.FALL)
-            return;
-        Player player = (Player) event.getEntity();
-        if(!FFAPlayer.getFFAPlayerFromPlayer(player).isPlaying())
-            return;
-        event.setCancelled(true);
     }
 
     public static Location getRandomSpawnLocation() {
