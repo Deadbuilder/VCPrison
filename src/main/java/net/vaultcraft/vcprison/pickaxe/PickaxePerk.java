@@ -24,7 +24,7 @@ public class PickaxePerk {
     private int cost;
     private int initLevel;
     private int maxLevel;
-    private boolean togglable;
+    private boolean toggleable;
 
     private Material icon;
     private Material toggleOn;
@@ -63,7 +63,7 @@ public class PickaxePerk {
 
         this.toggleOn = null;
         this.toggleOff = null;
-        this.togglable = false;
+        this.toggleable = false;
     }
 
     public PickaxePerk(Material icon, Material toggleOn, Material toggleOff, String name, int cost, boolean initState, String... lore) {
@@ -78,7 +78,7 @@ public class PickaxePerk {
         loreList.add("Cost: " + cost);
         this.lore = loreList;
         this.cost = cost;
-        this.togglable = true;
+        this.toggleable = true;
         if (initState)
             this.initLevel = 1;
         else
@@ -148,8 +148,8 @@ public class PickaxePerk {
         return itemStack;
     }
 
-    public boolean isTogglable() {
-        return togglable;
+    public boolean isToggleable() {
+        return toggleable;
     }
 
     //Modifiers

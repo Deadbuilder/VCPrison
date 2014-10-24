@@ -37,7 +37,7 @@ public class Sword {
         this.player = player;
         for (SwordPerk perk : SwordPerk.getPerks()) {
             perkLevels.put(perk, perk.getInitLevel());
-            if (perk.isTogglable()) {
+            if (perk.isToggleable()) {
                 perkToggle.put(perk, perk.getInitLevel() == 1);
                 if(perk.getInitLevel() == 1)
                     perk.onToggleOn(player);
@@ -96,7 +96,7 @@ public class Sword {
             if (perkLevels.containsKey(perk))
                 continue;
             perkLevels.put(perk, perk.getInitLevel());
-            if (perk.isTogglable())
+            if (perk.isToggleable())
                 perkToggle.put(perk, perk.getInitLevel() == 1);
         }
     }
@@ -107,7 +107,7 @@ public class Sword {
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Prison Sword &e&n[KillStreak " + killstreak + "]"));
         List<String> lore = new ArrayList<>();
         for (SwordPerk perk : perkLevels.keySet()) {
-            if (perk.isTogglable())
+            if (perk.isToggleable())
                 if (!perkToggle.get(perk))
                     continue;
             if (perkLevels.get(perk) == 0)
@@ -128,7 +128,7 @@ public class Sword {
         int rows = (int) Math.ceil(((perkLevels.size() + 2.0) / 9.0));
         Inventory inventory = Bukkit.getServer().createInventory(null, 9 * rows, "Sword Perks");
         for (SwordPerk perk : SwordPerk.getPerks()) {
-            if (perk.isTogglable()) {
+            if (perk.isToggleable()) {
                 if (perkLevels.get(perk) == 1) {
                     if (perkToggle.get(perk)) {
                         inventory.addItem(perk.getToggleOff());
@@ -152,7 +152,6 @@ public class Sword {
         ItemStack itemStack = new ItemStack(Material.EMERALD);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&2&lPerk Points: " + swordPoints));
-        itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&2Click to get a Perk Point Item")));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
@@ -224,7 +223,7 @@ public class Sword {
         perkToggle.clear();
         for (SwordPerk perk : SwordPerk.getPerks()) {
             perkLevels.put(perk, perk.getInitLevel());
-            if (perk.isTogglable()) {
+            if (perk.isToggleable()) {
                 perkToggle.put(perk, perk.getInitLevel() == 1);
                 if(perk.getInitLevel() == 1)
                     perk.onToggleOn(player);
@@ -270,7 +269,7 @@ public class Sword {
         sb.append("Deaths|").append(deaths).append(".");
         sb.append("Points|").append(swordPoints).append(".");
         for (SwordPerk perk : perkLevels.keySet()) {
-            if (perk.isTogglable())
+            if (perk.isToggleable())
                 sb.append(perk.getNoColorName()).append("-Toggle|").append(perkToggle.get(perk)).append(".");
 
             sb.append(perk.getNoColorName()).append("|").append(perkLevels.get(perk)).append(".");

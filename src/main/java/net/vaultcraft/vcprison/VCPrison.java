@@ -20,11 +20,11 @@ import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.plots.PlotWorld;
 import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
 import net.vaultcraft.vcprison.shop.PrisonShopListener;
+import net.vaultcraft.vcprison.sword.*;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.command.CommandManager;
-import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.events.ServerEventHandler;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
 import net.vaultcraft.vcutils.sign.SignManager;
@@ -37,7 +37,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -93,10 +92,17 @@ public class VCPrison extends JavaPlugin {
         PickaxePerk.addPerk(new FortunePerk(Material.DIAMOND, "Fortune", 1, 5, 100, "Adds a level of fortune to your pick."), 1);
         PickaxePerk.addPerk(new HastePerk(Material.DIAMOND_PICKAXE, "Haste", 5, 0, 4, "Adds a level of haste when you have your pick selected."), 2);
         PickaxePerk.addPerk(new ExplosionPerk(Material.TNT, "Explosion", 3, 0, 25, "Blow up the blocks you wish to mine."), 3);
-        PickaxePerk.addPerk(new AutoSmeltPerk(Material.FIRE, Material.FIRE, Material.FURNACE, "Auto Smelt", 8, false, "Smelt things as you go!", "Toggable"), 4);
-        PickaxePerk.addPerk(new SilkTouchPerk(Material.WEB, Material.WEB, Material.STRING, "Silk Touch", 8, false, "Adds the Silk Touch enchantment to your pick.", "Toggable"), 5);
-        PickaxePerk.addPerk(new NightVisionPerk(Material.EYE_OF_ENDER, Material.EYE_OF_ENDER, Material.ENDER_PEARL, "Night Vision", 8, false, "Adds night vision when you have your pick selected.", "Toggable"), 6);
-        PickaxePerk.addPerk(new SpeedPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 8, false, "Adds Speed when you have your pick selected.", "Toggable"), 7);
+        PickaxePerk.addPerk(new AutoSmeltPerk(Material.FIRE, Material.FIRE, Material.FURNACE, "Auto Smelt", 8, false, "Smelt things as you go!", "Toggleable"), 4);
+        PickaxePerk.addPerk(new SilkTouchPerk(Material.WEB, Material.WEB, Material.STRING, "Silk Touch", 8, false, "Adds the Silk Touch enchantment to your pick.", "Toggleable"), 5);
+        PickaxePerk.addPerk(new NightVisionPerk(Material.EYE_OF_ENDER, Material.EYE_OF_ENDER, Material.ENDER_PEARL, "Night Vision", 8, false, "Adds night vision when you have your pick selected.", "Toggleable"), 6);
+        PickaxePerk.addPerk(new SpeedPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 8, false, "Adds Speed when you have your pick selected.", "Toggleable"), 7);
+
+        SwordPerk.addPerk(new SharpnessSwordPerk(Material.QUARTZ, "Sharpness", 2, 0, 5, "Adds a level of sharpness to your sword."), 0);
+        SwordPerk.addPerk(new FireAspectSwordPerk(Material.FIRE, "Fire Aspect", 4, 0, 2, "Adds a level of fire aspect to your sword."), 1);
+        SwordPerk.addPerk(new KnockbackSwordPerk(Material.ANVIL, "Knockback", 5, 0, 8, "Adds a level of knockback to your sword."), 2);
+        SwordPerk.addPerk(new HasteSwordPerk(Material.DIAMOND_PICKAXE, "Haste", 5, 0, 2, "Adds a level of haste when you have your sword selected."), 3);
+        SwordPerk.addPerk(new NightVisionSwordPerk(Material.EYE_OF_ENDER, Material.EYE_OF_ENDER, Material.ENDER_PEARL, "Night Vision", 5, false, "Adds night vision when you have your sword selected.", "Toggleable"), 4);
+        SwordPerk.addPerk(new SpeedSwordPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 5, false, "Adds Speed when you have your sword selected.", "Toggleable"), 5);
 
         for(Player player : Bukkit.getOnlinePlayers()) {
             new PrisonUser(player);

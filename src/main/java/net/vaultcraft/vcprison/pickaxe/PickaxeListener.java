@@ -101,7 +101,7 @@ public class PickaxeListener implements Listener {
             Form.at(player, Prefix.ERROR, "Pickaxe perk is at it highest level!");
             return;
         }
-        if (perk.isTogglable()) {
+        if (perk.isToggleable()) {
             if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Toggle")) {
                 pickaxe.togglePerk(player, perk);
                 if (pickaxe.getToggle(perk))
@@ -141,7 +141,7 @@ public class PickaxeListener implements Listener {
             for (PickaxePerk perk : PickaxePerk.getPerks()) {
                 if (pickaxe.getPerkLevel(perk) == 0)
                     continue;
-                if (perk.isTogglable())
+                if (perk.isToggleable())
                     if (!pickaxe.getToggle(perk))
                         continue;
                 perk.onHoverOn(event.getPlayer(), pickaxe.getPerkLevel(perk));
@@ -154,7 +154,7 @@ public class PickaxeListener implements Listener {
             for (PickaxePerk perk : PickaxePerk.getPerks()) {
                 if (pickaxe.getPerkLevel(perk) == 0)
                     continue;
-                if (perk.isTogglable())
+                if (perk.isToggleable())
                     if (!pickaxe.getToggle(perk))
                         continue;
                 perk.onHoverOff(event.getPlayer(), pickaxe.getPerkLevel(perk));
@@ -234,7 +234,7 @@ public class PickaxeListener implements Listener {
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
             if (pickaxe.getPerkLevel(perk) == 0)
                 continue;
-            if (perk.isTogglable())
+            if (perk.isToggleable())
                 if (!pickaxe.getToggle(perk))
                     continue;
             item = perk.onBreak(event.getPlayer(), event, event.getBlock(), item, pickaxe.getPerkLevel(perk));

@@ -22,7 +22,7 @@ public class SwordPerk {
     private int cost;
     private int initLevel;
     private int maxLevel;
-    private boolean togglable;
+    private boolean toggleable;
 
     private Material icon;
     private Material toggleOn;
@@ -61,7 +61,7 @@ public class SwordPerk {
 
         this.toggleOn = null;
         this.toggleOff = null;
-        this.togglable = false;
+        this.toggleable = false;
     }
 
     public SwordPerk(Material icon, Material toggleOn, Material toggleOff, String name, int cost, boolean initState, String... lore) {
@@ -76,7 +76,7 @@ public class SwordPerk {
         loreList.add("Cost: " + cost);
         this.lore = loreList;
         this.cost = cost;
-        this.togglable = true;
+        this.toggleable = true;
         if (initState)
             this.initLevel = 1;
         else
@@ -146,8 +146,8 @@ public class SwordPerk {
         return itemStack;
     }
 
-    public boolean isTogglable() {
-        return togglable;
+    public boolean isToggleable() {
+        return toggleable;
     }
 
     //Modifiers
