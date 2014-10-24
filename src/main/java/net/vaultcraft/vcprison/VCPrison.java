@@ -153,8 +153,9 @@ public class VCPrison extends JavaPlugin {
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
 
-        {
+        Runnable postWorld = () -> {
             //FFA region hardcode
+            System.out.println("FFA Region loaded!");
             ProtectedArea area = new ProtectedArea(new Area(new Location(Bukkit.getWorld("ffa"), 5000, 5000, 5000), new Location(Bukkit.getWorld("ffa"), -5000, -5000, -5000)));
             area.setPriority(100);
             area.addToProtection(FlagType.PVP, false);
@@ -163,7 +164,8 @@ public class VCPrison extends JavaPlugin {
             area.addToProtection(FlagType.PLAYER_DAMAGE, false);
 
             ProtectionManager.getInstance().addToProtection("ffa", area);
-        }
+        };
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, postWorld, 20L);
     }
 
     public static ServerEventHandler getEventHandler() {
