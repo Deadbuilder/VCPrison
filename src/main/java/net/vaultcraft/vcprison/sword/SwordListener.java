@@ -129,9 +129,9 @@ public class SwordListener implements Listener {
         sword.reset();
 
         Player player = FFADamageTracker.getLastDamager(event.getEntity());
-        if (FFADamageTracker.getLastDamager(player) == null)
+        if (player == null)
             return;
-        PrisonUser user = PrisonUser.fromPlayer(FFADamageTracker.getLastDamager(event.getEntity()));
+        PrisonUser user = PrisonUser.fromPlayer(player);
         if (user != null) {
             user.getSword().levelUp();
             player.getInventory().setItem(0, user.getSword().getSword());
