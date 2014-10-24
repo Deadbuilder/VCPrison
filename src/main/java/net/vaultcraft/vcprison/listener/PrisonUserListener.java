@@ -151,9 +151,9 @@ public class PrisonUserListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDamage(EntityDamageEvent event) {
         if(!(event.getEntity() instanceof Player)) {
-            event.getEntity().remove();
             return;
         }
+
         Player player = (Player) event.getEntity();
         if (event.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
             if(FFAPlayer.getFFAPlayerFromPlayer(player).isPlaying()) {
