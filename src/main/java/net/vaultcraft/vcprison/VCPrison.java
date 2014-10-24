@@ -19,6 +19,7 @@ import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.plots.PlotWorld;
 import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
+import net.vaultcraft.vcprison.shop.FFAShopListener;
 import net.vaultcraft.vcprison.shop.PrisonShopListener;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
@@ -84,6 +85,7 @@ public class VCPrison extends JavaPlugin {
         new FurnaceListener();
         new CrateListener();
         new PrisonShopListener();
+        new FFAShopListener();
 
         MineUtil.createBlockInjector(new MineCrateInjector());
 
