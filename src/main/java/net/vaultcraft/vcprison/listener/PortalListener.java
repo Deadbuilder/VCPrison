@@ -31,7 +31,7 @@ public class PortalListener implements Listener {
                 return;
             }
             if(area.getArea().isInArea(event.getTo())) {
-                event.getPlayer().performCommand("ffa");
+                event.getPlayer().performCommand("redir ffa");
                 using.add(event.getPlayer());
                 Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), () -> using.remove(event.getPlayer()), 5);
             }
