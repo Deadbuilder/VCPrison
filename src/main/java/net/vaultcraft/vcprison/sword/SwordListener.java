@@ -128,12 +128,14 @@ public class SwordListener implements Listener {
             return;
         sword.reset();
 
-        if (FFADamageTracker.getLastDamager(event.getEntity()) == null)
+        Player player = FFADamageTracker.getLastDamager(event.getEntity());
+        if (FFADamageTracker.getLastDamager(player) == null)
             return;
         PrisonUser user = PrisonUser.fromPlayer(FFADamageTracker.getLastDamager(event.getEntity()));
         if (user != null) {
             user.getSword().levelUp();
-            event.getEntity().getKiller().getInventory().setItem(0, user.getSword().getSword());
+            player.getInventory().setItem(0, user.getSword().getSword());
+            Form.at(player, Prefix.VAULT_CRAFT, "You gained a Sword Perk. Drop your sword to upgrade it!");
         }
     }
 
