@@ -20,6 +20,7 @@ import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.plots.PlotWorld;
 import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
 import net.vaultcraft.vcprison.shop.PrisonShopListener;
+import net.vaultcraft.vcprison.sword.SwordListener;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
@@ -68,7 +69,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCKit("kit", Group.COMMON, "kits"));
         CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON));
         CommandManager.addCommand(new VCShop("shop", Group.COMMON));
-        //CommandManager.addCommand(new VCFFA("ffa", Group.COMMON, "freeforall", "pvp", "fight"));
+        CommandManager.addCommand(new VCFFA("ffa", Group.COMMON, "freeforall", "pvp", "fight"));
         CommandManager.addCommand(new VCSell("sell", Group.ENDERDRAGON));
 
         new PlotWorld();
@@ -81,6 +82,7 @@ public class VCPrison extends JavaPlugin {
         new AsyncChatListener();
         new PrisonUserListener();
         new PickaxeListener();
+        new SwordListener();
         new FurnaceListener();
         new CrateListener();
         new PrisonShopListener();

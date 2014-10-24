@@ -134,15 +134,15 @@ public class SwordListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Sword sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
+        event.getDrops().remove(sword.getSword());
         if(!sword.isInUse())
             return;
-        event.getDrops().remove(sword.getSword());
         sword.reset();
+
         PrisonUser user = PrisonUser.fromPlayer(event.getEntity().getKiller());
         if(user != null) {
             user.getSword().levelUp();
         }
-
     }
 
     @EventHandler

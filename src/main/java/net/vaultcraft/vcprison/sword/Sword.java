@@ -212,6 +212,7 @@ public class Sword {
     }
 
     public void levelUp() {
+        kills++;
         killstreak++;
         swordPoints++;
         player.sendMessage("");
@@ -260,11 +261,10 @@ public class Sword {
     }
 
     public void setInUse(boolean inUse) {
+        this.inUse = inUse;
         if(!inUse) {
-            this.inUse = false;
             player.getInventory().setItem(0, new ItemStack(Material.AIR));
         } else {
-            this.inUse = false;
             player.getInventory().setItem(0, getSword());
         }
     }
