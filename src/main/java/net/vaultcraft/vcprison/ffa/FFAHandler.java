@@ -27,8 +27,6 @@ public class FFAHandler {
         FFAPlayer ffaDead = FFAPlayer.getFFAPlayerFromPlayer(dead);
         FFAPlayer ffaKill = FFAPlayer.getFFAPlayerFromPlayer(killer);
 
-        FFADamageTracker.reset(dead);
-
         if (doubleBounty == null || ffaKill.sessionKills >= doubleBounty.sessionKills) {
             doubleBounty = ffaKill;
         }
