@@ -156,7 +156,7 @@ public class VCPrison extends JavaPlugin {
         Runnable postWorld = () -> {
             //FFA region hardcode
             System.out.println("FFA Region loaded!");
-            ProtectedArea area = new ProtectedArea(new Area(new Location(Bukkit.getWorld("ffa"), 5000, 5000, 5000), new Location(Bukkit.getWorld("ffa"), -5000, -5000, -5000)));
+            ProtectedArea area = new ProtectedArea(new Area(new Location(Bukkit.getWorld("ffa"), -5000, 0, -5000), new Location(Bukkit.getWorld("ffa"), 5000, 256, 5000)));
             area.setPriority(100);
             area.addToProtection(FlagType.PVP, false);
             area.addToProtection(FlagType.CREATURE_SPAWN, true);

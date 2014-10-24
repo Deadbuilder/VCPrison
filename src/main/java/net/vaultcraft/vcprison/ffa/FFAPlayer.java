@@ -86,7 +86,6 @@ public class FFAPlayer {
         //TODO - Sell items that players have from FFA
 
         Bukkit.getPluginManager().callEvent(new FFALeaveEvent(this));
-        player.teleport(VCPrison.spawn);
 
         user.getSword().setInUse(false);
         user.getPickaxe().setInUse(true);
@@ -95,5 +94,6 @@ public class FFAPlayer {
         player.setGameMode(GameMode.SURVIVAL);
 
         playing = false;
+        player.teleport(VCPrison.spawn);
     }
 }

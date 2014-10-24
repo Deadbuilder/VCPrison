@@ -240,6 +240,9 @@ public class Sword {
     }
 
     public int getPerkLevel(SwordPerk perk) {
+        if (perk == null)
+            return 0;
+        
         return perkLevels.get(perk);
     }
 
