@@ -219,6 +219,7 @@ public class Sword {
     public void reset() {
         killstreak = 0;
         swordPoints = 0;
+        deaths++;
         perkLevels.clear();
         perkToggle.clear();
         for (SwordPerk perk : SwordPerk.getPerks()) {
