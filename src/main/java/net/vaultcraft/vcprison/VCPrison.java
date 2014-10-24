@@ -167,7 +167,7 @@ public class VCPrison extends JavaPlugin {
 
             ProtectionManager.getInstance().addToProtection("ffa", area);
         };
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, postWorld, 20L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this, postWorld, 100L);
     }
 
     public static ServerEventHandler getEventHandler() {

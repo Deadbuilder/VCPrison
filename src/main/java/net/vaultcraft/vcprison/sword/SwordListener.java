@@ -41,8 +41,13 @@ public class SwordListener implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
-        if(event.getItemDrop().getItemStack().equals(PrisonUser.fromPlayer(event.getPlayer()).getSword().getSword())) {
-            event.getPlayer().openInventory(PrisonUser.fromPlayer(event.getPlayer()).getSword().getStatsMenu());
+        Sword sword = PrisonUser.fromPlayer(event.getPlayer()).getSword();
+        if(sword == null)
+            return;
+        if(!sword.isInUse())
+            return;
+        if(event.getItemDrop().getItemStack().equals(sword.getSword())) {
+            event.getPlayer().openInventory(sword.getStatsMenu());
             event.setCancelled(true);
         }
 

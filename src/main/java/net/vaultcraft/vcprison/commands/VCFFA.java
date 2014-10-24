@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.commands;
 
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
+import net.vaultcraft.vcprison.ffa.combatlog.CombatLog;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
@@ -19,6 +20,10 @@ public class VCFFA extends ICommand {
 
     public void processCommand(Player player, String[] strings) {
         FFAPlayer ffa = FFAPlayer.getFFAPlayerFromPlayer(player);
+        if(!CombatLog.isSafeLogout(player)) {
+            Form.at(player, Prefix.ERROR, "You can't leave ffa if you are tagged.");
+            return;
+        }
 
         if (ffa.isPlaying()) {
             //end

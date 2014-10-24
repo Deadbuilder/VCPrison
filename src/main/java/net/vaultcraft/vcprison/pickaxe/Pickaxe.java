@@ -161,7 +161,7 @@ public class Pickaxe {
     }
 
     public Inventory getStatsMenu() {
-        int rows = (int) Math.ceil(((perkLevels.size() + 2.0) / 9.0));
+        int rows = (int) Math.ceil(((perkLevels.size() + 3.0) / 9.0));
         Inventory inventory = Bukkit.getServer().createInventory(null, 9 * rows, "Pickaxe Perks");
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
             if (perk.isToggleable()) {
