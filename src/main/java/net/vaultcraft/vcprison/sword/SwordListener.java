@@ -5,6 +5,7 @@ import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
+import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -25,6 +26,16 @@ public class SwordListener implements Listener {
 
     public SwordListener () {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
+    }
+
+    @EventHandler
+    public void onUserLoad(UserLoadedEvent event) {
+        PrisonUser user = PrisonUser.fromPlayer(event.getUser().getPlayer());
+        if (event.getUser().getUserdata("Sword") != null) {
+            user.setSword(new Sword(user.getPlayer(), event.getUser().getUserdata("Sword")));
+        } else {
+            user.setSword(new Sword(user.getPlayer()));
+        }
     }
 
     @EventHandler
@@ -102,15 +113,15 @@ public class SwordListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Sword sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
+        event.getDrops().remove(sword.getSword());
         if(!sword.isInUse())
             return;
-        event.getDrops().remove(sword.getSword());
         sword.reset();
+
         PrisonUser user = PrisonUser.fromPlayer(event.getEntity().getKiller());
         if(user != null) {
             user.getSword().levelUp();
         }
-
     }
 
     @EventHandler

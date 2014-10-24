@@ -19,14 +19,7 @@ public class FFAItems {
         earned.add(new FFAItem(new ItemStack(Material.GOLD_HELMET), 20, 12000));
     }
 
-    public static final ItemStack startingHelmet = ItemUtils.build(Material.LEATHER_HELMET, "&5&lFFA &7&lHelmet", "&e&oStarting helmet");
-    public static final ItemStack startingChestplate = ItemUtils.build(Material.LEATHER_CHESTPLATE, "&5&lFFA &7&lChestplate", "&e&oStarting chestplate");
-    public static final ItemStack startingLeggings = ItemUtils.build(Material.LEATHER_LEGGINGS, "&5&lFFA &7&lLeggings", "&e&oStarting leggings");
-    public static final ItemStack startingBoots = ItemUtils.build(Material.LEATHER_BOOTS, "&5&lFFA &7&lBoots", "&e&oStarting boots");
-    public static final ItemStack startingSword = ItemUtils.build(Material.STONE_SWORD, "&5&lFFA &7&lSword", "&e&oStarting sword");
-
     public static class FFAItem {
-
         private ItemStack stack;
         private int chance;
         private double worth;

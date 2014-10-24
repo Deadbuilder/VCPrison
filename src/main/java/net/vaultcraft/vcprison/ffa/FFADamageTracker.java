@@ -11,8 +11,6 @@ import java.util.HashMap;
 
 public class FFADamageTracker {
 
-    //Maybe handle kill steals?
-    //<Player damaged, Player damager>
     private static HashMap<Player, Player> lastDamage = new HashMap<>();
 
     public static void setLastDamager(Player hurt, Player damager) {

@@ -3,12 +3,10 @@ package net.vaultcraft.vcprison.ffa;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.ffa.event.FFAJoinEvent;
 import net.vaultcraft.vcprison.ffa.event.FFALeaveEvent;
-import net.vaultcraft.vcprison.sword.Sword;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -19,8 +17,6 @@ import java.util.HashMap;
 public class FFAPlayer {
 
     private static HashMap<Player, FFAPlayer> ffaPlayers = new HashMap<>();
-
-    private Sword sword;
 
     public static FFAPlayer getFFAPlayerFromPlayer(Player player) {
         return ffaPlayers.get(player);
@@ -34,7 +30,6 @@ public class FFAPlayer {
 
     private Player player;
     private boolean playing = false;
-    private ItemStack[] saved;
 
     private User user;
 
@@ -69,34 +64,31 @@ public class FFAPlayer {
     //===================================
 
     public void beginFFA() {
+        PrisonUser user = PrisonUser.fromPlayer(player);
         player.teleport(FFAHandler.getRandomSpawnLocation());
 
-        PrisonUser.fromPlayer(player).getPickaxe().setInUse(false);
-        saved = player.getInventory().getContents();
-
-        player.getInventory().clear();
-
-        player.getEquipment().setHelmet(FFAItems.startingHelmet);
-        player.getEquipment().setChestplate(FFAItems.startingChestplate);
-        player.getEquipment().setLeggings(FFAItems.startingLeggings);
-        player.getEquipment().setBoots(FFAItems.startingBoots);
-
-        player.getInventory().setItem(0, FFAItems.startingSword);
-
-        player.updateInventory();
+        user.getPickaxe().setInUse(false);
 
         Bukkit.getPluginManager().callEvent(new FFAJoinEvent(this));
+
+        user.getPickaxe().setInUse(false);
+        user.getSword().setInUse(true);
+        player.updateInventory();
+
 
         playing = true;
     }
 
     public void endFFA() {
+        PrisonUser user = PrisonUser.fromPlayer(player);
         //TODO - Sell items that players have from FFA
-        player.getInventory().clear();
-        player.getInventory().setContents(saved);
 
         Bukkit.getPluginManager().callEvent(new FFALeaveEvent(this));
         player.teleport(VCPrison.spawn);
+
+        user.getSword().setInUse(false);
+        user.getPickaxe().setInUse(true);
+        player.updateInventory();
 
         playing = false;
     }

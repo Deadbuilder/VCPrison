@@ -80,6 +80,7 @@ public class VCPrison extends JavaPlugin {
         new AsyncChatListener();
         new PrisonUserListener();
         new PickaxeListener();
+        new SwordListener();
         new FurnaceListener();
         new CrateListener();
         new PrisonShopListener();

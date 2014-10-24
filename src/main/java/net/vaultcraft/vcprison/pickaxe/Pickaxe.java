@@ -181,6 +181,7 @@ public class Pickaxe {
         }
         inventory.addItem(getPointsIcon());
         inventory.addItem(getWarpIcon());
+        inventory.addItem(getFFAIcon());
         return inventory;
     }
 
@@ -199,6 +200,12 @@ public class Pickaxe {
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lMine Warps"));
         itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&6Click to open mine warps.")));
         itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    public ItemStack getFFAIcon() {
+        ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD);
+        ItemMeta itemMeta = itemStack.getItemMeta();
         return itemStack;
     }
 
@@ -284,11 +291,10 @@ public class Pickaxe {
     }
 
     public void setInUse(boolean inUse) {
+        this.inUse = inUse;
         if(!inUse) {
-            this.inUse = false;
             player.getInventory().setItem(0, new ItemStack(Material.AIR));
         } else {
-            this.inUse = false;
             player.getInventory().setItem(0, getPickaxe());
         }
     }
