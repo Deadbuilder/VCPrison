@@ -38,13 +38,6 @@ public class PrisonUserListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
-    public void onMontor(EntityDamageEvent event) {
-        if(event.getEntity() instanceof Player) {
-            ((Player) event.getEntity()).sendMessage("Canceled State: " + event.isCancelled());
-        }
-    }
-
     @EventHandler
     public void onUserLoaded(UserLoadedEvent event) {
         new PrisonUser(event.getUser().getPlayer());
