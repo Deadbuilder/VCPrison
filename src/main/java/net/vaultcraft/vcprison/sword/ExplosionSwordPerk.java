@@ -3,6 +3,7 @@ package net.vaultcraft.vcprison.sword;
 import net.vaultcraft.vcutils.uncommon.Particles;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -18,10 +19,11 @@ public class ExplosionSwordPerk extends SwordPerk {
 
     @Override
     public void onHit(Player player, Player otherPlayer, int level) {
-        if ((Math.random()*100) < (level*3)) {
+        if ((Math.random()*100) < (level*10)) {
             Location at = otherPlayer.getLocation();
             Particles.HUGE_EXPLOSION.sendToLocation(at, 1f, 1f, 1f, 1, 3);
-            otherPlayer.setVelocity(otherPlayer.getVelocity().multiply(new Vector(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5)));
+            otherPlayer.setVelocity(otherPlayer.getVelocity().multiply(new Vector((Math.random()*10) - 5, (Math.random()*10) - 5, (Math.random()*10) - 5)));
+            at.getWorld().playSound(at, Sound.EXPLODE, 1, 1);
             otherPlayer.damage(3.0);
         }
     }
