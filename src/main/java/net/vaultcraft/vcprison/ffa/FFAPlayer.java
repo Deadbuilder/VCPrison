@@ -82,6 +82,8 @@ public class FFAPlayer {
 
         Bukkit.getPluginManager().callEvent(new FFALeaveEvent(this));
 
+        if(user == null)
+            return;
         user.getSword().setInUse(false);
         user.getPickaxe().setInUse(true);
         player.updateInventory();
