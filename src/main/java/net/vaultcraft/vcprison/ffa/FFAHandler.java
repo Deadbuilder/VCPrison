@@ -55,7 +55,7 @@ public class FFAHandler {
                 bounty*=1.2;
         }
 
-        bounty*=(64 * ItemWorthLoader.getWorth(PrisonUser.fromPlayer(killer).getRank(), Material.DIAMOND_BLOCK));
+        bounty*=(5 * ItemWorthLoader.getWorth(PrisonUser.fromPlayer(killer).getRank(), Material.DIAMOND_BLOCK));
 
         ffaKill.getUser().setMoney(ffaKill.getUser().getMoney() + bounty);
 
