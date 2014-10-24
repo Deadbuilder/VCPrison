@@ -27,6 +27,14 @@ public class FFAMultikill {
     }
 
     public static void handleDeath(Player dead, Player killer) {
+        if (multiKillTimer.containsKey(killer)) {
+            long at = multiKillTimer.get(killer);
+            if (at < System.currentTimeMillis()) {
+                multiKillTimer.remove(killer);
+                killstreak.remove(killer);
+            }
+        }
+
         if (killstreak.containsKey(dead))
             killstreak.remove(dead);
 
@@ -36,15 +44,6 @@ public class FFAMultikill {
 
         killstreak.put(killer, kills+1);
         kills++;
-
-        if (multiKillTimer.containsKey(killer)) {
-            long at = multiKillTimer.get(killer);
-            if (at < System.currentTimeMillis()) {
-                multiKillTimer.remove(killer);
-                killstreak.remove(killer);
-                return;
-            }
-        }
 
         if (kills > 1) {
             multiKillTimer.put(killer, System.currentTimeMillis() + (5000));
