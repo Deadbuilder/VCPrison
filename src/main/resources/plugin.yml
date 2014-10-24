@@ -11,3 +11,5 @@ load: POSTWORLD
 authors: [IModZombies4Fun, Tacticalsk8er]
 softdepend: [VCUtils, VCEssentials, Citizens]
 main: net.vaultcraft.vcprison.VCPrison
+commands:
+  ppoint:
