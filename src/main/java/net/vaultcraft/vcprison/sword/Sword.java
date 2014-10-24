@@ -125,7 +125,7 @@ public class Sword {
     }
 
     public Inventory getStatsMenu() {
-        int rows = (int) Math.ceil(((perkLevels.size() + 2.0) / 9.0));
+        int rows = (int) Math.ceil(((perkLevels.size() + 1.0) / 9.0));
         Inventory inventory = Bukkit.getServer().createInventory(null, 9 * rows, "Sword Perks");
         for (SwordPerk perk : SwordPerk.getPerks()) {
             if (perk.isToggleable()) {
@@ -144,7 +144,6 @@ public class Sword {
             inventory.addItem(perk.getIcon(perkLevels.get(perk)));
         }
         inventory.addItem(getPointsIcon());
-        inventory.addItem(getWarpIcon());
         return inventory;
     }
 

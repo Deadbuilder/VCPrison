@@ -1,7 +1,6 @@
 package net.vaultcraft.vcprison.sword;
 
 import net.vaultcraft.vcprison.VCPrison;
-import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
@@ -81,16 +80,13 @@ public class SwordListener implements Listener {
             return;
         if (event.getCurrentItem().getItemMeta() == null)
             return;
+        if(event.getCurrentItem().getItemMeta().getDisplayName() == null)
+            return;
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
         Sword sword = PrisonUser.fromPlayer(player).getSword();
         if(!sword.isInUse())
             return;
-        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Warps")) {
-            player.closeInventory();
-            player.openInventory(WarpGUI.create(PrisonUser.fromPlayer(player)));
-            return;
-        }
         SwordPerk perk = SwordPerk.getPerkFromName(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName().replace("Toggle Off ", "").replace("Toggle On ", "").replaceAll(" \\d+", "").replace(" Max", "")));
         if (sword.getPerkLevel(perk) == perk.getMaxLevel()) {
             Form.at(player, Prefix.ERROR, "Sword perk is at it highest level!");
