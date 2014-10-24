@@ -27,6 +27,9 @@ public class PortalListener implements Listener {
                 return;
             }
             ProtectedArea area = ProtectionManager.getInstance().getRegions().get("ffaportal");
+            if(area == null) {
+                return;
+            }
             if(area.getArea().isInArea(event.getTo())) {
                 event.getPlayer().performCommand("ffa");
                 using.add(event.getPlayer());
