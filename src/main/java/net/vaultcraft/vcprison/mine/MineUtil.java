@@ -46,11 +46,6 @@ public class MineUtil {
             public void run() {
                 HashMap<Block, Material> fixed_reset_blocks = new HashMap<>();
                 for (Block block : blocks) {
-                    //pick material
-                    Chunk c = block.getWorld().getChunkAt(block);
-                    if (!c.isLoaded())
-                        c.load();
-
                     Material use = null;
                     double random = (Math.random()*max);
                     for (Material m : reset.keySet()) {
