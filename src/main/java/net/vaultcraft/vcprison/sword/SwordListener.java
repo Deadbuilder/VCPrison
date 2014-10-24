@@ -120,7 +120,7 @@ public class SwordListener implements Listener {
         perkMenu.setItem(SwordPerk.getPerks().size(), sword.getPointsIcon());
     }
 
-    @EventHandler
+    @EventHandler()
     public void onDeath(PlayerDeathEvent event) {
         Sword sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
         event.getDrops().remove(sword.getSword());
@@ -129,14 +129,15 @@ public class SwordListener implements Listener {
         sword.reset();
 
         Player player = FFADamageTracker.getLastDamager(event.getEntity());
-        if (FFADamageTracker.getLastDamager(player) == null)
+        if (player == null)
             return;
-        PrisonUser user = PrisonUser.fromPlayer(FFADamageTracker.getLastDamager(event.getEntity()));
+        PrisonUser user = PrisonUser.fromPlayer(player);
         if (user != null) {
             user.getSword().levelUp();
             player.getInventory().setItem(0, user.getSword().getSword());
             Form.at(player, Prefix.VAULT_CRAFT, "You gained a Sword Perk. Drop your sword to upgrade it!");
         }
+        FFADamageTracker.reset(event.getEntity());
     }
 
     @EventHandler
