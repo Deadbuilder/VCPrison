@@ -214,9 +214,12 @@ public class VCPrison extends JavaPlugin {
                 return false;
             int amount = Integer.parseInt(args[0]);
             Player player = Bukkit.getPlayer(args[1]);
+            if(player == null)
+                return false;
             ItemStack itemStack = Pickaxe.getAddPointItem();
             itemStack.setAmount(amount);
             HashMap<Integer, ItemStack> map = player.getInventory().addItem(itemStack);
+            Form.at(player, Prefix.VAULT_CRAFT, "You pickaxe perk points have arrived check your inventory!");
             for(ItemStack itemStack1 : map.values())
                 player.getWorld().dropItemNaturally(player.getLocation(), itemStack1);
             if(!map.isEmpty())
