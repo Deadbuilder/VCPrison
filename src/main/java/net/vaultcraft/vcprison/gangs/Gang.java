@@ -114,7 +114,7 @@ public class Gang {
         ownerUUID = "";
         Bukkit.broadcastMessage(ChatColor.GRAY + "[" + ChatColor.DARK_PURPLE + "Gangs" + ChatColor.GRAY + "] " + gangName + " has been disbanded!");
         gangName = "";
-        GangManager.getGangsConfig().set("Gangs." + gangName, null);
+        GangManager.getGangsConfig().set("Gangs." + gangName, "");
 
     }
 
