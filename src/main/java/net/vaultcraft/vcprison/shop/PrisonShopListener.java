@@ -27,22 +27,22 @@ public class PrisonShopListener implements Listener {
 
     private static List<Player> inShop = new ArrayList<>();
     private final ArrayList<ShopItem> items = new ArrayList<ShopItem>() {{
-        add(new ShopItem(Material.SMOOTH_BRICK, 3000, "x16", "Stone Brick", 16));
-        add(new ShopItem(Material.TORCH, 50000, "x4", "Torch", 4));
-        add(new ShopItem(Material.ICE, 5000, "x2", "Ice", 2));
-        add(new ShopItem(Material.IRON_FENCE, 4000, "x8", "Iron Bars", 8));
-        add(new ShopItem(Material.ENCHANTMENT_TABLE, 4000, "x1", "Enchantment Table", 1));
-        add(new ShopItem(Material.BED, 20000, "x1", "Bed", 1));
-        add(new ShopItem(Material.ENDER_CHEST, 50000, "x1", "Ender Chest", 1));
-        add(new ShopItem(Material.CHEST, 6000, "x2", "Chest", 2));
-        add(new ShopItem(Material.GLOWSTONE, 8000, "x8", "Glowstone", 8));
-        add(new ShopItem(Material.BOOK_AND_QUILL, 10000, "x1", "Book and Quill", 1));
-        add(new ShopItem(Material.DIRT, 16000, "x16", "Dirt", 16));
-        add(new ShopItem(Material.SAND, 16000, "x16", "Sand", 16));
-        add(new ShopItem(Material.DIAMOND_HOE, 10000, "x1", "Diamond Hoe", 1));
-        add(new ShopItem(Material.SEEDS, 4000, "x2", "Seeds", 2));
-        add(new ShopItem(Material.LOG, 3000, "x8", "Oak Wood", 16));
-        add(new ShopItem(Material.BOOK, 2000, "x1", "Book", 1));
+        add(new ShopItem(Material.SMOOTH_BRICK, 3000, "Quantity: 16", "Stone Brick", 16));
+        add(new ShopItem(Material.TORCH, 50000, "Quantity: 4", "Torch", 4));
+        add(new ShopItem(Material.ICE, 5000, "Quantity: 2", "Ice", 2));
+        add(new ShopItem(Material.IRON_FENCE, 4000, "Quantity: 8", "Iron Bars", 8));
+        add(new ShopItem(Material.ENCHANTMENT_TABLE, 4000, "Quantity: 1", "Enchantment Table", 1));
+        add(new ShopItem(Material.BED, 20000, "Quantity: 1", "Bed", 1));
+        add(new ShopItem(Material.ENDER_CHEST, 50000, "Quantity: 1", "Ender Chest", 1));
+        add(new ShopItem(Material.CHEST, 6000, "Quantity: 2", "Chest", 2));
+        add(new ShopItem(Material.GLOWSTONE, 8000, "Quantity: 8", "Glowstone", 8));
+        add(new ShopItem(Material.BOOK_AND_QUILL, 10000, "Quantity: 1", "Book and Quill", 1));
+        add(new ShopItem(Material.DIRT, 16000, "Quantity: 16", "Dirt", 16));
+        add(new ShopItem(Material.SAND, 16000, "Quantity: 16", "Sand", 16));
+        add(new ShopItem(Material.DIAMOND_HOE, 10000, "Quantity: 1", "Diamond Hoe", 1));
+        add(new ShopItem(Material.SEEDS, 4000, "Quantity: 2", "Seeds", 2));
+        add(new ShopItem(Material.LOG, 3000, "Quantity: 8", "Oak Wood", 16));
+        add(new ShopItem(Material.BOOK, 2000, "Quantity: 1", "Book", 1));
     }};
 
 
