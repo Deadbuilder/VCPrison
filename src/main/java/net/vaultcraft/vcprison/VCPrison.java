@@ -26,6 +26,8 @@ import net.vaultcraft.vcprison.sword.*;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.events.ServerEventHandler;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
@@ -37,10 +39,14 @@ import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -104,13 +110,13 @@ public class VCPrison extends JavaPlugin {
         PickaxePerk.addPerk(new NightVisionPerk(Material.EYE_OF_ENDER, Material.EYE_OF_ENDER, Material.ENDER_PEARL, "Night Vision", 8, false, "Adds night vision when you have your pick selected.", "Toggleable"), 6);
         PickaxePerk.addPerk(new SpeedPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 8, false, "Adds Speed when you have your pick selected.", "Toggleable"), 7);
 
-        SwordPerk.addPerk(new SharpnessSwordPerk(Material.QUARTZ, "Sharpness", 2, 0, 5, "Adds a level of sharpness to your sword."), 0);
-        SwordPerk.addPerk(new FireAspectSwordPerk(Material.FIRE, "Fire Aspect", 4, 0, 2, "Adds a level of fire aspect to your sword."), 1);
-        SwordPerk.addPerk(new KnockbackSwordPerk(Material.ANVIL, "Knockback", 5, 0, 8, "Adds a level of knockback to your sword."), 2);
-        SwordPerk.addPerk(new HasteSwordPerk(Material.DIAMOND_PICKAXE, "Haste", 5, 0, 2, "Adds a level of haste when you have your sword selected."), 3);
+        SwordPerk.addPerk(new SharpnessSwordPerk(Material.QUARTZ, "Sharpness", 2, 0, 3, "Adds a level of sharpness to your sword."), 0);
+        SwordPerk.addPerk(new FireAspectSwordPerk(Material.FIRE, "Fire Aspect", 6, 0, 1, "Adds a level of fire aspect to your sword."), 1);
+        SwordPerk.addPerk(new KnockbackSwordPerk(Material.ANVIL, "Knockback", 5, 0, 2, "Adds a level of knockback to your sword."), 2);
+        SwordPerk.addPerk(new HasteSwordPerk(Material.DIAMOND_PICKAXE, "Haste", 1, 0, 2, "Adds a level of haste when you have your sword selected."), 3);
         SwordPerk.addPerk(new NightVisionSwordPerk(Material.EYE_OF_ENDER, Material.EYE_OF_ENDER, Material.ENDER_PEARL, "Night Vision", 5, false, "Adds night vision when you have your sword selected.", "Toggleable"), 4);
         SwordPerk.addPerk(new SpeedSwordPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 5, false, "Adds Speed when you have your sword selected.", "Toggleable"), 5);
-        SwordPerk.addPerk(new ExplosionSwordPerk(Material.TNT, "Explosion", 2, 0, 5, "Adds a level of explosion to your sword."), 6);
+        SwordPerk.addPerk(new ExplosionSwordPerk(Material.TNT, "Explosion", 5, 0, 2, "Adds a level of explosion to your sword."), 6);
 
         for(Player player : Bukkit.getOnlinePlayers()) {
             new PrisonUser(player);
@@ -199,5 +205,23 @@ public class VCPrison extends JavaPlugin {
 
     public static VCPrison getInstance() {
         return instance;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if(label.equals("ppoint")) {
+            if(args.length < 2)
+                return false;
+            int amount = Integer.parseInt(args[0]);
+            Player player = Bukkit.getPlayer(args[1]);
+            ItemStack itemStack = Pickaxe.getAddPointItem();
+            itemStack.setAmount(amount);
+            HashMap<Integer, ItemStack> map = player.getInventory().addItem(itemStack);
+            for(ItemStack itemStack1 : map.values())
+                player.getWorld().dropItemNaturally(player.getLocation(), itemStack1);
+            if(!map.isEmpty())
+                Form.at(player, Prefix.WARNING, "Some of your pickaxe points were dropped next to you since you didn't have enough room in your inventory.");
+        }
+        return true;
     }
 }
