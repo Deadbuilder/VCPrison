@@ -33,7 +33,7 @@ public class FFAHandler {
             doubleBounty = ffaKill;
         }
 
-        double bounty = ffaDead.bounty*=(ffaDead.equals(doubleBounty) ? 2 : 1);
+        double bounty = ffaDead.bounty*=(ffaDead.equals(doubleBounty) ? 3 : 2);
 
         switch (ffaKill.getUser().getGroup().getHighest()) {
             case ENDERDRAGON:
@@ -58,8 +58,10 @@ public class FFAHandler {
         ffaKill.getUser().setMoney(ffaKill.getUser().getMoney() + bounty);
 
         ffaDead.sessionDeaths++;
-        ffaDead.currentKillstreak = 0;
+        ffaKill.sessionKills++;
+
         announceFFA("&5"+dead.getName()+" &7was slain by &5"+killer.getName()+"&7!");
+        FFAMultikill.handleDeath(dead, killer);
 
         Form.at(ffaDead.getUser().getPlayer(), Prefix.NOTHING, "&e&m=====================================================");
         Form.at(ffaDead.getUser().getPlayer(), Prefix.NOTHING, "&6&lYou were killed by: &7"+ffaKill.getUser().getPlayer().getName());

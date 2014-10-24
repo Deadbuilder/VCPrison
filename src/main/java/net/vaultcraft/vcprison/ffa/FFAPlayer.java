@@ -55,13 +55,8 @@ public class FFAPlayer {
     public int sessionKills = 0;
     public int sessionDeaths = 0;
 
-    public int alltimeKills = 0;
-    public int alltimeDeaths = 0;
+    public double bounty = 1.0;
 
-    public int currentKillstreak = 0;
-    public int highestKillstreak = 0;
-
-    public double bounty = 0.0;
     //===================================
 
     public void beginFFA() {

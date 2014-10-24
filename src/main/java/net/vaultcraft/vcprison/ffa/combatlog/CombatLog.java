@@ -1,5 +1,7 @@
 package net.vaultcraft.vcprison.ffa.combatlog;
 
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -16,6 +18,10 @@ public class CombatLog {
         if (inPvP.containsKey(player)) {
             inPvP.remove(player);
         }
+        else {
+            Form.at(player, Prefix.WARNING, "You were tagged, you may not logout for another 10 seconds!");
+        }
+
         inPvP.put(player, System.currentTimeMillis() + (1000 * 10));
     }
 
