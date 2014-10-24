@@ -44,9 +44,9 @@ public class FFAMultikill {
 
         killstreak.put(killer, kills+1);
         kills++;
+        multiKillTimer.put(killer, System.currentTimeMillis() + (5000));
 
         if (kills > 1) {
-            multiKillTimer.put(killer, System.currentTimeMillis() + (5000));
 
             if (kills >= 7) {
                 FFAHandler.announceFFA(killer.getName()+" &f&l>> &r" + killMessages.get(7) + "&f&l!");

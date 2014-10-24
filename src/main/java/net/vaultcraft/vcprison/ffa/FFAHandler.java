@@ -5,6 +5,7 @@ import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
+import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -27,39 +28,38 @@ public class FFAHandler {
 
     public static void handleDeath(Player dead, Player killer) {
         FFAPlayer ffaDead = FFAPlayer.getFFAPlayerFromPlayer(dead);
+        ffaDead.sessionDeaths++;
+        ffaDead.bounty = 1.0;
+        if (killer == null) {
+            announceFFA("&5"+dead.getName()+" &7died!");
+            return;
+        }
+
         FFAPlayer ffaKill = FFAPlayer.getFFAPlayerFromPlayer(killer);
 
         if (doubleBounty == null || ffaKill.sessionKills >= doubleBounty.sessionKills) {
             doubleBounty = ffaKill;
         }
 
-        double bounty = ffaDead.bounty*=(ffaDead.equals(doubleBounty) ? 3 : 2);
+        double bounty = ffaDead.bounty*=(ffaDead.equals(doubleBounty) ? 1.5 : 1.2);
 
-        switch (ffaKill.getUser().getGroup().getHighest()) {
-            case ENDERDRAGON:
-                bounty*=4.0;
-                break;
-            case WITHER:
-                bounty*=3.0;
-                break;
-            case ENDERMAN:
-                bounty*=2.3;
-                break;
-            case SKELETON:
-                bounty*=1.8;
-                break;
-            case SLIME:
-                bounty*=1.5;
-                break;
-            case WOLF:
-                bounty*=1.2;
-        }
+        if (ffaKill.getUser().getGroup().hasPermission(Group.ENDERDRAGON))
+            bounty*=4.0;
+        else if (ffaKill.getUser().getGroup().hasPermission(Group.WITHER))
+            bounty*=3.0;
+        else if (ffaKill.getUser().getGroup().hasPermission(Group.ENDERMAN))
+            bounty*=2.3;
+        else if (ffaKill.getUser().getGroup().hasPermission(Group.SKELETON))
+            bounty*=1.8;
+        else if (ffaKill.getUser().getGroup().hasPermission(Group.SLIME))
+            bounty*=1.5;
+        else if (ffaKill.getUser().getGroup().hasPermission(Group.WOLF))
+            bounty*=1.2;
 
         bounty*=(5 * ItemWorthLoader.getWorth(PrisonUser.fromPlayer(killer).getRank(), Material.DIAMOND_BLOCK));
 
         ffaKill.getUser().setMoney(ffaKill.getUser().getMoney() + bounty);
 
-        ffaDead.sessionDeaths++;
         ffaKill.sessionKills++;
 
         announceFFA("&5"+dead.getName()+" &7was slain by &5"+killer.getName()+"&7!");
