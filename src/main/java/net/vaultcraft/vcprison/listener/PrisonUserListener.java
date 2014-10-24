@@ -15,14 +15,12 @@ import net.vaultcraft.vcutils.protection.ProtectedArea;
 import net.vaultcraft.vcutils.protection.ProtectionManager;
 import net.vaultcraft.vcutils.protection.flag.FlagType;
 import net.vaultcraft.vcutils.user.UserLoadedEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Hopper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
@@ -48,6 +46,7 @@ public class PrisonUserListener implements Listener {
         PrisonScoreboard.addPlayer(event.getUser().getPlayer());
 
         event.getUser().getPlayer().teleport(VCPrison.spawn);
+        event.getUser().getPlayer().setGameMode(GameMode.SURVIVAL);
     }
 
     @EventHandler
@@ -156,5 +155,11 @@ public class PrisonUserListener implements Listener {
         if(event.getClickedBlock().getType().equals(Material.ANVIL)) {
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
+        if (FFAPlayer.getFFAPlayerFromPlayer(event.getPlayer()).isPlaying())
+            event.setCancelled(true);
     }
 }

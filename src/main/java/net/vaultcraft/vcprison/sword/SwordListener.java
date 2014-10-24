@@ -16,12 +16,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
 
 /**
  * Created by tacticalsk8er on 10/5/2014.
@@ -43,11 +40,18 @@ public class SwordListener implements Listener {
     }
 
     @EventHandler
+    public void onItemDrop(PlayerDropItemEvent event) {
+        if(event.getItemDrop().getItemStack().equals(PrisonUser.fromPlayer(event.getPlayer()).getSword().getSword())) {
+            event.getPlayer().openInventory(PrisonUser.fromPlayer(event.getPlayer()).getSword().getStatsMenu());
+            event.setCancelled(true);
+        }
+
+    }
+
+    @EventHandler
     public void onInvClick(InventoryClickEvent event) {
         if (event.getSlotType() == InventoryType.SlotType.QUICKBAR) {
             if (event.getCurrentItem().getType().name().contains("SWORD")) {
-                if(event.getAction().name().contains("DROP"))
-                    event.getWhoClicked().openInventory(PrisonUser.fromPlayer((Player) event.getWhoClicked()).getSword().getStatsMenu());
                 event.setCancelled(true);
                 return;
             }
@@ -77,23 +81,6 @@ public class SwordListener implements Listener {
         Sword sword = PrisonUser.fromPlayer(player).getSword();
         if(!sword.isInUse())
             return;
-        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Perk Points:")) {
-            if (sword.getSwordPoints() == 0) {
-                Form.at(player, Prefix.ERROR, "You have no perk points!");
-                return;
-            }
-            HashMap<Integer, ItemStack> noRoom;
-            noRoom = player.getInventory().addItem(Sword.getAddPointItem());
-            if (noRoom.isEmpty()) {
-                Form.at(player, Prefix.SUCCESS, "You have 1 more perk point item in your inventory.");
-                sword.setSwordPoints(sword.getSwordPoints() - 1);
-                perkMenu.setItem(SwordPerk.getPerks().size(), sword.getPointsIcon());
-                return;
-            } else {
-                Form.at(player, Prefix.ERROR, "You need to clear space in your inventory!");
-                return;
-            }
-        }
         if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Warps")) {
             player.closeInventory();
             player.openInventory(WarpGUI.create(PrisonUser.fromPlayer(player)));
@@ -104,7 +91,7 @@ public class SwordListener implements Listener {
             Form.at(player, Prefix.ERROR, "Sword perk is at it highest level!");
             return;
         }
-        if (perk.isTogglable()) {
+        if (perk.isToggleable()) {
             if (event.getCurrentItem().getItemMeta().getDisplayName().contains("Toggle")) {
                 sword.togglePerk(player, perk);
                 if (sword.getToggle(perk))
@@ -134,15 +121,15 @@ public class SwordListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Sword sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
+        event.getDrops().remove(sword.getSword());
         if(!sword.isInUse())
             return;
-        event.getDrops().remove(sword.getSword());
         sword.reset();
+
         PrisonUser user = PrisonUser.fromPlayer(event.getEntity().getKiller());
         if(user != null) {
             user.getSword().levelUp();
         }
-
     }
 
     @EventHandler
@@ -162,31 +149,6 @@ public class SwordListener implements Listener {
         Sword sword = PrisonUser.fromPlayer(attacker).getSword();
         if(sword.isInUse())
             attacker.getInventory().setItem(0, sword.getSword());
-    }
-
-    @EventHandler
-    public void onClick(PlayerInteractEvent event) {
-        Sword sword = PrisonUser.fromPlayer(event.getPlayer()).getSword();
-        if(!sword.isInUse())
-            return;
-        if (event.getAction().name().contains("RIGHT")) {
-            if (event.getPlayer().getItemInHand() != null) {
-                if (event.getPlayer().getItemInHand().getItemMeta() != null) {
-                    if (event.getPlayer().getItemInHand().getItemMeta().getDisplayName() != null) {
-                        if (event.getPlayer().getItemInHand().getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&6&lRight Click: &2&lAdd Perk Point"))) {
-                            if(PrisonUser.fromPlayer(event.getPlayer()).getPickaxe().isInUse()) {
-                                if (event.getPlayer().getItemInHand().getAmount() != 1)
-                                    event.getPlayer().getItemInHand().setAmount(event.getPlayer().getItemInHand().getAmount() - 1);
-                                else
-                                    event.getPlayer().getInventory().remove(event.getPlayer().getItemInHand());
-                                PrisonUser.fromPlayer(event.getPlayer()).getSword().setSwordPoints(PrisonUser.fromPlayer(event.getPlayer()).getSword().getSwordPoints() + 1);
-                                Form.at(event.getPlayer(), Prefix.SUCCESS, "You have added a perk point to your sword!");
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 
     @EventHandler

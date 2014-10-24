@@ -97,12 +97,12 @@ public class Gang {
                 Bukkit.getPlayer(UUID.fromString(memberUUID)).sendMessage(ChatColor.YELLOW + "Notification: " + ChatColor.WHITE + "Your gang has been disbanded.");
         }
 
-        for(String alliedGang : alliedGangs) {
+        for(String alliedGang : new ArrayList<>(alliedGangs)) {
             Gang gang = GangManager.getGang(alliedGang);
             gang.removeAlly(gangName);
         }
 
-        for(String enemyGang : enemyGangs) {
+        for(String enemyGang : new ArrayList<>(enemyGangs)) {
             Gang gang = GangManager.getGang(enemyGang);
             gang.removeEnemy(gangName);
         }

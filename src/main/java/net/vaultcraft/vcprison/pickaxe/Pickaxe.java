@@ -36,7 +36,7 @@ public class Pickaxe {
         this.player = player;
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
             perkLevels.put(perk, perk.getInitLevel());
-            if (perk.isTogglable()) {
+            if (perk.isToggleable()) {
                 perkToggle.put(perk, perk.getInitLevel() == 1);
                 if(perk.getInitLevel() == 1)
                     perk.onToggleOn(player);
@@ -93,7 +93,7 @@ public class Pickaxe {
             if (perkLevels.containsKey(perk))
                 continue;
             perkLevels.put(perk, perk.getInitLevel());
-            if (perk.isTogglable())
+            if (perk.isToggleable())
                 perkToggle.put(perk, perk.getInitLevel() == 1);
         }
         player.getInventory().setItem(0, getPickaxe());
@@ -105,7 +105,7 @@ public class Pickaxe {
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Prison Pickaxe &e&n[Level " + level + "]&r &5&oExp: " + Form.at(blocksMined) + " / " + Form.at(toNextLevel(level))));
         List<String> lore = new ArrayList<>();
         for (PickaxePerk perk : perkLevels.keySet()) {
-            if (perk.isTogglable())
+            if (perk.isToggleable())
                 if (!perkToggle.get(perk))
                     continue;
             if (perkLevels.get(perk) == 0)
@@ -164,7 +164,7 @@ public class Pickaxe {
         int rows = (int) Math.ceil(((perkLevels.size() + 2.0) / 9.0));
         Inventory inventory = Bukkit.getServer().createInventory(null, 9 * rows, "Pickaxe Perks");
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
-            if (perk.isTogglable()) {
+            if (perk.isToggleable()) {
                 if (perkLevels.get(perk) == 1) {
                     if (perkToggle.get(perk)) {
                         inventory.addItem(perk.getToggleOff());
@@ -181,6 +181,7 @@ public class Pickaxe {
         }
         inventory.addItem(getPointsIcon());
         inventory.addItem(getWarpIcon());
+        inventory.addItem(getFFAIcon());
         return inventory;
     }
 
@@ -202,6 +203,15 @@ public class Pickaxe {
         return itemStack;
     }
 
+    public ItemStack getFFAIcon() {
+        ItemStack itemStack = new ItemStack(Material.DIAMOND_SWORD);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lFF&e&lA"));
+        itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&6Click to teleport to the FFA.")));
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
     public static ItemStack getAddPointItem() {
         ItemStack itemStack = new ItemStack(Material.DOUBLE_PLANT);
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -211,6 +221,9 @@ public class Pickaxe {
     }
 
     public int getPerkLevel(PickaxePerk perk) {
+        if (perk == null)
+            return 0;
+
         return perkLevels.get(perk);
     }
 
@@ -271,7 +284,7 @@ public class Pickaxe {
         sb.append("Points|").append(pickPoints).append(".");
         for (PickaxePerk perk : perkLevels.keySet()) {
             counter++;
-            if (perk.isTogglable()) {
+            if (perk.isToggleable()) {
                 sb.append(perk.getNoColorName()).append("-Toggle|").append(perkToggle.get(perk)).append(".");
             }
             if (perkLevels.size() == counter) {
@@ -284,11 +297,10 @@ public class Pickaxe {
     }
 
     public void setInUse(boolean inUse) {
+        this.inUse = inUse;
         if(!inUse) {
-            this.inUse = false;
             player.getInventory().setItem(0, new ItemStack(Material.AIR));
         } else {
-            this.inUse = false;
             player.getInventory().setItem(0, getPickaxe());
         }
     }

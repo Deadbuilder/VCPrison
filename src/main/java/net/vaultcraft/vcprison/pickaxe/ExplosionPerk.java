@@ -70,7 +70,7 @@ public class ExplosionPerk extends PickaxePerk {
                                         continue;
                                     if (pickaxe.getPerkLevel(perk) == 0)
                                         continue;
-                                    if (perk.isTogglable())
+                                    if (perk.isToggleable())
                                         if (!pickaxe.getToggle(perk))
                                             continue;
                                     item = perk.onBreak(event.getPlayer(), event, block1, item, pickaxe.getPerkLevel(perk));

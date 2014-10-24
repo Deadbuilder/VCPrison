@@ -146,7 +146,7 @@ public class SwordPerk {
         return itemStack;
     }
 
-    public boolean isTogglable() {
+    public boolean isToggleable() {
         return toggleable;
     }
 
