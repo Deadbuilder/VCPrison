@@ -247,6 +247,9 @@ public class Sword {
     }
 
     public boolean getToggle(SwordPerk perk) {
+        if (perk == null) {
+            return false;
+        }
         return perkToggle.get(perk);
     }
 
