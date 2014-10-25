@@ -65,6 +65,9 @@ public class MineUtil {
                 Runnable sync = new Runnable() {
                     public void run() {
                         block: for (Block $k : clone.keySet()) {
+                            Chunk c = $k.getWorld().getChunkAt($k);
+                            if (!c.isLoaded())
+                                c.load();
 
                             if ($k.getType().equals(Material.CHEST)) {
                                 Chest chest = (Chest)$k.getState();
