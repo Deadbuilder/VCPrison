@@ -18,6 +18,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -148,6 +149,37 @@ public class SwordListener implements Listener {
             Form.at(player, Prefix.VAULT_CRAFT, "You gained a Sword Perk. Drop your sword to upgrade it!");
         }
         FFADamageTracker.reset(event.getEntity());
+    }
+
+    @EventHandler
+    public void onHotbarHover(PlayerItemHeldEvent event) {
+        if(PrisonUser.fromPlayer(event.getPlayer()) == null)
+            return;
+        Sword sword = PrisonUser.fromPlayer(event.getPlayer()).getSword();
+        if(sword == null)
+            return;
+        if(!sword.isInUse())
+            return;
+        if (event.getNewSlot() == 0) {
+            for (SwordPerk perk : SwordPerk.getPerks()) {
+                if (sword.getPerkLevel(perk) == 0)
+                    continue;
+                if (perk.isToggleable())
+                    if (!sword.getToggle(perk))
+                        continue;
+                perk.onHoverOn(event.getPlayer(), sword.getPerkLevel(perk));
+            }
+        }
+        if (event.getPreviousSlot() == 0) {
+            for (SwordPerk perk : SwordPerk.getPerks()) {
+                if (sword.getPerkLevel(perk) == 0)
+                    continue;
+                if (perk.isToggleable())
+                    if (!sword.getToggle(perk))
+                        continue;
+                perk.onHoverOff(event.getPlayer(), sword.getPerkLevel(perk));
+            }
+        }
     }
 
     @EventHandler

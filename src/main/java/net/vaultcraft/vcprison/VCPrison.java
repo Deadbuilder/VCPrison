@@ -18,7 +18,6 @@ import net.vaultcraft.vcprison.mine.MineUtil;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
-import net.vaultcraft.vcprison.plots.PlotWorld;
 import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
 import net.vaultcraft.vcprison.shop.FFAShopListener;
 import net.vaultcraft.vcprison.shop.PrisonShopListener;
@@ -77,9 +76,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON));
         CommandManager.addCommand(new VCShop("shop", Group.COMMON));
         CommandManager.addCommand(new VCFFA("ffa", Group.COMMON, "freeforall", "pvp", "fight"));
-        CommandManager.addCommand(new VCSell("sell", Group.ENDERDRAGON));
-
-        new PlotWorld();
+        CommandManager.addCommand(new VCSell("sell", Group.WITHER));
 
         spawn = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
 
@@ -176,7 +173,6 @@ public class VCPrison extends JavaPlugin {
 
     public void onDisable() {
         PrisonUser.disable();
-        PlotWorld.getPlotManager().disable();
         GangManager.disable();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
