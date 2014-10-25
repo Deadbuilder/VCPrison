@@ -117,7 +117,7 @@ public class MineLoader {
             fw.setFireworkMeta(m);
         }
 
-        mine.reset();
+        mine.finish();
     }
 
     public static Collection<Mine> getMines() {

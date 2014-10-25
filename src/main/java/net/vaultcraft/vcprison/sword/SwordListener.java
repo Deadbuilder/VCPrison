@@ -2,6 +2,7 @@ package net.vaultcraft.vcprison.sword;
 
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.ffa.FFADamageTracker;
+import net.vaultcraft.vcprison.ffa.FFAPlayer;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
@@ -155,6 +156,8 @@ public class SwordListener implements Listener {
             return;
         Player defender = (Player) event.getEntity();
         Player attacker = (Player) event.getDamager();
+        if(FFAPlayer.getFFAPlayerFromPlayer(attacker) == null || !FFAPlayer.getFFAPlayerFromPlayer(attacker).isPlaying())
+            return;
         for (SwordPerk perk : SwordPerk.getPerks()) {
             int defenderLevel = PrisonUser.fromPlayer(defender).getSword().getPerkLevel(perk);
             int attackerLevel = PrisonUser.fromPlayer(attacker).getSword().getPerkLevel(perk);
