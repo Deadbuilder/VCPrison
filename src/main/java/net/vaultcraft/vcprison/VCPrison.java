@@ -77,7 +77,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCSpawn("spawn", Group.COMMON));
         CommandManager.addCommand(new VCShop("shop", Group.COMMON));
         CommandManager.addCommand(new VCFFA("ffa", Group.COMMON, "freeforall", "pvp", "fight"));
-        CommandManager.addCommand(new VCSell("sell", Group.ENDERDRAGON));
+        CommandManager.addCommand(new VCSell("sell", Group.WITHER));
 
         eventHandler = new ServerEventHandler(this);
         spawn = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
