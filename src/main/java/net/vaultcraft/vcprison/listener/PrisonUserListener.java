@@ -72,7 +72,6 @@ public class PrisonUserListener implements Listener {
                 if (mine.isResetting())
                     return;
 
-                mine.reset();
                 Runnable sync = new Runnable() {
                     public void run() {
                         MineLoader.resetMine(mine);

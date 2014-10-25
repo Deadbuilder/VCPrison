@@ -26,6 +26,7 @@ public class Locations {
             build("-3831.5,89.0,8.5"),
             build("-3835.5,89.0,11.5")
     };
+
     public static final Location center = build("-3839.5,86.0,0.5");
 
     private static Location build(String in) {

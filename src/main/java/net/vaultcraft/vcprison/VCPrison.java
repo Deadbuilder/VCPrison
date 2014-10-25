@@ -54,7 +54,6 @@ import java.util.List;
  */
 public class VCPrison extends JavaPlugin {
 
-    private static ServerEventHandler eventHandler;
     public static Location spawn;
     private static VCPrison instance;
 
@@ -82,7 +81,6 @@ public class VCPrison extends JavaPlugin {
 
         new PlotWorld();
 
-        eventHandler = new ServerEventHandler(this);
         spawn = new Location(Bukkit.getServer().getWorld("world"), -3839.5, 86, 0.5);
 
         CrateFile.getInstance().load();
@@ -172,10 +170,6 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
-    }
-
-    public static ServerEventHandler getEventHandler() {
-        return eventHandler;
     }
 
     private static DecimalFormat df = new DecimalFormat("0.00");

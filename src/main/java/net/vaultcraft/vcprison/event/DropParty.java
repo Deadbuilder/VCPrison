@@ -3,6 +3,7 @@ package net.vaultcraft.vcprison.event;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.events.ServerEvent;
 import net.vaultcraft.vcutils.innerplugin.InnerPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -18,10 +19,15 @@ public class DropParty extends InnerPlugin {
     public void onEnable() {
         instance = this;
         dropEvent = new DropEvent();
-        VCPrison.getEventHandler().addEvent(dropEvent);
+
+        Runnable task = new Runnable() {
+            public void run() {
+                dropEvent.onEvent(VCPrison.getInstance());
+            }
+        };
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(VCPrison.getInstance(), task, (30*60*20), (30*60*20));
     }
 
-    @Override
     public void onDisable() {
 
     }

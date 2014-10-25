@@ -53,4 +53,8 @@ public class Mine {
     public double getPercent() {
         return (double)blocksBroken/(double)totalCount;
     }
+
+    public void setPercent(double percent) {
+        this.blocksBroken = (int) (totalCount * (percent * 0.01));
+    }
 }

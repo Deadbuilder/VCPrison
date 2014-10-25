@@ -88,6 +88,8 @@ public class MineLoader {
         if (mine.isResetting())
             return;
 
+        mine.reset();
+
         mines.get(mine).reset(MineUtil.iterator(mine.getArea()), mine);
 
         //just for the fun

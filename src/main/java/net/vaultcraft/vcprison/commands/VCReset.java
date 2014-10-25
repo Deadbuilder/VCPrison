@@ -25,6 +25,34 @@ public class VCReset extends ICommand {
             return;
         }
 
+        if (args[0].equalsIgnoreCase("setpercent")) {
+            if (args.length < 3) {
+                Form.at(player, Prefix.ERROR, "Format: /reset setpercent [rank] [percent]");
+                return;
+            }
+
+            Rank reset = Rank.fromName(args[1]);
+            if (reset == null) {
+                Form.at(player, Prefix.ERROR, "Cannot set percent of null mine!");
+                return;
+            }
+
+            Mine from = MineLoader.fromRank(reset);
+            if (from == null) {
+                Form.at(player, Prefix.ERROR, "The given rank does not have a mine associated with it!");
+                return;
+            }
+
+            double set = 0.0;
+            try { set = Double.parseDouble(args[2]); } catch (NumberFormatException ex) {
+                Form.at(player, Prefix.ERROR, args[2] + " is not a valid number!");
+                return;
+            }
+
+            from.setPercent(set);
+            Form.at(player, Prefix.SUCCESS, "Percent set to " + set + "!");
+        }
+
         Rank reset = Rank.fromName(args[0]);
         if (reset == null) {
             Form.at(player, Prefix.ERROR, "No such mine to reset!");
