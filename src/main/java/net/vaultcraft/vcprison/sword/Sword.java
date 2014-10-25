@@ -104,7 +104,7 @@ public class Sword {
     public ItemStack getSword() {
         ItemStack pick = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta itemMeta = pick.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Prison Sword &e&n[Kills " + kills + "]"));
+        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&5&lV&7&lC&e: &7Prison Sword &e&n[Kills " + kills + "]&r &5Drop to Upgrade"));
         List<String> lore = new ArrayList<>();
         for (SwordPerk perk : perkLevels.keySet()) {
             if (perk.isToggleable())
@@ -247,6 +247,9 @@ public class Sword {
     }
 
     public boolean getToggle(SwordPerk perk) {
+        if (perk == null) {
+            return false;
+        }
         return perkToggle.get(perk);
     }
 

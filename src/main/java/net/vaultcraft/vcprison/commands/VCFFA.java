@@ -31,7 +31,7 @@ public class VCFFA extends ICommand {
             Form.at(player, Prefix.SUCCESS, "You have left the FFA!");
         } else {
             ffa.beginFFA();
-            Form.at(player, Prefix.SUCCESS, "You have joined the FFA!");
+            Form.at(player, Prefix.SUCCESS, "You have joined the FFA! Use /ffa to leave.");
         }
     }
 }
