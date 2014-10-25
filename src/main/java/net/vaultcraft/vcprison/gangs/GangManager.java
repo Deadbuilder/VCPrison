@@ -33,7 +33,7 @@ public class GangManager implements Listener {
         Gson gson = new Gson();
         if(section != null) {
             for (String key : section.getKeys(false)) {
-                if(section.getString(key).equals(" "))
+                if(section.getString(key).equals("_disbanded"))
                     continue;
                 gangs.put(key, gson.fromJson(section.getString(key), Gang.class));
             }
