@@ -273,6 +273,8 @@ public class Pickaxe {
     }
 
     public boolean getToggle(PickaxePerk perk) {
+        if(perk == null)
+            return false;
         return perkToggle.get(perk);
     }
 
