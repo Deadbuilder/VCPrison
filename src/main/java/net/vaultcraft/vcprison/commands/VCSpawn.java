@@ -21,7 +21,7 @@ public class VCSpawn extends ICommand {
     @Override
     public void processCommand(Player player, String[] strings) {
         if (FFAPlayer.getFFAPlayerFromPlayer(player).isPlaying()) {
-            Form.at(player, Prefix.ERROR, "You cannot go to spawn during battle!");
+            player.performCommand("redir ffa");
             return;
         }
 
