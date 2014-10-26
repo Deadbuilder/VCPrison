@@ -4,8 +4,11 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.user.PrisonUser;
+import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
+import net.vaultcraft.vcutils.user.Group;
+import net.vaultcraft.vcutils.user.User;
 import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.*;
 import org.bukkit.entity.ExperienceOrb;
@@ -252,16 +255,21 @@ public class PickaxeListener implements Listener {
         if(event.getPlayer().getInventory().firstEmpty() == -1) {
             if (warnCooloff.contains(event.getPlayer()))
                 return;
+            User user = User.fromPlayer(event.getPlayer());
+            if(user.getGroup().hasPermission(Group.ENDERDRAGON)) {
+                Form.at(event.getPlayer(), Prefix.VAULT_CRAFT, "Your inventory is full, but you have auto selling from your rank!");
+                Warden.sell(event.getPlayer());
+            } else {
+                Form.at(event.getPlayer(), Prefix.WARNING, "Your inventory is full!");
+                warnCooloff.add(event.getPlayer());
 
-            Form.at(event.getPlayer(), Prefix.WARNING, "Your inventory is full!");
-            warnCooloff.add(event.getPlayer());
-
-            Runnable r = new Runnable() {
-                public void run() {
-                    warnCooloff.remove(event.getPlayer());
-                }
-            };
-            Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), r, 20);
+                Runnable r = new Runnable() {
+                    public void run() {
+                        warnCooloff.remove(event.getPlayer());
+                    }
+                };
+                Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), r, 20);
+            }
         }
     }
 
