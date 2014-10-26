@@ -221,12 +221,14 @@ public class VCPrison extends JavaPlugin {
         }
 
         if(label.equals("prisonsave")) {
-            shuttingDown = true;
+            if(args.length > 0)
+                shuttingDown = true;
             Logger.log(VCPrison.getInstance(), "Saving Prison Users...");
             for(Player player : Bukkit.getOnlinePlayers()) {
                 PrisonUser.fromPlayer(player).save();
                 User.update(User.fromPlayer(player));
             }
+            Logger.log(VCPrison.getInstance(), "Prison Users saved!");
         }
         return true;
     }
