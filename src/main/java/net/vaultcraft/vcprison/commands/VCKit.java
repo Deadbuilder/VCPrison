@@ -125,8 +125,9 @@ public class VCKit extends ICommand {
                     theUser.removeUserdata("kitCooldown"+g.getName());
                 } else {
                     long timeToWait = (lastGet + (kit.getCoodownInSeconds() * 1000)) - System.currentTimeMillis();
-                    Form.at(player, Prefix.ERROR, "You need to wait " + String.format("%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeToWait),
-                            TimeUnit.MILLISECONDS.toMinutes(timeToWait) -  TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeToWait)))
+                    Form.at(player, Prefix.ERROR, "You need to wait " + String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeToWait),
+                            TimeUnit.MILLISECONDS.toMinutes(timeToWait) -  TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeToWait)),
+                            TimeUnit.MILLISECONDS.toMinutes(timeToWait) -  TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeToWait) - TimeUnit.MINUTES.toSeconds(timeToWait)))
                             + " before getting this kit again.");
                     return;
                 }
