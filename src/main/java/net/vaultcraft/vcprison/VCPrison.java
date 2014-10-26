@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
+import net.vaultcraft.vcessentials.VCEssentials;
 import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
@@ -28,8 +29,8 @@ import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.CommandManager;
-import net.vaultcraft.vcutils.events.ServerEventHandler;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
+import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.protection.Area;
 import net.vaultcraft.vcutils.protection.ProtectedArea;
 import net.vaultcraft.vcutils.protection.ProtectionManager;
@@ -41,8 +42,11 @@ import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.spigotmc.SpigotConfig;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -55,6 +59,8 @@ public class VCPrison extends JavaPlugin {
 
     public static Location spawn;
     private static VCPrison instance;
+
+    private static boolean shuttingDown = false;
 
     public void onEnable() {
 
@@ -215,6 +221,25 @@ public class VCPrison extends JavaPlugin {
             if(!map.isEmpty())
                 Form.at(player, Prefix.WARNING, "Some of your pickaxe points were dropped next to you since you didn't have enough room in your inventory.");
         }
+
+        if(label.equals("shutdown")) {
+            shuttingDown = true;
+            SpigotConfig.restartOnCrash = false;
+            Logger.log(VCPrison.getInstance(), "Saving Prison Users...");
+            Bukkit.savePlayers();
+            for(Player player : Bukkit.getOnlinePlayers()) {
+                PrisonUser.fromPlayer(player).save();
+                User.update(User.fromPlayer(player));
+                VCEssentials.getInstance().sendPlayerToServer(player, "hub");
+            }
+            Bukkit.shutdown();
+        }
         return true;
+    }
+
+    @EventHandler
+    public void onPreJoin(AsyncPlayerPreLoginEvent event) {
+        if(shuttingDown)
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Server is going into maintenance! Please join back later.");
     }
 }
