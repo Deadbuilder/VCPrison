@@ -38,6 +38,7 @@ public class VCReset extends ICommand {
             }
 
             Mine from = MineLoader.fromRank(reset);
+
             if (from == null) {
                 Form.at(player, Prefix.ERROR, "The given rank does not have a mine associated with it!");
                 return;
@@ -51,6 +52,7 @@ public class VCReset extends ICommand {
 
             from.setPercent(set);
             Form.at(player, Prefix.SUCCESS, "Percent set to " + set + "!");
+            return;
         }
 
         Rank reset = Rank.fromName(args[0]);
