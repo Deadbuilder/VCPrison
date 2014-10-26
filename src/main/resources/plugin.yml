@@ -13,4 +13,4 @@ softdepend: [VCUtils, VCEssentials, Citizens]
 main: net.vaultcraft.vcprison.VCPrison
 commands:
   ppoint:
-  shutdown:
+  prisonsave:
