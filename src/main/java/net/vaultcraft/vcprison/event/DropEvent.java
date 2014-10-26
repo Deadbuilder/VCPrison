@@ -3,17 +3,21 @@ package net.vaultcraft.vcprison.event;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.events.ServerEvent;
 import net.vaultcraft.vcutils.events.TimeUnit;
+import net.vaultcraft.vcutils.uncommon.Particles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 /**
  * @author Connor Hollasch
@@ -69,10 +73,42 @@ public class DropEvent extends ServerEvent implements Listener {
                 }
 
                 rads++;
-                particleLoc = Locations.center.clone().add(Math.cos(rads)*9, 1, Math.sin(rads)*9);
+                double realRads = Math.toRadians(rads);
+
+                particleLoc = Locations.center.clone().add(Math.cos(realRads)*9, 1, Math.sin(realRads)*9);
+
+                Particles.WITCH_MAGIC.sendToLocation(particleLoc, 0, 0, 0, 0, 1);
+
+                Item drop = particleLoc.getWorld().dropItem(particleLoc, new ItemStack(randMat()));
+                drop.setVelocity(new Vector((Math.random()-0.5)/3, Math.random()/2, (Math.random()-0.5)/3));
+                drop.setTicksLived(5800);
+            }
+
+            private Material randMat() {
+                double rand = Math.random();
+                if (rand < 0.33)
+                    return Material.DIAMOND;
+                if (rand >= 0.33 && rand < 0.66)
+                    return Material.GOLD_INGOT;
+                if (rand >= 0.66)
+                    return Material.EMERALD;
+
+                return Material.AIR;
             }
         };
-        br.runTaskTimer(VCPrison.getInstance(), 2, 2);
+        br.runTaskTimer(VCPrison.getInstance(), 1, 1);
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), () -> {
+            running = false;
+            for (Location loc : Locations.pillars) {
+                for (int x = 1; x <= 3; x++) {
+                    loc.add(0, 1, 0);
+                    loc.getBlock().setType(Material.AIR);
+                    Particles.CRIT.sendToLocation(loc.clone().add(0.5, 0, 0.5), 0, 0, 0, 1, 30);
+                }
+            }
+            Locations.center.clone().add(0, -2, 0).getBlock().setType(Material.STONE);
+        }, delay+=(20*10));
     }
 
     public void onTick(Plugin plugin, int i) {

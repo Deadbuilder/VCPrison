@@ -14,22 +14,31 @@ public class DropParty extends InnerPlugin {
 
     private ServerEvent dropEvent;
     private static DropParty instance;
+    private int timeLeft = 30*60*20;
 
-    @Override
     public void onEnable() {
         instance = this;
         dropEvent = new DropEvent();
 
         Runnable task = new Runnable() {
             public void run() {
-                dropEvent.onEvent(VCPrison.getInstance());
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    //dropEvent.onEvent(VCPrison.getInstance());
+                    timeLeft = (30*60*20);
+                    return;
+                }
             }
         };
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(VCPrison.getInstance(), task, (30*60*20), (30*60*20));
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(VCPrison.getInstance(), task, 0, 20);
     }
 
     public void onDisable() {
 
+    }
+
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
     }
 
     public DropEvent getDropEvent() {
@@ -43,5 +52,9 @@ public class DropParty extends InnerPlugin {
     @Override
     public Plugin getWrapperPlugin() {
         return VCPrison.getInstance();
+    }
+
+    public int getTimeLeft() {
+        return timeLeft;
     }
 }

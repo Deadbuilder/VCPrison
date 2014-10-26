@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.commands;
 
+import net.vaultcraft.vcprison.event.DropEvent;
 import net.vaultcraft.vcprison.event.DropParty;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
@@ -22,7 +23,7 @@ public class VCDropParty extends ICommand {
         DropParty dp = DropParty.getInstance();
 
         if (args.length == 0) {
-            int left = (int) ServerEventHandler.getTimeRemaining(dp.getDropEvent());
+            int left = DropParty.getInstance().getTimeLeft();
 
             Form.at(player, Prefix.VAULT_CRAFT, "The drop party will begin in " + MMSS(left/20) + "!");
             return;
@@ -32,7 +33,7 @@ public class VCDropParty extends ICommand {
             case "force":
             case "forcestart":
             case "begin": {
-                ServerEventHandler.setTimeRemaining(dp.getDropEvent(), 5);
+                DropParty.getInstance().setTimeLeft(5);
                 Form.at(player, Prefix.WARNING, "Drop party will begin in 5 seconds!");
                 break;
             }
