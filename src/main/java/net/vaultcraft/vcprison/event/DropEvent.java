@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.event;
 
+import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.events.ServerEvent;
 import net.vaultcraft.vcutils.events.TimeUnit;
@@ -8,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
@@ -19,6 +21,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 /**
  * @author Connor Hollasch
  * @since 10/12/14
@@ -28,6 +32,8 @@ public class DropEvent extends ServerEvent implements Listener {
     private boolean running = false;
     private Location particleLoc;
     private double rads;
+
+    private List<FallingBlock> fallingEntities = Lists.newArrayList();
 
     public DropEvent() {
         super("Drop Party", 30, TimeUnit.MINUTES, 100);
@@ -75,13 +81,15 @@ public class DropEvent extends ServerEvent implements Listener {
                 rads++;
                 double realRads = Math.toRadians(rads);
 
-                particleLoc = Locations.center.clone().add(Math.cos(realRads)*9, 1, Math.sin(realRads)*9);
+                particleLoc = Locations.center.clone().add(Math.cos(realRads)*9, (Math.sin(4*realRads)*2)+4, Math.sin(realRads)*9);
 
-                Particles.WITCH_MAGIC.sendToLocation(particleLoc, 0, 0, 0, 0, 1);
+                Particles.FIREWORKS_SPARK.sendToLocation(particleLoc, 0, 0, 0, 0, 1);
 
-                Item drop = particleLoc.getWorld().dropItem(particleLoc, new ItemStack(randMat()));
-                drop.setVelocity(new Vector((Math.random()-0.5)/3, Math.random()/2, (Math.random()-0.5)/3));
-                drop.setTicksLived(5800);
+                if (Math.random() > 0.98) {
+                    FallingBlock chest = particleLoc.getWorld().spawnFallingBlock(particleLoc, Material.CHEST.getId(), (byte)0);
+                    chest.setVelocity(new Vector((Math.random()*3)-1.5, Math.random()*2, (Math.random()*3)-1.5));
+                    fallingEntities.add(chest);
+                }
             }
 
             private Material randMat() {
@@ -100,7 +108,7 @@ public class DropEvent extends ServerEvent implements Listener {
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), () -> {
             running = false;
-            for (Location loc : Locations.pillars) {
+            for (Location loc : Locations.pillars.clone()) {
                 for (int x = 1; x <= 3; x++) {
                     loc.add(0, 1, 0);
                     loc.getBlock().setType(Material.AIR);
@@ -116,6 +124,8 @@ public class DropEvent extends ServerEvent implements Listener {
 
     @EventHandler
     public void onBlockForm(EntityChangeBlockEvent event) {
-
+        if (fallingEntities.contains(event.getEntity())) {
+            event.setCancelled(true);
+        }
     }
 }
