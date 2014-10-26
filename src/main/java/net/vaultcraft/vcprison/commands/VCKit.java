@@ -30,42 +30,42 @@ public class VCKit extends ICommand {
             new ItemStackBuilder(Material.IRON_BOOTS, "&7&lCommon Boots").toItemStack()
         ));
 
-        put(Group.WOLF, new Kit(21600,
+        put(Group.WOLF, new Kit(3600,
             new ItemStackBuilder(Material.IRON_HELMET, "&8&lWolf Helmet").addEnchantment(Enchantment.DURABILITY, 1).toItemStack(),
             new ItemStackBuilder(Material.IRON_CHESTPLATE, "&8&lWolf Chestplate").addEnchantment(Enchantment.DURABILITY, 1).toItemStack(),
             new ItemStackBuilder(Material.IRON_LEGGINGS, "&8&lWolf Leggings").addEnchantment(Enchantment.DURABILITY, 1).toItemStack(),
             new ItemStackBuilder(Material.IRON_BOOTS, "&8&lWolf Boots").addEnchantment(Enchantment.DURABILITY, 1).toItemStack()
         ));
 
-        put(Group.SLIME, new Kit(21600,
+        put(Group.SLIME, new Kit(3600,
             new ItemStackBuilder(Material.IRON_HELMET, "&a&lSlime Helmet").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack(),
             new ItemStackBuilder(Material.IRON_CHESTPLATE, "&a&lSlime Chestplate").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack(),
             new ItemStackBuilder(Material.IRON_LEGGINGS, "&a&lSlime Leggings").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack(),
             new ItemStackBuilder(Material.IRON_BOOTS, "&a&lSlime Boots").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack()
         ));
 
-        put(Group.SKELETON, new Kit(21600,
+        put(Group.SKELETON, new Kit(3600,
             new ItemStackBuilder(Material.DIAMOND_HELMET, "&f&lSkeleton Helmet").addEnchantment(Enchantment.DURABILITY, 2).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack(),
             new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&f&lSkeleton Chestplate").addEnchantment(Enchantment.DURABILITY, 2).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack(),
             new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&f&lSkeleton Leggings").addEnchantment(Enchantment.DURABILITY, 2).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack(),
             new ItemStackBuilder(Material.DIAMOND_BOOTS, "&f&lSkeleton Boots").addEnchantment(Enchantment.DURABILITY, 2).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).toItemStack()
         ));
 
-        put(Group.ENDERMAN, new Kit(21600,
+        put(Group.ENDERMAN, new Kit(3600,
            new ItemStackBuilder(Material.DIAMOND_HELMET, "&5&lEnderman Helmet").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).toItemStack(),
            new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&5&lEnderman Chestplate").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).toItemStack(),
            new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&5&lEnderman Leggings").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).toItemStack(),
            new ItemStackBuilder(Material.DIAMOND_BOOTS, "&5&lEnderman Boots").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).toItemStack()
         ));
 
-        put(Group.WITHER, new Kit(21600,
+        put(Group.WITHER, new Kit(3600,
             new ItemStackBuilder(Material.DIAMOND_HELMET, "&e&lWither Helmet").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).addEnchantment(Enchantment.THORNS, 2).toItemStack(),
             new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&e&lWither Chestplate").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).addEnchantment(Enchantment.THORNS, 2).toItemStack(),
             new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&e&lWither Leggings").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).addEnchantment(Enchantment.THORNS, 2).toItemStack(),
             new ItemStackBuilder(Material.DIAMOND_BOOTS, "&e&lWither Boots").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).addEnchantment(Enchantment.THORNS, 2).toItemStack()
         ));
 
-        put(Group.ENDERDRAGON, new Kit(21600,
+        put(Group.ENDERDRAGON, new Kit(3600,
             new ItemStackBuilder(Material.DIAMOND_HELMET, "&5&lEnder&7&lDragon Helmet").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.THORNS, 2).toItemStack(),
             new ItemStackBuilder(Material.DIAMOND_CHESTPLATE, "&5&lEnder&7&lDragon Chestplate").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.THORNS, 2).toItemStack(),
             new ItemStackBuilder(Material.DIAMOND_LEGGINGS, "&5&lEnder&7&lDragon Leggings").addEnchantment(Enchantment.DURABILITY, 3).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.THORNS, 2).toItemStack(),
@@ -125,8 +125,9 @@ public class VCKit extends ICommand {
                     theUser.removeUserdata("kitCooldown"+g.getName());
                 } else {
                     long timeToWait = (lastGet + (kit.getCoodownInSeconds() * 1000)) - System.currentTimeMillis();
-                    Form.at(player, Prefix.ERROR, "You need to wait " + String.format("%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeToWait),
-                            TimeUnit.MILLISECONDS.toMinutes(timeToWait) -  TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeToWait)))
+                    Form.at(player, Prefix.ERROR, "You need to wait " + String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeToWait),
+                            TimeUnit.MILLISECONDS.toMinutes(timeToWait) -  TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeToWait)),
+                            TimeUnit.MILLISECONDS.toMinutes(timeToWait) -  TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeToWait) - TimeUnit.MINUTES.toSeconds(timeToWait)))
                             + " before getting this kit again.");
                     return;
                 }
