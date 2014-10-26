@@ -1,7 +1,6 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
-import net.vaultcraft.vcessentials.VCEssentials;
 import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
@@ -46,7 +45,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.spigotmc.SpigotConfig;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -222,17 +220,13 @@ public class VCPrison extends JavaPlugin {
                 Form.at(player, Prefix.WARNING, "Some of your pickaxe points were dropped next to you since you didn't have enough room in your inventory.");
         }
 
-        if(label.equals("shutdown")) {
+        if(label.equals("prisonsave")) {
             shuttingDown = true;
-            SpigotConfig.restartOnCrash = false;
             Logger.log(VCPrison.getInstance(), "Saving Prison Users...");
-            Bukkit.savePlayers();
             for(Player player : Bukkit.getOnlinePlayers()) {
                 PrisonUser.fromPlayer(player).save();
                 User.update(User.fromPlayer(player));
-                VCEssentials.getInstance().sendPlayerToServer(player, "hub");
             }
-            Bukkit.shutdown();
         }
         return true;
     }
