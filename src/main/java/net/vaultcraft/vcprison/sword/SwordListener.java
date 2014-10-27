@@ -137,7 +137,7 @@ public class SwordListener implements Listener {
         }
         if (!sword.isInUse() || !FFAPlayer.getFFAPlayerFromPlayer(event.getEntity()).isPlaying())
             return;
-        
+
         sword.reset();
 
         Player player = FFADamageTracker.getLastDamager(event.getEntity());
