@@ -9,14 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Chest;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -47,12 +43,12 @@ public class DropEvent extends ServerEvent implements Listener {
         int delay = 0;
 
         for (Location loc : Locations.pillars) {
-            delay+=5;
+            delay += 5;
             Runnable run = new Runnable() {
                 public void run() {
-                    FallingBlock f1 = Locations.world.spawnFallingBlock(loc.clone().add(0, 100, 0), Material.COBBLE_WALL, (byte)0);
-                    FallingBlock f2 = Locations.world.spawnFallingBlock(loc.clone().add(0, 102, 0), Material.BEACON, (byte)0);
-                    FallingBlock f3 = Locations.world.spawnFallingBlock(loc.clone().add(0, 104, 0), Material.COBBLE_WALL, (byte)0);
+                    FallingBlock f1 = Locations.world.spawnFallingBlock(loc.clone().add(0, 100, 0), Material.COBBLE_WALL, (byte) 0);
+                    FallingBlock f2 = Locations.world.spawnFallingBlock(loc.clone().add(0, 102, 0), Material.BEACON, (byte) 0);
+                    FallingBlock f3 = Locations.world.spawnFallingBlock(loc.clone().add(0, 104, 0), Material.COBBLE_WALL, (byte) 0);
 
                     f1.setDropItem(false);
                     f2.setDropItem(false);
@@ -62,7 +58,7 @@ public class DropEvent extends ServerEvent implements Listener {
             Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), run, delay);
         }
 
-        delay+=20;
+        delay += 20;
 
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
             public void run() {
@@ -80,13 +76,13 @@ public class DropEvent extends ServerEvent implements Listener {
                 rads++;
                 double realRads = Math.toRadians(rads);
 
-                particleLoc = Locations.center.clone().add(Math.cos(realRads)*9, (Math.sin(4*realRads)*2)+4, Math.sin(realRads)*9);
+                particleLoc = Locations.center.clone().add(Math.cos(realRads) * 9, (Math.sin(4 * realRads) * 2) + 4, Math.sin(realRads) * 9);
 
                 Particles.FIREWORKS_SPARK.sendToLocation(particleLoc, 0, 0, 0, 0, 1);
 
                 if (Math.random() > 0.98) {
-                    FallingBlock chest = particleLoc.getWorld().spawnFallingBlock(particleLoc, Material.CHEST.getId(), (byte)0);
-                    chest.setVelocity(new Vector((Math.random()*3)-1.5, Math.random()*2, (Math.random()*3)-1.5));
+                    FallingBlock chest = particleLoc.getWorld().spawnFallingBlock(particleLoc, Material.CHEST.getId(), (byte) 0);
+                    chest.setVelocity(new Vector((Math.random() * 3) - 1.5, Math.random() * 2, (Math.random() * 3) - 1.5));
                     fallingEntities.add(chest);
                 }
             }
@@ -115,7 +111,7 @@ public class DropEvent extends ServerEvent implements Listener {
                 }
             }
             Locations.center.clone().add(0, -2, 0).getBlock().setType(Material.STONE);
-        }, delay+=(20*10));
+        }, delay += (20 * 10));
     }
 
     public void onTick(Plugin plugin, int i) {
