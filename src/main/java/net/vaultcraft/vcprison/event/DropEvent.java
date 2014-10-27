@@ -150,7 +150,7 @@ public class DropEvent implements Listener {
             return new ItemStack(Material.EMERALD_BLOCK, 64);
         if (r >= 0.33 && r < 0.66)
             return new ItemStack(Material.DIAMOND_BLOCK, 64);
-        return new ItemStack(Material.GOLD_BLOCK);
+        return new ItemStack(Material.GOLD_BLOCK, 64);
     }
 
     private static Location randomInside(Area area) {
