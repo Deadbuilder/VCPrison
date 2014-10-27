@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.event;
 
+import net.vaultcraft.vcutils.protection.Area;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -27,6 +28,7 @@ public class Locations {
             build("-3835.5,87.0,11.5")
     };
 
+    public static final Area spawnTopArea = new Area(new Location(world, -3852, 140, -11), new Location(world, -3827, 140, 13));
     public static final Location center = build("-3839.5,86.0,0.5");
 
     private static Location build(String in) {

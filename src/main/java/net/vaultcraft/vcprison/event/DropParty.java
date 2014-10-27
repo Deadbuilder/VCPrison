@@ -12,22 +12,20 @@ import org.bukkit.plugin.Plugin;
  */
 public class DropParty extends InnerPlugin {
 
-    private ServerEvent dropEvent;
+    private DropEvent dropEvent;
     private static DropParty instance;
-    private int timeLeft = 30*60;
+    private double timeLeft = 60*60;
 
     public void onEnable() {
         instance = this;
         dropEvent = new DropEvent();
 
-        Runnable task = new Runnable() {
-            public void run() {
-                timeLeft--;
-                if (timeLeft <= 0) {
-                    dropEvent.onEvent(VCPrison.getInstance());
-                    timeLeft = (30*60);
-                    return;
-                }
+        Runnable task = () -> {
+            timeLeft-=0.5;
+            if (timeLeft <= 0) {
+                dropEvent.onEvent(VCPrison.getInstance());
+                timeLeft = (60*60);
+                return;
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(VCPrison.getInstance(), task, 20, 20);
@@ -42,7 +40,7 @@ public class DropParty extends InnerPlugin {
     }
 
     public DropEvent getDropEvent() {
-        return (DropEvent) dropEvent;
+        return dropEvent;
     }
 
     public static DropParty getInstance() {
@@ -55,6 +53,6 @@ public class DropParty extends InnerPlugin {
     }
 
     public int getTimeLeft() {
-        return timeLeft;
+        return (int)Math.ceil(timeLeft);
     }
 }
