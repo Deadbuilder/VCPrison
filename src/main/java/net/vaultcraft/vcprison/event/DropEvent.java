@@ -40,7 +40,6 @@ public class DropEvent extends ServerEvent implements Listener {
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party is now starting!"));
 
         running = true;
-
         int delay = 0;
 
         for (Location loc : Locations.pillars) {
