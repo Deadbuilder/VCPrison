@@ -34,6 +34,7 @@ public class DropEvent implements Listener {
 
     public void onEvent(Plugin plugin) {
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party is now starting!"));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fType /spawn to get to the dp!"));
 
         running = true;
         int delay = 0;
@@ -78,7 +79,7 @@ public class DropEvent implements Listener {
                     Particles.FIREWORKS_SPARK.sendToLocation(Locations.center.clone().add(x*(8-i), y, z*(8-i)), 0, 0, 0, 0, 1);
                 }
 
-                if (Math.random() > 0.96) {
+                if (Math.random() > 0.8) {
                     ItemStack[] boom = random();
                     for (ItemStack i : boom) {
                         Item drop = particleLoc.getWorld().dropItem(randomInside(Locations.spawnTopArea), i.clone());
