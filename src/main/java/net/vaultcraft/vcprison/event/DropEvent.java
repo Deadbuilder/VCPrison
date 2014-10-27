@@ -138,6 +138,7 @@ public class DropEvent implements Listener {
         int pos = 0;
         while (random[random.length-1] == null) {
             random[pos] = rand();
+            pos++;
         }
 
         return random;
