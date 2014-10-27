@@ -135,8 +135,9 @@ public class SwordListener implements Listener {
             if(itemStack.getType().name().contains("SWORD"))
                 event.getDrops().remove(itemStack);
         }
-        if (!sword.isInUse())
+        if (!sword.isInUse() || !FFAPlayer.getFFAPlayerFromPlayer(event.getEntity()).isPlaying())
             return;
+        
         sword.reset();
 
         Player player = FFADamageTracker.getLastDamager(event.getEntity());
