@@ -2,6 +2,8 @@ package net.vaultcraft.vcprison.scoreboard;
 
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.user.PrisonUser;
+import net.vaultcraft.vcprison.utils.Rank;
+import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.scoreboard.VCDisplay;
 import net.vaultcraft.vcutils.scoreboard.VCObjective;
 import net.vaultcraft.vcutils.scoreboard.VCScore;
@@ -58,8 +60,8 @@ public class ScoreboardHandle implements Runnable {
             String use = text.get(x);
 
             use = use.replace("{rank}", user.getRank().toString());
-            use = use.replace("{balance}", user.getUser().getMoney()+"");
-            use = use.replace("{next}", (user.getRank().next(user.getRank()).getCost()+""));
+            use = use.replace("{balance}", Form.at(user.getUser().getMoney(), true));
+            use = use.replace("{next}", Form.at(Rank.next(user.getRank()).getCost(), true));
             use = use.replace("{staff}", VCPrison.getStaff().size()+"");
 
             score.setName(ChatColor.translateAlternateColorCodes('&', use));
