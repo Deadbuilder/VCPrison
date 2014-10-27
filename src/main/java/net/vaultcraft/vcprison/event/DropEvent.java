@@ -74,7 +74,7 @@ public class DropEvent implements Listener {
                 Particles.FIREWORKS_SPARK.sendToLocation(particleLoc, 0, 0, 0, 0, 1);
                 particleLoc.getWorld().playSound(particleLoc, Sound.AMBIENCE_CAVE, 1, 1);
 
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 5; i++) { //Comment for broken commit
                     Particles.FIREWORKS_SPARK.sendToLocation(Locations.center.clone().add(x*(8-i), y, z*(8-i)), 0, 0, 0, 0, 1);
                 }
 
