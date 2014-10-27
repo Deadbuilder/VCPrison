@@ -137,14 +137,19 @@ public class DropEvent implements Listener {
 
         int pos = 0;
         while (random[random.length-1] == null) {
-            CrateItem ci = CrateFile.crateItems.get((int)(Math.random()*CrateFile.crateItems.size()));
-            if (ci.runChance()) {
-                random[pos] = ci.getStack();
-                pos++;
-            }
+            random[pos] = rand();
         }
 
         return random;
+    }
+
+    private static ItemStack rand() {
+        double r = Math.random();
+        if (r < 0.33)
+            return new ItemStack(Material.EMERALD_BLOCK, 64);
+        if (r >= 0.33 && r < 0.66)
+            return new ItemStack(Material.DIAMOND_BLOCK, 64);
+        return new ItemStack(Material.GOLD_BLOCK);
     }
 
     private static Location randomInside(Area area) {
