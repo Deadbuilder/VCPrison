@@ -72,7 +72,17 @@ public class CellManager {
     public void addOrUpdateCell(Cell theCell, Player updater) {
         Cell dbCell = getCellFromLocation(theCell.cellSpawn);
         if(dbCell == null) {
-            // New cell
+            DBObject o = new BasicDBObject();
+            o.put("OwnerUUID", theCell.ownerUUID.toString());
+            o.put("Chunk", theCell.cellSpawn.getChunk().getX() + "," + theCell.cellSpawn.getChunk().getZ());
+            StringBuilder sb = new StringBuilder();
+            for(UUID u : theCell.additionalUUIDs) {
+                sb.append(u.toString()).append(",");
+            }
+            o.put("Members", sb.toString());
+            o.put("Name", theCell.name);
+            o.put("SpawnPoint", locationToString(theCell.cellSpawn));
+            VCUtils.getInstance().getMongoDB().insert(VCUtils.mongoDBName, "Cells", o);
         } else {
             // Update cell
             DBObject o = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", theCell.cellSpawn.getChunk().getX() + "," + theCell.cellSpawn.getChunk().getZ());
