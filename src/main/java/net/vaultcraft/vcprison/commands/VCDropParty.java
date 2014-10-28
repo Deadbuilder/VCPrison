@@ -1,12 +1,11 @@
 package net.vaultcraft.vcprison.commands;
 
-import net.vaultcraft.vcprison.event.DropEvent;
 import net.vaultcraft.vcprison.event.DropParty;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
-import net.vaultcraft.vcutils.events.ServerEventHandler;
 import net.vaultcraft.vcutils.user.Group;
+import net.vaultcraft.vcutils.user.User;
 import org.bukkit.entity.Player;
 
 /**
@@ -33,6 +32,8 @@ public class VCDropParty extends ICommand {
             case "force":
             case "forcestart":
             case "begin": {
+                if(!User.fromPlayer(player).getGroup().hasPermission(Group.DEVELOPER))
+                    return;
                 DropParty.getInstance().setTimeLeft(5);
                 Form.at(player, Prefix.WARNING, "Drop party will begin in 5 seconds!");
                 break;
