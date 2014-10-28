@@ -99,11 +99,17 @@ public class Gang {
 
         for(String alliedGang : new ArrayList<>(alliedGangs)) {
             Gang gang = GangManager.getGang(alliedGang);
+            if(gang == null) {
+                continue;
+            }
             gang.removeAlly(gangName);
         }
 
         for(String enemyGang : new ArrayList<>(enemyGangs)) {
             Gang gang = GangManager.getGang(enemyGang);
+            if(gang == null) {
+                continue;
+            }
             gang.removeEnemy(gangName);
         }
 
