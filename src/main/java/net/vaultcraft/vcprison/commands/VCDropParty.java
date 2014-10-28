@@ -24,7 +24,7 @@ public class VCDropParty extends ICommand {
         if (args.length == 0) {
             int left = DropParty.getInstance().getTimeLeft();
 
-            Form.at(player, Prefix.VAULT_CRAFT, "The drop party will begin in " + MMSS(left) + "!");
+            Form.at(player, Prefix.VAULT_CRAFT, "The drop party will begin in " + MM(left) + "!");
             return;
         }
 
@@ -50,5 +50,22 @@ public class VCDropParty extends ICommand {
         }
 
         return in + " seconds";
+    }
+
+    public static String MM(int in) {
+        if (in >= 60) {
+            int mins = (int)(in/60);
+
+            if(mins == 1) {
+                return mins + " Minute";
+            } else if(mins < 1) {
+                return "< 1 Minute";
+            } else  {
+                return mins + " Minutes";
+            }
+
+        } else {
+            return "< 1 Minute";
+        }
     }
 }
