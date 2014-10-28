@@ -9,6 +9,7 @@ import net.vaultcraft.vcutils.uncommon.Particles;
 import org.bukkit.*;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -35,6 +36,15 @@ public class DropEvent implements Listener {
     public void onEvent(Plugin plugin) {
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party is now starting!"));
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fType /spawn to get to the dp!"));
+
+        for (int i = 0; i < 3; i++) {
+            final int mirror = i;
+            Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), () -> {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.playSound(player.getLocation(), Sound.NOTE_PIANO, 1, mirror);
+                }
+            }, i*5);
+        }
 
         running = true;
         int delay = 0;
