@@ -131,7 +131,7 @@ public class SwordListener implements Listener {
     @EventHandler()
     public void onDeath(PlayerDeathEvent event) {
         Sword sword = null;
-        if(PrisonUser.fromPlayer(event.getEntity()) == null)
+        if(PrisonUser.fromPlayer(event.getEntity()) != null)
             sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
         for(ItemStack itemStack : new ArrayList<>(event.getDrops())) {
             if(itemStack.getType().name().contains("SWORD"))
