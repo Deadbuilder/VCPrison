@@ -27,6 +27,9 @@ public class CellManager {
 
         List<DBObject> objects = VCUtils.getInstance().getMongoDB().queryMutiple(VCUtils.mongoDBName, "Cells", "OwnerUUID", player.getUniqueId().toString());
         ArrayList<Cell> cells = new ArrayList<>();
+        if(objects == null) {
+            return cells;
+        }
         for (DBObject o : objects) {
             Cell cell = new Cell();
             cell.ownerUUID = UUID.fromString((String) o.get("OwnerUUID"));
@@ -47,7 +50,9 @@ public class CellManager {
             throw new IllegalArgumentException("World must be ChunkWorld!");
         }
         DBObject o = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", location.getChunk().getX() + "," + location.getChunk().getZ());
-
+        if(o == null) {
+            return null;
+        }
         Cell cell = new Cell();
         cell.ownerUUID = UUID.fromString((String) o.get("OwnerUUID"));
         String[] chunkString = ((String) o.get("Chunk")).split(",");
