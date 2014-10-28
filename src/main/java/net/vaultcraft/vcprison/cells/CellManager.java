@@ -3,8 +3,10 @@ package net.vaultcraft.vcprison.cells;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import net.minecraft.util.com.mojang.authlib.yggdrasil.response.User;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.VCUtils;
+import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -67,6 +69,10 @@ public class CellManager {
     }
 
     public void addOrUpdateCell(Cell theCell, Player updater) {
+        if(updater.getUniqueId() != theCell.ownerUUID && !net.vaultcraft.vcutils.user.User.fromPlayer(updater).getGroup().hasPermission(Group.ADMIN)) {
+            throw new IllegalArgumentException("User does not have permission to update or add cell!");
+            return;
+        }
         Cell dbCell = getCellFromLocation(theCell.cellSpawn);
         if(dbCell == null) {
             DBObject o = new BasicDBObject();
