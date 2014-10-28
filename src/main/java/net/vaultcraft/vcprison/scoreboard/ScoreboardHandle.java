@@ -83,7 +83,7 @@ public class ScoreboardHandle implements Runnable {
         double needs = Rank.next(pu.getRank()).getCost();
 
         if (has > needs) {
-            return "&5&l100%!";
+            return "&7&l100%!";
         }
 
         double left = needs - has;
@@ -103,7 +103,7 @@ public class ScoreboardHandle implements Runnable {
         }
 
         int calculate = (int)((has/needs) * 100);
-        build+=(calculate+"%");
+        build+=(" "+calculate+"%");
         return build;
     }
 }
