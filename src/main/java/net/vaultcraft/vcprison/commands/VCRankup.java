@@ -7,7 +7,6 @@ import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.string.StringUtils;
 import net.vaultcraft.vcutils.user.Group;
-import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
