@@ -57,15 +57,15 @@ public class VCDropParty extends ICommand {
             int mins = (int)(in/60);
 
             if(mins == 1) {
-                return mins + " Minute";
+                return mins + " minute";
             } else if(mins < 1) {
-                return "< 1 Minute";
+                return "< 1 minute";
             } else  {
-                return mins + " Minutes";
+                return mins + " minutes";
             }
 
         } else {
-            return "< 1 Minute";
+            return "< 1 minute";
         }
     }
 }
