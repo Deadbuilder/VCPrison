@@ -82,6 +82,10 @@ public class ScoreboardHandle implements Runnable {
         double has = u.getMoney();
         double needs = Rank.next(pu.getRank()).getCost();
 
+        if (has > needs) {
+            return "&5&l100%!";
+        }
+
         double left = needs - has;
 
         int percent = (int)((left / needs)*5);
