@@ -37,8 +37,8 @@ public class ScoreboardHandle implements Runnable {
         text.put(5, "&5Rankup Cost");
         text.put(4, "&7${next}");
         text.put(3, "    ");
-        text.put(2, "&5Online Staff");
-        text.put(1, "&7{staff}");
+        text.put(2, "&5Players In FFA");
+        text.put(1, "&7{ffa}");
     }
 
     public void run() {
@@ -62,7 +62,7 @@ public class ScoreboardHandle implements Runnable {
             use = use.replace("{rank}", user.getRank().toString());
             use = use.replace("{balance}", Form.at(user.getUser().getMoney(), true));
             use = use.replace("{next}", Form.at(Rank.next(user.getRank()).getCost(), true));
-            use = use.replace("{staff}", VCPrison.getStaff().size()+"");
+            use = use.replace("{ffa}", VCPrison.getFFA().size()+"");
 
             score.setName(ChatColor.translateAlternateColorCodes('&', use));
         }

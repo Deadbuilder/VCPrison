@@ -47,6 +47,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.DecimalFormat;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,6 +60,15 @@ public class VCPrison extends JavaPlugin {
     private static VCPrison instance;
 
     private static boolean shuttingDown = false;
+
+    public static Collection<Player> getFFA() {
+        List<Player> l = Lists.newArrayList();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (FFAPlayer.getFFAPlayerFromPlayer(player).isPlaying())
+                l.add(player);
+        }
+        return l;
+    }
 
     public void onEnable() {
 

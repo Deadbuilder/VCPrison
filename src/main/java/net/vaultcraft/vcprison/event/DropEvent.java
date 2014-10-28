@@ -115,7 +115,7 @@ public class DropEvent implements Listener {
             }
 
             Locations.center.clone().add(0, -2, 0).getBlock().setType(Material.STONE);
-        }, delay += (20 * 20));
+        }, delay += (20 * 30));
     }
 
     private static FireworkEffect randomEffect() {
