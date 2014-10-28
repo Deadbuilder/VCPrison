@@ -66,7 +66,7 @@ public class ScoreboardHandle implements Runnable {
             String use = text.get(x);
 
             use = use.replace("{rank}", user.getRank().toString());
-            use = use.replace("{dp}", VCDropParty.MMSS(DropParty.getInstance().getTimeLeft())+"");
+            use = use.replace("{dp}", VCDropParty.MM(DropParty.getInstance().getTimeLeft())+"");
             use = use.replace("{bal}", Form.at(user.getUser().getMoney(), true));
             use = use.replace("{next}", percent(user.getPlayer()));
             use = use.replace("{ffa}", VCPrison.getFFA().size()+"");
