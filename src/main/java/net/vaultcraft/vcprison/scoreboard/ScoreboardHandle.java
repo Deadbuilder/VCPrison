@@ -1,6 +1,8 @@
 package net.vaultcraft.vcprison.scoreboard;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.commands.VCDropParty;
+import net.vaultcraft.vcprison.event.DropParty;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.utils.Rank;
 import net.vaultcraft.vcutils.chat.Form;
@@ -31,8 +33,8 @@ public class ScoreboardHandle implements Runnable {
         text.put(11, "&5Current Rank");
         text.put(10, "&7{rank}");
         text.put(9, "  ");
-        text.put(8, "&5Balance");
-        text.put(7, "&7${balance}");
+        text.put(8, "&5Next DP");
+        text.put(7, "&7{dp}");
         text.put(6, "   ");
         text.put(5, "&5Rankup Cost");
         text.put(4, "&7${next}");
@@ -60,7 +62,7 @@ public class ScoreboardHandle implements Runnable {
             String use = text.get(x);
 
             use = use.replace("{rank}", user.getRank().toString());
-            use = use.replace("{balance}", Form.at(user.getUser().getMoney(), true));
+            use = use.replace("{dp}", VCDropParty.MMSS(DropParty.getInstance().getTimeLeft())+"");
             use = use.replace("{next}", Form.at(Rank.next(user.getRank()).getCost(), true));
             use = use.replace("{ffa}", VCPrison.getFFA().size()+"");
 

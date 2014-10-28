@@ -41,12 +41,12 @@ public class VCDropParty extends ICommand {
         }
     }
 
-    private static String MMSS(int in) {
+    public static String MMSS(int in) {
         if (in >= 60) {
             int mins = (int)(in/60);
             int left = in % 60;
 
-            return mins + " minutes, " + left + " seconds";
+            return mins + " min, " + left + " sec";
         }
 
         return in + " seconds";
