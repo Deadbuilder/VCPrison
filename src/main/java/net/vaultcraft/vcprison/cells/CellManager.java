@@ -3,16 +3,13 @@ package net.vaultcraft.vcprison.cells;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import net.vaultcraft.vcessentials.listeners.VCChatListener;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.VCUtils;
-import net.vaultcraft.vcutils.string.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
