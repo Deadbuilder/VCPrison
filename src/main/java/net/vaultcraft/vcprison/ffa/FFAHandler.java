@@ -72,7 +72,6 @@ public class FFAHandler {
         Form.at(ffaDead.getUser().getPlayer(), Prefix.NOTHING, "&e&m=====================================================");
 
         Form.at(ffaKill.getUser().getPlayer(), Prefix.NOTHING, "&6&lYou received &7$"+bounty+" &6&lfrom &7"+ffaDead.getUser().getPlayer().getName()+"'s &6&ldeath!");
-        FFADamageTracker.reset(dead);
         CombatLog.untag(ffaDead.getUser().getPlayer());
     }
 
