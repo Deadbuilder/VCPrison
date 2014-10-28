@@ -83,7 +83,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCHelp("help", Group.COMMON, "?"));
         CommandManager.addCommand(new VCRules("rules", Group.COMMON));
         CommandManager.addCommand(new VCGangs("gang", Group.COMMON, "gangs", "f", "team"));
-        CommandManager.addCommand(new VCDropParty("dp", Group.ADMIN, "dropparty"));
+        CommandManager.addCommand(new VCDropParty("dp", Group.COMMON, "dropparty"));
         CommandManager.addCommand(new VCFix("fix", Group.WOLF, "repair"));
         CommandManager.addCommand(new VCPoint("point", Group.ADMIN));
         CommandManager.addCommand(new VCKit("kit", Group.COMMON, "kits"));

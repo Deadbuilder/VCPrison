@@ -130,12 +130,14 @@ public class SwordListener implements Listener {
 
     @EventHandler()
     public void onDeath(PlayerDeathEvent event) {
-        Sword sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
+        Sword sword = null;
+        if(PrisonUser.fromPlayer(event.getEntity()) == null)
+            sword = PrisonUser.fromPlayer(event.getEntity()).getSword();
         for(ItemStack itemStack : new ArrayList<>(event.getDrops())) {
             if(itemStack.getType().name().contains("SWORD"))
                 event.getDrops().remove(itemStack);
         }
-        if (!sword.isInUse() || !FFAPlayer.getFFAPlayerFromPlayer(event.getEntity()).isPlaying())
+        if (sword == null || !sword.isInUse() || !FFAPlayer.getFFAPlayerFromPlayer(event.getEntity()).isPlaying())
             return;
 
         sword.reset();
@@ -145,9 +147,11 @@ public class SwordListener implements Listener {
             return;
         PrisonUser user = PrisonUser.fromPlayer(player);
         if (user != null) {
-            user.getSword().levelUp();
-            player.getInventory().setItem(0, user.getSword().getSword());
-            Form.at(player, Prefix.VAULT_CRAFT, "You gained a Sword Perk. Drop your sword to upgrade it!");
+            if(user.getSword().isInUse()) {
+                user.getSword().levelUp();
+                player.getInventory().setItem(0, user.getSword().getSword());
+                Form.at(player, Prefix.VAULT_CRAFT, "You gained a Sword Perk. Drop your sword to upgrade it!");
+            }
         }
         FFADamageTracker.reset(event.getEntity());
     }

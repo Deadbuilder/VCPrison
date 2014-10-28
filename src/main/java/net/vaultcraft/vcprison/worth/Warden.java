@@ -84,7 +84,8 @@ public class Warden {
         resume.put(player.getName(), dc);
 
         String date = (DateUtil.fromTime(TimeUnit.SECONDS, ticks/20));
-        Form.atCharacter(player, Prefix.CHARACTER, "I'm selling your items, it will take about &e&n" + (date.equals("") ? "0 seconds" : date), "GUARD");
+        if(!date.equals(""))
+            Form.atCharacter(player, Prefix.CHARACTER, "I'm selling your items, it will take about &e&n" + (date.equals("") ? "0 seconds" : date), "GUARD");
 
         final int finalWorth = (int)(worth*getItemWorthMultiplier(user.getGroup()));
 

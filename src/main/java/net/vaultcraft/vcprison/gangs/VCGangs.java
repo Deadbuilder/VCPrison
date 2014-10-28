@@ -174,6 +174,24 @@ public class VCGangs extends ICommand {
         }
 
         String gangName = args[1];
+        Player player = Bukkit.getPlayer(args[1]);
+
+        if(player != null) {
+            for (Gang gang : GangManager.getGangs().values()) {
+                if (gang.getOwnerUUID().equals(player.getUniqueId().toString())) {
+                    sendGangInfo(sender, gang);
+                    return;
+                }
+                for (String memberUUID : gang.getMemberUUIDs()) {
+                    if (memberUUID.equals(player.getUniqueId().toString())) {
+                        sendGangInfo(sender, gang);
+                        return;
+                    }
+                }
+            }
+            sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.WHITE + player.getName() + " is not apart of a gang.");
+            return;
+        }
 
         if (!GangManager.getGangs().containsKey(gangName)) {
             sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.WHITE + gangName + " does not exist.");
