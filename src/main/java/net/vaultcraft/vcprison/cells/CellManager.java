@@ -177,7 +177,7 @@ public class CellManager {
     }
 
     private String locationToString(Location l) {
-        return l.getX() + " " + l.getY() + " " + l.getZ() + " " + l.getY() + " " + l.getPitch();
+        return l.getX() + " " + l.getY() + " " + l.getZ() + " " + l.getYaw() + " " + l.getPitch();
     }
 
 
