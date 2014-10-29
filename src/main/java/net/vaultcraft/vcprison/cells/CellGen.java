@@ -54,7 +54,7 @@ public class CellGen extends ChunkGenerator {
     public byte[][] generateBlockSections(World world, Random rand, int chunkX, int chunkY, BiomeGrid biomes) {
         byte[][] result = new byte[world.getMaxHeight() / 16][];
         for (int x = 0; x < 16; x++) {
-            for (int y = 80; y < 98; y++) {
+            for (int y = 80; y < 99; y++) {
                 for (int z = 0; z < 16; z++) {
                     if (chunkX % 2 == 0) {
                         if (cells.getBlock(new Vector(x, y - 80, z)).getId() != 0 && cells.getBlock(new Vector(x, y - 80, z)).getId() != 50)
