@@ -148,7 +148,7 @@ public class SwordListener implements Listener {
         PrisonUser user = PrisonUser.fromPlayer(player);
         if (user != null) {
             if(user.getSword().isInUse()) {
-                user.getSword().levelUp();
+                user.getSword().levelUp(event.getEntity());
                 player.getInventory().setItem(0, user.getSword().getSword());
                 Form.at(player, Prefix.VAULT_CRAFT, "You gained a Sword Perk. Drop your sword to upgrade it!");
             }

@@ -33,6 +33,8 @@ public class Sword {
     private HashMap<SwordPerk, Integer> perkLevels = new HashMap<>();
     private HashMap<SwordPerk, Boolean> perkToggle = new HashMap<>();
 
+    private List<String> lastPlayerKills = new ArrayList<>();
+
     public Sword(Player player) {
         this.player = player;
         for (SwordPerk perk : SwordPerk.getPerks()) {
@@ -209,10 +211,15 @@ public class Sword {
         }
     }
 
-    public void levelUp() {
+    public void levelUp(Player player) {
         kills++;
-        killstreak++;
-        swordPoints++;
+        if(!lastPlayerKills.contains(player.getName())) {
+            killstreak++;
+            swordPoints++;
+        }
+        if(lastPlayerKills.size() > 2)
+            lastPlayerKills.remove(0);
+        lastPlayerKills.add(player.getName());
         player.sendMessage("");
     }
 
