@@ -75,6 +75,10 @@ public class CellManager {
             throw new IllegalArgumentException("World must be PlotWorld!");
         }
 
+        if(location.getChunk().getX() % 2 != 0 || location.getY() >= 91) {
+            return null;
+        }
+
 
         for(Cell c : cells) {
             if(c.chunkX == location.getChunk().getX() && c.chunkZ == location.getChunk().getZ()) {
