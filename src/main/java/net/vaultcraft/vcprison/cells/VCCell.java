@@ -9,17 +9,14 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -35,7 +32,8 @@ public class VCCell extends ICommand {
     public void processCommand(Player player, String[] args) {
 
         if(args.length == 0) {
-            openMenu(player, player);
+            new CellMenu(player, player);
+            return;
         }
 
         switch (args[0].toLowerCase()) {
@@ -67,39 +65,9 @@ public class VCCell extends ICommand {
                     }
                 }
 
-                openMenu(player1.getPlayer(), player);
+                new CellMenu(player1.getPlayer(), player);
         }
 
-    }
-
-    public void openMenu(Player plotOwner, Player opener) {
-        List<Cell> cells = VCPrison.getInstance().getCellManager().getCellsFromPlayer(plotOwner);
-        int rows = (int) Math.ceil(((cells.size() + 1.0) / 9.0));
-        Inventory menu = Bukkit.createInventory(null, rows, ChatColor.GREEN + plotOwner.getName() + "'s Cells");
-        for(int i = 0; i < cells.size(); i++) {
-            menu.setItem(i, getCellItem(cells.get(i)));
-        }
-        if(plotOwner.equals(opener))
-            menu.setItem(cells.size(), getNewCellItem());
-        opener.openInventory(menu);
-    }
-
-    private ItemStack getNewCellItem() {
-        ItemStack itemStack = new ItemStack(Material.WOOL, 1, (short) 5);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.DARK_GREEN + "Create Cell");
-        itemMeta.setLore(Arrays.asList(ChatColor.WHITE + "Creates a new cell, and teleports you to it."));
-        itemStack.setItemMeta(itemMeta);
-        return itemStack;
-    }
-
-    private ItemStack getCellItem(Cell cell) {
-        ItemStack itemStack = new ItemStack(Material.IRON_FENCE);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(cell.name);
-        itemMeta.setLore(Arrays.asList(VCPrison.getInstance().getCellManager().locationToString(cell.cellSpawn)));
-        itemStack.setItemMeta(itemMeta);
-        return itemStack;
     }
 
     public void executeSetSpawn(Player player) {

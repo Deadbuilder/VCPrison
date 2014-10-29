@@ -5,6 +5,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.VCUtils;
+import net.vaultcraft.vcutils.config.ClassConfig;
 import net.vaultcraft.vcutils.logging.Logger;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -18,10 +19,14 @@ import java.util.UUID;
 
 public class CellManager {
 
+    @ClassConfig.Config(path = "Cells.WBRadius")
+    public static long yRadius = 6;
+
     private World plotWorld;
     private volatile List<Cell> cells = new ArrayList<>();
 
     public CellManager() {
+        ClassConfig.loadConfig(this.getClass(), VCPrison.getInstance().getConfig());
         WorldCreator wc = new WorldCreator("Cells");
         wc.generator(new CellGen());
         this.plotWorld = wc.createWorld();
@@ -111,6 +116,11 @@ public class CellManager {
             } else {
                 row-= 2;
                 row = -row;
+                if(row % yRadius == 0) {
+                    yRadius += 6;
+                    ClassConfig.updateConfig(this.getClass(), VCPrison.getInstance().getConfig());
+                    VCPrison.getInstance().saveConfig();
+                }
             }
         }
         return null;

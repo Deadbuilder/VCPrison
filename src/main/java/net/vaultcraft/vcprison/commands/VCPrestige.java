@@ -6,6 +6,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 /**
@@ -28,7 +29,7 @@ public class VCPrestige extends ICommand {
             return;
         }
         if(args.length == 0) {
-            Form.at(player, Prefix.WARNING, "Prestiging will bring you down to rank A, wipe your money, and teleport you to mine A. If you are sure you want to prestige type /prestige confirm.");
+            Form.at(player, Prefix.WARNING, "Prestiging will bring you down to rank A, wipe your money, " + ChatColor.RED.toString() + ChatColor.BOLD + "wipe your pickaxe," + ChatColor.RESET + " and teleport you to mine A. If you are sure you want to prestige type /prestige confirm.");
             return;
         }
 
@@ -37,6 +38,7 @@ public class VCPrestige extends ICommand {
                 user.setRank(Rank.A);
                 user.setPrestige(user.getPrestige() + 1);
                 user.getUser().setMoney(0);
+                user.getPickaxe().reset();
                 Form.at(player, Prefix.SUCCESS, "You have Prestiged!");
             }
         }
