@@ -93,16 +93,14 @@ public class CellManager {
 
     public Chunk getNextOpenCell() {
         int row = 0;
-        while (true) {
+        while (Math.abs(row) > 1000000) {
             for(int cell = -25; cell < 25; cell++) {
                 Cell checkCell = getCellFromLocation(new Location(this.plotWorld, 16 * row, 88, 16 * cell));
                 if(checkCell == null) {
                     return new Location(this.plotWorld, 16*row, 88, 16*cell).getChunk();
                 }
             }
-            if(Math.abs(row) > 1000000) {
-                return null;
-            }
+
             if(row == 0) {
                 row+= 2;
             } else if(row > 0) {
@@ -112,6 +110,7 @@ public class CellManager {
                 row = -row;
             }
         }
+        return null;
     }
 
     /**
