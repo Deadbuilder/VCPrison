@@ -26,6 +26,8 @@ public class CellsListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
+        if(!event.getTo().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
+            return;
         if(event.getTo().getBlockZ() > (16 * 27) || event.getTo().getBlockZ() < -(16 * 26)
                 || event.getTo().getBlockX() > (16 * (CellManager.xRadius + 2)) || event.getTo().getBlockX() < -(16 * CellManager.xRadius + 1)) {
             event.getPlayer().teleport(event.getFrom());
