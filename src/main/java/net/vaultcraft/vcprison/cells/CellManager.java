@@ -4,25 +4,26 @@ package net.vaultcraft.vcprison.cells;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
-import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.VCUtils;
 import net.vaultcraft.vcutils.logging.Logger;
-import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 public class CellManager {
 
     private World plotWorld;
-    private List<Cell> cells = new ArrayList<Cell>();
-    public CellManager(World plotWorld) {
-        this.plotWorld = plotWorld;
+    private List<Cell> cells = new ArrayList<>();
+
+    public CellManager() {
+        WorldCreator wc = new WorldCreator("Cells");
+        wc.generator(new CellGen());
+        this.plotWorld = wc.createWorld();
         loadCells();
     }
 
