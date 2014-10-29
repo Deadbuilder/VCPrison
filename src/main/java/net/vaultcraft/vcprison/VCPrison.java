@@ -2,8 +2,8 @@ package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.cells.CellManager;
-import net.vaultcraft.vcprison.cells.VCGetCell;
-import net.vaultcraft.vcprison.cells.VCListCell;
+import net.vaultcraft.vcprison.cells.CellsListener;
+import net.vaultcraft.vcprison.cells.VCCell;
 import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
@@ -87,7 +87,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCReset("reset", Group.ADMIN));
         CommandManager.addCommand(new VCWarp("warp", Group.COMMON, "mine", "mines", "warps"));
         CommandManager.addCommand(new VCAddCrateItem("addcrateitem", Group.DEVELOPER, "aci"));
-        //CommandManager.addCommand(new VCPlots("plot", Group.COMMON, "p", "cell", "plots", "plotme"));
+        CommandManager.addCommand(new VCCell("plot", Group.COMMON, "p", "cell", "plots", "plotme", "cells"));
         CommandManager.addCommand(new VCHelp("help", Group.COMMON, "?"));
         CommandManager.addCommand(new VCRules("rules", Group.COMMON));
         CommandManager.addCommand(new VCGangs("gang", Group.COMMON, "gangs", "f", "team"));
@@ -116,6 +116,7 @@ public class VCPrison extends JavaPlugin {
         new PrisonShopListener();
         new FFAShopListener();
         new PortalListener();
+        new CellsListener();
 
         MineUtil.createBlockInjector(new MineCrateInjector());
 
@@ -199,9 +200,7 @@ public class VCPrison extends JavaPlugin {
             public void run() {
                 cellManager.saveCells();
             }
-        }, 20, (20*60)*5);
-        CommandManager.addCommand(new VCGetCell("getcell", Group.COMMON));
-        CommandManager.addCommand(new VCListCell("listcell", Group.COMMON));
+        }, (20*60)*5, (20*60)*5);
     }
 
     private static DecimalFormat df = new DecimalFormat("0.00");

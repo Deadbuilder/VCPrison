@@ -1,6 +1,8 @@
 package net.vaultcraft.vcprison.user;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
 
@@ -20,12 +22,42 @@ public class PrisonPrefs {
     boolean pickaxeMessages = true;
     boolean swordMessages = true;
 
-    public PrisonPrefs() {
-
+    public PrisonPrefs(Player player) {
+        prefsMap.put(player, this);
     }
 
-    public PrisonPrefs(String s) {
-
+    public PrisonPrefs(Player player, String s) {
+        String[] parts = s.split(",");
+        for(String part : parts) {
+            String[] data = part.split(":");
+            switch (data[0]) {
+                case "Explosions":
+                    explosions = Boolean.parseBoolean(data[1]);
+                    break;
+                case "GuardMessages":
+                    guardMessages = Boolean.parseBoolean(data[1]);
+                    break;
+                case "ChatMessages":
+                    chatMessages = Boolean.parseBoolean(data[1]);
+                    break;
+                case "PrivateMessages":
+                    privateMessages = Boolean.parseBoolean(data[1]);
+                    break;
+                case "AutoSell":
+                    autoSell = Boolean.parseBoolean(data[1]);
+                    break;
+                case "FFAMessages":
+                    ffaMessages = Boolean.parseBoolean(data[1]);
+                    break;
+                case "PickaxeMessages":
+                    pickaxeMessages = Boolean.parseBoolean(data[1]);
+                    break;
+                case "SwordMessages":
+                    swordMessages = Boolean.parseBoolean(data[1]);
+                    break;
+            }
+        }
+        prefsMap.put(player, this);
     }
 
     public boolean isExplosions() {
@@ -90,6 +122,18 @@ public class PrisonPrefs {
 
     public void setSwordMessages(boolean swordMessages) {
         this.swordMessages = swordMessages;
+    }
+
+    public static PrisonPrefs getPrisonPrefs(Player player) {
+        return prefsMap.get(player);
+    }
+
+    public static Inventory getMenu(Player player) {
+        PrisonPrefs prefs = getPrisonPrefs(player);
+        if(prefs == null)
+            return null;
+        Inventory menu = Bukkit.createInventory(null, 54, "Prison Prefs");
+        return menu;
     }
 
     @Override

@@ -26,6 +26,7 @@ public class Pickaxe {
     private Player player;
     private int level = 1;
     private int blocksMined = 0;
+    private long totalBlocksMined = 0;
     private int pickPoints = 0;
     private boolean inUse = true;
 
@@ -82,6 +83,8 @@ public class Pickaxe {
                     case "BlocksMined":
                         blocksMined = Integer.parseInt(value[1]);
                         break;
+                    case "TotalBlocksMined":
+                        totalBlocksMined = Long.parseLong(value[1]);
                     case "Points":
                         pickPoints = Integer.parseInt(value[1]);
                         break;
@@ -95,6 +98,30 @@ public class Pickaxe {
             perkLevels.put(perk, perk.getInitLevel());
             if (perk.isToggleable())
                 perkToggle.put(perk, perk.getInitLevel() == 1);
+        }
+        player.getInventory().setItem(0, getPickaxe());
+    }
+
+    public void reset() {
+
+        this.level = 1;
+        this.blocksMined = 0;
+        this.pickPoints = 0;
+
+        for (PickaxePerk perk : PickaxePerk.getPerks()) {
+            perkLevels.put(perk, perk.getInitLevel());
+            if (perk.isToggleable()) {
+                perkToggle.put(perk, perk.getInitLevel() == 1);
+                if(perk.getInitLevel() == 1)
+                    perk.onToggleOn(player);
+            }
+            if(perk.getInitLevel() > 0) {
+                perk.onStart(player, perk.getInitLevel());
+                if(player.getInventory().getHeldItemSlot() == 0)
+                    perk.onHoverOn(player, perk.getInitLevel());
+                else
+                    perk.onHoverOff(player, perk.getInitLevel());
+            }
         }
         player.getInventory().setItem(0, getPickaxe());
     }
@@ -115,6 +142,7 @@ public class Pickaxe {
         }
         itemMeta.addEnchant(Enchantment.DURABILITY, 50, true);
         lore.add("Exp: " + Form.at(blocksMined) + " / " + Form.at(toNextLevel(level)));
+        lore.add("Blocks Mined: " + Form.at(totalBlocksMined));
         itemMeta.setLore(lore);
         pick.setItemMeta(itemMeta);
         return pick;
@@ -145,6 +173,7 @@ public class Pickaxe {
 
     public void mineBlock(Material material) {
         blocksMined += Math.ceil((BlockExp.fromMaterial(material).getExp() * getDonorMultiplier(User.fromPlayer(player))));
+        totalBlocksMined++;
         if (blocksMined >= toNextLevel(level)) {
             blocksMined = 0;
             level++;
@@ -283,6 +312,7 @@ public class Pickaxe {
         int counter = 0;
         sb.append("Level|").append(level).append(".");
         sb.append("BlocksMined|").append(blocksMined).append(".");
+        sb.append("TotalBlocksMined|").append(totalBlocksMined).append(".");
         sb.append("Points|").append(pickPoints).append(".");
         for (PickaxePerk perk : perkLevels.keySet()) {
             counter++;
