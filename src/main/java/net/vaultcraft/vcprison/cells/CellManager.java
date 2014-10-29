@@ -20,7 +20,7 @@ import java.util.UUID;
 public class CellManager {
 
     @ClassConfig.Config(path = "Cells.WBRadius")
-    public static long yRadius = 6;
+    public static long xRadius = 6;
 
     private World plotWorld;
     private volatile List<Cell> cells = new ArrayList<>();
@@ -116,8 +116,8 @@ public class CellManager {
             } else {
                 row-= 2;
                 row = -row;
-                if(row % yRadius == 0) {
-                    yRadius += 6;
+                if(row % xRadius == 0) {
+                    xRadius += 6;
                     ClassConfig.updateConfig(this.getClass(), VCPrison.getInstance().getConfig());
                     VCPrison.getInstance().saveConfig();
                 }

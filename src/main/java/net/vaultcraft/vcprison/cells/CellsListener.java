@@ -26,8 +26,8 @@ public class CellsListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        if(event.getTo().getBlockX() > (16 * 26) || event.getTo().getBlockX() < -(16 * 25)
-                || event.getTo().getBlockZ() > (16 * (CellManager.yRadius + 1)) || event.getTo().getBlockZ() < -(16 * CellManager.yRadius)) {
+        if(event.getTo().getBlockZ() > (16 * 27) || event.getTo().getBlockZ() < -(16 * 26)
+                || event.getTo().getBlockX() > (16 * (CellManager.xRadius + 2)) || event.getTo().getBlockX() < -(16 * CellManager.xRadius + 1)) {
             event.getPlayer().teleport(event.getFrom());
             Form.at(event.getPlayer(), Prefix.ERROR, "You hit the world boarder!");
         }
