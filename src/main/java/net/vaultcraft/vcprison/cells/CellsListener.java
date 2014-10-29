@@ -39,6 +39,8 @@ public class CellsListener implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
+        if(!event.getBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
+            return;
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getBlockPlaced().getLocation());
         if(possibleCell == null) {
             event.setCancelled(true);
@@ -53,6 +55,8 @@ public class CellsListener implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
+        if(!event.getBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
+            return;
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getBlock().getLocation());
         if(possibleCell == null) {
             event.setCancelled(true);
@@ -67,6 +71,15 @@ public class CellsListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
+        if(event.getClickedBlock() == null)
+            return;
+        if(!event.getClickedBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
+            return;
+        Material type = event.getClickedBlock().getType();
+        if(type != Material.IRON_DOOR_BLOCK && type != Material.CHEST && type != Material.ENDER_CHEST && type != Material.BREWING_STAND
+                && type != Material.FURNACE && type != Material.ANVIL && type != Material.TRAPPED_CHEST && type != Material.BEACON
+                && type != Material.BED_BLOCK && type != Material.BURNING_FURNACE && type != Material.ENCHANTMENT_TABLE)
+            return;
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getClickedBlock().getLocation());
         if(possibleCell == null) {
             if(event.getClickedBlock().getType() == Material.IRON_DOOR_BLOCK && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
