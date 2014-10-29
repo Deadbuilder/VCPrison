@@ -18,7 +18,7 @@ import java.util.UUID;
 public class CellManager {
 
     private World plotWorld;
-    private List<Cell> cells = new ArrayList<>();
+    private volatile List<Cell> cells = new ArrayList<>();
 
     public CellManager() {
         WorldCreator wc = new WorldCreator("Cells");
