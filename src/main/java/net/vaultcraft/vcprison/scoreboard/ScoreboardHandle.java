@@ -80,7 +80,7 @@ public class ScoreboardHandle implements Runnable {
         User u = pu.getUser();
 
         double has = u.getMoney();
-        double needs = Rank.next(pu.getRank()).getCost();
+        double needs = Rank.next(pu.getRank()).getCost() * pu.getPrestigeMultiplier();
 
         if (has > needs) {
             return "&7&l100%!";

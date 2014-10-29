@@ -34,7 +34,7 @@ public class CellsListener implements Listener {
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't place blocks in a cell or area you do not have access to.");
             return;
         }
-        if(event.getPlayer().getUniqueId() != possibleCell.ownerUUID || !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
+        if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) || !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't place blocks in a cell or area you do not have access to.");
         }
@@ -43,10 +43,30 @@ public class CellsListener implements Listener {
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         //TODO Handle block breaking in plots.
+        Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getBlock().getLocation());
+        if(possibleCell == null) {
+            event.setCancelled(true);
+            Form.at(event.getPlayer(), Prefix.WARNING, "You can't break blocks in a cell or area you do not have access to.");
+            return;
+        }
+        if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) || !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
+            event.setCancelled(true);
+            Form.at(event.getPlayer(), Prefix.WARNING, "You can't break blocks in a cell or area you do not have access to.");
+        }
     }
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         //TODO Handle interact events in plots.
+        Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getClickedBlock().getLocation());
+        if(possibleCell == null) {
+            event.setCancelled(true);
+            Form.at(event.getPlayer(), Prefix.WARNING, "You can't interact with blocks in a cell or area you do not have access to.");
+            return;
+        }
+        if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) || !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
+            event.setCancelled(true);
+            Form.at(event.getPlayer(), Prefix.WARNING, "You can't interact with blocks in a cell or area you do not have access to.");
+        }
     }
 }

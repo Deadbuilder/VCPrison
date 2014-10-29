@@ -49,10 +49,10 @@ public class VCRankup extends ICommand {
         double balance = user.getUser().getMoney();
         Rank next = Rank.next(user.getRank());
 
-        if (balance >= next.getCost()) {
+        if (balance >= next.getCost() * user.getPrestigeMultiplier()) {
             //rankup
             user.setRank(next);
-            user.getUser().setMoney(balance-next.getCost());
+            user.getUser().setMoney(balance-(next.getCost() * user.getPrestigeMultiplier()));
 
             Form.at(player, Prefix.SUCCESS, "You ranked up to &e"+next.toString()+Prefix.SUCCESS.getChatColor()+"!");
             for (Player pl : Bukkit.getOnlinePlayers()) {
@@ -62,7 +62,7 @@ public class VCRankup extends ICommand {
                 Form.at(pl, "&e"+player.getName()+" "+Prefix.VAULT_CRAFT.getChatColor()+"ranked up to &e"+next.toString()+Prefix.VAULT_CRAFT.getChatColor()+"!");
             }
         } else {
-            double rankup = next.getCost() - balance;
+            double rankup = (next.getCost() * user.getPrestigeMultiplier()) - balance;
             Form.at(player, Prefix.ERROR, "You do not have enough to rankup! &e$"+Form.at(rankup, true)+Prefix.ERROR.getChatColor()+" left!");
         }
     }

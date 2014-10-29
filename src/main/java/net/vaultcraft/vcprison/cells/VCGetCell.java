@@ -27,7 +27,7 @@ public class VCGetCell extends ICommand {
         newCell.ownerUUID = player.getUniqueId();
         newCell.chunkX = nextFree.getX();
         newCell.chunkZ = nextFree.getZ();
-        newCell.cellSpawn = new Location(nextFree.getWorld(), (nextFree.getX()*16) + 13, 88, (nextFree.getZ()*16) + 12);
+        newCell.cellSpawn = new Location(nextFree.getWorld(), (nextFree.getX()*16) + 13, 88, (nextFree.getZ()*16) + 12, 90f, 135f);
         VCPrison.getInstance().getCellManager().addCell(newCell);
         player.teleport(newCell.cellSpawn);
         Form.at(player, Prefix.VAULT_CRAFT, "Teleported to your new cell at ROW " + nextFree.getX() + " COL " + nextFree.getZ());

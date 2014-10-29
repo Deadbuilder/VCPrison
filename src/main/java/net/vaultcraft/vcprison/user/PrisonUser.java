@@ -80,6 +80,34 @@ public class PrisonUser {
         return prestige;
     }
 
+    public double getPrestigeMultiplier() {
+
+        switch (prestige) {
+            case 1:
+                return 1.1;
+            case 2:
+                return 1.2;
+            case 3:
+                return 1.3;
+            case 4:
+                return 1.4;
+            case 5:
+                return 1.5;
+            case 6:
+                return 1.6;
+            case 7:
+                return 1.7;
+            case 8:
+                return 1.8;
+            case 9:
+                return 1.9;
+            case 10:
+                return 2.0;
+        }
+
+        return 1.0;
+    }
+
     //① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩
     public String getPrestigePrefix() {
         switch (prestige) {

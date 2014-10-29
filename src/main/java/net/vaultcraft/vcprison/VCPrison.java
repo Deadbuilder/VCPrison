@@ -2,8 +2,6 @@ package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.cells.CellManager;
-import net.vaultcraft.vcprison.cells.VCGetCell;
-import net.vaultcraft.vcprison.cells.VCListCell;
 import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
@@ -197,8 +195,8 @@ public class VCPrison extends JavaPlugin {
                 cellManager.saveCells();
             }
         }, (20*60)*5, (20*60)*5);
-        CommandManager.addCommand(new VCGetCell("getcell", Group.COMMON));
-        CommandManager.addCommand(new VCListCell("listcell", Group.COMMON));
+        //CommandManager.addCommand(new VCGetCell("getcell", Group.COMMON));
+        //CommandManager.addCommand(new VCListCell("listcell", Group.COMMON));
     }
 
     private static DecimalFormat df = new DecimalFormat("0.00");
