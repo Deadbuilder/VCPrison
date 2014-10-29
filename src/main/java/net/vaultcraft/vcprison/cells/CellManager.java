@@ -184,7 +184,7 @@ public class CellManager {
             dbCell.put("Members", sb.toString());
             dbCell.put("Name", theCell.name);
             dbCell.put("SpawnPoint", locationToString(theCell.cellSpawn));
-            DBObject o1 = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", theCell.cellSpawn.getChunk().getX() + "," + theCell.cellSpawn.getChunk().getZ());
+            DBObject o1 = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", theCell.chunkX + "," + theCell.chunkZ);
             VCUtils.getInstance().getMongoDB().update(VCUtils.mongoDBName, "Cells", o1, dbCell);
         }
     }
