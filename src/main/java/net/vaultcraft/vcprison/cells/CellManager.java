@@ -61,7 +61,7 @@ public class CellManager {
     public List<Cell> getCellsFromPlayer(Player player) {
         ArrayList<Cell> playerCells = new ArrayList<>();
         for(Cell c : cells) {
-            if(c.ownerUUID == player.getUniqueId()) {
+            if(c.ownerUUID.equals(player.getUniqueId())) {
                 playerCells.add(c);
             }
         }
