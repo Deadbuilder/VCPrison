@@ -145,7 +145,7 @@ public class CellManager {
         if(dbCell == null) {
             DBObject o = new BasicDBObject();
             o.put("OwnerUUID", theCell.ownerUUID.toString());
-            o.put("Chunk", theCell.cellSpawn.getChunk().getX() + "," + theCell.cellSpawn.getChunk().getZ());
+            o.put("Chunk", theCell.chunkX + "," + theCell.chunkZ);
             StringBuilder sb = new StringBuilder();
             for(UUID u : theCell.additionalUUIDs) {
                 sb.append(u.toString()).append(",");
@@ -157,7 +157,7 @@ public class CellManager {
         } else {
             // Update cell
             dbCell.put("OwnerUUID", theCell.ownerUUID.toString());
-            dbCell.put("Chunk", theCell.cellSpawn.getChunk().getX() + "," + theCell.cellSpawn.getChunk().getZ());
+            dbCell.put("Chunk", theCell.chunkX + "," + theCell.chunkZ);
             StringBuilder sb = new StringBuilder();
             for(UUID u : theCell.additionalUUIDs) {
                 sb.append(u.toString()).append(",");
