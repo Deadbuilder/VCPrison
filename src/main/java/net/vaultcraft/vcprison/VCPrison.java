@@ -195,8 +195,6 @@ public class VCPrison extends JavaPlugin {
                 cellManager.saveCells();
             }
         }, (20*60)*5, (20*60)*5);
-        //CommandManager.addCommand(new VCGetCell("getcell", Group.COMMON));
-        //CommandManager.addCommand(new VCListCell("listcell", Group.COMMON));
     }
 
     private static DecimalFormat df = new DecimalFormat("0.00");

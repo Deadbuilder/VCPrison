@@ -170,13 +170,13 @@ public class CellManager {
         }
     }
 
-    private Location stringToLocation(String s) {
+    public Location stringToLocation(String s) {
         String[] strings = s.split(" ");
         return new Location(plotWorld, Double.parseDouble(strings[0]), Double.parseDouble(strings[1]),
                 Double.parseDouble(strings[2]), Float.parseFloat(strings[3]), Float.parseFloat(strings[4]));
     }
 
-    private String locationToString(Location l) {
+    public String locationToString(Location l) {
         return l.getX() + " " + l.getY() + " " + l.getZ() + " " + l.getYaw() + " " + l.getPitch();
     }
 
