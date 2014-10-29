@@ -93,7 +93,7 @@ public class CellManager {
 
     public Chunk getNextOpenCell() {
         int row = 0;
-        while (Math.abs(row) > 1000000) {
+        while (Math.abs(row) <= 1000000) {
             for(int cell = -25; cell < 25; cell++) {
                 Cell checkCell = getCellFromLocation(new Location(this.plotWorld, 16 * row, 88, 16 * cell));
                 if(checkCell == null) {

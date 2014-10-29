@@ -50,6 +50,7 @@ public class PrisonUserListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         CombatLog.handleLeave(event.getPlayer());
         PrisonUser.remove(event.getPlayer());
+        PrisonScoreboard.removePlayer(event.getPlayer());
     }
 
     @EventHandler
