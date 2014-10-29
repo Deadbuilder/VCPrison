@@ -250,7 +250,8 @@ public class VCCell extends ICommand {
 
         EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitUtil.getLocalWorld(VCPrison.getInstance().getCellManager().getPlotWorld()), -1);
         try {
-            cells.paste(editSession, new Vector((cell.chunkX * 16), 80, (cell.chunkZ * 16)), false);
+            cells.rotate2D(90);
+            cells.paste(editSession, new Vector((cell.chunkX * 16) + 16, 89, (cell.chunkZ * 16)), false);
         } catch (MaxChangedBlocksException e) {
             e.printStackTrace();
             Form.at(player, Prefix.ERROR, "Something happened when trying to delete your cell. Please notify a staff member.");
