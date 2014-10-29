@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
+import net.vaultcraft.vcprison.cells.CellManager;
 import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
@@ -59,6 +60,7 @@ public class VCPrison extends JavaPlugin {
     public static Location spawn;
     private static VCPrison instance;
 
+
     private static boolean shuttingDown = false;
 
     public static Collection<Player> getFFA() {
@@ -69,6 +71,8 @@ public class VCPrison extends JavaPlugin {
         }
         return l;
     }
+
+    private CellManager cellManager;
 
     public void onEnable() {
 
@@ -181,6 +185,8 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
+
+        cellManager = new CellManager();
     }
 
     private static DecimalFormat df = new DecimalFormat("0.00");
@@ -188,6 +194,7 @@ public class VCPrison extends JavaPlugin {
     public void onDisable() {
         PrisonUser.disable();
         GangManager.disable();
+        cellManager.saveCells();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             FFAPlayer ffa = FFAPlayer.getFFAPlayerFromPlayer(player);
@@ -247,5 +254,9 @@ public class VCPrison extends JavaPlugin {
     public void onPreJoin(AsyncPlayerPreLoginEvent event) {
         if(shuttingDown)
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Server is going into maintenance! Please join back later.");
+    }
+
+    public CellManager getCellManager() {
+        return cellManager;
     }
 }
