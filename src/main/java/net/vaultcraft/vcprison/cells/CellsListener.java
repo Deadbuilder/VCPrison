@@ -4,17 +4,17 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
-import org.bukkit.*;
-import org.bukkit.block.BlockFace;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.material.Door;
 
 /**
  * Created by tacticalsk8er on 10/26/2014.
@@ -68,46 +68,11 @@ public class CellsListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getClickedBlock().getLocation());
         if(possibleCell == null) {
-            if(event.getClickedBlock().getType() == Material.IRON_DOOR_BLOCK && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                Door door = (Door) event.getClickedBlock();
-                Door door1;
-                if(door.isTopHalf())
-                    door1 = (Door) event.getClickedBlock().getRelative(BlockFace.DOWN);
-                else
-                    door1 = (Door) event.getClickedBlock().getRelative(BlockFace.UP);
-                if(!door.isOpen()) {
-                    door.setOpen(true);
-                    door1.setOpen(true);
-                    event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_OPEN, 1, 1);
-                } else {
-                    door.setOpen(false);
-                    door1.setOpen(false);
-                    event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_CLOSE, 1, 1);
-                }
-            }
             return;
         }
         if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) && !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't interact with blocks in a cell or area you do not have access to.");
-        }
-
-        if(event.getClickedBlock().getType() == Material.IRON_DOOR_BLOCK && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            Door door = (Door) event.getClickedBlock();
-            Door door1;
-            if(door.isTopHalf())
-                door1 = (Door) event.getClickedBlock().getRelative(BlockFace.DOWN);
-            else
-                door1 = (Door) event.getClickedBlock().getRelative(BlockFace.UP);
-            if(!door.isOpen()) {
-                door.setOpen(true);
-                door1.setOpen(true);
-                event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_OPEN, 1, 1);
-            } else {
-                door.setOpen(false);
-                door1.setOpen(false);
-                event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_CLOSE, 1, 1);
-            }
         }
     }
 
