@@ -1,6 +1,8 @@
 package net.vaultcraft.vcprison.cells;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -29,6 +31,8 @@ public class CellMenu implements InventoryHolder {
         }
         if(plotOwner.equals(opener))
             inv.setItem(cells.size(), getNewCellItem());
+        else if(cells.size() == 0)
+            Form.at(opener, Prefix.ERROR, plotOwner.getName() + " doesn't have any cells.");
         opener.openInventory(inv);
     }
 
