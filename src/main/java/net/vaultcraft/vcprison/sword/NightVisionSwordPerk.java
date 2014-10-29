@@ -33,6 +33,19 @@ public class NightVisionSwordPerk extends SwordPerk {
     }
 
     @Override
+    public void onPurchase(Player player, int level) {
+        if(player.getInventory().getHeldItemSlot() != 0)
+            return;
+        if(level == 0)
+            return;
+        if(!PrisonUser.fromPlayer(player).getSword().getToggle(this))
+            return;
+        if(player.hasPotionEffect(PotionEffectType.NIGHT_VISION))
+            player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, level - 1, false));
+    }
+
+    @Override
     public void onToggleOff(Player player) {
         if(player.hasPotionEffect(PotionEffectType.NIGHT_VISION))
             player.removePotionEffect(PotionEffectType.NIGHT_VISION);

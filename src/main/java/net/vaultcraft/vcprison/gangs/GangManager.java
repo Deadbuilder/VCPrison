@@ -73,40 +73,10 @@ public class GangManager implements Listener {
         if(damager == null)
             return;
 
-        Gang playerGang = null;
-        Gang damagerGang = null;
+        Gang playerGang = getPlayerGang(player);
+        Gang damagerGang = getPlayerGang(damager);
 
-        for (Gang gang : gangs.values()) {
-            if (gang.getOwnerUUID().equals(player.getUniqueId().toString())) {
-                playerGang = gang;
-                break;
-            }
-            for (String memberUUID : gang.getMemberUUIDs()) {
-                if (memberUUID.equals(player.getUniqueId().toString())) {
-                    playerGang = gang;
-                    break;
-                }
-            }
-        }
-
-        for (Gang gang : gangs.values()) {
-            if (gang.getOwnerUUID().equals(damager.getUniqueId().toString())) {
-                damagerGang = gang;
-                break;
-            }
-            for (String memberUUID : gang.getMemberUUIDs()) {
-                if (memberUUID.equals(damager.getUniqueId().toString())) {
-                    damagerGang = gang;
-                    break;
-                }
-            }
-        }
-
-        if(playerGang == null)
-            return;
-        if(damagerGang == null)
-            return;
-        if(playerGang.isFriendlyFire() && damagerGang.isFriendlyFire())
+        if(canHurt(player, damager))
             return;
 
         if(playerGang.getGangName().equals(damagerGang.getGangName())) {
@@ -132,6 +102,47 @@ public class GangManager implements Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Gang getPlayerGang(Player player) {
+        Gang playerGang = null;
+
+        for (Gang gang : gangs.values()) {
+            if (gang.getOwnerUUID().equals(player.getUniqueId().toString())) {
+                playerGang = gang;
+                break;
+            }
+            for (String memberUUID : gang.getMemberUUIDs()) {
+                if (memberUUID.equals(player.getUniqueId().toString())) {
+                    playerGang = gang;
+                    break;
+                }
+            }
+        }
+
+        return playerGang;
+    }
+
+    public static boolean canHurt(Player player, Player player2) {
+        Gang playerGang = getPlayerGang(player);
+        Gang damagerGang = getPlayerGang(player2);
+
+        if(playerGang == null)
+            return true;
+        if(damagerGang == null)
+            return true;
+        if(playerGang.isFriendlyFire() && damagerGang.isFriendlyFire())
+            return true;
+
+        if(playerGang.getGangName().equals(damagerGang.getGangName()))
+            return false;
+
+        for(String gangName : playerGang.getAlliedGangs()) {
+            if(gangName.equalsIgnoreCase(damagerGang.getGangName()))
+                return false;
+        }
+
+        return true;
     }
 
     public static FileConfiguration getGangsConfig() {

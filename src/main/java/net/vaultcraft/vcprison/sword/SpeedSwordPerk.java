@@ -33,6 +33,19 @@ public class SpeedSwordPerk extends SwordPerk{
     }
 
     @Override
+    public void onPurchase(Player player, int level) {
+        if(player.getInventory().getHeldItemSlot() != 0)
+            return;
+        if(level == 0)
+            return;
+        if(!PrisonUser.fromPlayer(player).getSword().getToggle(this))
+            return;
+        if(player.hasPotionEffect(PotionEffectType.SPEED))
+            player.removePotionEffect(PotionEffectType.SPEED);
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, level - 1, false));
+    }
+
+    @Override
     public void onToggleOff(Player player) {
         if(player.hasPotionEffect(PotionEffectType.SPEED))
             player.removePotionEffect(PotionEffectType.SPEED);

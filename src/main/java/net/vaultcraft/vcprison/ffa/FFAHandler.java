@@ -67,11 +67,11 @@ public class FFAHandler {
 
         Form.at(ffaDead.getUser().getPlayer(), Prefix.NOTHING, "&e&m=====================================================");
         Form.at(ffaDead.getUser().getPlayer(), Prefix.NOTHING, "&6&lYou were killed by: &7"+ffaKill.getUser().getPlayer().getName());
-        Form.at(ffaDead.getUser().getPlayer(), Prefix.NOTHING, "&7"+ffaKill.getUser().getPlayer().getName()+" &6&lreceived &7$"+bounty+" &6&lfrom your death!");
+        Form.at(ffaDead.getUser().getPlayer(), Prefix.NOTHING, "&7"+ffaKill.getUser().getPlayer().getName()+" &6&lreceived &7$"+Form.at(bounty, false)+" &6&lfrom your death!");
         Form.at(ffaDead.getUser().getPlayer(), Prefix.NOTHING, "&6&lTo join to back type /ffa.");
         Form.at(ffaDead.getUser().getPlayer(), Prefix.NOTHING, "&e&m=====================================================");
 
-        Form.at(ffaKill.getUser().getPlayer(), Prefix.NOTHING, "&6&lYou received &7$"+bounty+" &6&lfrom &7"+ffaDead.getUser().getPlayer().getName()+"'s &6&ldeath!");
+        Form.at(ffaKill.getUser().getPlayer(), Prefix.NOTHING, "&6&lYou received &7$"+Form.at(bounty, false)+" &6&lfrom &7"+ffaDead.getUser().getPlayer().getName()+"'s &6&ldeath!");
         CombatLog.untag(ffaDead.getUser().getPlayer());
     }
 

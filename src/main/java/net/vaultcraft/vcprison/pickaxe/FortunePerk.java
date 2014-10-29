@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.pickaxe;
 
+import net.vaultcraft.vcprison.mine.MineLoader;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -25,33 +26,12 @@ public class FortunePerk extends PickaxePerk {
 
     @Override
     public ItemStack onBreak(Player player, BlockBreakEvent event, Block block, ItemStack itemStack, int level) {
-        if (isFortuneBlock(itemStack.getType()))
+        if (MineLoader.fromLocation(block.getLocation()) != null)
             if (itemStack.getType() == Material.REDSTONE || itemStack.getType() == Material.INK_SACK)
                 itemStack.setAmount(fortune(level) * 2);
             else
                 itemStack.setAmount(fortune(level));
         return itemStack;
-    }
-
-    public boolean isFortuneBlock(Material type) {
-        switch (type) {
-            case COAL:
-                return true;
-            case DIAMOND:
-                return true;
-            case REDSTONE:
-                return true;
-            case INK_SACK:
-                return true;
-            case IRON_INGOT:
-                return true;
-            case GOLD_INGOT:
-                return true;
-            case EMERALD:
-                return true;
-            default:
-                return false;
-        }
     }
 
     public int fortune(int level) {

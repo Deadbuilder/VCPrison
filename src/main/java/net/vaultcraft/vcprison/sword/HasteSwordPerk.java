@@ -1,6 +1,5 @@
 package net.vaultcraft.vcprison.sword;
 
-import net.vaultcraft.vcprison.user.PrisonUser;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -19,8 +18,6 @@ public class HasteSwordPerk extends SwordPerk {
     public void onHoverOn(Player player, int level) {
         if(level == 0)
             return;
-        if(!PrisonUser.fromPlayer(player).getSword().getToggle(this))
-            return;
         if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING))
             player.removePotionEffect(PotionEffectType.FAST_DIGGING);
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, level - 1, false));
@@ -33,16 +30,19 @@ public class HasteSwordPerk extends SwordPerk {
     }
 
     @Override
-    public void onToggleOff(Player player) {
+    public void onPurchase(Player player, int level) {
+        if(player.getInventory().getHeldItemSlot() != 0)
+            return;
+        if(level == 0)
+            return;
         if(player.hasPotionEffect(PotionEffectType.FAST_DIGGING))
             player.removePotionEffect(PotionEffectType.FAST_DIGGING);
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, level - 1, false));
     }
 
     @Override
     public void onStart(Player player, int level) {
         if(level == 0)
-            return;
-        if(!PrisonUser.fromPlayer(player).getSword().getToggle(this))
             return;
         if(player.getInventory().getHeldItemSlot() != 0)
             return;
