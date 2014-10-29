@@ -243,7 +243,7 @@ public class VCCell extends ICommand {
             return;
         }
 
-        player.teleport(new Location(player.getWorld(), ((cell.chunkX - 1) * 16) + 14, 88, (cell.chunkZ * 16) + 4, 90f, -90f));
+        player.teleport(new Location(player.getWorld(), ((cell.chunkX - 1) * 16) + 14, 88, (cell.chunkZ * 16) + 4, -90f, 0f));
 
         CuboidClipboard cells;
 
@@ -259,7 +259,7 @@ public class VCCell extends ICommand {
         EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitUtil.getLocalWorld(VCPrison.getInstance().getCellManager().getPlotWorld()), -1);
         try {
             cells.rotate2D(90);
-            cells.paste(editSession, new Vector((cell.chunkX * 16) + 15, 84, (cell.chunkZ * 16) + 16), false);
+            cells.paste(editSession, new Vector((cell.chunkX * 16) + 15, 84, (cell.chunkZ * 16) + 15), false);
         } catch (MaxChangedBlocksException e) {
             e.printStackTrace();
             Form.at(player, Prefix.ERROR, "Something happened when trying to delete your cell. Please notify a staff member.");
