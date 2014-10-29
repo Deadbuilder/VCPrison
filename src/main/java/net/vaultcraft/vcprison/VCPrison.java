@@ -196,7 +196,7 @@ public class VCPrison extends JavaPlugin {
             public void run() {
                 cellManager.saveCells();
             }
-        }, 20, (20*60)*5);
+        }, (20*60)*5, (20*60)*5);
         CommandManager.addCommand(new VCGetCell("getcell", Group.COMMON));
         CommandManager.addCommand(new VCListCell("listcell", Group.COMMON));
     }
