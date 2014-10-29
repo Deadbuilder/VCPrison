@@ -92,8 +92,9 @@ public class VCCell extends ICommand {
         cell.name = "Cell #" + (ownedCells + 1);
         cell.cellSpawn = new Location(player.getWorld(), (chunk.getX() * 16) + 13, 88,
                 (chunk.getZ() * 16) + 12, 135f, 0f);
+        player.teleport(cell.cellSpawn);
         VCPrison.getInstance().getCellManager().addCell(cell);
-        Form.at(player, Prefix.SUCCESS, "You have claimed this cell.");
+        Form.at(player, Prefix.SUCCESS, "Teleporting you to your new cell!");
     }
 
     public void executeRename(Player player, String[] args) {

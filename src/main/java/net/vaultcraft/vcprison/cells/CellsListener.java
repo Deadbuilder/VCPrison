@@ -5,6 +5,7 @@ import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.*;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -70,6 +71,8 @@ public class CellsListener implements Listener {
         if(possibleCell == null) {
             if(event.getClickedBlock().getType() == Material.IRON_DOOR_BLOCK && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 BlockState state = event.getClickedBlock().getState();
+                if(event.getClickedBlock().getRelative(BlockFace.DOWN).getType() == Material.IRON_DOOR_BLOCK)
+                    state = event.getClickedBlock().getRelative(BlockFace.DOWN).getState();
                 Openable openable = (Openable) state.getData();
                 if(openable.isOpen()) {
                     openable.setOpen(false);
@@ -86,10 +89,13 @@ public class CellsListener implements Listener {
         if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) && !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't interact with blocks in a cell or area you do not have access to.");
+            return;
         }
 
         if(event.getClickedBlock().getType() == Material.IRON_DOOR_BLOCK && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             BlockState state = event.getClickedBlock().getState();
+            if(event.getClickedBlock().getRelative(BlockFace.DOWN).getType() == Material.IRON_DOOR_BLOCK)
+                state = event.getClickedBlock().getRelative(BlockFace.DOWN).getState();
             Openable openable = (Openable) state.getData();
             if(openable.isOpen()) {
                 openable.setOpen(false);
