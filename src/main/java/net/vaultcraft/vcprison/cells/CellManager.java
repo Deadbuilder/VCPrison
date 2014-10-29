@@ -94,7 +94,7 @@ public class CellManager {
         int row = 0;
         while (true) {
             for(int cell = -25; cell < 25; cell++) {
-                Cell checkCell = VCPrison.getInstance().getCellManager().getCellFromLocation(new Location(this.plotWorld, 16*row, 88, 16*cell));
+                Cell checkCell = getCellFromLocation(new Location(this.plotWorld, 16*row, 88, 16*cell));
                 if(checkCell == null) {
                     return new Location(this.plotWorld, 16*row, 88, 16*cell);
                 }
