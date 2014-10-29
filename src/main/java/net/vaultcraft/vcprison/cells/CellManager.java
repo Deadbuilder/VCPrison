@@ -6,6 +6,7 @@ import com.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcutils.VCUtils;
 import net.vaultcraft.vcutils.logging.Logger;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -90,13 +91,13 @@ public class CellManager {
         return null;
     }
 
-    public Location getNextOpenCell() {
+    public Chunk getNextOpenCell() {
         int row = 0;
         while (true) {
             for(int cell = -25; cell < 25; cell++) {
-                Cell checkCell = getCellFromLocation(new Location(this.plotWorld, 16*row, 88, 16*cell));
+                Cell checkCell = getCellFromLocation(new Location(this.plotWorld, 16 * row, 88, 16 * cell));
                 if(checkCell == null) {
-                    return new Location(this.plotWorld, 16*row, 88, 16*cell);
+                    return new Location(this.plotWorld, 16*row, 88, 16*cell).getChunk();
                 }
             }
             if(Math.abs(row) > 1000000) {
