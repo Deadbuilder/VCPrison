@@ -35,6 +35,9 @@ public class VCCell extends ICommand {
         }
 
         switch (args[0].toLowerCase()) {
+            case "help":
+                executeHelp(player);
+                break;
             case "new":
                 executeNew(player);
                 break;
@@ -72,6 +75,11 @@ public class VCCell extends ICommand {
                 new CellMenu(player1.getPlayer(), player);
         }
 
+    }
+
+    public void executeHelp(Player player) {
+        Form.at(player, Prefix.VAULT_CRAFT, "Commands: /cell new, /cell rename, /cell setspawn, /cell addbuilder" +
+                ", /cell removebuilder, /cell delete, /cell claim, /cell info");
     }
 
     public void executeNew(Player player) {
@@ -251,7 +259,7 @@ public class VCCell extends ICommand {
         EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitUtil.getLocalWorld(VCPrison.getInstance().getCellManager().getPlotWorld()), -1);
         try {
             cells.rotate2D(90);
-            cells.paste(editSession, new Vector((cell.chunkX * 16) + 16, 89, (cell.chunkZ * 16)), false);
+            cells.paste(editSession, new Vector((cell.chunkX * 16) + 15, 88, (cell.chunkZ * 16) - 1), false);
         } catch (MaxChangedBlocksException e) {
             e.printStackTrace();
             Form.at(player, Prefix.ERROR, "Something happened when trying to delete your cell. Please notify a staff member.");
