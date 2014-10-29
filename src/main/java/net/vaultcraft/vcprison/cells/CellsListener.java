@@ -75,8 +75,15 @@ public class CellsListener implements Listener {
                     door1 = (Door) event.getClickedBlock().getRelative(BlockFace.DOWN);
                 else
                     door1 = (Door) event.getClickedBlock().getRelative(BlockFace.UP);
-                door.setOpen(true);
-                door1.setOpen(true);
+                if(!door.isOpen()) {
+                    door.setOpen(true);
+                    door1.setOpen(true);
+                    event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_OPEN, 1, 1);
+                } else {
+                    door.setOpen(false);
+                    door1.setOpen(false);
+                    event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_CLOSE, 1, 1);
+                }
             }
             return;
         }
@@ -92,8 +99,15 @@ public class CellsListener implements Listener {
                 door1 = (Door) event.getClickedBlock().getRelative(BlockFace.DOWN);
             else
                 door1 = (Door) event.getClickedBlock().getRelative(BlockFace.UP);
-            door.setOpen(true);
-            door1.setOpen(true);
+            if(!door.isOpen()) {
+                door.setOpen(true);
+                door1.setOpen(true);
+                event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_OPEN, 1, 1);
+            } else {
+                door.setOpen(false);
+                door1.setOpen(false);
+                event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_CLOSE, 1, 1);
+            }
         }
     }
 
