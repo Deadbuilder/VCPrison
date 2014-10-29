@@ -126,7 +126,7 @@ public class CellsListener implements Listener {
             newCell.ownerUUID = event.getWhoClicked().getUniqueId();
             newCell.chunkX = nextFree.getX();
             newCell.chunkZ = nextFree.getZ();
-            newCell.cellSpawn = new Location(nextFree.getWorld(), (nextFree.getX()*16) + 13, 88, (nextFree.getZ()*16) + 12, 90f, 135f);
+            newCell.cellSpawn = new Location(nextFree.getWorld(), (nextFree.getX()*16) + 13, 88, (nextFree.getZ()*16) + 12, 0f, 135f);
             newCell.name = "Cell #" + (ownedCells + 1);
             VCPrison.getInstance().getCellManager().addCell(newCell);
             event.getWhoClicked().teleport(newCell.cellSpawn);

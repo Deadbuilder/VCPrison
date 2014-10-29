@@ -230,7 +230,7 @@ public class VCCell extends ICommand {
         cell.ownerUUID = player.getUniqueId();
         cell.name = "Cell #" + (ownedCells + 1);
         cell.cellSpawn = new Location(player.getWorld(), (player.getLocation().getChunk().getX()*16) + 13, 88,
-                (player.getLocation().getChunk().getZ()*16) + 12, 90f, 135f);
+                (player.getLocation().getChunk().getZ()*16) + 12, 0f, 135f);
         VCPrison.getInstance().getCellManager().addCell(cell);
         Form.at(player, Prefix.SUCCESS, "You have claimed this cell.");
     }
