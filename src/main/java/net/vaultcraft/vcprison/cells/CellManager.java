@@ -90,6 +90,29 @@ public class CellManager {
         return null;
     }
 
+    public Location getNextOpenCell() {
+        int row = 0;
+        while (true) {
+            for(int cell = -25; cell < 25; cell++) {
+                Cell checkCell = VCPrison.getInstance().getCellManager().getCellFromLocation(new Location(this.plotWorld, 16*row, 88, 16*cell));
+                if(checkCell == null) {
+                    return new Location(this.plotWorld, 16*row, 88, 16*cell);
+                }
+            }
+            if(Math.abs(row) > 1000000) {
+                return null;
+            }
+            if(row == 0) {
+                row++;
+            } else if(row > 0) {
+                row++;
+                row -= row*2;
+            } else {
+                row -= row*2;
+            }
+        }
+    }
+
     /**
      * Adds a cell to the RAM collection.
      * @param cell cell to add
