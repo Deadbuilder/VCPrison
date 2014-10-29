@@ -1,6 +1,8 @@
 package net.vaultcraft.vcprison.cells;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +28,16 @@ public class CellsListener implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         //TODO Handle block placing in plots.
+        Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getBlockPlaced().getLocation());
+        if(possibleCell == null) {
+            event.setCancelled(true);
+            Form.at(event.getPlayer(), Prefix.WARNING, "You can't place blocks in a cell or area you do not have access to.");
+            return;
+        }
+        if(event.getPlayer().getUniqueId() != possibleCell.ownerUUID || !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
+            event.setCancelled(true);
+            Form.at(event.getPlayer(), Prefix.WARNING, "You can't place blocks in a cell or area you do not have access to.");
+        }
     }
 
     @EventHandler
