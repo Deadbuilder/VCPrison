@@ -32,6 +32,7 @@ public class FFAPlayer {
 
     private Player player;
     private boolean playing = false;
+    private long lastJoin = 0;
 
     private User user;
 
@@ -78,6 +79,7 @@ public class FFAPlayer {
             player.removePotionEffect(effect.getType());
         }
 
+        lastJoin = System.currentTimeMillis();
         playing = true;
     }
 
@@ -101,5 +103,9 @@ public class FFAPlayer {
 
         playing = false;
         player.teleport(VCPrison.spawn);
+    }
+
+    public long getLastJoin() {
+        return lastJoin;
     }
 }

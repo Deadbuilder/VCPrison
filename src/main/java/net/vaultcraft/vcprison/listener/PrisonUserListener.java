@@ -11,7 +11,6 @@ import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
-import net.vaultcraft.vcutils.protection.ProtectedArea;
 import net.vaultcraft.vcutils.protection.ProtectionManager;
 import net.vaultcraft.vcutils.protection.flag.FlagType;
 import net.vaultcraft.vcutils.user.UserLoadedEvent;
@@ -110,6 +109,18 @@ public class PrisonUserListener implements Listener {
             return;
 
         if(hurt.getLocation().getWorld().getName().equalsIgnoreCase("ffa")) {
+            FFAPlayer ffaPlayer = FFAPlayer.getFFAPlayerFromPlayer((Player) hurt);
+            FFAPlayer ffaPlayer1 = FFAPlayer.getFFAPlayerFromPlayer((Player) damager);
+            if(ffaPlayer.getLastJoin() + 5000 > System.currentTimeMillis()) {
+                event.setCancelled(true);
+                Form.at((Player) damager, Prefix.ERROR, "You can't hurt a player that just spawned.");
+                return;
+            }
+            if(ffaPlayer1.getLastJoin() + 5000 > System.currentTimeMillis()) {
+                event.setCancelled(true);
+                Form.at((Player) damager, Prefix.ERROR, "You can't hurt players since you just spawned.");
+                return;
+            }
             FFADamageTracker.setLastDamager((Player) hurt, (Player) damager);
         }
     }
