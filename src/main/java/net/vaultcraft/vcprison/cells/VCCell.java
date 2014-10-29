@@ -1,21 +1,26 @@
 package net.vaultcraft.vcprison.cells;
 
+import com.sk89q.worldedit.*;
+import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.data.DataException;
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tacticalsk8er on 10/29/2014.
@@ -194,13 +199,97 @@ public class VCCell extends ICommand {
 
     public void executeDelete(Player player) {
 
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
+
+        if(cell == null) {
+            Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
+            return;
+        }
+
+        if(!cell.ownerUUID.equals(player.getUniqueId())) {
+            Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
+            return;
+        }
+
+        player.teleport(new Location(player.getWorld(), ((cell.chunkX - 1) * 16) + 14, 88, (cell.chunkZ * 16) + 4, 90f, -90f));
+
+        CuboidClipboard cells;
+
+        try {
+            cells = CuboidClipboard.loadSchematic(new File(VCPrison.getInstance().getDataFolder(), "cells.schematic"));
+        } catch (DataException | IOException e) {
+            e.printStackTrace();
+            Form.at(player, Prefix.ERROR, "Something happened when trying to delete your cell. Please notify a staff member.");
+            return;
+        }
+
+
+        EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitUtil.getLocalWorld(VCPrison.getInstance().getCellManager().getPlotWorld()), -1);
+        try {
+            cells.paste(editSession, new Vector((cell.chunkX * 16), 80, (cell.chunkZ * 16)), false);
+        } catch (MaxChangedBlocksException e) {
+            e.printStackTrace();
+            Form.at(player, Prefix.ERROR, "Something happened when trying to delete your cell. Please notify a staff member.");
+            return;
+        }
+
+        VCPrison.getInstance().getCellManager().removeCell(cell);
+        Form.at(player, Prefix.SUCCESS, "Your cell have been removed.");
     }
 
     public void executeClaim(Player player) {
 
+        if(player.getLocation().getChunk().getX() % 2 != 0) {
+            Form.at(player, Prefix.ERROR, "Please stand inside the cell you want to claim.");
+            return;
+        }
+
+        if(VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation()) != null) {
+            Form.at(player, Prefix.ERROR, "This cell has already been claimed!");
+            return;
+        }
+
+        int ownedCells = VCPrison.getInstance().getCellManager().getCellsFromPlayer(player).size();
+
+        if(ownedCells >= PrisonUser.fromPlayer(player).getPlotLimit()) {
+            Form.at(player, Prefix.ERROR, "You have hit the limit on the amount of cells you can have.");
+            return;
+        }
+
+        Cell cell = new Cell();
+        cell.chunkX = player.getLocation().getChunk().getX();
+        cell.chunkZ = player.getLocation().getChunk().getZ();
+        cell.ownerUUID = player.getUniqueId();
+        cell.name = "Cell #" + (ownedCells + 1);
+        cell.cellSpawn = new Location(player.getWorld(), (player.getLocation().getChunk().getX()*16) + 13, 88,
+                (player.getLocation().getChunk().getZ()*16) + 12, 90f, 135f);
+
+        Form.at(player, Prefix.SUCCESS, "You have claimed this cell.");
     }
 
     public void executeInfo(Player player) {
 
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
+
+        if(cell == null) {
+            Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
+            return;
+        }
+
+        String cellOwnerName = Bukkit.getOfflinePlayer(cell.ownerUUID).getName();
+        player.sendMessage(ChatColor.GREEN + "===" + ChatColor.WHITE.toString() +
+                ChatColor.BOLD + cellOwnerName + "'s Cell" + ChatColor.GREEN + "===");
+        player.sendMessage(ChatColor.GOLD + "Name: " + cell.name);
+        player.sendMessage(ChatColor.RED + "Spawn Location: " + VCPrison.getInstance().getCellManager().locationToString(cell.cellSpawn));
+        StringBuilder sb = new StringBuilder();
+        for(UUID uuid : cell.additionalUUIDs) {
+            OfflinePlayer player1 = Bukkit.getOfflinePlayer(uuid);
+            if(player1.isOnline())
+                sb.append(ChatColor.GREEN).append(player1.getName()).append(", ");
+            else
+                sb.append(ChatColor.RED).append(player1.getName()).append(", ");
+        }
+        player.sendMessage(ChatColor.BLUE + "Builders: " + sb.toString());
+        player.sendMessage("");
     }
 }

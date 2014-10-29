@@ -131,6 +131,15 @@ public class CellManager {
     }
 
     /**
+     * Removes a cell from the RAM collection.
+     * @param cell cell to remove
+     */
+    public void removeCell(Cell cell) {
+        if(cells.contains(cell))
+            cells.remove(cell);
+    }
+
+    /**
      * Update cells in DB.
      */
     public void saveCells() {
@@ -180,7 +189,7 @@ public class CellManager {
         return l.getX() + " " + l.getY() + " " + l.getZ() + " " + l.getYaw() + " " + l.getPitch();
     }
 
-
-
-
+    public World getPlotWorld() {
+        return plotWorld;
+    }
 }

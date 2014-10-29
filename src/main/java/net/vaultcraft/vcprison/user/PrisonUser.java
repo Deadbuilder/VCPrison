@@ -199,8 +199,6 @@ public class PrisonUser {
             perk.onEnd(player);
         }
         user.getTask().cancel();
-        if(user.getPickaxe() != null)
-            user.getUser().getAllUserdata().remove("Pickaxe");
         Bukkit.getScheduler().runTaskAsynchronously(VCPrison.getInstance(), user::save);
         player.getInventory().setItem(0, null);
         async_player_map.remove(player);
