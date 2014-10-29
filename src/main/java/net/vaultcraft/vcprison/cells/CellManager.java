@@ -3,33 +3,35 @@ package net.vaultcraft.vcprison.cells;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.VCUtils;
+import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 public class CellManager {
 
     private World plotWorld;
+    private List<Cell> cells = new ArrayList<Cell>();
     public CellManager(World plotWorld) {
         this.plotWorld = plotWorld;
+        loadCells();
     }
 
-    public List<Cell> getCellsFromPlayer(Player player) {
-        PrisonUser user = PrisonUser.fromPlayer(player);
-
-        List<DBObject> objects = VCUtils.getInstance().getMongoDB().queryMutiple(VCUtils.mongoDBName, "Cells", "OwnerUUID", player.getUniqueId().toString());
-        ArrayList<Cell> cells = new ArrayList<>();
-        if(objects == null) {
-            return cells;
-        }
-        for (DBObject o : objects) {
+    /**
+     * Loads cells from the DB.
+     */
+    public void loadCells() {
+        List<DBObject> allTheDBObjects = VCUtils.getInstance().getMongoDB().getAll(VCUtils.mongoDBName, "Cells");
+        for(DBObject o : allTheDBObjects) {
             Cell cell = new Cell();
             cell.ownerUUID = UUID.fromString((String) o.get("OwnerUUID"));
             String[] chunkString = ((String) o.get("Chunk")).split(",");
@@ -40,37 +42,73 @@ public class CellManager {
             }
             cell.name = (String) o.get("Name");
             cell.cellSpawn = stringToLocation((String) o.get("SpawnPoint"));
+            cells.add(cell);
         }
-        return cells;
+        Logger.log(VCPrison.getInstance(), cells.size() + " cells loaded from the DB.");
     }
 
+
+    /**
+     * Returns a list of all cells that a player owns. If a player does not own any cells, it'll be an empty list.
+     * @param player Player to get cells for
+     * @return List of cells said player owns, or an empty list if they don't own any.
+     */
+    public List<Cell> getCellsFromPlayer(Player player) {
+        ArrayList<Cell> playerCells = new ArrayList<>();
+        for(Cell c : cells) {
+            if(c.ownerUUID == player.getUniqueId()) {
+                playerCells.add(c);
+            }
+        }
+
+        return playerCells;
+    }
+
+    /**
+     * Returns the cell object for a location, returns null if there is no cell at that location yet.
+     * @param location Location to get a cell for
+     * @return The cell.
+     */
     public Cell getCellFromLocation(Location location) {
         if(location.getWorld() != this.plotWorld) {
-            throw new IllegalArgumentException("World must be ChunkWorld!");
+            throw new IllegalArgumentException("World must be PlotWorld!");
         }
-        DBObject o = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", location.getChunk().getX() + "," + location.getChunk().getZ());
-        if(o == null) {
-            return null;
-        }
-        Cell cell = new Cell();
-        cell.ownerUUID = UUID.fromString((String) o.get("OwnerUUID"));
-        String[] chunkString = ((String) o.get("Chunk")).split(",");
-        cell.chunkX = Integer.parseInt(chunkString[0]);
-        cell.chunkZ = Integer.parseInt(chunkString[1]);
-        for(String s : ((String)o.get("Members")).split(",")) {
-            cell.additionalUUIDs.add(UUID.fromString(s));
-        }
-        cell.name = (String) o.get("Name");
-        cell.cellSpawn = stringToLocation((String) o.get("SpawnPoint"));
 
 
-        return cell;
+        for(Cell c : cells) {
+            if(c.chunkX == location.getChunk().getX() && c.chunkZ == location.getChunk().getZ()) {
+                return c;
+            }
+        }
+
+
+        return null;
     }
 
-    public void addOrUpdateCell(Cell theCell, Player updater) {
-        if(updater.getUniqueId() != theCell.ownerUUID && !net.vaultcraft.vcutils.user.User.fromPlayer(updater).getGroup().hasPermission(Group.ADMIN)) {
-            throw new IllegalArgumentException("User does not have permission to update or add cell!");
+    /**
+     * Adds a cell to the RAM collection.
+     * @param cell cell to add
+     */
+    public void addCell(Cell cell) {
+        Cell possibleCell = getCellFromLocation(cell.cellSpawn);
+        if(possibleCell == null) {
+            cells.add(cell);
+        } else {
+            cells.remove(possibleCell);
+            cells.add(cell);
         }
+    }
+
+    /**
+     * Update cells in DB.
+     */
+    public void saveCells() {
+        for(Cell c : cells) {
+            addOrUpdateCellInDB(c);
+        }
+    }
+
+    private void addOrUpdateCellInDB(Cell theCell) {
         Cell dbCell = getCellFromLocation(theCell.cellSpawn);
         if(dbCell == null) {
             DBObject o = new BasicDBObject();
