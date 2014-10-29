@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
+import net.vaultcraft.vcprison.cells.CellManager;
 import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateListener;
@@ -45,6 +46,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.text.DecimalFormat;
 import java.util.Collection;
@@ -59,6 +61,7 @@ public class VCPrison extends JavaPlugin {
     public static Location spawn;
     private static VCPrison instance;
 
+
     private static boolean shuttingDown = false;
 
     public static Collection<Player> getFFA() {
@@ -69,6 +72,9 @@ public class VCPrison extends JavaPlugin {
         }
         return l;
     }
+
+    private CellManager cellManager = null;
+    private BukkitTask cellSaveTask = null;
 
     public void onEnable() {
 
@@ -181,6 +187,14 @@ public class VCPrison extends JavaPlugin {
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
+
+        cellManager = new CellManager();
+        cellSaveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+            @Override
+            public void run() {
+                cellManager.saveCells();
+            }
+        }, 20, (20*60)*5);
     }
 
     private static DecimalFormat df = new DecimalFormat("0.00");
@@ -188,6 +202,10 @@ public class VCPrison extends JavaPlugin {
     public void onDisable() {
         PrisonUser.disable();
         GangManager.disable();
+        if(cellSaveTask != null) {
+            cellSaveTask.cancel();
+        }
+        cellManager.saveCells();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             FFAPlayer ffa = FFAPlayer.getFFAPlayerFromPlayer(player);
@@ -247,5 +265,9 @@ public class VCPrison extends JavaPlugin {
     public void onPreJoin(AsyncPlayerPreLoginEvent event) {
         if(shuttingDown)
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, "Server is going into maintenance! Please join back later.");
+    }
+
+    public CellManager getCellManager() {
+        return cellManager;
     }
 }

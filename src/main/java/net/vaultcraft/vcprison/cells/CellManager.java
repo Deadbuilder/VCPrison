@@ -18,7 +18,7 @@ import java.util.UUID;
 public class CellManager {
 
     private World plotWorld;
-    private List<Cell> cells = new ArrayList<>();
+    private volatile List<Cell> cells = new ArrayList<>();
 
     public CellManager() {
         WorldCreator wc = new WorldCreator("Cells");
@@ -110,7 +110,8 @@ public class CellManager {
     }
 
     private void addOrUpdateCellInDB(Cell theCell) {
-        Cell dbCell = getCellFromLocation(theCell.cellSpawn);
+        String locString = theCell.chunkX+","+theCell.chunkZ;
+        DBObject dbCell = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", locString);
         if(dbCell == null) {
             DBObject o = new BasicDBObject();
             o.put("OwnerUUID", theCell.ownerUUID.toString());
@@ -125,18 +126,17 @@ public class CellManager {
             VCUtils.getInstance().getMongoDB().insert(VCUtils.mongoDBName, "Cells", o);
         } else {
             // Update cell
-            DBObject o = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", theCell.cellSpawn.getChunk().getX() + "," + theCell.cellSpawn.getChunk().getZ());
-            o.put("OwnerUUID", theCell.ownerUUID.toString());
-            o.put("Chunk", theCell.cellSpawn.getChunk().getX() + "," + theCell.cellSpawn.getChunk().getZ());
+            dbCell.put("OwnerUUID", theCell.ownerUUID.toString());
+            dbCell.put("Chunk", theCell.cellSpawn.getChunk().getX() + "," + theCell.cellSpawn.getChunk().getZ());
             StringBuilder sb = new StringBuilder();
             for(UUID u : theCell.additionalUUIDs) {
                 sb.append(u.toString()).append(",");
             }
-            o.put("Members", sb.toString());
-            o.put("Name", theCell.name);
-            o.put("SpawnPoint", locationToString(theCell.cellSpawn));
+            dbCell.put("Members", sb.toString());
+            dbCell.put("Name", theCell.name);
+            dbCell.put("SpawnPoint", locationToString(theCell.cellSpawn));
             DBObject o1 = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", theCell.cellSpawn.getChunk().getX() + "," + theCell.cellSpawn.getChunk().getZ());
-            VCUtils.getInstance().getMongoDB().update(VCUtils.mongoDBName, "Cells", o1, o);
+            VCUtils.getInstance().getMongoDB().update(VCUtils.mongoDBName, "Cells", o1, dbCell);
         }
     }
 
