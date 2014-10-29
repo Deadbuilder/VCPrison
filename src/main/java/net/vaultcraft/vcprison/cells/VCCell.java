@@ -47,11 +47,11 @@ public class VCCell extends ICommand {
             case "setspawn":
                 executeSetSpawn(player);
                 break;
-            case "addbuilder":
-                executeAddBuilder(player, args);
+            case "add":
+                executeAdd(player, args);
                 break;
-            case "removebuilder":
-                executeRemoveBuilder(player, args);
+            case "remove":
+                executeRemove(player, args);
                 break;
             case "delete":
                 executeDelete(player);
@@ -78,8 +78,8 @@ public class VCCell extends ICommand {
     }
 
     public void executeHelp(Player player) {
-        Form.at(player, Prefix.VAULT_CRAFT, "Commands: /cell new, /cell rename, /cell setspawn, /cell addbuilder" +
-                ", /cell removebuilder, /cell delete, /cell claim, /cell info");
+        Form.at(player, Prefix.VAULT_CRAFT, "Commands: /cell new, /cell rename, /cell setspawn, /cell add" +
+                ", /cell remove, /cell delete, /cell claim, /cell info");
     }
 
     public void executeNew(Player player) {
@@ -107,7 +107,7 @@ public class VCCell extends ICommand {
 
     public void executeRename(Player player, String[] args) {
 
-        if (args.length > 2) {
+        if (args.length < 2) {
             Form.at(player, Prefix.ERROR, "Missing Arguments! Format: /cell rename <name>");
             return;
         }
@@ -152,10 +152,10 @@ public class VCCell extends ICommand {
         Form.at(player, Prefix.SUCCESS, "You have set " + cell.name + " cell spawn to your location.");
     }
 
-    public void executeAddBuilder(Player player, String[] args) {
+    public void executeAdd(Player player, String[] args) {
 
         if (args.length < 2) {
-            Form.at(player, Prefix.ERROR, "Missing arguments! Format: /plot addbuilder <player>");
+            Form.at(player, Prefix.ERROR, "Missing arguments! Format: /plot add <player>");
             return;
         }
 
@@ -171,11 +171,11 @@ public class VCCell extends ICommand {
             return;
         }
 
-        OfflinePlayer player1 = Bukkit.getPlayer(args[0]);
+        OfflinePlayer player1 = Bukkit.getPlayer(args[1]);
         if (player1 == null) {
-            player1 = Bukkit.getOfflinePlayer(args[0]);
+            player1 = Bukkit.getOfflinePlayer(args[1]);
             if (player1 == null) {
-                Form.at(player, Prefix.ERROR, "No such player! Format: /plot addbuilder <player>.");
+                Form.at(player, Prefix.ERROR, "No such player! Format: /plot add <player>.");
                 return;
             }
         }
@@ -193,9 +193,9 @@ public class VCCell extends ICommand {
         Form.at(player, Prefix.SUCCESS, player1.getName() + " has been added as a builder to " + cell.name + " cell.");
     }
 
-    public void executeRemoveBuilder(Player player, String[] args) {
+    public void executeRemove(Player player, String[] args) {
         if (args.length < 2) {
-            Form.at(player, Prefix.ERROR, "Missing arguments! Format: /plot removebuilder <player>");
+            Form.at(player, Prefix.ERROR, "Missing arguments! Format: /plot remover <player>");
             return;
         }
 
@@ -211,11 +211,11 @@ public class VCCell extends ICommand {
             return;
         }
 
-        OfflinePlayer player1 = Bukkit.getPlayer(args[0]);
+        OfflinePlayer player1 = Bukkit.getPlayer(args[1]);
         if (player1 == null) {
-            player1 = Bukkit.getOfflinePlayer(args[0]);
+            player1 = Bukkit.getOfflinePlayer(args[1]);
             if (player1 == null) {
-                Form.at(player, Prefix.ERROR, "No such player! Format: /plot removebuilder <player>.");
+                Form.at(player, Prefix.ERROR, "No such player! Format: /plot remove <player>.");
                 return;
             }
         }
