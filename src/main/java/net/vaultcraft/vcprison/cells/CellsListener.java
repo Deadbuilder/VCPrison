@@ -71,10 +71,13 @@ public class CellsListener implements Listener {
             if(event.getClickedBlock().getType() == Material.IRON_DOOR_BLOCK && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 BlockState state = event.getClickedBlock().getState();
                 Openable openable = (Openable) state.getData();
-                if(openable.isOpen())
+                if(openable.isOpen()) {
                     openable.setOpen(false);
-                else
+                    event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_OPEN, 1, 1);
+                } else {
                     openable.setOpen(true);
+                    event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_CLOSE, 1, 1);
+                }
                 state.setData((org.bukkit.material.MaterialData) openable);
                 state.update();
             }
@@ -88,10 +91,13 @@ public class CellsListener implements Listener {
         if(event.getClickedBlock().getType() == Material.IRON_DOOR_BLOCK && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             BlockState state = event.getClickedBlock().getState();
             Openable openable = (Openable) state.getData();
-            if(openable.isOpen())
+            if(openable.isOpen()) {
                 openable.setOpen(false);
-            else
+                event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_OPEN, 1, 1);
+            } else {
                 openable.setOpen(true);
+                event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.DOOR_CLOSE, 1, 1);
+            }
             state.setData((org.bukkit.material.MaterialData) openable);
             state.update();
         }
@@ -126,7 +132,7 @@ public class CellsListener implements Listener {
             newCell.ownerUUID = event.getWhoClicked().getUniqueId();
             newCell.chunkX = nextFree.getX();
             newCell.chunkZ = nextFree.getZ();
-            newCell.cellSpawn = new Location(nextFree.getWorld(), (nextFree.getX()*16) + 13, 88, (nextFree.getZ()*16) + 12, 0f, 135f);
+            newCell.cellSpawn = new Location(nextFree.getWorld(), (nextFree.getX()*16) + 13, 88, (nextFree.getZ()*16) + 12, 135f, 0f);
             newCell.name = "Cell #" + (ownedCells + 1);
             VCPrison.getInstance().getCellManager().addCell(newCell);
             event.getWhoClicked().teleport(newCell.cellSpawn);

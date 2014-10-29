@@ -9,10 +9,8 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.*;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -31,12 +29,18 @@ public class VCCell extends ICommand {
     @Override
     public void processCommand(Player player, String[] args) {
 
-        if(args.length == 0) {
+        if (args.length == 0) {
             new CellMenu(player, player);
             return;
         }
 
         switch (args[0].toLowerCase()) {
+            case "new":
+                executeNew(player);
+                break;
+            case "rename":
+                executeRename(player, args);
+                break;
             case "setspawn":
                 executeSetSpawn(player);
                 break;
@@ -57,9 +61,9 @@ public class VCCell extends ICommand {
                 break;
             default:
                 OfflinePlayer player1 = Bukkit.getPlayer(args[0]);
-                if(player1 == null) {
+                if (player1 == null) {
                     player1 = Bukkit.getOfflinePlayer(args[0]);
-                    if(player1 == null) {
+                    if (player1 == null) {
                         Form.at(player, Prefix.ERROR, "No such player! Format: /plot <player>.");
                         return;
                     }
@@ -70,15 +74,66 @@ public class VCCell extends ICommand {
 
     }
 
-    public void executeSetSpawn(Player player) {
+    public void executeNew(Player player) {
+
+        Chunk chunk = VCPrison.getInstance().getCellManager().getNextOpenCell();
+
+        int ownedCells = VCPrison.getInstance().getCellManager().getCellsFromPlayer(player).size();
+
+        if (ownedCells >= PrisonUser.fromPlayer(player).getPlotLimit()) {
+            Form.at(player, Prefix.ERROR, "You have hit the limit on the amount of cells you can have.");
+            return;
+        }
+
+        Cell cell = new Cell();
+        cell.chunkX = chunk.getX();
+        cell.chunkZ = chunk.getZ();
+        cell.ownerUUID = player.getUniqueId();
+        cell.name = "Cell #" + (ownedCells + 1);
+        cell.cellSpawn = new Location(player.getWorld(), (chunk.getX() * 16) + 13, 88,
+                (chunk.getZ() * 16) + 12, 135f, 0f);
+        VCPrison.getInstance().getCellManager().addCell(cell);
+        Form.at(player, Prefix.SUCCESS, "You have claimed this cell.");
+    }
+
+    public void executeRename(Player player, String[] args) {
+
+        if (args.length > 2) {
+            Form.at(player, Prefix.ERROR, "Missing Arguments! Format: /cell rename <name>");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < args.length; i++) {
+            sb.append(args[i]).append(" ");
+        }
+
         Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
 
-        if(cell == null) {
+        if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
             return;
         }
 
-        if(!cell.ownerUUID.equals(player.getUniqueId())) {
+        if (!cell.ownerUUID.equals(player.getUniqueId())) {
+            Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
+            return;
+        }
+
+        cell.name = sb.toString();
+
+        Form.at(player, Prefix.SUCCESS, "You have rename your cell to " + cell.name + ".");
+    }
+
+    public void executeSetSpawn(Player player) {
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
+
+        if (cell == null) {
+            Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
+            return;
+        }
+
+        if (!cell.ownerUUID.equals(player.getUniqueId())) {
             Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
             return;
         }
@@ -90,38 +145,38 @@ public class VCCell extends ICommand {
 
     public void executeAddBuilder(Player player, String[] args) {
 
-        if(args.length < 2) {
+        if (args.length < 2) {
             Form.at(player, Prefix.ERROR, "Missing arguments! Format: /plot addbuilder <player>");
             return;
         }
 
         Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
 
-        if(cell == null) {
+        if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
             return;
         }
 
-        if(!cell.ownerUUID.equals(player.getUniqueId())) {
+        if (!cell.ownerUUID.equals(player.getUniqueId())) {
             Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
             return;
         }
 
         OfflinePlayer player1 = Bukkit.getPlayer(args[0]);
-        if(player1 == null) {
+        if (player1 == null) {
             player1 = Bukkit.getOfflinePlayer(args[0]);
-            if(player1 == null) {
+            if (player1 == null) {
                 Form.at(player, Prefix.ERROR, "No such player! Format: /plot addbuilder <player>.");
                 return;
             }
         }
 
-        if(player.equals(player1.getPlayer())) {
+        if (player.equals(player1.getPlayer())) {
             Form.at(player, Prefix.ERROR, "You can't add yourself as a builder.");
             return;
         }
 
-        if(cell.additionalUUIDs.contains(player1.getUniqueId())) {
+        if (cell.additionalUUIDs.contains(player1.getUniqueId())) {
             Form.at(player, Prefix.ERROR, player1.getName() + " is already a build in " + cell.name + " cell.");
         }
 
@@ -130,33 +185,33 @@ public class VCCell extends ICommand {
     }
 
     public void executeRemoveBuilder(Player player, String[] args) {
-        if(args.length < 2) {
+        if (args.length < 2) {
             Form.at(player, Prefix.ERROR, "Missing arguments! Format: /plot removebuilder <player>");
             return;
         }
 
         Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
 
-        if(cell == null) {
+        if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
             return;
         }
 
-        if(!cell.ownerUUID.equals(player.getUniqueId())) {
+        if (!cell.ownerUUID.equals(player.getUniqueId())) {
             Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
             return;
         }
 
         OfflinePlayer player1 = Bukkit.getPlayer(args[0]);
-        if(player1 == null) {
+        if (player1 == null) {
             player1 = Bukkit.getOfflinePlayer(args[0]);
-            if(player1 == null) {
+            if (player1 == null) {
                 Form.at(player, Prefix.ERROR, "No such player! Format: /plot removebuilder <player>.");
                 return;
             }
         }
 
-        if(!cell.additionalUUIDs.contains(player1.getUniqueId())) {
+        if (!cell.additionalUUIDs.contains(player1.getUniqueId())) {
             Form.at(player, Prefix.ERROR, player1.getName() + " is not a builder in " + cell.name + " cell.");
             return;
         }
@@ -169,12 +224,12 @@ public class VCCell extends ICommand {
 
         Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
 
-        if(cell == null) {
+        if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
             return;
         }
 
-        if(!cell.ownerUUID.equals(player.getUniqueId())) {
+        if (!cell.ownerUUID.equals(player.getUniqueId())) {
             Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
             return;
         }
@@ -207,19 +262,19 @@ public class VCCell extends ICommand {
 
     public void executeClaim(Player player) {
 
-        if(player.getLocation().getChunk().getX() % 2 != 0) {
+        if (player.getLocation().getChunk().getX() % 2 != 0) {
             Form.at(player, Prefix.ERROR, "Please stand inside the cell you want to claim.");
             return;
         }
 
-        if(VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation()) != null) {
+        if (VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation()) != null) {
             Form.at(player, Prefix.ERROR, "This cell has already been claimed!");
             return;
         }
 
         int ownedCells = VCPrison.getInstance().getCellManager().getCellsFromPlayer(player).size();
 
-        if(ownedCells >= PrisonUser.fromPlayer(player).getPlotLimit()) {
+        if (ownedCells >= PrisonUser.fromPlayer(player).getPlotLimit()) {
             Form.at(player, Prefix.ERROR, "You have hit the limit on the amount of cells you can have.");
             return;
         }
@@ -229,8 +284,8 @@ public class VCCell extends ICommand {
         cell.chunkZ = player.getLocation().getChunk().getZ();
         cell.ownerUUID = player.getUniqueId();
         cell.name = "Cell #" + (ownedCells + 1);
-        cell.cellSpawn = new Location(player.getWorld(), (player.getLocation().getChunk().getX()*16) + 13, 88,
-                (player.getLocation().getChunk().getZ()*16) + 12, 0f, 135f);
+        cell.cellSpawn = new Location(player.getWorld(), (player.getLocation().getChunk().getX() * 16) + 13, 88,
+                (player.getLocation().getChunk().getZ() * 16) + 12, 135f, 0f);
         VCPrison.getInstance().getCellManager().addCell(cell);
         Form.at(player, Prefix.SUCCESS, "You have claimed this cell.");
     }
@@ -239,7 +294,7 @@ public class VCCell extends ICommand {
 
         Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
 
-        if(cell == null) {
+        if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
             return;
         }
@@ -250,9 +305,9 @@ public class VCCell extends ICommand {
         player.sendMessage(ChatColor.GOLD + "Name: " + cell.name);
         player.sendMessage(ChatColor.RED + "Spawn Location: " + VCPrison.getInstance().getCellManager().locationToString(cell.cellSpawn));
         StringBuilder sb = new StringBuilder();
-        for(UUID uuid : cell.additionalUUIDs) {
+        for (UUID uuid : cell.additionalUUIDs) {
             OfflinePlayer player1 = Bukkit.getOfflinePlayer(uuid);
-            if(player1.isOnline())
+            if (player1.isOnline())
                 sb.append(ChatColor.GREEN).append(player1.getName()).append(", ");
             else
                 sb.append(ChatColor.RED).append(player1.getName()).append(", ");
