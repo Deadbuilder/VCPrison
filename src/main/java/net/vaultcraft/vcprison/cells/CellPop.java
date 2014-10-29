@@ -25,7 +25,7 @@ public class CellPop extends BlockPopulator {
     @Override
     public void populate(World world, Random random, Chunk chunk) {
         for (int x = 0; x < 16; x++) {
-            for (int y = 80; y < 128; y++) {
+            for (int y = 80; y < 99; y++) {
                 for (int z = 0; z < 16; z++) {
                     Block block = chunk.getBlock(x, y, z);
                     if (chunk.getX() % 2 == 0) {
