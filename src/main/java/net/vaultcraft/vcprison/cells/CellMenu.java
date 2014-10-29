@@ -23,7 +23,7 @@ public class CellMenu implements InventoryHolder {
     public CellMenu(Player plotOwner, Player opener) {
         List<Cell> cells = VCPrison.getInstance().getCellManager().getCellsFromPlayer(plotOwner);
         int rows = (int) Math.ceil(((cells.size() + 1.0) / 9.0));
-        inv = Bukkit.createInventory(this, rows, ChatColor.GREEN + plotOwner.getName() + "'s Cells");
+        inv = Bukkit.createInventory(this, rows * 9, ChatColor.GREEN + plotOwner.getName() + "'s Cells");
         for(int i = 0; i < cells.size(); i++) {
             inv.setItem(i, getCellItem(cells.get(i)));
         }

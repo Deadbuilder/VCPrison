@@ -2,6 +2,7 @@ package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.cells.CellManager;
+import net.vaultcraft.vcprison.cells.CellsListener;
 import net.vaultcraft.vcprison.cells.VCCell;
 import net.vaultcraft.vcprison.commands.*;
 import net.vaultcraft.vcprison.crate.CrateFile;
@@ -112,6 +113,7 @@ public class VCPrison extends JavaPlugin {
         new PrisonShopListener();
         new FFAShopListener();
         new PortalListener();
+        new CellsListener();
 
         MineUtil.createBlockInjector(new MineCrateInjector());
 
