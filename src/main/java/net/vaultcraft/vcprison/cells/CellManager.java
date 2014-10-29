@@ -106,10 +106,10 @@ public class CellManager {
             if(row == 0) {
                 row++;
             } else if(row > 0) {
-                row++;
-                row -= row*2;
+                row = -row;
             } else {
-                row -= row*2;
+                row--;
+                row = -row;
             }
         }
     }
