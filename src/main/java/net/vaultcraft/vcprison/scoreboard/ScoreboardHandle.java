@@ -88,7 +88,7 @@ public class ScoreboardHandle implements Runnable {
 
         double left = needs - has;
 
-        int percent = (int)((left / needs)*5) - 1;
+        int percent = (int)((left / needs)*5) + 1;
 
         String build = "&5";
 

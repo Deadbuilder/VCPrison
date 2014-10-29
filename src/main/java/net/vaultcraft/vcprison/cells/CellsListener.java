@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.cells;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.Bukkit;
@@ -43,7 +44,7 @@ public class CellsListener implements Listener {
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't place blocks in a cell or area you do not have access to.");
             return;
         }
-        if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) || !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
+        if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) && !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't place blocks in a cell or area you do not have access to.");
         }
@@ -57,7 +58,7 @@ public class CellsListener implements Listener {
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't break blocks in a cell or area you do not have access to.");
             return;
         }
-        if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) || !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
+        if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) && !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't break blocks in a cell or area you do not have access to.");
         }
@@ -71,7 +72,7 @@ public class CellsListener implements Listener {
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't interact with blocks in a cell or area you do not have access to.");
             return;
         }
-        if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) || !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
+        if(!event.getPlayer().getUniqueId().equals(possibleCell.ownerUUID) && !possibleCell.additionalUUIDs.contains(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
             Form.at(event.getPlayer(), Prefix.WARNING, "You can't interact with blocks in a cell or area you do not have access to.");
         }
@@ -95,11 +96,19 @@ public class CellsListener implements Listener {
                 return;
             }
 
+            int ownedCells = VCPrison.getInstance().getCellManager().getCellsFromPlayer((org.bukkit.entity.Player) event.getWhoClicked()).size();
+
+            if(ownedCells >= PrisonUser.fromPlayer((org.bukkit.entity.Player) event.getWhoClicked()).getPlotLimit()) {
+                Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.ERROR, "You have hit the limit on the amount of cells you can have.");
+                return;
+            }
+
             Cell newCell = new Cell();
             newCell.ownerUUID = event.getWhoClicked().getUniqueId();
             newCell.chunkX = nextFree.getX();
             newCell.chunkZ = nextFree.getZ();
             newCell.cellSpawn = new Location(nextFree.getWorld(), (nextFree.getX()*16) + 13, 88, (nextFree.getZ()*16) + 12, 90f, 135f);
+            newCell.name = "Cell #" + (ownedCells + 1);
             VCPrison.getInstance().getCellManager().addCell(newCell);
             event.getWhoClicked().teleport(newCell.cellSpawn);
             Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.VAULT_CRAFT, "Teleporting you to your new cell!");
