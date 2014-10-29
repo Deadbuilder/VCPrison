@@ -104,11 +104,11 @@ public class CellManager {
                 return null;
             }
             if(row == 0) {
-                row++;
+                row+= 2;
             } else if(row > 0) {
                 row = -row;
             } else {
-                row--;
+                row-= 2;
                 row = -row;
             }
         }
