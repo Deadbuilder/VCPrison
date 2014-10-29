@@ -40,7 +40,10 @@ public class CellManager {
             cell.chunkX = Integer.parseInt(chunkString[0]);
             cell.chunkZ = Integer.parseInt(chunkString[1]);
             for (String s : ((String) o.get("Members")).split(",")) {
-                cell.additionalUUIDs.add(UUID.fromString(s));
+                try {
+                    cell.additionalUUIDs.add(UUID.fromString(s));
+                } catch (IllegalArgumentException e) {
+                }
             }
             cell.name = (String) o.get("Name");
             cell.cellSpawn = stringToLocation((String) o.get("SpawnPoint"));
