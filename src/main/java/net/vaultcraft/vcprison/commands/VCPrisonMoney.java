@@ -63,7 +63,10 @@ public class VCPrisonMoney extends ICommand {
                     }
 
                     Rank yours = PrisonUser.fromPlayer(player).getRank();
-                    Rank his = PrisonUser.fromPlayer(player1).getRank();
+                    Rank his = Rank.next(PrisonUser.fromPlayer(player1).getRank());
+
+                    if (his == null)
+                        his = Rank.FREE;
 
                     if (yours.higherThan(his)) {
                         if (amount > (his.getCost()/1000)) {
