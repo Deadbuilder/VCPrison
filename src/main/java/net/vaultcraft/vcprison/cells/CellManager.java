@@ -89,7 +89,7 @@ public class CellManager {
         int chunkZ = location.getChunk().getZ();
         if(chunkX % 2 != 0 || location.getY() >= 91 ||
                 location.getX() > (chunkX * 16) + 13 ||  location.getX() < (chunkX * 16) + 2 ||
-                location.getZ() > (chunkZ * 16) + 12 || location.getZ() > (chunkZ * 16) + 3) {
+                location.getZ() > (chunkZ * 16) + 12 || location.getZ() < (chunkZ * 16) + 3) {
             return null;
         }
 
