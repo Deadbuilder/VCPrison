@@ -1,6 +1,8 @@
 package net.vaultcraft.vcprison.mine;
 
+import com.google.common.collect.Lists;
 import net.minecraft.util.org.apache.commons.io.FileUtils;
+import net.vaultcraft.vcessentials.commands.VCClearChatPersonal;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.utils.Rank;
 import net.vaultcraft.vcutils.protection.Area;
@@ -13,6 +15,7 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Connor on 8/1/14. Designed for the VCPrison project.
@@ -84,8 +87,16 @@ public class MineLoader {
         return make;
     }
 
+    private static List<Mine> cannotreset = Lists.newArrayList();
+
+    public static void initCannotReset(Mine mine) {
+        cannotreset.add(mine);
+        Runnable r = () -> cannotreset.remove(mine);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), r, 20);
+    }
+
     public static void resetMine(Mine mine) {
-        if (mine.isResetting())
+        if (mine.isResetting() || cannotreset.contains(mine))
             return;
 
         mine.reset();
