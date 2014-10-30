@@ -84,7 +84,12 @@ public class CellManager {
             throw new IllegalArgumentException("World must be PlotWorld!");
         }
 
-        if(location.getChunk().getX() % 2 != 0 || location.getY() >= 91) {
+        //13 x 12 z && 2 x 3 z
+        int chunkX = location.getChunk().getX();
+        int chunkZ = location.getChunk().getZ();
+        if(chunkX % 2 != 0 || location.getY() >= 91 ||
+                location.getX() > (chunkX * 16) + 13 ||  location.getX() < (chunkX * 16) + 2 ||
+                location.getZ() > (chunkZ * 16) + 12 || location.getZ() > (chunkZ * 16) + 3) {
             return null;
         }
 
