@@ -27,7 +27,7 @@ public class CellsListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onMove(PlayerMoveEvent event) {
         if(!event.getTo().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
@@ -40,7 +40,7 @@ public class CellsListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlace(BlockPlaceEvent event) {
         if(!event.getBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
@@ -58,7 +58,7 @@ public class CellsListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onBreak(BlockBreakEvent event) {
         if(!event.getBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
@@ -76,7 +76,7 @@ public class CellsListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onInteract(PlayerInteractEvent event) {
         if(event.getClickedBlock() == null)
             return;
