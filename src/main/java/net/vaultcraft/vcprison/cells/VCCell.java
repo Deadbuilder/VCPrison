@@ -66,7 +66,7 @@ public class VCCell extends ICommand {
                 OfflinePlayer player1 = Bukkit.getPlayer(args[0]);
                 if (player1 == null) {
                     player1 = Bukkit.getOfflinePlayer(args[0]);
-                    if (player1 == null) {
+                    if (player1 == null || !player1.hasPlayedBefore()) {
                         Form.at(player, Prefix.ERROR, "No such player! Format: /plot <player>.");
                         return;
                     }
