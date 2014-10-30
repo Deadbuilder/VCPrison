@@ -66,18 +66,19 @@ public class PrisonUserListener implements Listener {
             if (mine == null)
                 return;
 
+            if (mine.isResetting())
+                return;
+
             mine.tickBlocks();
 
             if (mine.getPercent() > 0.3) {
-                if (mine.isResetting())
-                    return;
+                Runnable sync = () -> {
+                    if (mine.isResetting())
+                        return;
 
-                Runnable sync = new Runnable() {
-                    public void run() {
-                        MineLoader.resetMine(mine);
-                        for (Player player : Bukkit.getOnlinePlayers()) {
-                            Form.at(player, "Mine: &e"+mine.getRank().toString()+ Prefix.VAULT_CRAFT.getChatColor()+" reset!");
-                        }
+                    MineLoader.resetMine(mine);
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        Form.at(player, "Mine: &e"+mine.getRank().toString()+ Prefix.VAULT_CRAFT.getChatColor()+" reset!");
                     }
                 };
                 Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), sync);
@@ -135,7 +136,7 @@ public class PrisonUserListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         event.setDeathMessage(null);
-        
+
         if (!FFAPlayer.getFFAPlayerFromPlayer(event.getEntity()).isPlaying())
             return;
 
