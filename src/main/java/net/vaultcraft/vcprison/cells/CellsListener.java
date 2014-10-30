@@ -82,8 +82,6 @@ public class CellsListener implements Listener {
             return;
         if(!event.getClickedBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
-        if(event.isCancelled())
-            event.setCancelled(false);
         Material type = event.getClickedBlock().getType();
         if(type != Material.IRON_DOOR_BLOCK && type != Material.CHEST && type != Material.ENDER_CHEST && type != Material.BREWING_STAND
                 && type != Material.FURNACE && type != Material.ANVIL && type != Material.TRAPPED_CHEST && type != Material.BEACON
