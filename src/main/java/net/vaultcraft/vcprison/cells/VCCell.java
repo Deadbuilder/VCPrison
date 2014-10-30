@@ -98,7 +98,7 @@ public class VCCell extends ICommand {
         cell.chunkZ = chunk.getZ();
         cell.ownerUUID = player.getUniqueId();
         cell.name = "Cell #" + (ownedCells + 1);
-        cell.cellSpawn = new Location(player.getWorld(), (chunk.getX() * 16) + 13, 88,
+        cell.cellSpawn = new Location(chunk.getWorld(), (chunk.getX() * 16) + 13, 88,
                 (chunk.getZ() * 16) + 12, 135f, 0f);
         player.teleport(cell.cellSpawn);
         VCPrison.getInstance().getCellManager().addCell(cell);

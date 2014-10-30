@@ -108,7 +108,7 @@ public class CellManager {
         int row = 0;
         while (Math.abs(row) <= 1000000) {
             for(int cell = -25; cell < 25; cell++) {
-                Cell checkCell = getCellFromLocation(new Location(this.plotWorld, 16 * row, 88, 16 * cell));
+                Cell checkCell = getCellFromLocation(new Location(this.plotWorld, 16 * row + 7, 88, 16 * cell + 7));
                 if(checkCell == null) {
                     return new Location(this.plotWorld, 16*row, 88, 16*cell).getChunk();
                 }
