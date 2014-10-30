@@ -1,7 +1,6 @@
 package net.vaultcraft.vcprison.pickaxe;
 
 import net.vaultcraft.vcprison.VCPrison;
-import net.vaultcraft.vcprison.ffa.FFAPlayer;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.Warden;
@@ -103,6 +102,11 @@ public class PickaxeListener implements Listener {
         if (event.getCurrentItem().getItemMeta().getDisplayName().contains(ChatColor.translateAlternateColorCodes('&', "&6&lFF&e&lA"))) {
             player.closeInventory();
             player.performCommand("redir ffa");
+            return;
+        }
+        if(event.getCurrentItem().getItemMeta().getDisplayName().contains(ChatColor.DARK_GRAY + ChatColor.BOLD.toString() + "Cells")) {
+            player.closeInventory();
+            player.performCommand("redir cell");
             return;
         }
 
