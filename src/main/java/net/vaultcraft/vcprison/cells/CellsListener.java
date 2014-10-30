@@ -26,21 +26,25 @@ public class CellsListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onMove(PlayerMoveEvent event) {
         if(!event.getTo().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
+        if(event.isCancelled())
+            event.setCancelled(false);
         if(event.getTo().getBlockZ() > (16 * 27) || event.getTo().getBlockZ() < -(16 * 26)
                 || event.getTo().getBlockX() > (16 * (CellManager.xRadius + 2)) || event.getTo().getBlockX() < -(16 * CellManager.xRadius + 1)) {
             event.getPlayer().teleport(event.getFrom());
-            Form.at(event.getPlayer(), Prefix.ERROR, "You hit the world boarder!");
+            Form.at(event.getPlayer(), Prefix.ERROR, "You hit the world border!");
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent event) {
         if(!event.getBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
+        if(event.isCancelled())
+            event.setCancelled(false);
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getBlockPlaced().getLocation());
         if(possibleCell == null) {
             event.setCancelled(true);
@@ -53,10 +57,12 @@ public class CellsListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onBreak(BlockBreakEvent event) {
         if(!event.getBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
+        if(event.isCancelled())
+            event.setCancelled(false);
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getBlock().getLocation());
         if(possibleCell == null) {
             event.setCancelled(true);
@@ -69,12 +75,14 @@ public class CellsListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         if(event.getClickedBlock() == null)
             return;
         if(!event.getClickedBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
+        if(event.isCancelled())
+            event.setCancelled(false);
         Material type = event.getClickedBlock().getType();
         if(type != Material.IRON_DOOR_BLOCK && type != Material.CHEST && type != Material.ENDER_CHEST && type != Material.BREWING_STAND
                 && type != Material.FURNACE && type != Material.ANVIL && type != Material.TRAPPED_CHEST && type != Material.BEACON

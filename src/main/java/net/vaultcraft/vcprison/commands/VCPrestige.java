@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.commands;
 
+import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.utils.Rank;
 import net.vaultcraft.vcutils.chat.Form;
@@ -39,6 +40,7 @@ public class VCPrestige extends ICommand {
                 user.setPrestige(user.getPrestige() + 1);
                 user.getUser().setMoney(0);
                 user.getPickaxe().reset();
+                user.getPlayer().teleport(WarpLoader.getWarpLocation(Rank.A));
                 Form.at(player, Prefix.SUCCESS, "You have Prestiged!");
             }
         }
