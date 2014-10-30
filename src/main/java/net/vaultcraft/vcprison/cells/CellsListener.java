@@ -4,6 +4,7 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
+import net.vaultcraft.vcutils.logging.Logger;
 import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -42,8 +43,10 @@ public class CellsListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onPlace(BlockPlaceEvent event) {
+        Logger.debug(VCPrison.getInstance(), "Event called Place");
         if(!event.getBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
+        Logger.debug(VCPrison.getInstance(), "Inside right world");
         if(event.isCancelled())
             event.setCancelled(false);
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getBlockPlaced().getLocation());
