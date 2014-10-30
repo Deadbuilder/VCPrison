@@ -41,7 +41,7 @@ public class PrisonShopListener implements Listener {
         add(new ShopItem(Material.SAND, 16000, "Quantity: 16", "Sand", 16));
         add(new ShopItem(Material.DIAMOND_HOE, 10000, "Quantity: 1", "Diamond Hoe", 1));
         add(new ShopItem(Material.SEEDS, 4000, "Quantity: 2", "Seeds", 2));
-        add(new ShopItem(Material.LOG, 3000, "Quantity: 8", "Oak Wood", 16));
+        add(new ShopItem(Material.LOG, 3000, "Quantity: 16", "Oak Wood", 16));
         add(new ShopItem(Material.BOOK, 2000, "Quantity: 1", "Book", 1));
     }};
 

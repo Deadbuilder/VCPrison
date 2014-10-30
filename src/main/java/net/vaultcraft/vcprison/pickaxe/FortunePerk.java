@@ -26,13 +26,14 @@ public class FortunePerk extends PickaxePerk {
 
     @Override
     public ItemStack onBreak(Player player, BlockBreakEvent event, Block block, ItemStack itemStack, int level) {
-        if (MineLoader.fromLocation(block.getLocation()) != null)
-            if(itemStack.getType() == Material.CHEST)
+        if (MineLoader.fromLocation(block.getLocation()) != null) {
+            if (itemStack.getType() == Material.CHEST)
                 return itemStack;
             if (itemStack.getType() == Material.REDSTONE || itemStack.getType() == Material.INK_SACK)
                 itemStack.setAmount(fortune(level) * 2);
             else
                 itemStack.setAmount(fortune(level));
+        }
         return itemStack;
     }
 

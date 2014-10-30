@@ -190,7 +190,7 @@ public class Pickaxe {
     }
 
     public Inventory getStatsMenu() {
-        int rows = (int) Math.ceil(((perkLevels.size() + 3.0) / 9.0));
+        int rows = (int) Math.ceil(((perkLevels.size() + 4.0) / 9.0));
         Inventory inventory = Bukkit.getServer().createInventory(null, 9 * rows, "Pickaxe Perks");
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
             if (perk.isToggleable()) {
@@ -210,6 +210,7 @@ public class Pickaxe {
         }
         inventory.addItem(getPointsIcon());
         inventory.addItem(getWarpIcon());
+        inventory.addItem(getCellsIcon());
         inventory.addItem(getFFAIcon());
         return inventory;
     }
@@ -228,6 +229,15 @@ public class Pickaxe {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lMine Warps"));
         itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&6Click to open mine warps.")));
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    public ItemStack getCellsIcon() {
+        ItemStack itemStack = new ItemStack(Material.IRON_FENCE);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.DARK_GRAY + ChatColor.BOLD.toString() + "Cells");
+        itemMeta.setLore(Arrays.asList(ChatColor.GOLD + "Click to open your cells menu."));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }

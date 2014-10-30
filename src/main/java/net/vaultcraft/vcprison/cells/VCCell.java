@@ -66,7 +66,7 @@ public class VCCell extends ICommand {
                 OfflinePlayer player1 = Bukkit.getPlayer(args[0]);
                 if (player1 == null) {
                     player1 = Bukkit.getOfflinePlayer(args[0]);
-                    if (player1 == null) {
+                    if (player1 == null || !player1.hasPlayedBefore()) {
                         Form.at(player, Prefix.ERROR, "No such player! Format: /plot <player>.");
                         return;
                     }
@@ -98,7 +98,7 @@ public class VCCell extends ICommand {
         cell.chunkZ = chunk.getZ();
         cell.ownerUUID = player.getUniqueId();
         cell.name = "Cell #" + (ownedCells + 1);
-        cell.cellSpawn = new Location(player.getWorld(), (chunk.getX() * 16) + 13, 88,
+        cell.cellSpawn = new Location(chunk.getWorld(), (chunk.getX() * 16) + 13, 88,
                 (chunk.getZ() * 16) + 12, 135f, 0f);
         player.teleport(cell.cellSpawn);
         VCPrison.getInstance().getCellManager().addCell(cell);
@@ -125,13 +125,13 @@ public class VCCell extends ICommand {
         }
 
         if (!cell.ownerUUID.equals(player.getUniqueId())) {
-            Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
+            Form.at(player, Prefix.ERROR, "You are not the owner of this cell!");
             return;
         }
 
         cell.name = sb.toString();
 
-        Form.at(player, Prefix.SUCCESS, "You have rename your cell to " + cell.name + ".");
+        Form.at(player, Prefix.SUCCESS, "You have renamed your cell to " + cell.name + ".");
     }
 
     public void executeSetSpawn(Player player) {
@@ -143,7 +143,7 @@ public class VCCell extends ICommand {
         }
 
         if (!cell.ownerUUID.equals(player.getUniqueId())) {
-            Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
+            Form.at(player, Prefix.ERROR, "You are not the owner of this cell!");
             return;
         }
 
@@ -167,7 +167,7 @@ public class VCCell extends ICommand {
         }
 
         if (!cell.ownerUUID.equals(player.getUniqueId())) {
-            Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
+            Form.at(player, Prefix.ERROR, "You are not the owner of this cell!");
             return;
         }
 
@@ -195,7 +195,7 @@ public class VCCell extends ICommand {
 
     public void executeRemove(Player player, String[] args) {
         if (args.length < 2) {
-            Form.at(player, Prefix.ERROR, "Missing arguments! Format: /plot remover <player>");
+            Form.at(player, Prefix.ERROR, "Missing arguments! Format: /plot remove <player>");
             return;
         }
 
@@ -207,7 +207,7 @@ public class VCCell extends ICommand {
         }
 
         if (!cell.ownerUUID.equals(player.getUniqueId())) {
-            Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
+            Form.at(player, Prefix.ERROR, "You are not the owner of this cell!");
             return;
         }
 
@@ -239,7 +239,7 @@ public class VCCell extends ICommand {
         }
 
         if (!cell.ownerUUID.equals(player.getUniqueId())) {
-            Form.at(player, Prefix.ERROR, "You are not the owner of the cell!");
+            Form.at(player, Prefix.ERROR, "You are not the owner of this cell!");
             return;
         }
 
