@@ -29,7 +29,7 @@ public class VCPrestige extends ICommand {
             return;
         }
         if(args.length == 0) {
-            Form.at(player, Prefix.WARNING, "Prestiging will bring you down to rank A, wipe your money, " + ChatColor.RED.toString() + ChatColor.BOLD + "wipe your pickaxe," + ChatColor.RESET + " and teleport you to mine A. If you are sure you want to prestige type /prestige confirm.");
+            Form.at(player, Prefix.WARNING, "Prestiging will bring you down to rank A, wipe your money, " + ChatColor.RED.toString() + ChatColor.BOLD + "wipe your pickaxe," + ChatColor.GRAY + " and teleport you to mine A. If you are sure you want to prestige type /prestige confirm.");
             return;
         }
 
