@@ -13,6 +13,7 @@ public class Cell {
     public Location cellSpawn;
     public ArrayList<UUID> additionalUUIDs = new ArrayList<>();
     public String name;
+    public boolean block = false;
 
     public Cell() {
     }
