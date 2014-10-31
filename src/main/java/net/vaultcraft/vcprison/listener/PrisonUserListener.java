@@ -1,6 +1,8 @@
 package net.vaultcraft.vcprison.listener;
 
+import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.event.DropParty;
 import net.vaultcraft.vcprison.ffa.FFADamageTracker;
 import net.vaultcraft.vcprison.ffa.FFAHandler;
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
@@ -16,6 +18,7 @@ import net.vaultcraft.vcutils.protection.flag.FlagType;
 import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,6 +30,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
 
 /**
  * Created by tacticalsk8er on 7/31/2014.
@@ -179,10 +186,43 @@ public class PrisonUserListener implements Listener {
         }
     }
 
+    private static List<Player> dp = Lists.newArrayList();
+
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if(event.getClickedBlock().getType().equals(Material.ANVIL)) {
             event.setCancelled(true);
+        }
+
+        Player player = event.getPlayer();
+
+        ItemStack hand = player.getItemInHand();
+        hand.setAmount(1);
+
+        if (DropParty.getDpToken().clone().equals(hand)) {
+            player.getInventory().removeItem(player.getItemInHand());
+
+            final Item drop = player.getWorld().dropItem(player.getLocation(), DropParty.getDpToken().clone());
+            drop.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(2));
+            drop.setPickupDelay(20 * 60 * 60);
+
+            Runnable delay = () -> {
+                drop.remove();
+
+                dp.add(player);
+
+                BukkitRunnable br = new BukkitRunnable() {
+                    public void run() {
+                        if (!dp.contains(player)) {
+                            cancel();
+                            return;
+                        }
+                    }
+                };
+                br.runTaskTimer(VCPrison.getInstance(), 5, 5);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), () -> dp.remove(player), 20 * 10);
+            };
+            Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), delay, 20 * 3);
         }
     }
 

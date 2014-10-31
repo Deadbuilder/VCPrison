@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.commands;
 
+import net.vaultcraft.vcprison.event.DropParty;
 import net.vaultcraft.vcprison.pickaxe.Pickaxe;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
@@ -18,7 +19,6 @@ public class VCPoint extends ICommand {
         super(name, permission, aliases);
     }
 
-    @Override
     public void processCommand(Player player, String[] args) {
         if(args.length == 0) {
             Form.at(player, Prefix.ERROR, "Format /point <amount> <player>");
@@ -26,6 +26,24 @@ public class VCPoint extends ICommand {
         }
 
         if(args.length > 0) {
+            if (args[0].equalsIgnoreCase("dp")) {
+                if (args.length > 1) {
+                    Player find = Bukkit.getPlayer(args[1]);
+                    if (find == null) {
+                        Form.at(player, Prefix.ERROR, "Cannot find player &e" + find.getName() + Prefix.ERROR.getChatColor() + "!");
+                        return;
+                    }
+
+                    find.getInventory().addItem(DropParty.getDpToken().clone());
+                    Form.at(player, Prefix.SUCCESS, "You gave &e" + find.getName() + Prefix.SUCCESS.getChatColor() + " a drop party token!");
+                    return;
+                }
+
+                player.getInventory().addItem(DropParty.getDpToken().clone());
+                Form.at(player, Prefix.SUCCESS, "You gave yourself a drop party token!");
+                return;
+            }
+
             int amount;
             try {
                 amount = Integer.parseInt(args[0]);
