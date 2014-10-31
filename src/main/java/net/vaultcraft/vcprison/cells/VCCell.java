@@ -1,10 +1,12 @@
 package net.vaultcraft.vcprison.cells;
 
+import com.mongodb.DBObject;
 import com.sk89q.worldedit.*;
 import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.data.DataException;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.user.PrisonUser;
+import net.vaultcraft.vcutils.VCUtils;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
@@ -249,6 +251,10 @@ public class VCCell extends ICommand {
         player.teleport(new Location(player.getWorld(), ((cell.chunkX - 1) * 16) + 14, 88, (cell.chunkZ * 16) + 4, -90f, 0f));
 
         CuboidClipboard cells;
+
+        DBObject dbObject = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", cell.chunkX + "," + cell.chunkZ);
+        if(dbObject != null)
+            VCUtils.getInstance().getMongoDB().getClient().getDB(VCUtils.mongoDBName).getCollection("Cells").remove(dbObject);
 
         try {
             cells = CuboidClipboard.loadSchematic(new File(VCPrison.getInstance().getDataFolder(), "cells.schematic"));
