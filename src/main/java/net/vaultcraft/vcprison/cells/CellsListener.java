@@ -44,6 +44,8 @@ public class CellsListener implements Listener {
     public void onPlace(BlockPlaceEvent event) {
         if(!event.getBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
             return;
+        if(event.getPlayer().isOp())
+            return;
         if(event.isCancelled())
             event.setCancelled(false);
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getBlockPlaced().getLocation());
@@ -61,6 +63,8 @@ public class CellsListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onBreak(BlockBreakEvent event) {
         if(!event.getBlock().getLocation().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
+            return;
+        if(event.getPlayer().isOp())
             return;
         if(event.isCancelled())
             event.setCancelled(false);
@@ -186,7 +190,7 @@ public class CellsListener implements Listener {
         if(targetCell.cellSpawn.getBlock().getRelative(BlockFace.UP).getType() == Material.AIR) {
             event.getWhoClicked().teleport(targetCell.cellSpawn);
             Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.SUCCESS, "Teleported to "
-                    + Bukkit.getOfflinePlayer(targetCell.ownerUUID).getName() + "'s " + targetCell.name + " cell.");
+                    + Bukkit.getOfflinePlayer(targetCell.ownerUUID).getName() + "'s " + targetCell.name + "cell.");
         } else {
             event.getWhoClicked().teleport(new Location(targetCell.cellSpawn.getWorld(), ((targetCell.chunkX - 1) * 16) + 14, 88, (targetCell.chunkZ * 16) + 4, -90f, 0f));
             Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.ERROR, targetCell.name

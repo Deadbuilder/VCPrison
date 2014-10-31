@@ -191,11 +191,11 @@ public class VCCell extends ICommand {
         }
 
         if (cell.additionalUUIDs.contains(player1.getUniqueId())) {
-            Form.at(player, Prefix.ERROR, player1.getName() + " is already a build in " + cell.name + " cell.");
+            Form.at(player, Prefix.ERROR, player1.getName() + " is already a build in " + cell.name + "cell.");
         }
 
         cell.additionalUUIDs.add(player1.getUniqueId());
-        Form.at(player, Prefix.SUCCESS, player1.getName() + " has been added as a builder to " + cell.name + " cell.");
+        Form.at(player, Prefix.SUCCESS, player1.getName() + " has been added as a builder to " + cell.name + "cell.");
     }
 
     public void executeRemove(Player player, String[] args) {
@@ -226,12 +226,12 @@ public class VCCell extends ICommand {
         }
 
         if (!cell.additionalUUIDs.contains(player1.getUniqueId())) {
-            Form.at(player, Prefix.ERROR, player1.getName() + " is not a builder in " + cell.name + " cell.");
+            Form.at(player, Prefix.ERROR, player1.getName() + " is not a builder in " + cell.name + "cell.");
             return;
         }
 
         cell.additionalUUIDs.remove(player1.getUniqueId());
-        Form.at(player, Prefix.SUCCESS, player1.getName() + " is no longer a builder in " + cell.name + " cell.");
+        Form.at(player, Prefix.SUCCESS, player1.getName() + " is no longer a builder in " + cell.name + "cell.");
     }
 
     public void executeDelete(Player player) {
