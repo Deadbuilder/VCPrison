@@ -178,7 +178,7 @@ public class CellsListener implements Listener {
             return;
         }
 
-        if(targetCell.block && (!targetCell.ownerUUID.equals(event.getWhoClicked().getUniqueId()) || !targetCell.additionalUUIDs.contains(event.getWhoClicked().getUniqueId()))) {
+        if(targetCell.block && !targetCell.ownerUUID.equals(event.getWhoClicked().getUniqueId()) && !targetCell.additionalUUIDs.contains(event.getWhoClicked().getUniqueId())) {
             Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.ERROR, "That cell is private. You can't teleport to it.");
             return;
         }
