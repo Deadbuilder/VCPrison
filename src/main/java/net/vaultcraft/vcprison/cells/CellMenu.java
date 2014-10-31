@@ -55,7 +55,7 @@ public class CellMenu implements InventoryHolder {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(cell.name);
         int cellIndex = VCPrison.getInstance().getCellManager().getLoadedCells().indexOf(cell);
-        itemMeta.setLore(Arrays.asList("Cell", "CellID #" + cellIndex);
+        itemMeta.setLore(Arrays.asList("Cell", "CellID #" + cellIndex));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
