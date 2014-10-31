@@ -64,6 +64,7 @@ public class VCCell extends ICommand {
                 break;
             case "block":
                 executeBlock(player);
+                break;
             default:
                 OfflinePlayer player1 = Bukkit.getPlayer(args[0]);
                 if (player1 == null) {
@@ -176,13 +177,13 @@ public class VCCell extends ICommand {
         OfflinePlayer player1 = Bukkit.getPlayer(args[1]);
         if (player1 == null) {
             player1 = Bukkit.getOfflinePlayer(args[1]);
-            if (player1 == null) {
+            if (player1 == null || !player1.hasPlayedBefore()) {
                 Form.at(player, Prefix.ERROR, "No such player! Format: /plot add <player>.");
                 return;
             }
         }
 
-        if (player.equals(player1.getPlayer())) {
+        if (player.getUniqueId().equals(player1.getUniqueId())) {
             Form.at(player, Prefix.ERROR, "You can't add yourself as a builder.");
             return;
         }
@@ -216,7 +217,7 @@ public class VCCell extends ICommand {
         OfflinePlayer player1 = Bukkit.getPlayer(args[1]);
         if (player1 == null) {
             player1 = Bukkit.getOfflinePlayer(args[1]);
-            if (player1 == null) {
+            if (player1 == null || !player1.hasPlayedBefore()) {
                 Form.at(player, Prefix.ERROR, "No such player! Format: /plot remove <player>.");
                 return;
             }

@@ -234,7 +234,14 @@ public class PickaxeListener implements Listener {
             return;
         if (event.getPlayer().getInventory().getHeldItemSlot() != 0)
             return;
-        if(MineLoader.fromLocation(event.getPlayer().getLocation()) == null)
+        Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
+        if(pickaxe == null)
+            return;
+        if(MineLoader.fromLocation(event.getPlayer().getLocation()) == null) {
+            event.getPlayer().getInventory().setItem(0, pickaxe.getPickaxe());
+            return;
+        }
+        if(!pickaxe.isInUse())
             return;
         event.setCancelled(true);
         ItemStack item;
@@ -242,11 +249,6 @@ public class PickaxeListener implements Listener {
             item = new ItemStack(Material.INK_SACK, 1, (short) 4);
         else
             item = new ItemStack(changeType(event.getBlock().getType()));
-        Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
-        if(pickaxe == null)
-            return;
-        if(!pickaxe.isInUse())
-            return;
         for (PickaxePerk perk : PickaxePerk.getPerks()) {
             if (pickaxe.getPerkLevel(perk) == 0)
                 continue;
