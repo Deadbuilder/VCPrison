@@ -237,7 +237,7 @@ public class PickaxeListener implements Listener {
         Pickaxe pickaxe = PrisonUser.fromPlayer(event.getPlayer()).getPickaxe();
         if(pickaxe == null)
             return;
-        if(MineLoader.fromLocation(event.getPlayer().getLocation()) == null) {
+        if(MineLoader.fromLocation(event.getBlock().getLocation()) == null) {
             event.getPlayer().getInventory().setItem(0, pickaxe.getPickaxe());
             return;
         }
