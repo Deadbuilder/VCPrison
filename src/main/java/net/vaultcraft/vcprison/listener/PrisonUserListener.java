@@ -197,8 +197,8 @@ public class PrisonUserListener implements Listener {
 
         Player player = event.getPlayer();
 
-        ItemStack hand = player.getItemInHand();
-        hand.setAmount(1);
+        /*ItemStack hand = player.getItemInHand();
+        /hand.setAmount(1);
 
         if (DropParty.getDpToken().clone().equals(hand)) {
             player.getInventory().removeItem(player.getItemInHand());
@@ -224,7 +224,7 @@ public class PrisonUserListener implements Listener {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), () -> dp.remove(player), 20 * 10);
             };
             Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), delay, 20 * 3);
-        }
+        }*/
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
