@@ -186,7 +186,7 @@ public class CellsListener implements Listener {
         if(targetCell.cellSpawn.getBlock().getRelative(BlockFace.UP).getType() == Material.AIR) {
             event.getWhoClicked().teleport(targetCell.cellSpawn);
             Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.SUCCESS, "Teleported to "
-                    + event.getInventory().getTitle() + "'s " + targetCell.name + " cell.");
+                    + Bukkit.getOfflinePlayer(targetCell.ownerUUID).getName() + "'s " + targetCell.name + " cell.");
         } else {
             event.getWhoClicked().teleport(new Location(targetCell.cellSpawn.getWorld(), ((targetCell.chunkX - 1) * 16) + 14, 88, (targetCell.chunkZ * 16) + 4, -90f, 0f));
             Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.ERROR, targetCell.name
