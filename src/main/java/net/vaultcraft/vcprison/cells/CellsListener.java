@@ -171,8 +171,11 @@ public class CellsListener implements Listener {
             return;
         if(!event.getCurrentItem().getItemMeta().getLore().get(0).equals("Cell"))
             return;
-        Location location = VCPrison.getInstance().getCellManager().stringToLocation(event.getCurrentItem().getItemMeta().getLore().get(1));
-        event.getWhoClicked().teleport(location);
+        Cell targetCell = VCPrison.getInstance().getCellManager().getLoadedCells().get(Integer.valueOf(event.getCurrentItem().getItemMeta().getLore().get(1).split("#")[1]));
+        if(targetCell == null) {
+            return;
+        }
+        event.getWhoClicked().teleport(targetCell.cellSpawn);
         Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.SUCCESS, "Teleported to " + event.getCurrentItem().getItemMeta().getDisplayName() + " cell.");
     }
 }

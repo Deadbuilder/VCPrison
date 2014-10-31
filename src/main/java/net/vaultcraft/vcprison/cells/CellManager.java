@@ -204,6 +204,10 @@ public class CellManager {
         return l.getX() + " " + l.getY() + " " + l.getZ() + " " + l.getYaw() + " " + l.getPitch();
     }
 
+    public List<Cell> getLoadedCells() {
+        return cells;
+    }
+
     public World getPlotWorld() {
         return plotWorld;
     }
