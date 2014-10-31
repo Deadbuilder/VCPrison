@@ -1,8 +1,7 @@
 package net.vaultcraft.vcprison.cells;
 
 import com.mongodb.DBObject;
-import com.sk89q.worldedit.*;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
+import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.data.DataException;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.user.PrisonUser;
@@ -12,7 +11,6 @@ import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
 import org.bukkit.*;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -265,15 +263,17 @@ public class VCCell extends ICommand {
         }
 
 
-        EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitUtil.getLocalWorld(VCPrison.getInstance().getCellManager().getPlotWorld()), -1);
-        try {
-            cells.rotate2D(90);
-            cells.paste(editSession, new Vector((cell.chunkX * 16) + 15, 84, (cell.chunkZ * 16) + 15), false);
-        } catch (MaxChangedBlocksException e) {
-            e.printStackTrace();
-            Form.at(player, Prefix.ERROR, "Something happened when trying to delete your cell. Please notify a staff member.");
-            return;
-        }
+        cell.cellSpawn.getWorld().regenerateChunk(cell.chunkX, cell.chunkZ);
+
+//        EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(BukkitUtil.getLocalWorld(VCPrison.getInstance().getCellManager().getPlotWorld()), -1);
+//        try {
+//            cells.rotate2D(90);
+//            cells.paste(editSession, new Vector((cell.chunkX * 16) + 15, 84, (cell.chunkZ * 16) + 15), false);
+//        } catch (MaxChangedBlocksException e) {
+//            e.printStackTrace();
+//            Form.at(player, Prefix.ERROR, "Something happened when trying to delete your cell. Please notify a staff member.");
+//            return;
+//        }
 
         VCPrison.getInstance().getCellManager().removeCell(cell);
         Form.at(player, Prefix.SUCCESS, "Your cell have been removed.");
