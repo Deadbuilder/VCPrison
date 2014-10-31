@@ -54,7 +54,7 @@ public class CellMenu implements InventoryHolder {
         ItemStack itemStack = new ItemStack(Material.IRON_FENCE);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(cell.name);
-        itemMeta.setLore(Arrays.asList("Cell", VCPrison.getInstance().getCellManager().locationToString(cell.cellSpawn)));
+        itemMeta.setLore(Arrays.asList("Cell", (int)cell.cellSpawn.getX() + " " + (int)cell.cellSpawn.getY() + " " + (int)cell.cellSpawn.getZ() + " " + (int)cell.cellSpawn.getPitch() + " " + (int)cell.cellSpawn.getYaw()));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
