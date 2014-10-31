@@ -84,7 +84,7 @@ public class VCCell extends ICommand {
 
     public void executeHelp(Player player) {
         Form.at(player, Prefix.VAULT_CRAFT, "Commands: /cell new, /cell rename, /cell setspawn, /cell add" +
-                ", /cell remove, /cell delete, /cell claim, /cell info");
+                ", /cell remove, /cell delete, /cell claim, /cell info, /cell block");
     }
 
     public void executeNew(Player player) {
