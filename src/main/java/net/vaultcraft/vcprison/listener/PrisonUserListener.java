@@ -2,6 +2,7 @@ package net.vaultcraft.vcprison.listener;
 
 import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.cells.CellManager;
 import net.vaultcraft.vcprison.event.DropParty;
 import net.vaultcraft.vcprison.ffa.FFADamageTracker;
 import net.vaultcraft.vcprison.ffa.FFAHandler;
@@ -190,7 +191,7 @@ public class PrisonUserListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.getClickedBlock().getType().equals(Material.ANVIL)) {
+        if(event.getClickedBlock().getType().equals(Material.ANVIL) && !event.getPlayer().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld())) {
             event.setCancelled(true);
         }
 
