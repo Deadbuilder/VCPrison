@@ -76,7 +76,7 @@ public class CellsListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOW)
     public void onInteract(PlayerInteractEvent event) {
         if(event.getClickedBlock() == null)
             return;
@@ -85,7 +85,9 @@ public class CellsListener implements Listener {
         Material type = event.getClickedBlock().getType();
         if(type != Material.IRON_DOOR_BLOCK && type != Material.CHEST && type != Material.ENDER_CHEST && type != Material.BREWING_STAND
                 && type != Material.FURNACE && type != Material.ANVIL && type != Material.TRAPPED_CHEST && type != Material.BEACON
-                && type != Material.BED_BLOCK && type != Material.BURNING_FURNACE && type != Material.ENCHANTMENT_TABLE)
+                && type != Material.BED_BLOCK && type != Material.BURNING_FURNACE && type != Material.ENCHANTMENT_TABLE
+                && type != Material.DISPENSER && type != Material.HOPPER && type != Material.DROPPER && type != Material.STONE_BUTTON
+                && type != Material.WOOD_BUTTON && type != Material.LEVER)
             return;
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getClickedBlock().getLocation());
         if(possibleCell == null) {
@@ -175,7 +177,26 @@ public class CellsListener implements Listener {
         if(targetCell == null) {
             return;
         }
-        event.getWhoClicked().teleport(targetCell.cellSpawn);
-        Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.SUCCESS, "Teleported to " + event.getCurrentItem().getItemMeta().getDisplayName() + " cell.");
+
+        if(targetCell.block && targetCell.ownerUUID != event.getWhoClicked().getUniqueId() && !targetCell.additionalUUIDs.contains(event.getWhoClicked().getUniqueId())) {
+            Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.ERROR, "That cell is private. You can't teleport to it.");
+            return;
+        }
+
+        if(targetCell.cellSpawn.getBlock().getRelative(BlockFace.UP).getType() == Material.AIR) {
+            event.getWhoClicked().teleport(targetCell.cellSpawn);
+            Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.SUCCESS, "Teleported to "
+                    + event.getCurrentItem().getItemMeta().getDisplayName() + "'s " + targetCell.name + " cell.");
+        } else {
+            event.getWhoClicked().teleport(new Location(targetCell.cellSpawn.getWorld(), ((targetCell.chunkX - 1) * 16) + 14, 88, (targetCell.chunkZ * 16) + 4, -90f, 0f));
+            Form.at((org.bukkit.entity.Player) event.getWhoClicked(), Prefix.ERROR, targetCell.name
+                    + "'s spawn location is obstructed. Teleporting you outside of the cell.");
+        }
+    }
+
+    @EventHandler
+    public void onTrample(PlayerInteractEvent event) {
+        if(event.getAction() == Action.PHYSICAL && event.getClickedBlock().getType() == Material.SOIL)
+            event.setCancelled(true);
     }
 }

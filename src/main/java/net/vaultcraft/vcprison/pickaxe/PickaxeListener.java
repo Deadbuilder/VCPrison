@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.pickaxe;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.mine.MineLoader;
 import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.user.PrisonUser;
 import net.vaultcraft.vcprison.worth.Warden;
@@ -232,6 +233,8 @@ public class PickaxeListener implements Listener {
         if (event.isCancelled())
             return;
         if (event.getPlayer().getInventory().getHeldItemSlot() != 0)
+            return;
+        if(MineLoader.fromLocation(event.getPlayer().getLocation()) == null)
             return;
         event.setCancelled(true);
         ItemStack item;

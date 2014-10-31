@@ -30,7 +30,7 @@ public class VCCell extends ICommand {
     public void processCommand(Player player, String[] args) {
 
         if (args.length == 0) {
-            new CellMenu(player, player);
+            new CellMenu(player.getUniqueId(), player);
             return;
         }
 
@@ -62,6 +62,8 @@ public class VCCell extends ICommand {
             case "info":
                 executeInfo(player);
                 break;
+            case "block":
+                executeBlock(player);
             default:
                 OfflinePlayer player1 = Bukkit.getPlayer(args[0]);
                 if (player1 == null) {
@@ -72,7 +74,7 @@ public class VCCell extends ICommand {
                     }
                 }
 
-                new CellMenu(player1.getPlayer(), player);
+                new CellMenu(player1.getUniqueId(), player);
         }
 
     }
@@ -117,7 +119,7 @@ public class VCCell extends ICommand {
             sb.append(args[i]).append(" ");
         }
 
-        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation().getBlock().getLocation());
 
         if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
@@ -135,7 +137,7 @@ public class VCCell extends ICommand {
     }
 
     public void executeSetSpawn(Player player) {
-        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation().getBlock().getLocation());
 
         if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
@@ -159,7 +161,7 @@ public class VCCell extends ICommand {
             return;
         }
 
-        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation().getBlock().getLocation());
 
         if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
@@ -199,7 +201,7 @@ public class VCCell extends ICommand {
             return;
         }
 
-        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation().getBlock().getLocation());
 
         if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
@@ -231,7 +233,7 @@ public class VCCell extends ICommand {
 
     public void executeDelete(Player player) {
 
-        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation().getBlock().getLocation());
 
         if (cell == null) {
             Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
@@ -277,7 +279,7 @@ public class VCCell extends ICommand {
             return;
         }
 
-        if (VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation()) != null) {
+        if (VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation().getBlock().getLocation()) != null) {
             Form.at(player, Prefix.ERROR, "This cell has already been claimed!");
             return;
         }
@@ -302,10 +304,10 @@ public class VCCell extends ICommand {
 
     public void executeInfo(Player player) {
 
-        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation());
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation().getBlock().getLocation());
 
         if (cell == null) {
-            Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
+            Form.at(player, Prefix.ERROR, "You need to stand inside a claimed cell to use this command.");
             return;
         }
 
@@ -324,5 +326,27 @@ public class VCCell extends ICommand {
         }
         player.sendMessage(ChatColor.BLUE + "Builders: " + sb.toString());
         player.sendMessage("");
+    }
+
+    public void executeBlock(Player player) {
+        Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation().getBlock().getLocation());
+
+        if (cell == null) {
+            Form.at(player, Prefix.ERROR, "You need to stand inside a cell you own to use this command.");
+            return;
+        }
+
+        if (!cell.ownerUUID.equals(player.getUniqueId())) {
+            Form.at(player, Prefix.ERROR, "You are not the owner of this cell!");
+            return;
+        }
+
+        if(cell.block) {
+            cell.block = false;
+            Form.at(player, Prefix.SUCCESS, "You have opened your cell to the public. Anyone can teleport to it.");
+        } else {
+            cell.block = true;
+            Form.at(player, Prefix.SUCCESS, "You have closed your cell. Only you and your builders can teleport to it.");
+        }
     }
 }

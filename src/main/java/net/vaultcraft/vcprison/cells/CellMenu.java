@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tacticalsk8er on 10/29/2014.
@@ -22,17 +23,19 @@ public class CellMenu implements InventoryHolder {
 
     private Inventory inv;
 
-    public CellMenu(Player plotOwner, Player opener) {
-        List<Cell> cells = VCPrison.getInstance().getCellManager().getCellsFromPlayer(plotOwner);
+    public CellMenu(UUID plotOwner, Player opener) {
+        List<Cell> cells = VCPrison.getInstance().getCellManager().getCellsFromUUID(plotOwner);
         int rows = (int) Math.ceil(((cells.size() + 1.0) / 9.0));
-        inv = Bukkit.createInventory(this, rows * 9, ChatColor.GREEN + plotOwner.getName() + "'s Cells");
+        inv = Bukkit.createInventory(this, rows * 9, ChatColor.GREEN + Bukkit.getOfflinePlayer(plotOwner).getName() + "'s Cells");
         for(int i = 0; i < cells.size(); i++) {
             inv.setItem(i, getCellItem(cells.get(i)));
         }
-        if(plotOwner.equals(opener))
+        if(plotOwner.equals(opener.getUniqueId()))
             inv.setItem(cells.size(), getNewCellItem());
-        else if(cells.size() == 0)
-            Form.at(opener, Prefix.ERROR, plotOwner.getName() + " doesn't have any cells.");
+        else if(cells.size() == 0) {
+            Form.at(opener, Prefix.ERROR, Bukkit.getOfflinePlayer(plotOwner).getName() + " doesn't have any cells.");
+            return;
+        }
         opener.openInventory(inv);
     }
 

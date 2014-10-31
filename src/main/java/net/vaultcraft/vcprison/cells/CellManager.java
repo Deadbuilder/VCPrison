@@ -52,6 +52,7 @@ public class CellManager {
             }
             cell.name = (String) o.get("Name");
             cell.cellSpawn = stringToLocation((String) o.get("SpawnPoint"));
+            cell.block = o.get("Block") != null && ((boolean) o.get("Block"));
             cells.add(cell);
         }
         Logger.log(VCPrison.getInstance(), cells.size() + " cells loaded from the DB.");
@@ -75,6 +76,21 @@ public class CellManager {
     }
 
     /**
+     * Returns a list of all cells that a uuid owns. If a player does not own any cells, it'll be an empty list.
+     * @param uuid UUID to get cells for
+     * @return List of cells said uuid owns, or an empty list if they don't own any.
+     */
+    public List<Cell> getCellsFromUUID(UUID uuid) {
+        ArrayList<Cell> uuidCells = new ArrayList<>();
+        for(Cell c : cells) {
+            if(c.ownerUUID.equals(uuid))
+                uuidCells.add(c);
+        }
+
+        return uuidCells;
+    }
+
+    /**
      * Returns the cell object for a location, returns null if there is no cell at that location yet.
      * @param location Location to get a cell for
      * @return The cell.
@@ -88,8 +104,8 @@ public class CellManager {
         int chunkX = location.getChunk().getX();
         int chunkZ = location.getChunk().getZ();
         if(chunkX % 2 != 0 || location.getY() >= 91 ||
-                location.getX() > (chunkX * 16) + 13 ||  location.getX() < (chunkX * 16) + 2 ||
-                location.getZ() > (chunkZ * 16) + 12 || location.getZ() < (chunkZ * 16) + 3) {
+                location.getX() > (chunkX * 16) + 14 ||  location.getX() < (chunkX * 16) + 1 ||
+                location.getZ() > (chunkZ * 16) + 13 || location.getZ() < (chunkZ * 16) + 2) {
             return null;
         }
 
@@ -177,6 +193,7 @@ public class CellManager {
             o.put("Members", sb.toString());
             o.put("Name", theCell.name);
             o.put("SpawnPoint", locationToString(theCell.cellSpawn));
+            o.put("Block", theCell.block);
             VCUtils.getInstance().getMongoDB().insert(VCUtils.mongoDBName, "Cells", o);
         } else {
             // Update cell
@@ -189,6 +206,7 @@ public class CellManager {
             dbCell.put("Members", sb.toString());
             dbCell.put("Name", theCell.name);
             dbCell.put("SpawnPoint", locationToString(theCell.cellSpawn));
+            dbCell.put("Block", theCell.block);
             DBObject o1 = VCUtils.getInstance().getMongoDB().query(VCUtils.mongoDBName, "Cells", "Chunk", locString);
             VCUtils.getInstance().getMongoDB().update(VCUtils.mongoDBName, "Cells", o1, dbCell);
         }
