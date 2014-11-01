@@ -209,9 +209,7 @@ public class PrisonUserListener implements Listener {
 
             Runnable delay = () -> {
                 drop.remove();
-
                 dp.add(player);
-
                 BukkitRunnable br = new BukkitRunnable() {
                     public void run() {
                         if (!dp.contains(player)) {
