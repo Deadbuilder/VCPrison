@@ -3,6 +3,7 @@ package net.vaultcraft.vcprison.event;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.crate.CrateFile;
 import net.vaultcraft.vcprison.crate.CrateItem;
+import net.vaultcraft.vcprison.pickaxe.Pickaxe;
 import net.vaultcraft.vcutils.protection.Area;
 import net.vaultcraft.vcutils.uncommon.FireworkEffectPlayer;
 import net.vaultcraft.vcutils.uncommon.Particles;
@@ -26,6 +27,8 @@ import java.util.Random;
 public class DropEvent implements Listener {
 
     private boolean running = false;
+    private int perkTicker = 0;
+    private int perkCount = 0;
     private Location particleLoc;
     private double rads;
 
@@ -87,6 +90,18 @@ public class DropEvent implements Listener {
 
                 for (int i = 0; i < 5; i++) { //Comment for broken commit
                     Particles.FIREWORKS_SPARK.sendToLocation(Locations.center.clone().add(x*(8-i), y, z*(8-i)), 0, 0, 0, 0, 1);
+                }
+
+                if(Bukkit.getOnlinePlayers().size() > 10 && perkCount != -1) {
+                    if(perkTicker % 20 == 0) {
+                        Item drop = particleLoc.getWorld().dropItem(randomInside(Locations.spawnTopArea), Pickaxe.getAddPointItem());
+                        drop.setTicksLived(5800);
+                        perkCount++;
+                        if(perkCount > Math.ceil((double)Bukkit.getOnlinePlayers().size() / (double)10)) {
+                            perkCount = -1;
+                        }
+                    }
+                    perkTicker++;
                 }
 
                 if (Math.random() > 0.8) {
