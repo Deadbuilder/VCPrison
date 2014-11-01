@@ -9,6 +9,7 @@ import net.vaultcraft.vcutils.user.User;
 import net.vaultcraft.vcutils.util.DateUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashMap;
 
@@ -36,7 +37,8 @@ public class VCFix extends ICommand {
 
         User.fromPlayer(player).addUserdata("fixCooldown", String.valueOf(System.currentTimeMillis() + (1000 * 60 * getMultiplier(User.fromPlayer(player).getGroup().getHighest()))));
 
-        repairItems(player.getInventory().getContents());
+        repairItems(player.getInventory());
+
         repairItems(player.getInventory().getArmorContents());
 
         Form.at(player, Prefix.SUCCESS, "You repaired all of your items!");
@@ -63,6 +65,18 @@ public class VCFix extends ICommand {
 
     private void repairItems(ItemStack[] stacks) {
         for (ItemStack i : stacks) {
+            if (i == null)
+                return;
+
+            if (i.getType().isBlock() || i.getType().getMaxDurability() < 1)
+                return;
+
+            i.setDurability((short)0);
+        }
+    }
+
+    private void repairItems(PlayerInventory inventory) {
+        for (ItemStack i : inventory) {
             if (i == null)
                 return;
 
