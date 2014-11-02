@@ -216,11 +216,12 @@ public class Sword {
         if(!lastPlayerKills.contains(player.getName())) {
             killstreak++;
             swordPoints++;
+            Form.at(player, Prefix.VAULT_CRAFT, "You gained a Sword Perk. Drop your sword to upgrade it!");
         }
-        if(lastPlayerKills.size() > 2)
+        if(lastPlayerKills.size() > 2) {
             lastPlayerKills.remove(0);
+        }
         lastPlayerKills.add(player.getName());
-        player.sendMessage("");
     }
 
     public void reset() {
