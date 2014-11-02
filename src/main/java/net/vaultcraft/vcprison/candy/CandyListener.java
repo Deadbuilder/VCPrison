@@ -1,7 +1,6 @@
 package net.vaultcraft.vcprison.candy;
 
 import net.vaultcraft.vcprison.VCPrison;
-import net.vaultcraft.vcutils.item.ItemUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -10,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 
 /**
  * @author Connor Hollasch
@@ -21,25 +21,30 @@ public class CandyListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
 
         //Recipe for wrappers
-        ShapedRecipe wrapper = new ShapedRecipe(ItemUtils.build(Material.QUARTZ, ChatColor.translateAlternateColorCodes('&', "&7&lCandy Wrapper"), "You'll need something to contain sticky candies!"));
+        ShapedRecipe wrapper = new ShapedRecipe(CandyItems.WRAPPER);
         wrapper.shape("XXX", "XYX", "XXX");
         wrapper.setIngredient('X', Material.INK_SACK, 8);
         wrapper.setIngredient('Y', Material.SNOW_BLOCK);
         Bukkit.addRecipe(wrapper);
 
         //Recipe for butter
-        ShapedRecipe butter = new ShapedRecipe(ItemUtils.build(Material.INK_SACK, (byte) 11, ChatColor.translateAlternateColorCodes('&', "&e&lButter"), "Used to create some types of candies"));
+        ShapedRecipe butter = new ShapedRecipe(CandyItems.BUTTER);
         butter.shape("XYX", "YXY", "XYX");
         butter.setIngredient('X', Material.WHEAT);
         butter.setIngredient('Y', Material.GLOWSTONE_DUST);
         Bukkit.addRecipe(butter);
 
         //Recipe for CoCoa
-        ShapedRecipe cocoa = new ShapedRecipe(ItemUtils.build(Material.BRICK, ChatColor.GOLD.toString() + ChatColor.BOLD + "Co-Coa", "Used to make some types of "));
+        ShapedRecipe cocoa = new ShapedRecipe(CandyItems.COCOA);
         cocoa.shape("xyx", "yxy", "xyx");
         cocoa.setIngredient('x', Material.COCOA);
         cocoa.setIngredient('y', Material.SUGAR);
         Bukkit.addRecipe(cocoa);
+
+        //Recipe for jawbreaker
+        ShapelessRecipe snowball = new ShapelessRecipe(CandyItems.JAWBREAKER);
+        snowball.addIngredient(4, Material.SUGAR);
+        Bukkit.addRecipe(snowball);
     }
 
     @EventHandler

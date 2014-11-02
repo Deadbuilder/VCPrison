@@ -48,6 +48,7 @@ public class Gum implements Candy {
 
     public ItemStack onCandyConsume(Player player) {
         player.removePotionEffect(PotionEffectType.SLOW);
+        player.removePotionEffect(PotionEffectType.SPEED);
         player.addPotionEffect(PotionEffectType.SPEED.createEffect(20 * 5, 1));
         return chewed;
     }
