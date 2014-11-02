@@ -45,11 +45,6 @@ public class CandyListener implements Listener {
         cocoa.setIngredient('x', Material.COCOA);
         cocoa.setIngredient('y', Material.SUGAR);
         Bukkit.addRecipe(cocoa);
-
-        //Recipe for jawbreaker
-        ShapelessRecipe snowball = new ShapelessRecipe(CandyItems.JAWBREAKER);
-        snowball.addIngredient(4, Material.SUGAR);
-        Bukkit.addRecipe(snowball);
     }
 
     @EventHandler

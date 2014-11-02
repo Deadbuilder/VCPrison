@@ -148,6 +148,7 @@ public class VCPrison extends JavaPlugin {
         CandyManager.registerCandy("gum", new Gum());
         CandyManager.registerCandy("butterscotch", new Butterscotch());
         CandyManager.registerCandy("sugar", new SugarCube());
+        CandyManager.registerCandy("jawbreaker", new Jawbreaker());
 
         Iterator<Recipe> rIterator = getServer().recipeIterator();
         while (rIterator.hasNext()) {
