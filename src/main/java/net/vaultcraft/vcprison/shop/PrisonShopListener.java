@@ -30,6 +30,7 @@ public class PrisonShopListener implements Listener {
         add(new ShopItem(Material.SMOOTH_BRICK, 3000, "Quantity: 16", "Stone Brick", 16));
         add(new ShopItem(Material.TORCH, 50000, "Quantity: 4", "Torch", 4));
         add(new ShopItem(Material.ICE, 5000, "Quantity: 2", "Ice", 2));
+        add(new ShopItem(Material.LAVA_BUCKET, 10000, "Quantity: 2", "Lava Bucket", 2));
         add(new ShopItem(Material.IRON_FENCE, 4000, "Quantity: 8", "Iron Bars", 8));
         add(new ShopItem(Material.ENCHANTMENT_TABLE, 4000, "Quantity: 1", "Enchantment Table", 1));
         add(new ShopItem(Material.BED, 20000, "Quantity: 1", "Bed", 1));
@@ -43,6 +44,7 @@ public class PrisonShopListener implements Listener {
         add(new ShopItem(Material.SEEDS, 4000, "Quantity: 2", "Seeds", 2));
         add(new ShopItem(Material.LOG, 3000, "Quantity: 16", "Oak Wood", 16));
         add(new ShopItem(Material.BOOK, 2000, "Quantity: 1", "Book", 1));
+        add(new ShopItem(Material.WOOL, 4000, "Quantity: 8", "Wool", 8));
     }};
 
 

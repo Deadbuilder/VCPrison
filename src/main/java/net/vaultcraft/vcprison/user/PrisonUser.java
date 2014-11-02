@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PrisonUser {
 
-    private static volatile ConcurrentHashMap<Player, PrisonUser> async_player_map = new ConcurrentHashMap<>();
+    public static volatile ConcurrentHashMap<Player, PrisonUser> async_player_map = new ConcurrentHashMap<>();
 
     public static PrisonUser fromPlayer(Player player) {
         return async_player_map.get(player);

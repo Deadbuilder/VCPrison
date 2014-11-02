@@ -11,6 +11,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
+import net.vaultcraft.vcutils.user.User;
 import org.bukkit.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -355,6 +356,16 @@ public class VCCell extends ICommand {
         } else {
             cell.block = true;
             Form.at(player, Prefix.SUCCESS, "You have closed your cell. Only you and your builders can teleport to it.");
+
+            for (PrisonUser pu : PrisonUser.async_player_map.values()) {
+                Cell at = VCPrison.getInstance().getCellManager().getCellFromLocation(pu.getPlayer().getLocation());
+                if (at == null)
+                    continue;
+
+                if (!(at.additionalUUIDs.contains(pu.getPlayer().getUniqueId())) || !(at.ownerUUID.equals(pu.getPlayer().getUniqueId()))) {
+                    pu.getPlayer().teleport(VCPrison.spawn);
+                }
+            }
         }
     }
 }
