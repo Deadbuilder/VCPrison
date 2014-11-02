@@ -1,18 +1,17 @@
 package net.vaultcraft.vcprison.candy;
 
 import net.vaultcraft.vcprison.VCPrison;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
 
 /**
  * @author Connor Hollasch
@@ -22,6 +21,18 @@ public class CandyListener implements Listener {
 
     public CandyListener() {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
+
+        //Recipe for Wrapper
+        ItemStack itemStack = new ItemStack(Material.QUARTZ);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.BOLD + "Candy Wrapper");
+        itemMeta.setLore(Arrays.asList("Used to make candy."));
+        itemStack.setItemMeta(itemMeta);
+        ShapedRecipe shapedRecipe = new ShapedRecipe(itemStack);
+        shapedRecipe.shape("xxx", "xyx", "xxx");
+        shapedRecipe.setIngredient('x', Material.INK_SACK, 8);
+        shapedRecipe.setIngredient('y', Material.SNOW_BLOCK);
+        Bukkit.getServer().addRecipe(shapedRecipe);
     }
 
     @EventHandler
