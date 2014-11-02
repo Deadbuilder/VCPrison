@@ -20,19 +20,19 @@ public class CandyListener implements Listener {
     public CandyListener() {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
 
-        //Recipe for Wrapper
-        ShapedRecipe shapedRecipe = new ShapedRecipe(ItemUtils.build(Material.QUARTZ, ChatColor.translateAlternateColorCodes('&', "&7&lCandy Wrapper"), "You'll need something to contain sticky candies!"));
-        shapedRecipe.shape("XXX", "XYX", "XXX");
-        shapedRecipe.setIngredient('X', Material.INK_SACK, 8);
-        shapedRecipe.setIngredient('Y', Material.SNOW_BLOCK);
-        Bukkit.addRecipe(shapedRecipe);
-
         //Recipe for butter
-        ShapedRecipe butter = new ShapedRecipe(ItemUtils.build(Material.INK_SACK, (byte)11, ChatColor.translateAlternateColorCodes('&', "&e&lButter"), "Used to create some types of candies"));
+        ShapedRecipe butter = new ShapedRecipe(ItemUtils.build(Material.INK_SACK, (byte) 11, ChatColor.translateAlternateColorCodes('&', "&e&lButter"), "Used to create some types of candies"));
         butter.shape("XYX", "YXY", "XYX");
         butter.setIngredient('X', Material.WHEAT);
         butter.setIngredient('Y', Material.GLOWSTONE_DUST);
         Bukkit.addRecipe(butter);
+
+        //Recipe for CoCoa
+        ShapedRecipe cocoa = new ShapedRecipe(ItemUtils.build(Material.BRICK, ChatColor.GOLD.toString() + ChatColor.BOLD + "Co-Coa", "Used to make some types of "));
+        cocoa.shape("xyx", "yxy", "xyx");
+        cocoa.setIngredient('x', Material.COCOA);
+        cocoa.setIngredient('y', Material.SUGAR);
+        Bukkit.addRecipe(cocoa);
     }
 
     @EventHandler
@@ -63,7 +63,6 @@ public class CandyListener implements Listener {
             }
         }
 
-        event.setCancelled(true);
         player.updateInventory();
     }
 }
