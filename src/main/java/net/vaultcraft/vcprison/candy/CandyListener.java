@@ -14,6 +14,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,6 +22,8 @@ import java.util.List;
  * @since 11/1/2014
  */
 public class CandyListener implements Listener {
+
+    private static HashMap<String, HashMap<Candy, Integer>> playerCandyMap = new HashMap<>();
 
     public CandyListener() {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
@@ -56,6 +59,7 @@ public class CandyListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         ItemStack holding = event.getItem();
         Player player = event.getPlayer();
+        String name = player.getName();
         Candy from = CandyManager.getCandy(holding);
         if (from == null)
             return;
@@ -65,9 +69,52 @@ public class CandyListener implements Listener {
             if(holding.getItemMeta().getLore() != null)
                 if(holding.getItemMeta().getLore().contains("harmful"))
                     harmful = true;
+
+        int amount = 1;
+        if(playerCandyMap.containsKey(name)) {
+            HashMap<Candy, Integer> candyMap = playerCandyMap.remove(name);
+            if(candyMap.containsKey(from)) {
+                amount = candyMap.remove(from);
+                if(amount >= from.getHarmfulAfter())
+                    harmful = true;
+                amount++;
+                candyMap.put(from, amount);
+                playerCandyMap.put(name, candyMap);
+            } else {
+                candyMap.put(from, amount);
+                playerCandyMap.put(name, candyMap);
+            }
+        } else {
+            HashMap<Candy, Integer> candyMap = new HashMap<>();
+            candyMap.put(from, amount);
+            playerCandyMap.put(name, candyMap);
+        }
+
         ItemStack drop = from.onCandyConsume(player, harmful);
         player.playSound(player.getLocation(), Sound.EAT, 1, 1);
         player.playEffect(player.getLocation(), Effect.STEP_SOUND, holding.getTypeId());
+
+        final int origin = amount;
+        Runnable runnable = () -> {
+            if(!playerCandyMap.containsKey(name) || playerCandyMap.get(name) == null)
+                return;
+            HashMap<Candy, Integer> candyMap = playerCandyMap.remove(name);
+            if(!candyMap.containsKey(from) || candyMap.get(from) == null) {
+                playerCandyMap.put(name, candyMap);
+                return;
+            }
+
+            int amount1 = candyMap.remove(from);
+            if(amount1 != origin) {
+                candyMap.put(from, amount1);
+                playerCandyMap.put(name, candyMap);
+                return;
+            }
+
+            playerCandyMap.put(name, candyMap);
+        };
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), runnable, from.getCooldown() * 20);
 
         if (player.getItemInHand().getAmount() == 1) {
             player.getInventory().remove(player.getItemInHand());
