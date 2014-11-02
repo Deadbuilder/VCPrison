@@ -37,7 +37,7 @@ public class SugarCube implements Candy {
 
     private static HashMap<Player, Integer> rush = new HashMap<>();
 
-    public ItemStack onCandyConsume(Player player) {
+    public ItemStack onCandyConsume(Player player, boolean harmful) {
         int amount = 1;
         if (rush.containsKey(player)) {
             amount = rush.remove(player);
@@ -63,7 +63,7 @@ public class SugarCube implements Candy {
 
         int origin = amount;
         Runnable remove = () -> {
-            if (rush.containsKey(player) && rush.get(player) == origin)
+            if (!rush.containsKey(player) || rush.get(player) != origin)
                 return;
 
             rush.remove(player);

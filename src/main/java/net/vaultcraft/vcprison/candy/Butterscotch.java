@@ -29,7 +29,7 @@ public class Butterscotch implements Candy {
         return stack;
     }
 
-    public ItemStack onCandyConsume(Player player) {
+    public ItemStack onCandyConsume(Player player, boolean harmful) {
         player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
         player.addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(20 * 30, 1));
         return null;

@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
@@ -46,7 +45,7 @@ public class Gum implements Candy {
         return stack;
     }
 
-    public ItemStack onCandyConsume(Player player) {
+    public ItemStack onCandyConsume(Player player, boolean harmful) {
         player.removePotionEffect(PotionEffectType.SLOW);
         player.addPotionEffect(PotionEffectType.SPEED.createEffect(20 * 5, 1));
         return chewed;
