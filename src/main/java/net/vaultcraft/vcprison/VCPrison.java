@@ -1,10 +1,7 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
-import net.vaultcraft.vcprison.candy.Butterscotch;
-import net.vaultcraft.vcprison.candy.CandyListener;
-import net.vaultcraft.vcprison.candy.CandyManager;
-import net.vaultcraft.vcprison.candy.Gum;
+import net.vaultcraft.vcprison.candy.*;
 import net.vaultcraft.vcprison.cells.CellManager;
 import net.vaultcraft.vcprison.cells.CellsListener;
 import net.vaultcraft.vcprison.cells.VCCell;
@@ -154,6 +151,7 @@ public class VCPrison extends JavaPlugin {
         new CandyListener();
         CandyManager.registerCandy("gum", new Gum());
         CandyManager.registerCandy("butterscotch", new Butterscotch());
+        CandyManager.registerCandy("sugar", new SugarCube());
 
         Bukkit.getOnlinePlayers().forEach(net.vaultcraft.vcprison.user.PrisonUser::new);
 
