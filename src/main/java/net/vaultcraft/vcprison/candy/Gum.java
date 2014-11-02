@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
@@ -31,22 +30,13 @@ public class Gum implements Candy {
         return rc;
     }
 
-    private static ItemStack stack;
-    protected static ItemStack chewed = ItemUtils.build(Material.INK_SACK, (byte)15, ChatColor.translateAlternateColorCodes('&', "&d&lChewed gum"), "Drop this to stick players onto the ground!");
-
-    static {
-        stack = new ItemStack(Material.INK_SACK, 1, (short)13);
-        ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&d&lBubble Gum"));
-        meta.setLore(Arrays.asList(new String[]{"Consume to receive chewed gum, chewed gum can", "be dropped on the ground to give players slowness"}));
-        stack.setItemMeta(meta);
-    }
+    protected static ItemStack chewed = CandyItems.CHEWEDGUM;
 
     public ItemStack getCandyItem() {
-        return stack;
+        return CandyItems.GUM;
     }
 
-    public ItemStack onCandyConsume(Player player) {
+    public ItemStack onCandyConsume(Player player, boolean harmful) {
         player.removePotionEffect(PotionEffectType.SLOW);
         player.removePotionEffect(PotionEffectType.SPEED);
         player.addPotionEffect(PotionEffectType.SPEED.createEffect(20 * 5, 1));
@@ -56,7 +46,8 @@ public class Gum implements Candy {
     @EventHandler
     public void onItemPickup(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
-        ItemStack stack = event.getItem().getItemStack();
+
+        ItemStack stack = event.getItem().getItemStack().clone();
         stack.setAmount(1);
 
         if (chewed.equals(stack)) {

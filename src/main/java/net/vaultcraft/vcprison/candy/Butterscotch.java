@@ -1,7 +1,5 @@
 package net.vaultcraft.vcprison.candy;
 
-import net.vaultcraft.vcutils.item.ItemUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -23,13 +21,11 @@ public class Butterscotch implements Candy {
         return rc;
     }
 
-    private static ItemStack stack = ItemUtils.build(Material.INK_SACK, (byte)14, ChatColor.translateAlternateColorCodes('&', "&6&lButterscotch"), "Receive 8 minutes of fire resistance.");
-
     public ItemStack getCandyItem() {
-        return stack;
+        return CandyItems.BUTTERSCOTCH;
     }
 
-    public ItemStack onCandyConsume(Player player) {
+    public ItemStack onCandyConsume(Player player, boolean harmful) {
         player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
         player.addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(20 * 30, 1));
         return null;

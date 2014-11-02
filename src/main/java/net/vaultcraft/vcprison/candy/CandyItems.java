@@ -15,5 +15,13 @@ public class CandyItems {
     public static final ItemStack BUTTER = ItemUtils.build(Material.INK_SACK, (byte) 11, ChatColor.translateAlternateColorCodes('&', "&e&lButter"), "Used to create some types of candies");
     public static final ItemStack COCOA = ItemUtils.build(Material.BRICK, ChatColor.GOLD.toString() + ChatColor.BOLD + "Co-Coa", "Used to make some types of ");
     public static final ItemStack JAWBREAKER = ItemUtils.build(Material.SNOW_BALL, ChatColor.translateAlternateColorCodes('&', "&lJawbreaker"), "Ow! Jawbreakers can do some serious damage to your teeth!");
-
+    public static final ItemStack CHEWEDGUM = ItemUtils.build(Material.INK_SACK, (byte)15, ChatColor.translateAlternateColorCodes('&', "&d&lChewed gum"), "Drop this to stick players onto the ground!");
+    public static final ItemStack GUM = ItemUtils.build(Material.INK_SACK, (byte)13,
+            ChatColor.translateAlternateColorCodes('&', "&d&lBubble Gum"),
+            "Consume to receive chewed gum, chewed gum can", "be dropped on the ground to give players slowness");
+    public static final ItemStack SUGARCUBE = ItemUtils.build(Material.SNOW_BLOCK, ChatColor.translateAlternateColorCodes('&', "&lSugar Cube"),
+            "Core item used to create new candies.",
+            "Sugar cubes may also be consumed to receive ", "speed and jump boosts.",
+            ChatColor.translateAlternateColorCodes('&', "&c&lWARNING&f: &5&oEating too many sugar cubes in such"), "short time can have negative effects!");
+    public static final ItemStack BUTTERSCOTCH = ItemUtils.build(Material.INK_SACK, (byte)14, ChatColor.translateAlternateColorCodes('&', "&6&lButterscotch"), "Receive 8 minutes of fire resistance.");
 }

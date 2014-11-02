@@ -6,10 +6,15 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 /**
  * @author Connor Hollasch
@@ -55,7 +60,12 @@ public class CandyListener implements Listener {
         if (from == null)
             return;
 
-        ItemStack drop = from.onCandyConsume(player);
+        boolean harmful = false;
+        if(holding.getItemMeta() != null)
+            if(holding.getItemMeta().getLore() != null)
+                if(holding.getItemMeta().getLore().contains("harmful"))
+                    harmful = true;
+        ItemStack drop = from.onCandyConsume(player, harmful);
         player.playSound(player.getLocation(), Sound.EAT, 1, 1);
         player.playEffect(player.getLocation(), Effect.STEP_SOUND, holding.getTypeId());
 
@@ -76,5 +86,34 @@ public class CandyListener implements Listener {
         }
 
         player.updateInventory();
+    }
+
+    @EventHandler
+    public void onCraft(PrepareItemCraftEvent event) {
+        CraftingInventory inventory = event.getInventory();
+        Candy candy = null;
+        for(int i = 0; i < inventory.getContents().length; i++) {
+            if(i <= 3 || i >= 8) {
+                if(inventory.getContents()[i].getType() != Material.SNOW_BALL)
+                    return;
+                continue;
+            }
+            if(CandyManager.getCandy(inventory.getContents()[i]) != null) {
+                candy = CandyManager.getCandy(inventory.getContents()[i]);
+                continue;
+            }
+            return;
+        }
+
+        if(candy == null)
+            return;
+
+        ItemStack itemStack = candy.getCandyItem();
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        List<String> lore = itemMeta.getLore();
+        lore.add("Harmful");
+        itemMeta.setLore(lore);
+        itemStack.setItemMeta(itemMeta);
+        inventory.setResult(itemStack);
     }
 }
