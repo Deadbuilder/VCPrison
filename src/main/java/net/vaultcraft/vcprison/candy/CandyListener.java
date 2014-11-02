@@ -100,6 +100,9 @@ public class CandyListener implements Listener {
             return;
         }
 
+        if(candy == null)
+            return;
+
         ItemStack itemStack = candy.getCandyItem();
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore = itemMeta.getLore();
