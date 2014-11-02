@@ -28,8 +28,8 @@ public class SugarCube implements Candy {
 
     private static ItemStack cube = ItemUtils.build(Material.SNOW_BLOCK, ChatColor.translateAlternateColorCodes('&', "&lSugar Cube"),
             "Core item used to create new candies.",
-            "Sugar cubes may also be consumed to receive speed and jump boosts.",
-            ChatColor.translateAlternateColorCodes('&', "&c&lWARNING&f: Eating too many sugar cubes in such"), "short time can have negative effects!");
+            "Sugar cubes may also be consumed to receive ", "speed and jump boosts.",
+            ChatColor.translateAlternateColorCodes('&', "&c&lWARNING&f: &5&oEating too many sugar cubes in such"), "short time can have negative effects!");
 
     public ItemStack getCandyItem() {
         return cube;
@@ -44,8 +44,11 @@ public class SugarCube implements Candy {
             amount++;
 
             if (amount >= 4) {
-                player.addPotionEffect(PotionEffectType.BLINDNESS.createEffect(20 * 10, 0));
-                player.addPotionEffect(PotionEffectType.CONFUSION.createEffect(20 * 10, 0));
+                player.removePotionEffect(PotionEffectType.BLINDNESS);
+                player.removePotionEffect(PotionEffectType.CONFUSION);
+
+                player.addPotionEffect(PotionEffectType.BLINDNESS.createEffect(20 * 25, 0));
+                player.addPotionEffect(PotionEffectType.CONFUSION.createEffect(20 * 25, 0));
             }
         }
 
@@ -53,13 +56,14 @@ public class SugarCube implements Candy {
         if (amount < 4) {
             player.removePotionEffect(PotionEffectType.JUMP);
             player.removePotionEffect(PotionEffectType.SPEED);
-            player.addPotionEffect(PotionEffectType.JUMP.createEffect(20 * 3, 0));
-            player.addPotionEffect(PotionEffectType.SPEED.createEffect(20 * 3, 0));
+
+            player.addPotionEffect(PotionEffectType.JUMP.createEffect(20 * 5, 0));
+            player.addPotionEffect(PotionEffectType.SPEED.createEffect(20 * 5, 0));
         }
 
         int origin = amount;
         Runnable remove = () -> {
-            if (rush.containsKey(player) && rush.get(player) != origin)
+            if (rush.containsKey(player) && rush.get(player) == origin)
                 return;
 
             rush.remove(player);

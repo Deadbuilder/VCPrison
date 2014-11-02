@@ -142,12 +142,6 @@ public class VCPrison extends JavaPlugin {
         SwordPerk.addPerk(new SpeedSwordPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 5, false, "Adds Speed when you have your sword selected.", "Toggleable"), 5);
         SwordPerk.addPerk(new ExplosionSwordPerk(Material.TNT, "Explosion", 5, 0, 2, "Adds a level of explosion to your sword."), 6);
 
-        ShapedRecipe butter = new ShapedRecipe(ItemUtils.build(Material.INK_SACK, (byte)11, ChatColor.translateAlternateColorCodes('&', "&e&lButter"), "Used to create some types of candies"));
-        butter.shape("XYX", "YXY", "XYX");
-        butter.setIngredient('X', Material.WHEAT);
-        butter.setIngredient('Y', Material.GLOWSTONE_DUST);
-        Bukkit.addRecipe(butter);
-
         new CandyListener();
         CandyManager.registerCandy("gum", new Gum());
         CandyManager.registerCandy("butterscotch", new Butterscotch());

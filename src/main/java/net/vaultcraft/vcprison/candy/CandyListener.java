@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.candy;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcutils.item.ItemUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -9,9 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
 
 /**
  * @author Connor Hollasch
@@ -23,16 +21,18 @@ public class CandyListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
 
         //Recipe for Wrapper
-        ItemStack itemStack = new ItemStack(Material.QUARTZ);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.BOLD + "Candy Wrapper");
-        itemMeta.setLore(Arrays.asList("Used to make candy."));
-        itemStack.setItemMeta(itemMeta);
-        ShapedRecipe shapedRecipe = new ShapedRecipe(itemStack);
-        shapedRecipe.shape("xxx", "xyx", "xxx");
-        shapedRecipe.setIngredient('x', Material.INK_SACK, 8);
-        shapedRecipe.setIngredient('y', Material.SNOW_BLOCK);
-        Bukkit.getServer().addRecipe(shapedRecipe);
+        ShapedRecipe shapedRecipe = new ShapedRecipe(ItemUtils.build(Material.QUARTZ, ChatColor.translateAlternateColorCodes('&', "&7&lCandy Wrapper"), "You'll need something to contain sticky candies!"));
+        shapedRecipe.shape("XXX", "XYX", "XXX");
+        shapedRecipe.setIngredient('X', Material.INK_SACK, 8);
+        shapedRecipe.setIngredient('Y', Material.SNOW_BLOCK);
+        Bukkit.addRecipe(shapedRecipe);
+
+        //Recipe for butter
+        ShapedRecipe butter = new ShapedRecipe(ItemUtils.build(Material.INK_SACK, (byte)11, ChatColor.translateAlternateColorCodes('&', "&e&lButter"), "Used to create some types of candies"));
+        butter.shape("XYX", "YXY", "XYX");
+        butter.setIngredient('X', Material.WHEAT);
+        butter.setIngredient('Y', Material.GLOWSTONE_DUST);
+        Bukkit.addRecipe(butter);
     }
 
     @EventHandler
@@ -63,6 +63,7 @@ public class CandyListener implements Listener {
             }
         }
 
+        event.setCancelled(true);
         player.updateInventory();
     }
 }
