@@ -7,7 +7,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -20,6 +19,13 @@ public class CandyListener implements Listener {
 
     public CandyListener() {
         Bukkit.getPluginManager().registerEvents(this, VCPrison.getInstance());
+
+        //Recipe for wrappers
+        ShapedRecipe wrapper = new ShapedRecipe(ItemUtils.build(Material.QUARTZ, ChatColor.translateAlternateColorCodes('&', "&7&lCandy Wrapper"), "You'll need something to contain sticky candies!"));
+        wrapper.shape("XXX", "XYX", "XXX");
+        wrapper.setIngredient('X', Material.INK_SACK, 8);
+        wrapper.setIngredient('Y', Material.SNOW_BLOCK);
+        Bukkit.addRecipe(wrapper);
 
         //Recipe for butter
         ShapedRecipe butter = new ShapedRecipe(ItemUtils.build(Material.INK_SACK, (byte) 11, ChatColor.translateAlternateColorCodes('&', "&e&lButter"), "Used to create some types of candies"));
@@ -65,9 +71,5 @@ public class CandyListener implements Listener {
         }
 
         player.updateInventory();
-    }
-
-    @EventHandler
-    public void onCraft(CraftItemEvent event) {
     }
 }

@@ -49,6 +49,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -56,6 +57,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -146,6 +148,13 @@ public class VCPrison extends JavaPlugin {
         CandyManager.registerCandy("gum", new Gum());
         CandyManager.registerCandy("butterscotch", new Butterscotch());
         CandyManager.registerCandy("sugar", new SugarCube());
+
+        Iterator<Recipe> rIterator = getServer().recipeIterator();
+        while (rIterator.hasNext()) {
+            Recipe current = rIterator.next();
+            if (current.getResult().getType().equals(Material.QUARTZ))
+                rIterator.remove();
+        }
 
         Bukkit.getOnlinePlayers().forEach(net.vaultcraft.vcprison.user.PrisonUser::new);
 
