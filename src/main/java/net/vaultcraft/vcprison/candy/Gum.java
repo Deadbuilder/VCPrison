@@ -3,11 +3,15 @@ package net.vaultcraft.vcprison.candy;
 import net.vaultcraft.vcutils.item.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.MaterialData;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
 
@@ -15,15 +19,15 @@ import java.util.Arrays;
  * @author Connor Hollasch
  * @since 11/1/2014
  */
-public class Gum extends Candy {
+public class Gum implements Candy {
 
     public ShapedRecipe getRecipe() {
         ShapedRecipe rc = new ShapedRecipe(getCandyItem());
         rc.shape("XYX", "QZQ", "XYX");
-        rc.setIngredient('X', Material.QUARTZ_ORE);
-        rc.setIngredient('Y', Material.STONE);
-        rc.setIngredient('Q', Material.STONE);
-        rc.setIngredient('Z', Material.SUGAR);
+        rc.setIngredient('X', Material.QUARTZ);
+        rc.setIngredient('Y', Material.INK_SACK.getNewData((byte)9));
+        rc.setIngredient('Q', Material.INK_SACK.getNewData((byte)8));
+        rc.setIngredient('Z', Material.SNOW_BLOCK);
         return rc;
     }
 
@@ -42,8 +46,25 @@ public class Gum extends Candy {
         return stack;
     }
 
-    @Override
     public ItemStack onCandyConsume(Player player) {
+        player.removePotionEffect(PotionEffectType.SLOW);
+        player.addPotionEffect(PotionEffectType.SPEED.createEffect(20 * 5, 1));
         return chewed;
+    }
+
+    @EventHandler
+    public void onItemPickup(PlayerPickupItemEvent event) {
+        Player player = event.getPlayer();
+        ItemStack stack = event.getItem().getItemStack();
+        stack.setAmount(1);
+
+        if (chewed.equals(stack)) {
+            event.setCancelled(true);
+            player.removePotionEffect(PotionEffectType.SLOW);
+            player.addPotionEffect(PotionEffectType.SLOW.createEffect(20 * 10, 1));
+            player.playSound(player.getLocation(), Sound.DIG_GRAVEL, 1, 2);
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&lYou stepped in sticky gum!"));
+            event.getItem().remove();
+        }
     }
 }

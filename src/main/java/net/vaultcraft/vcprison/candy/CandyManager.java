@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison.candy;
 
 import net.vaultcraft.vcprison.VCPrison;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -21,6 +22,7 @@ public class CandyManager {
     public static void registerCandy(String name, Candy c) {
         candy.put(name, c);
         VCPrison.getInstance().getServer().addRecipe(c.getRecipe());
+        Bukkit.getPluginManager().registerEvents(c, VCPrison.getInstance());
     }
 
     public static Candy getCandy(ItemStack stack) {

@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
+import net.vaultcraft.vcprison.candy.Butterscotch;
 import net.vaultcraft.vcprison.candy.CandyListener;
 import net.vaultcraft.vcprison.candy.CandyManager;
 import net.vaultcraft.vcprison.candy.Gum;
@@ -35,6 +36,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
+import net.vaultcraft.vcutils.item.ItemUtils;
 import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.protection.Area;
 import net.vaultcraft.vcutils.protection.ProtectedArea;
@@ -50,6 +52,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -142,8 +145,15 @@ public class VCPrison extends JavaPlugin {
         SwordPerk.addPerk(new SpeedSwordPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 5, false, "Adds Speed when you have your sword selected.", "Toggleable"), 5);
         SwordPerk.addPerk(new ExplosionSwordPerk(Material.TNT, "Explosion", 5, 0, 2, "Adds a level of explosion to your sword."), 6);
 
+        ShapedRecipe butter = new ShapedRecipe(ItemUtils.build(Material.INK_SACK, (byte)11, ChatColor.translateAlternateColorCodes('&', "&e&lButter"), "Used to create some types of candies"));
+        butter.shape("XYX", "YXY", "XYX");
+        butter.setIngredient('X', Material.WHEAT);
+        butter.setIngredient('Y', Material.GLOWSTONE_DUST);
+        Bukkit.addRecipe(butter);
+
         new CandyListener();
         CandyManager.registerCandy("gum", new Gum());
+        CandyManager.registerCandy("butterscotch", new Butterscotch());
 
         Bukkit.getOnlinePlayers().forEach(net.vaultcraft.vcprison.user.PrisonUser::new);
 

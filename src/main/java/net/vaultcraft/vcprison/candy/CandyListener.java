@@ -34,7 +34,14 @@ public class CandyListener implements Listener {
 
         ItemStack drop = from.onCandyConsume(player);
         player.playSound(player.getLocation(), Sound.EAT, 1, 1);
-        player.playEffect(player.getLocation(), Effect.POTION_BREAK, holding.getTypeId());
+        player.playEffect(player.getLocation(), Effect.STEP_SOUND, holding.getTypeId());
+
+        if (player.getItemInHand().getAmount() == 1) {
+            player.getInventory().remove(player.getItemInHand());
+        } else {
+            holding.setAmount(holding.getAmount()-1);
+            player.setItemInHand(holding);
+        }
 
         if (drop != null) {
             if (player.getInventory().firstEmpty() == -1) {
@@ -44,19 +51,7 @@ public class CandyListener implements Listener {
                 player.getInventory().addItem(drop.clone());
             }
         }
-    }
 
-    @EventHandler
-    public void onItemPickup(PlayerPickupItemEvent event) {
-        Player player = event.getPlayer();
-        ItemStack stack = event.getItem().getItemStack();
-        stack.setAmount(1);
-
-        if (Gum.chewed.equals(stack)) {
-            event.setCancelled(true);
-            player.addPotionEffect(PotionEffectType.SLOW.createEffect(20 * 10, 1));
-            player.playSound(player.getLocation(), Sound.DIG_WOOL, 1, 0);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&d&l"));
-        }
+        player.updateInventory();
     }
 }
