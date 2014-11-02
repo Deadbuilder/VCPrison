@@ -1,6 +1,9 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
+import net.vaultcraft.vcprison.candy.CandyListener;
+import net.vaultcraft.vcprison.candy.CandyManager;
+import net.vaultcraft.vcprison.candy.Gum;
 import net.vaultcraft.vcprison.cells.CellManager;
 import net.vaultcraft.vcprison.cells.CellsListener;
 import net.vaultcraft.vcprison.cells.VCCell;
@@ -139,9 +142,10 @@ public class VCPrison extends JavaPlugin {
         SwordPerk.addPerk(new SpeedSwordPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 5, false, "Adds Speed when you have your sword selected.", "Toggleable"), 5);
         SwordPerk.addPerk(new ExplosionSwordPerk(Material.TNT, "Explosion", 5, 0, 2, "Adds a level of explosion to your sword."), 6);
 
-        for(Player player : Bukkit.getOnlinePlayers()) {
-            new PrisonUser(player);
-        }
+        new CandyListener();
+        CandyManager.registerCandy("gum", new Gum());
+
+        Bukkit.getOnlinePlayers().forEach(net.vaultcraft.vcprison.user.PrisonUser::new);
 
         MineLoader.loadMines();
         WarpLoader.loadWarps();
