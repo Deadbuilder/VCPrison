@@ -16,5 +16,9 @@ public interface Candy extends Listener {
 
     public ItemStack getCandyItem();
 
+    public int getCooldown();
+
+    public int getHarmfulAfter();
+
     public ItemStack onCandyConsume(Player player, boolean harmful);
 }
