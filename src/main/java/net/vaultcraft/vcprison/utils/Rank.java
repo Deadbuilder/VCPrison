@@ -85,6 +85,6 @@ public enum Rank {
             if (rank.toString().equals(name.toUpperCase()))
                 return rank;
         }
-        return A;
+        return null;
     }
 }

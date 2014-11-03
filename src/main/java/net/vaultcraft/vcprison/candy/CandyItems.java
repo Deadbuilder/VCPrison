@@ -29,9 +29,25 @@ public class CandyItems {
             "Sugar cubes may also be consumed to receive ", "speed and jump boosts.",
             ChatColor.translateAlternateColorCodes('&', "&c&lWARNING&f: &5&oEating too many sugar cubes in such"), "short time can have negative effects!");
     public static final ItemStack BUTTERSCOTCH = ItemUtils.build(Material.INK_SACK, (byte)14, ChatColor.translateAlternateColorCodes('&', "&6&lButterscotch"),
-            "Receive 8 minutes of fire resistance.");
+            "Receive 30 minutes of fire resistance.");
     public static final ItemStack SOURPATCH = ItemUtils.build(Material.MELON, ChatColor.translateAlternateColorCodes('&', "&2&lSour&6&lPatch"),
             "Consume to get a Thorns effect for 15 seconds.");
     public static final ItemStack USEDWRAPPER = ItemUtils.build(Material.INK_SACK, (byte)7, ChatColor.translateAlternateColorCodes('&', "&8&lUsed Candy Wrapper"),
             "Smelt to get 4 rubber back.");
+    public static final ItemStack CHOCOLATEBAR = ItemUtils.build(Material.NETHER_BRICK, ChatColor.translateAlternateColorCodes('&', "&6&lChocolate Bar"),
+            "Consume to get 20 seconds of invisibility" , "and 10 seconds of resistance.");
+    public static final ItemStack CANDYAPPLE = ItemUtils.build(Material.APPLE, ChatColor.translateAlternateColorCodes('&', "&d&lCandy &c&lApple"),
+            "Right to throw. After 6 seconds near",
+            "by players will receive slowness and",
+            "blindness.");
+    public static final ItemStack RUBBER = ItemUtils.build(Material.INK_SACK, (byte)8, ChatColor.translateAlternateColorCodes('&', "&o&lRubber"),
+            "Used to create gum and wrappers.");
+    public static final ItemStack WARHEAD = ItemUtils.build(Material.MAGMA_CREAM, ChatColor.translateAlternateColorCodes('&', "&e&lWarHead"),
+            "Consume to get 10 seconds of Strength");
+    public static final ItemStack COOKIE = ItemUtils.build(Material.COOKIE, ChatColor.translateAlternateColorCodes('&', "&6&lC&e&lO&6&lO&e&lK&6&lI&e&lE"),
+            "Consume to rain down Cocoa Beans",
+            "that explode!");
+    public static final ItemStack SWEDISHFISH = ItemUtils.build(Material.RAW_BEEF, 1, ChatColor.translateAlternateColorCodes('&', "&4&lSwedish Fish"),
+            "Consume to get 10 seconds of speed",
+            "and 5 seconds of resistance.");
 }

@@ -1,0 +1,83 @@
+package net.vaultcraft.vcprison.candy;
+
+import net.vaultcraft.vcutils.protection.Area;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
+
+import java.util.Random;
+
+/**
+ * Created by tacticalsk8er on 11/2/2014.
+ */
+public class Cookie implements Candy {
+
+    @Override
+    public Recipe getRecipe() {
+        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.COOKIE);
+        shapedRecipe.shape("xyz", "yay", "zyx");
+        shapedRecipe.setIngredient('x', Material.INK_SACK, 11);
+        shapedRecipe.setIngredient('y', Material.BRICK);
+        shapedRecipe.setIngredient('z', Material.NETHER_STAR);
+        shapedRecipe.setIngredient('a', Material.SNOW_BLOCK);
+        return shapedRecipe;
+    }
+
+    @Override
+    public ItemStack getCandyItem() {
+        return CandyItems.COOKIE;
+    }
+
+    @Override
+    public int getCooldown() {
+        return 1;
+    }
+
+    @Override
+    public int getHarmfulAfter() {
+        return 20;
+    }
+
+    @Override
+    public ItemStack onCandyConsume(Player player, boolean harmful) {
+
+        Location min = new Location(player.getLocation().getWorld(), player.getLocation().getX() - 10, player.getLocation().getY() + 10, player.getLocation().getZ() - 10);
+        Location max = new Location(player.getLocation().getWorld(), player.getLocation().getX() + 10, player.getLocation().getY() + 10, player.getLocation().getZ() + 10);
+        Area area = new Area(min , max);
+
+        for(int i = 0; i < 25; i++) {
+            Item drop = player.getWorld().dropItem(randomInside(area), new ItemStack(Material.COCOA));
+            drop.setTicksLived(5800);
+        }
+
+        return null;
+    }
+
+    private static Location randomInside(Area area) {
+        Location low = area.getMin();
+        Location hi = area.getMax();
+
+        int x = randInt(low.getBlockX(), hi.getBlockX());
+        int y = randInt(low.getBlockY(), hi.getBlockY());
+        int z = randInt(low.getBlockZ(), hi.getBlockZ());
+
+        return new Location(area.getMax().getWorld(), x, y, z);
+    }
+
+    private static int randInt(int min, int max) {
+
+        // NOTE: Usually this should be a field rather than a method
+        // variable so that it is not re-seeded every call.
+        Random rand = new Random();
+
+        // nextInt is normally exclusive of the top value,
+        // so add 1 to make it inclusive
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
+    }
+}

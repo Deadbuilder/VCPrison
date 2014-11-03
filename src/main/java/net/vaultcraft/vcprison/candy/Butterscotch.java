@@ -37,6 +37,7 @@ public class Butterscotch implements Candy {
 
     public ItemStack onCandyConsume(Player player, boolean harmful) {
         if(harmful) {
+            player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
             player.setFireTicks(20 * 30);
         } else {
             player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);

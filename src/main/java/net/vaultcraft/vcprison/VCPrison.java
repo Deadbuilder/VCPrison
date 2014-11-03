@@ -33,7 +33,6 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
-import net.vaultcraft.vcutils.item.ItemUtils;
 import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.protection.Area;
 import net.vaultcraft.vcutils.protection.ProtectedArea;
@@ -50,7 +49,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -128,6 +126,7 @@ public class VCPrison extends JavaPlugin {
 
         new WarpGUI();
 
+        //Pickaxe perks
         PickaxePerk.addPerk(new EfficiencyPerk(Material.STONE, "Efficiency", 1, 5, 100, "Adds a level of efficiency to your pick."), 0);
         PickaxePerk.addPerk(new FortunePerk(Material.DIAMOND, "Fortune", 1, 5, 100, "Adds a level of fortune to your pick."), 1);
         PickaxePerk.addPerk(new HastePerk(Material.DIAMOND_PICKAXE, "Haste", 5, 0, 4, "Adds a level of haste when you have your pick selected."), 2);
@@ -137,6 +136,7 @@ public class VCPrison extends JavaPlugin {
         PickaxePerk.addPerk(new NightVisionPerk(Material.EYE_OF_ENDER, Material.EYE_OF_ENDER, Material.ENDER_PEARL, "Night Vision", 8, false, "Adds night vision when you have your pick selected.", "Toggleable"), 6);
         PickaxePerk.addPerk(new SpeedPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 8, false, "Adds Speed when you have your pick selected.", "Toggleable"), 7);
 
+        //Sword perks
         SwordPerk.addPerk(new SharpnessSwordPerk(Material.QUARTZ, "Sharpness", 2, 0, 3, "Adds a level of sharpness to your sword."), 0);
         SwordPerk.addPerk(new FireAspectSwordPerk(Material.FIRE, "Fire Aspect", 6, 0, 1, "Adds a level of fire aspect to your sword."), 1);
         SwordPerk.addPerk(new KnockbackSwordPerk(Material.ANVIL, "Knockback", 5, 0, 2, "Adds a level of knockback to your sword."), 2);
@@ -145,29 +145,45 @@ public class VCPrison extends JavaPlugin {
         SwordPerk.addPerk(new SpeedSwordPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 5, false, "Adds Speed when you have your sword selected.", "Toggleable"), 5);
         SwordPerk.addPerk(new ExplosionSwordPerk(Material.TNT, "Explosion", 5, 0, 2, "Adds a level of explosion to your sword."), 6);
 
+        //Cnady
         new CandyListener();
         CandyManager.registerCandy("gum", new Gum());
         CandyManager.registerCandy("butterscotch", new Butterscotch());
         CandyManager.registerCandy("sugar", new SugarCube());
         CandyManager.registerCandy("jawbreaker", new Jawbreaker());
+        CandyManager.registerCandy("sourpatch", new SourPatch());
+        CandyManager.registerCandy("warhead", new Warhead());
+        CandyManager.registerCandy("candyapple", new CandyApple());
+        CandyManager.registerCandy("chocolatebar", new ChocolateBar());
+        CandyManager.registerCandy("cookie", new Cookie());
 
+        //Remove Recipes
         Iterator<Recipe> rIterator = getServer().recipeIterator();
         while (rIterator.hasNext()) {
             Recipe current = rIterator.next();
             if (current.getResult().getType().equals(Material.QUARTZ))
                 rIterator.remove();
+            if(current.getResult().getType().equals(Material.GOLDEN_APPLE) && current.getResult().getData().getData() == 1)
+                rIterator.remove();
+            if(current.getResult().getType().equals(Material.COOKIE))
+                rIterator.remove();
         }
 
+        //Add users who are online
         Bukkit.getOnlinePlayers().forEach(net.vaultcraft.vcprison.user.PrisonUser::new);
 
+        //Mine loading
         MineLoader.loadMines();
         WarpLoader.loadWarps();
         ItemWorthLoader.loadItemWorth();
 
+        //Gangs
         new GangManager();
 
+        //Main class as listener
         VCPluginManager.register(this);
 
+        //
         System.out.println("Loading FFA Region...");
         World ffaWorld = Bukkit.getServer().createWorld(new WorldCreator("ffa"));
         ProtectedArea area = new ProtectedArea(new Area(new Location(ffaWorld, -5000, 0, -5000), new Location(ffaWorld, 5000, 256, 5000)));

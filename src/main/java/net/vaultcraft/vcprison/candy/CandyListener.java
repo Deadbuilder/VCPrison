@@ -8,10 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.CraftingInventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
@@ -48,6 +45,10 @@ public class CandyListener implements Listener {
         cocoa.setIngredient('x', Material.COCOA);
         cocoa.setIngredient('y', Material.SUGAR);
         Bukkit.addRecipe(cocoa);
+
+        //Recipe for Rubber from Used Wrapper
+        FurnaceRecipe rubber = new FurnaceRecipe(CandyItems.RUBBER, Material.INK_SACK, 7);
+        Bukkit.addRecipe(rubber);
     }
 
     @EventHandler
