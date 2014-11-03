@@ -51,7 +51,7 @@ public class CandyApple implements Candy {
         Item item = player.getWorld().dropItem(player.getEyeLocation(), CandyItems.CANDYAPPLE);
         item.setPickupDelay(20 * 5000);
         Vector vector = player.getLocation().getDirection();
-        vector.multiply(3);
+        vector.multiply(2.25);
         item.setVelocity(vector);
         Runnable runnable = () -> {
             List<Entity> entityList = item.getNearbyEntities(4, 4, 4);
@@ -70,7 +70,7 @@ public class CandyApple implements Candy {
             }
         };
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), runnable, 6 * 20l);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), runnable, 3 * 20l);
         return null;
     }
 }
