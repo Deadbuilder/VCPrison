@@ -111,9 +111,12 @@ public class CandyManListener implements Listener {
             }
             Inventory inventory = Bukkit.createInventory(null, InventoryType.WORKBENCH, result.getItemMeta().getDisplayName() + "'s Recipe");
             for (int i = 0; i < ingredients.size() || i < 9; i++) {
-                inventory.setItem(i, ingredients.get(i));
+                if(i > 2)
+                    inventory.setItem(i + 1, ingredients.get(i));
+                else
+                    inventory.setItem(i, ingredients.get(i));
             }
-            inventory.setItem(9, result);
+            inventory.setItem(3, result);
             return inventory;
         }
     }
@@ -185,6 +188,7 @@ public class CandyManListener implements Listener {
     public void onInvClick(InventoryClickEvent event) {
         if(event.getWhoClicked() instanceof Player && event.getInventory().getName().contains("Recipe")) {
             event.setCancelled(true);
+            event.getWhoClicked().closeInventory();
             event.getWhoClicked().openInventory(getInv((Player) event.getWhoClicked()));
             return;
         }
