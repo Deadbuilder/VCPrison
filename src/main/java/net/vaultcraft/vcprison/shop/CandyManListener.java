@@ -4,7 +4,6 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.candy.CandyItems;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
-import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -190,7 +189,6 @@ public class CandyManListener implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().closeInventory();
             event.getWhoClicked().openInventory(getInv((Player) event.getWhoClicked()));
-            Logger.debug(VCPrison.getInstance(), event.getSlot() + "");
             return;
         }
 
