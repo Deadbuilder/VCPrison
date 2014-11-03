@@ -34,6 +34,8 @@ public class FurnaceListener implements Listener {
 
     @EventHandler
     public void onBlockClick(final PlayerInteractEvent event) {
+        if(event.getPlayer().getLocation().getWorld() == VCPrison.getInstance().getCellManager().getPlotWorld())
+            return;
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (event.getClickedBlock().getType() == Material.BURNING_FURNACE) {
                 event.setCancelled(true);

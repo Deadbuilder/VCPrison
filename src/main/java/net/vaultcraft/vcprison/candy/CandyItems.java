@@ -37,7 +37,7 @@ public class CandyItems {
     public static final ItemStack CHOCOLATEBAR = ItemUtils.build(Material.NETHER_BRICK, ChatColor.translateAlternateColorCodes('&', "&6&lChocolate Bar"),
             "Consume to get 20 seconds of invisibility" , "and 10 seconds of resistance.");
     public static final ItemStack CANDYAPPLE = ItemUtils.build(Material.APPLE, ChatColor.translateAlternateColorCodes('&', "&d&lCandy &c&lApple"),
-            "Right to throw. After 6 seconds near",
+            "Right to throw. After 3 seconds, near",
             "by players will receive slowness and",
             "blindness.");
     public static final ItemStack RUBBER = ItemUtils.build(Material.INK_SACK, (byte)8, ChatColor.translateAlternateColorCodes('&', "&o&lRubber"),
