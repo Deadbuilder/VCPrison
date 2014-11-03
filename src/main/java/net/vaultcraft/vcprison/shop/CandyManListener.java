@@ -114,12 +114,9 @@ public class CandyManListener implements Listener {
             }
             Inventory inventory = Bukkit.createInventory(null, InventoryType.WORKBENCH, result.getItemMeta().getDisplayName() + "'s Recipe");
             for (int i = 0; i < ingredients.size() || i < 9; i++) {
-                if(i > 2)
                     inventory.setItem(i + 1, ingredients.get(i));
-                else
-                    inventory.setItem(i, ingredients.get(i));
             }
-            inventory.setItem(3, result);
+            inventory.setItem(0, result);
             return inventory;
         }
     }
