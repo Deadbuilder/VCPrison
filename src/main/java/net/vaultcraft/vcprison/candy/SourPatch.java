@@ -24,7 +24,7 @@ public class SourPatch implements Candy {
         ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.SOURPATCH);
         shapedRecipe.shape("xyx", "yzy", "xyx");
         shapedRecipe.setIngredient('x', Material.QUARTZ);
-        shapedRecipe.setIngredient('y', Material.INK_SACK, 2);
+        shapedRecipe.setIngredient('y', Material.INK_SACK.getNewData((byte)2));
         shapedRecipe.setIngredient('z', Material.SNOW_BLOCK);
         return shapedRecipe;
     }

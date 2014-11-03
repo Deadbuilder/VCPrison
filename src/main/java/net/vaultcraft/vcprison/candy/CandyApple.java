@@ -23,7 +23,7 @@ public class CandyApple implements Candy {
     public ShapedRecipe getRecipe() {
         ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.CANDYAPPLE);
         shapedRecipe.shape("xyx", "xzx", "xxx");
-        shapedRecipe.setIngredient('x', Material.INK_SACK, 1);
+        shapedRecipe.setIngredient('x', Material.INK_SACK.getNewData((byte)1));
         shapedRecipe.setIngredient('y', Material.NETHER_STAR);
         shapedRecipe.setIngredient('z', Material.SNOW_BLOCK);
         return shapedRecipe;
