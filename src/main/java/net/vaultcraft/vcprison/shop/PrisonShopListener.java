@@ -46,8 +46,8 @@ public class PrisonShopListener implements Listener {
         add(new ShopItem(Material.LOG, (byte)1, 3000, "Quantity: 16", "Spruce Wood", 16));
         add(new ShopItem(Material.LOG, (byte)2, 3000, "Quantity: 16", "Birch Wood", 16));
         add(new ShopItem(Material.LOG, (byte)3, 3000, "Quantity: 16", "Jungle Wood", 16));
-        add(new ShopItem(Material.LOG, (byte)4, 3000, "Quantity: 16", "Acacia Wood", 16));
-        add(new ShopItem(Material.LOG, (byte)5, 3000, "Quantity: 16", "Dark Oak Wood", 16));
+        add(new ShopItem(Material.LOG_2, 3000, "Quantity: 16", "Acacia Wood", 16));
+        add(new ShopItem(Material.LOG_2, (byte)1, 3000, "Quantity: 16", "Dark Oak Wood", 16));
         add(new ShopItem(Material.MELON_SEEDS, 4000, "Quantity: 1", "Melon Seeds", 1));
         add(new ShopItem(Material.INK_SACK, (byte)3, 4000, "Quantity: 1", "Cocoa Beans", 1));
         add(new ShopItem(Material.BOOK, 2000, "Quantity: 1", "Book", 1));
@@ -86,7 +86,7 @@ public class PrisonShopListener implements Listener {
         }
 
         public ItemStack getItemStack() {
-            ItemStack itemStack = new ItemStack(itemType);
+            ItemStack itemStack = new ItemStack(itemType, 1, data);
             ItemMeta itemMeta = itemStack.getItemMeta();
             if(!name.equals(""))
                 itemMeta.setDisplayName(name);
