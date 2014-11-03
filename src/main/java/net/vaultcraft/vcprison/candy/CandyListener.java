@@ -47,7 +47,9 @@ public class CandyListener implements Listener {
         Bukkit.addRecipe(cocoa);
 
         //Recipe for Rubber from Used Wrapper
-        FurnaceRecipe rubber = new FurnaceRecipe(CandyItems.RUBBER, Material.INK_SACK, 7);
+        ItemStack rubberItem = CandyItems.RUBBER.clone();
+        rubberItem.setAmount(4);
+        FurnaceRecipe rubber = new FurnaceRecipe(rubberItem, Material.INK_SACK, 7);
         Bukkit.addRecipe(rubber);
     }
 
