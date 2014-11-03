@@ -31,6 +31,16 @@ public class Jawbreaker implements Candy {
         return CandyItems.JAWBREAKER;
     }
 
+    @Override
+    public int getCooldown() {
+        return 0;
+    }
+
+    @Override
+    public int getHarmfulAfter() {
+        return 0;
+    }
+
     private static HashMap<Projectile, Player> jawbreakers = new HashMap<>();
 
     public ItemStack onCandyConsume(Player player, boolean harmful) {

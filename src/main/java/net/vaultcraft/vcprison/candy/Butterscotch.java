@@ -25,6 +25,16 @@ public class Butterscotch implements Candy {
         return CandyItems.BUTTERSCOTCH;
     }
 
+    @Override
+    public int getCooldown() {
+        return 0;
+    }
+
+    @Override
+    public int getHarmfulAfter() {
+        return 0;
+    }
+
     public ItemStack onCandyConsume(Player player, boolean harmful) {
         player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
         player.addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(20 * 30, 1));
