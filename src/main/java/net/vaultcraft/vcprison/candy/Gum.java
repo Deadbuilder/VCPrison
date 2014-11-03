@@ -1,6 +1,5 @@
 package net.vaultcraft.vcprison.candy;
 
-import net.vaultcraft.vcutils.item.ItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -9,10 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffectType;
-
-import java.util.Arrays;
 
 /**
  * @author Connor Hollasch
@@ -34,6 +30,16 @@ public class Gum implements Candy {
 
     public ItemStack getCandyItem() {
         return CandyItems.GUM;
+    }
+
+    @Override
+    public int getCooldown() {
+        return 1;
+    }
+
+    @Override
+    public int getHarmfulAfter() {
+        return 20;
     }
 
     public ItemStack onCandyConsume(Player player, boolean harmful) {
