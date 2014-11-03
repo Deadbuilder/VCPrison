@@ -6,6 +6,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -99,13 +100,13 @@ public class CandyManListener implements Listener {
 
         public Inventory getInv() {
             if (furance) {
-                Inventory inventory = Bukkit.createInventory(null, 9, result.getItemMeta().getDisplayName() + "'s Recipe");
+                Inventory inventory = Bukkit.createInventory(null, 9, ChatColor.stripColor(result.getItemMeta().getDisplayName()) + "'s Recipe");
                 inventory.setItem(3, ingredients.get(0));
                 inventory.setItem(4, new ItemStack(Material.FIRE));
                 inventory.setItem(5, result);
                 return inventory;
             }
-            Inventory inventory = Bukkit.createInventory(null, InventoryType.WORKBENCH, result.getItemMeta().getDisplayName() + "'s Recipe");
+            Inventory inventory = Bukkit.createInventory(null, InventoryType.WORKBENCH, ChatColor.stripColor(result.getItemMeta().getDisplayName()) + "'s Recipe");
             for (int i = 0; i < ingredients.size() && i < 9; i++) {
                     inventory.setItem(i + 1, ingredients.get(i));
             }
