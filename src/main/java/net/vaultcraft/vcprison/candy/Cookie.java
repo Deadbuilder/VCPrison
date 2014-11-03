@@ -52,6 +52,9 @@ public class Cookie implements Candy {
         for(int i = 0; i < 25; i++) {
             Item drop = player.getWorld().dropItem(randomInside(area), new ItemStack(Material.COCOA));
             drop.setTicksLived(5800);
+            Runnable runnable = () -> {
+
+            };
         }
 
         return null;
