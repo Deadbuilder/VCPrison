@@ -56,6 +56,7 @@ public class CandyApple implements Candy {
             for(Entity entity : entityList) {
                 if(!(entity instanceof LivingEntity))
                     continue;
+
                 LivingEntity livingEntity = (LivingEntity) entity;
                 livingEntity.removePotionEffect(PotionEffectType.SLOW);
                 livingEntity.removePotionEffect(PotionEffectType.BLINDNESS);

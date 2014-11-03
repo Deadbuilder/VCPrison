@@ -109,11 +109,10 @@ public class CandyListener implements Listener {
 
             playerCandyMap.put(name, candyMap);
         };
-
         Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), runnable, from.getCooldown() * 20);
 
         if (player.getItemInHand().getAmount() == 1) {
-            player.getInventory().remove(player.getItemInHand());
+            player.getInventory().removeItem(player.getItemInHand());
         } else {
             holding.setAmount(holding.getAmount()-1);
             player.setItemInHand(holding);

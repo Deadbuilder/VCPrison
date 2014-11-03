@@ -145,18 +145,6 @@ public class VCPrison extends JavaPlugin {
         SwordPerk.addPerk(new SpeedSwordPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 5, false, "Adds Speed when you have your sword selected.", "Toggleable"), 5);
         SwordPerk.addPerk(new ExplosionSwordPerk(Material.TNT, "Explosion", 5, 0, 2, "Adds a level of explosion to your sword."), 6);
 
-        //Cnady
-        new CandyListener();
-        CandyManager.registerCandy("gum", new Gum());
-        CandyManager.registerCandy("butterscotch", new Butterscotch());
-        CandyManager.registerCandy("sugar", new SugarCube());
-        CandyManager.registerCandy("jawbreaker", new Jawbreaker());
-        CandyManager.registerCandy("sourpatch", new SourPatch());
-        CandyManager.registerCandy("warhead", new Warhead());
-        CandyManager.registerCandy("candyapple", new CandyApple());
-        CandyManager.registerCandy("chocolatebar", new ChocolateBar());
-        CandyManager.registerCandy("cookie", new Cookie());
-
         //Remove Recipes
         Iterator<Recipe> rIterator = getServer().recipeIterator();
         while (rIterator.hasNext()) {
@@ -168,6 +156,18 @@ public class VCPrison extends JavaPlugin {
             if(current.getResult().getType().equals(Material.COOKIE))
                 rIterator.remove();
         }
+
+        //Cnady
+        new CandyListener();
+        CandyManager.registerCandy("gum", new Gum());
+        CandyManager.registerCandy("butterscotch", new Butterscotch());
+        CandyManager.registerCandy("sugar", new SugarCube());
+        CandyManager.registerCandy("jawbreaker", new Jawbreaker());
+        CandyManager.registerCandy("sourpatch", new SourPatch());
+        CandyManager.registerCandy("warhead", new Warhead());
+        CandyManager.registerCandy("candyapple", new CandyApple());
+        CandyManager.registerCandy("chocolatebar", new ChocolateBar());
+        CandyManager.registerCandy("cookie", new Cookie());
 
         //Add users who are online
         Bukkit.getOnlinePlayers().forEach(net.vaultcraft.vcprison.user.PrisonUser::new);

@@ -1,13 +1,16 @@
 package net.vaultcraft.vcprison.candy;
 
+import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcprison.ffa.FFAHandler;
 import net.vaultcraft.vcutils.protection.Area;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.vaultcraft.vcutils.uncommon.Particles;
+import org.bukkit.*;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.util.Vector;
 
 import java.util.Random;
 
@@ -20,8 +23,8 @@ public class Cookie implements Candy {
     public Recipe getRecipe() {
         ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.COOKIE);
         shapedRecipe.shape("xyz", "yay", "zyx");
-        shapedRecipe.setIngredient('x', Material.INK_SACK, 11);
-        shapedRecipe.setIngredient('y', Material.BRICK);
+        shapedRecipe.setIngredient('x', Material.INK_SACK.getNewData((byte)11));
+        shapedRecipe.setIngredient('y', Material.CLAY_BRICK);
         shapedRecipe.setIngredient('z', Material.NETHER_STAR);
         shapedRecipe.setIngredient('a', Material.SNOW_BLOCK);
         return shapedRecipe;
@@ -50,11 +53,27 @@ public class Cookie implements Candy {
         Area area = new Area(min , max);
 
         for(int i = 0; i < 25; i++) {
-            Item drop = player.getWorld().dropItem(randomInside(area), new ItemStack(Material.COCOA));
-            drop.setTicksLived(5800);
+            Item drop = player.getWorld().dropItem(randomInside(area), new ItemStack(Material.INK_SACK, 1, (short)3));
+            drop.setPickupDelay(6000);
             Runnable runnable = () -> {
+                Location boom = drop.getLocation();
+                drop.remove();
 
+                Particles.HUGE_EXPLOSION.sendToLocation(boom, 0, 0, 0, 1, 1);
+                boom.getWorld().playSound(boom, Sound.EXPLODE, 1, 0.7f);
+
+                boom.getWorld().getPlayers().stream().filter(world -> world.getLocation().distance(boom) <= 4).forEach(world -> {
+                    Location move = world.getLocation();
+
+                    Vector set = move.toVector().subtract(boom.toVector()).normalize().multiply(1.2).setY(1.2);
+                    world.setVelocity(set);
+                    world.setFireTicks(20 * 3);
+
+                    if (!world.getGameMode().equals(GameMode.CREATIVE) && !world.equals(FFAHandler.getRandomSpawnLocation().getWorld()))
+                        world.damage(world.getMaxHealth()/5);
+                });
             };
+            Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), runnable, (int)(Math.random()*60)+40);
         }
 
         return null;
