@@ -138,8 +138,8 @@ public class CandyListener implements Listener {
     public void onCraft(PrepareItemCraftEvent event) {
         CraftingInventory inventory = event.getInventory();
         Candy candy = null;
-        for(int i = 0; i < inventory.getContents().length; i++) {
-            if(i <= 3 || i >= 5) {
+        for(int i = 1; i < inventory.getContents().length; i++) {
+            if(i <= 4 || i >= 6) {
                 if(inventory.getContents()[i].getType() != Material.SNOW_BALL)
                     return;
                 continue;

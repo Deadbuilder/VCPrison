@@ -14,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
@@ -106,7 +105,7 @@ public class CandyManListener implements Listener {
                 inventory.setItem(5, result);
                 return inventory;
             }
-            Inventory inventory = Bukkit.createInventory(null, InventoryType.WORKBENCH, ChatColor.stripColor(result.getItemMeta().getDisplayName()) + "'s Recipe");
+            Inventory inventory = Bukkit.createInventory(null, 27, ChatColor.stripColor(result.getItemMeta().getDisplayName()) + "'s Recipe");
             for (int i = 0; i < ingredients.size() && i < 9; i++) {
                     inventory.setItem(i + 1, ingredients.get(i));
             }
