@@ -134,7 +134,7 @@ public class CandyManListener implements Listener {
             ItemStack itemStack = new ItemStack(item);
             ItemMeta itemMeta = itemStack.getItemMeta();
             ArrayList<String> itemLore = new ArrayList<>();
-            itemLore.add("Price: $" + price);
+            itemLore.add("Price: $" + Form.at(price, true));
             if (!description.equals("")) {
                 itemLore.add(description);
             }

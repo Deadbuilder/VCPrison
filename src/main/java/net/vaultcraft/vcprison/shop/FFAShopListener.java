@@ -65,7 +65,7 @@ public class FFAShopListener implements Listener {
             if(!name.equals(""))
                 itemMeta.setDisplayName(name);
             ArrayList<String> itemLore = new ArrayList<>();
-            itemLore.add("Price: $" + price);
+            itemLore.add("Price: $" + Form.at(price, true));
             if(!description.equals("")) {
                 itemLore.add(description);
             }
