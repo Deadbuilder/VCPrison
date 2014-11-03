@@ -27,17 +27,22 @@ public class Butterscotch implements Candy {
 
     @Override
     public int getCooldown() {
-        return 0;
+        return 25;
     }
 
     @Override
     public int getHarmfulAfter() {
-        return 0;
+        return 4;
     }
 
     public ItemStack onCandyConsume(Player player, boolean harmful) {
-        player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-        player.addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(20 * 30, 1));
-        return null;
+        if(harmful) {
+            player.setFireTicks(20 * 30);
+        } else {
+            player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+            player.addPotionEffect(PotionEffectType.FIRE_RESISTANCE.createEffect(20 * 30, 1));
+        }
+
+        return CandyItems.USEDWRAPPER;
     }
 }

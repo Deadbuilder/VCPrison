@@ -104,6 +104,7 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCShop("shop", Group.COMMON));
         CommandManager.addCommand(new VCFFA("ffa", Group.COMMON, "freeforall", "pvp", "fight"));
         CommandManager.addCommand(new VCSell("sell", Group.WITHER));
+        CommandManager.addCommand(new VCCraft("craft", Group.SLIME, "workbench", "wb", "bench", "recipe"));
 
         CommandManager.removeCommand("money");
         CommandManager.addCommand(new VCPrisonMoney("money", Group.COMMON, "bal", "balance"));
