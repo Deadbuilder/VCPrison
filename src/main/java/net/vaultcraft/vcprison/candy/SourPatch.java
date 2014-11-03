@@ -1,5 +1,7 @@
 package net.vaultcraft.vcprison.candy;
 
+import net.vaultcraft.vcutils.chat.Form;
+import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
@@ -56,6 +58,7 @@ public class SourPatch implements Candy {
                 thornsMap.remove(player.getName());
             thornsMap.put(player.getName(), System.currentTimeMillis() + 10000);
         }
+        Form.at(player, Prefix.SUCCESS, "You now have Thorns I effect for 10 seconds.");
         return CandyItems.USEDWRAPPER;
     }
 
