@@ -49,7 +49,9 @@ public class CandyManListener implements Listener {
         put(12, new RecipeMenu(CandyItems.COCOA, new ArrayList<>(Arrays.asList(new ItemStack(Material.INK_SACK, 1, (short) 3), new ItemStack(Material.SUGAR), new ItemStack(Material.INK_SACK, 1, (short) 3),
                 new ItemStack(Material.SUGAR), new ItemStack(Material.INK_SACK, 1, (short) 3), new ItemStack(Material.SUGAR),
                 new ItemStack(Material.INK_SACK, 1, (short) 3), new ItemStack(Material.SUGAR), new ItemStack(Material.INK_SACK, 1, (short) 3))), false));
-        put(13, new RecipeMenu(CandyItems.RUBBER, new ArrayList<>(Arrays.asList(CandyItems.USEDWRAPPER)), true));
+        ItemStack rubber = CandyItems.RUBBER.clone();
+        rubber.setAmount(4);
+        put(13, new RecipeMenu(rubber, new ArrayList<>(Arrays.asList(CandyItems.USEDWRAPPER)), true));
         put(14, new RecipeMenu(CandyItems.WRAPPER, new ArrayList<>(Arrays.asList(CandyItems.RUBBER, CandyItems.RUBBER, CandyItems.RUBBER,
                 CandyItems.RUBBER, CandyItems.SUGARCUBE, CandyItems.RUBBER,
                 CandyItems.RUBBER, CandyItems.RUBBER, CandyItems.RUBBER)), false));
