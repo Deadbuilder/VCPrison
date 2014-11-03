@@ -87,16 +87,8 @@ public class MineLoader {
         return make;
     }
 
-    private static List<Mine> cannotreset = Lists.newArrayList();
-
-    public static void initCannotReset(Mine mine) {
-        cannotreset.add(mine);
-        Runnable r = () -> cannotreset.remove(mine);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), r, 20);
-    }
-
     public static void resetMine(Mine mine) {
-        if (mine.isResetting() || cannotreset.contains(mine))
+        if (mine.isResetting())
             return;
 
         mine.reset();
@@ -129,8 +121,6 @@ public class MineLoader {
             m.setPower(2);
             fw.setFireworkMeta(m);
         }
-
-        mine.finish();
     }
 
     public static Collection<Mine> getMines() {

@@ -85,7 +85,6 @@ public class PrisonUserListener implements Listener {
                         return;
 
                     MineLoader.resetMine(mine);
-                    MineLoader.initCannotReset(mine);
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         Form.at(player, "Mine: &e"+mine.getRank().toString()+ Prefix.VAULT_CRAFT.getChatColor()+" reset!");
                     }
@@ -209,9 +208,7 @@ public class PrisonUserListener implements Listener {
 
             Runnable delay = () -> {
                 drop.remove();
-
                 dp.add(player);
-
                 BukkitRunnable br = new BukkitRunnable() {
                     public void run() {
                         if (!dp.contains(player)) {

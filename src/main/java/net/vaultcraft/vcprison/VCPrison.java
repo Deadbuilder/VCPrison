@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
+import net.vaultcraft.vcprison.candy.*;
 import net.vaultcraft.vcprison.cells.CellManager;
 import net.vaultcraft.vcprison.cells.CellsListener;
 import net.vaultcraft.vcprison.cells.VCCell;
@@ -32,6 +33,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.CommandManager;
 import net.vaultcraft.vcutils.innerplugin.VCPluginManager;
+import net.vaultcraft.vcutils.item.ItemUtils;
 import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.protection.Area;
 import net.vaultcraft.vcutils.protection.ProtectedArea;
@@ -47,12 +49,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -140,9 +145,19 @@ public class VCPrison extends JavaPlugin {
         SwordPerk.addPerk(new SpeedSwordPerk(Material.DIAMOND_BOOTS, Material.DIAMOND_BOOTS, Material.LEATHER_BOOTS, "Speed Boost", 5, false, "Adds Speed when you have your sword selected.", "Toggleable"), 5);
         SwordPerk.addPerk(new ExplosionSwordPerk(Material.TNT, "Explosion", 5, 0, 2, "Adds a level of explosion to your sword."), 6);
 
-        for(Player player : Bukkit.getOnlinePlayers()) {
-            new PrisonUser(player);
+        new CandyListener();
+        CandyManager.registerCandy("gum", new Gum());
+        CandyManager.registerCandy("butterscotch", new Butterscotch());
+        CandyManager.registerCandy("sugar", new SugarCube());
+
+        Iterator<Recipe> rIterator = getServer().recipeIterator();
+        while (rIterator.hasNext()) {
+            Recipe current = rIterator.next();
+            if (current.getResult().getType().equals(Material.QUARTZ))
+                rIterator.remove();
         }
+
+        Bukkit.getOnlinePlayers().forEach(net.vaultcraft.vcprison.user.PrisonUser::new);
 
         MineLoader.loadMines();
         WarpLoader.loadWarps();
@@ -248,7 +263,7 @@ public class VCPrison extends JavaPlugin {
             ItemStack itemStack = Pickaxe.getAddPointItem();
             itemStack.setAmount(amount);
             HashMap<Integer, ItemStack> map = player.getInventory().addItem(itemStack);
-            Form.at(player, Prefix.VAULT_CRAFT, "You pickaxe perk points have arrived check your inventory!");
+            Form.at(player, Prefix.VAULT_CRAFT, "Your pickaxe perk points have arrived! Check your inventory!");
             for(ItemStack itemStack1 : map.values())
                 player.getWorld().dropItemNaturally(player.getLocation(), itemStack1);
             if(!map.isEmpty())
