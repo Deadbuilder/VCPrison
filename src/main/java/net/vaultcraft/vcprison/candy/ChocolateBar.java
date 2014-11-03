@@ -17,6 +17,7 @@ public class ChocolateBar implements Candy {
         shapedRecipe.shape("xyx", "aza", "xyx");
         shapedRecipe.setIngredient('x', Material.QUARTZ);
         shapedRecipe.setIngredient('y', Material.INK_SACK.getNewData((byte)3));
+        shapedRecipe.setIngredient('z', Material.SNOW_BLOCK);
         shapedRecipe.setIngredient('a', Material.CLAY_BRICK);
         return shapedRecipe;
     }

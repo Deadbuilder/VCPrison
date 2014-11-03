@@ -75,6 +75,9 @@ public class SourPatch implements Candy {
         if(damager == null)
             return;
         String name = ((Player) event.getEntity()).getName();
+        if (!(thornsMap.containsKey(name)))
+            return;
+
         if(thornsMap.get(name) <= System.currentTimeMillis()) {
             thornsMap.remove(name);
             return;

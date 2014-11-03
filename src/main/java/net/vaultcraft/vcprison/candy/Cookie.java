@@ -69,7 +69,7 @@ public class Cookie implements Candy {
                     world.setVelocity(set);
                     world.setFireTicks(20 * 3);
 
-                    if (!world.getGameMode().equals(GameMode.CREATIVE) && !world.equals(FFAHandler.getRandomSpawnLocation().getWorld()))
+                    if (!world.getGameMode().equals(GameMode.CREATIVE) && world.equals(FFAHandler.getRandomSpawnLocation().getWorld()))
                         world.damage(world.getMaxHealth()/5);
                 });
             };
