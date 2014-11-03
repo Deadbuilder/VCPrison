@@ -23,6 +23,7 @@ import net.vaultcraft.vcprison.mine.warp.WarpGUI;
 import net.vaultcraft.vcprison.mine.warp.WarpLoader;
 import net.vaultcraft.vcprison.pickaxe.*;
 import net.vaultcraft.vcprison.scoreboard.PrisonScoreboard;
+import net.vaultcraft.vcprison.shop.CandyManListener;
 import net.vaultcraft.vcprison.shop.FFAShopListener;
 import net.vaultcraft.vcprison.shop.PrisonShopListener;
 import net.vaultcraft.vcprison.sword.*;
@@ -102,7 +103,6 @@ public class VCPrison extends JavaPlugin {
         CommandManager.addCommand(new VCShop("shop", Group.COMMON));
         CommandManager.addCommand(new VCFFA("ffa", Group.COMMON, "freeforall", "pvp", "fight"));
         CommandManager.addCommand(new VCSell("sell", Group.WITHER));
-        CommandManager.addCommand(new VCCraft("craft", Group.SLIME, "workbench", "wb", "bench", "recipe"));
 
         CommandManager.removeCommand("money");
         CommandManager.addCommand(new VCPrisonMoney("money", Group.COMMON, "bal", "balance"));
@@ -121,6 +121,7 @@ public class VCPrison extends JavaPlugin {
         new FFAShopListener();
         new PortalListener();
         new CellsListener();
+        new CandyManListener();
 
         MineUtil.createBlockInjector(new MineCrateInjector());
 

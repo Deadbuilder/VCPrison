@@ -15,7 +15,7 @@ public class CandyItems {
             "You'll need something to contain sticky candies!");
     public static final ItemStack BUTTER = ItemUtils.build(Material.INK_SACK, (byte) 11, ChatColor.translateAlternateColorCodes('&', "&e&lButter"),
             "Used to create some types of candies.");
-    public static final ItemStack COCOA = ItemUtils.build(Material.BRICK, ChatColor.GOLD.toString() + ChatColor.BOLD + "Co-Coa",
+    public static final ItemStack COCOA = ItemUtils.build(Material.CLAY_BRICK, ChatColor.GOLD.toString() + ChatColor.BOLD + "Co-Coa",
             "Used to create some types of candies.");
     public static final ItemStack JAWBREAKER = ItemUtils.build(Material.SNOW_BALL, ChatColor.translateAlternateColorCodes('&', "&lJawbreaker"),
             "Ow! Jawbreakers can do some serious damage to your teeth!");
@@ -47,7 +47,15 @@ public class CandyItems {
     public static final ItemStack COOKIE = ItemUtils.build(Material.COOKIE, ChatColor.translateAlternateColorCodes('&', "&6&lC&e&lO&6&lO&e&lK&6&lI&e&lE"),
             "Consume to rain down Cocoa Beans",
             "that explode!");
-    public static final ItemStack SWEDISHFISH = ItemUtils.build(Material.RAW_BEEF, 1, ChatColor.translateAlternateColorCodes('&', "&4&lSwedish Fish"),
+    public static final ItemStack SWEDISHFISH = ItemUtils.build(Material.RAW_FISH, (byte)1, ChatColor.translateAlternateColorCodes('&', "&4&lSwedish Fish"),
             "Consume to get 10 seconds of speed",
             "and 5 seconds of resistance.");
+    public static final ItemStack REDDYE = ItemUtils.build(Material.INK_SACK,(byte)1, ChatColor.translateAlternateColorCodes('&', "&4&lApple Skin"),
+            "Used to create some types of candies.");
+    public static final ItemStack NETHERSTAR = ItemUtils.build(Material.NETHER_STAR, ChatColor.translateAlternateColorCodes('&', "&5&lCandy&f&lCore"),
+            "Used to create some types of candies.");
+    public static final ItemStack NETHERWART = ItemUtils.build(Material.NETHER_WARTS, ChatColor.translateAlternateColorCodes('&', "&4&lFish &7&lScales"),
+            "Used to create some types of candies.");
+    public static final ItemStack PINKDYE = ItemUtils.build(Material.INK_SACK, (byte)9, ChatColor.translateAlternateColorCodes('&', "&d&lGum Flavoring"),
+            "Used to create gum.");
 }

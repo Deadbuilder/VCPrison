@@ -43,6 +43,13 @@ public class PrisonShopListener implements Listener {
         add(new ShopItem(Material.DIAMOND_HOE, 10000, "Quantity: 1", "Diamond Hoe", 1));
         add(new ShopItem(Material.SEEDS, 4000, "Quantity: 2", "Seeds", 2));
         add(new ShopItem(Material.LOG, 3000, "Quantity: 16", "Oak Wood", 16));
+        add(new ShopItem(Material.LOG, (byte)1, 3000, "Quantity: 16", "Spruce Wood", 16));
+        add(new ShopItem(Material.LOG, (byte)2, 3000, "Quantity: 16", "Birch Wood", 16));
+        add(new ShopItem(Material.LOG, (byte)3, 3000, "Quantity: 16", "Jungle Wood", 16));
+        add(new ShopItem(Material.LOG, (byte)4, 3000, "Quantity: 16", "Acacia Wood", 16));
+        add(new ShopItem(Material.LOG, (byte)5, 3000, "Quantity: 16", "Dark Oak Wood", 16));
+        add(new ShopItem(Material.MELON_SEEDS, 4000, "Quantity: 1", "Melon Seeds", 1));
+        add(new ShopItem(Material.INK_SACK, (byte)3, 4000, "Quantity: 1", "Cocoa Beans", 1));
         add(new ShopItem(Material.BOOK, 2000, "Quantity: 1", "Book", 1));
         add(new ShopItem(Material.WOOL, 4000, "Quantity: 8", "Wool", 8));
     }};
@@ -54,13 +61,24 @@ public class PrisonShopListener implements Listener {
 
     private class ShopItem {
         private Material itemType;
+        private byte data;
         private double price;
         private String description;
         private String name;
         private int quantity;
 
+        public ShopItem(Material itemType, byte data, double price, String description, String name, int quantity) {
+            this.itemType = itemType;
+            this.data = data;
+            this.price = price;
+            this.description = description;
+            this.name = name;
+            this.quantity = quantity;
+        }
+
         public ShopItem(Material itemType, double price, String description, String name, int quantity) {
             this.itemType = itemType;
+            this.data = 0;
             this.price = price;
             this.description = description;
             this.name = name;
@@ -128,7 +146,7 @@ public class PrisonShopListener implements Listener {
                 return;
             }
 
-            event.getWhoClicked().getInventory().addItem(new ItemStack(item.itemType, item.quantity));
+            event.getWhoClicked().getInventory().addItem(new ItemStack(item.itemType, item.quantity, item.data));
             user.setMoney(user.getMoney() - item.price);
             Form.at((Player) event.getWhoClicked(), Prefix.SUCCESS, "You bought a "+item.name+" for $"+String.valueOf(item.price)+"!");
 

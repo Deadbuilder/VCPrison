@@ -42,7 +42,7 @@ public class CandyListener implements Listener {
         //Recipe for CoCoa
         ShapedRecipe cocoa = new ShapedRecipe(CandyItems.COCOA);
         cocoa.shape("xyx", "yxy", "xyx");
-        cocoa.setIngredient('x', Material.COCOA);
+        cocoa.setIngredient('x', Material.INK_SACK.getNewData((byte)3));
         cocoa.setIngredient('y', Material.SUGAR);
         Bukkit.addRecipe(cocoa);
 
