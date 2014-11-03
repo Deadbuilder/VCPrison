@@ -1,8 +1,10 @@
 package net.vaultcraft.vcprison.candy;
 
 import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcutils.uncommon.Particles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
@@ -53,6 +55,9 @@ public class CandyApple implements Candy {
         item.setVelocity(vector);
         Runnable runnable = () -> {
             List<Entity> entityList = item.getNearbyEntities(4, 4, 4);
+            Particles.HUGE_EXPLOSION.sendToLocation(item.getLocation(), 0, 0, 0, 1, 1);
+            item.getWorld().playSound(item.getLocation(), Sound.EXPLODE, 1, 0.7f);
+            item.remove();
             for(Entity entity : entityList) {
                 if(!(entity instanceof LivingEntity))
                     continue;
