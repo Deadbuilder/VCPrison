@@ -4,6 +4,7 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.candy.CandyItems;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
+import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -113,12 +114,12 @@ public class CandyManListener implements Listener {
             }
             Inventory inventory = Bukkit.createInventory(null, InventoryType.WORKBENCH, result.getItemMeta().getDisplayName() + "'s Recipe");
             for (int i = 0; i < ingredients.size() || i < 9; i++) {
-                if(i > 5)
+                if(i > 2)
                     inventory.setItem(i + 1, ingredients.get(i));
                 else
                     inventory.setItem(i, ingredients.get(i));
             }
-            inventory.setItem(6, result);
+            inventory.setItem(3, result);
             return inventory;
         }
     }
@@ -192,6 +193,7 @@ public class CandyManListener implements Listener {
             event.setCancelled(true);
             event.getWhoClicked().closeInventory();
             event.getWhoClicked().openInventory(getInv((Player) event.getWhoClicked()));
+            Logger.debug(VCPrison.getInstance(), event.getSlot() + "");
             return;
         }
 
