@@ -52,18 +52,15 @@ public class CandyManListener implements Listener {
         ItemStack rubber = CandyItems.RUBBER.clone();
         rubber.setAmount(4);
         put(13, new RecipeMenu(rubber, new ArrayList<>(Arrays.asList(CandyItems.USEDWRAPPER)), true));
-        put(14, new RecipeMenu(CandyItems.WRAPPER, new ArrayList<>(Arrays.asList(CandyItems.RUBBER, CandyItems.RUBBER, CandyItems.RUBBER,
-                CandyItems.RUBBER, CandyItems.SUGARCUBE, CandyItems.RUBBER,
-                CandyItems.RUBBER, CandyItems.RUBBER, CandyItems.RUBBER)), false));
-        put(15, new RecipeMenu(CandyItems.GUM, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, CandyItems.PINKDYE, CandyItems.WRAPPER,
+        put(14, new RecipeMenu(CandyItems.GUM, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, CandyItems.PINKDYE, CandyItems.WRAPPER,
                 CandyItems.RUBBER, CandyItems.SUGARCUBE, CandyItems.RUBBER,
                 CandyItems.WRAPPER, CandyItems.PINKDYE, CandyItems.WRAPPER)), false));
-        put(16, new RecipeMenu(CandyItems.JAWBREAKER, new ArrayList<>(Arrays.asList(CandyItems.SUGARCUBE, CandyItems.SUGARCUBE, CandyItems.SUGARCUBE,
+        put(15, new RecipeMenu(CandyItems.JAWBREAKER, new ArrayList<>(Arrays.asList(CandyItems.SUGARCUBE, CandyItems.SUGARCUBE, CandyItems.SUGARCUBE,
                 CandyItems.SUGARCUBE)), false));
-        put(17, new RecipeMenu(CandyItems.GUM, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, new ItemStack(Material.INK_SACK, 1, (short) 2), CandyItems.WRAPPER,
+        put(16, new RecipeMenu(CandyItems.SOURPATCH, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, new ItemStack(Material.INK_SACK, 1, (short) 2), CandyItems.WRAPPER,
                 new ItemStack(Material.INK_SACK, 1, (short) 2), CandyItems.SUGARCUBE, new ItemStack(Material.INK_SACK, 1, (short) 2),
                 CandyItems.WRAPPER, new ItemStack(Material.INK_SACK, 1, (short) 2), CandyItems.WRAPPER)), false));
-        put(19, new RecipeMenu(CandyItems.WARHEAD, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, new ItemStack(Material.MELON), CandyItems.WRAPPER,
+        put(17, new RecipeMenu(CandyItems.WARHEAD, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, new ItemStack(Material.MELON), CandyItems.WRAPPER,
                 new ItemStack(Material.MELON), CandyItems.SUGARCUBE, new ItemStack(Material.MELON),
                 CandyItems.WRAPPER, new ItemStack(Material.MELON), CandyItems.WRAPPER)), false));
         put(20, new RecipeMenu(CandyItems.SWEDISHFISH, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, CandyItems.NETHERWART, CandyItems.WRAPPER,
@@ -72,16 +69,13 @@ public class CandyManListener implements Listener {
         put(21, new RecipeMenu(CandyItems.CHOCOLATEBAR, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, new ItemStack(Material.INK_SACK, 1, (short) 3), CandyItems.WRAPPER,
                 CandyItems.COCOA, CandyItems.SUGARCUBE, CandyItems.COCOA,
                 CandyItems.WRAPPER, new ItemStack(Material.INK_SACK, 1, (short) 3), CandyItems.WRAPPER)), false));
-        put(22, new RecipeMenu(CandyItems.SWEDISHFISH, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, CandyItems.NETHERWART, CandyItems.WRAPPER,
-                CandyItems.REDDYE, CandyItems.SUGARCUBE, CandyItems.REDDYE,
-                CandyItems.WRAPPER, CandyItems.NETHERWART, CandyItems.WRAPPER)), false));
-        put(23, new RecipeMenu(CandyItems.BUTTERSCOTCH, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, CandyItems.BUTTER, CandyItems.WRAPPER,
+        put(22, new RecipeMenu(CandyItems.BUTTERSCOTCH, new ArrayList<>(Arrays.asList(CandyItems.WRAPPER, CandyItems.BUTTER, CandyItems.WRAPPER,
                 CandyItems.BUTTER, CandyItems.SUGARCUBE, CandyItems.BUTTER,
                 CandyItems.WRAPPER, CandyItems.BUTTER, CandyItems.WRAPPER)), false));
-        put(24, new RecipeMenu(CandyItems.CANDYAPPLE, new ArrayList<>(Arrays.asList(CandyItems.REDDYE, CandyItems.NETHERSTAR, CandyItems.REDDYE,
+        put(23, new RecipeMenu(CandyItems.CANDYAPPLE, new ArrayList<>(Arrays.asList(CandyItems.REDDYE, CandyItems.NETHERSTAR, CandyItems.REDDYE,
                 CandyItems.REDDYE, CandyItems.SUGARCUBE, CandyItems.REDDYE,
                 CandyItems.REDDYE, CandyItems.REDDYE, CandyItems.REDDYE)), false));
-        put(25, new RecipeMenu(CandyItems.COOKIE, new ArrayList<>(Arrays.asList(CandyItems.BUTTER, CandyItems.COCOA, CandyItems.NETHERSTAR,
+        put(24, new RecipeMenu(CandyItems.COOKIE, new ArrayList<>(Arrays.asList(CandyItems.BUTTER, CandyItems.COCOA, CandyItems.NETHERSTAR,
                 CandyItems.COCOA, CandyItems.SUGARCUBE, CandyItems.COCOA,
                 CandyItems.NETHERSTAR, CandyItems.COCOA, CandyItems.BUTTER)), false));
     }};
@@ -112,7 +106,7 @@ public class CandyManListener implements Listener {
                 return inventory;
             }
             Inventory inventory = Bukkit.createInventory(null, InventoryType.WORKBENCH, result.getItemMeta().getDisplayName() + "'s Recipe");
-            for (int i = 0; i < ingredients.size() || i < 9; i++) {
+            for (int i = 0; i < ingredients.size() && i < 9; i++) {
                     inventory.setItem(i + 1, ingredients.get(i));
             }
             inventory.setItem(0, result);

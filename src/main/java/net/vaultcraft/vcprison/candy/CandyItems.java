@@ -34,7 +34,7 @@ public class CandyItems {
             "Consume to get a Thorns effect for 15 seconds.");
     public static final ItemStack USEDWRAPPER = ItemUtils.build(Material.INK_SACK, (byte)7, ChatColor.translateAlternateColorCodes('&', "&8&lUsed Candy Wrapper"),
             "Smelt to get 4 rubber back.");
-    public static final ItemStack CHOCOLATEBAR = ItemUtils.build(Material.NETHER_BRICK, ChatColor.translateAlternateColorCodes('&', "&6&lChocolate Bar"),
+    public static final ItemStack CHOCOLATEBAR = ItemUtils.build(Material.NETHER_BRICK_ITEM, ChatColor.translateAlternateColorCodes('&', "&6&lChocolate Bar"),
             "Consume to get 20 seconds of invisibility" , "and 10 seconds of resistance.");
     public static final ItemStack CANDYAPPLE = ItemUtils.build(Material.APPLE, ChatColor.translateAlternateColorCodes('&', "&d&lCandy &c&lApple"),
             "Right to throw. After 3 seconds, near",
