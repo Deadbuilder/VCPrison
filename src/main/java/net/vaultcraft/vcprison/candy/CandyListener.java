@@ -113,7 +113,8 @@ public class CandyListener implements Listener {
         };
         Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), runnable, from.getCooldown() * 20);
 
-        event.setCancelled(true);
+        if(!from.getCandyItem().getType().equals(Material.SNOW_BALL))
+            event.setCancelled(true);
 
         if (player.getItemInHand().getAmount() <= 1) {
             player.getInventory().removeItem(player.getItemInHand());

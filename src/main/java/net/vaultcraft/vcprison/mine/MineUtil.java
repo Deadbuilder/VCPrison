@@ -92,6 +92,7 @@ public class MineUtil {
                                 player.teleport(tp);
                             }
                         }
+                        mine.finish();
                     }
                 };
                 Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), sync);
