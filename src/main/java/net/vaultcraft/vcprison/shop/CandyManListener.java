@@ -132,7 +132,7 @@ public class CandyManListener implements Listener {
         }
 
         public ItemStack getItemStack() {
-            ItemStack itemStack = new ItemStack(item);
+            ItemStack itemStack = item.clone();
             ItemMeta itemMeta = itemStack.getItemMeta();
             ArrayList<String> itemLore = new ArrayList<>();
             itemLore.add("Price: $" + Form.at(price, true));
@@ -152,7 +152,7 @@ public class CandyManListener implements Listener {
     private Inventory getInv(Player player) {
         Inventory inv = Bukkit.createInventory(null, 27, "VaultCraft Candy Man");
         for (Map.Entry entry : items.entrySet()) {
-            inv.setItem((Integer) entry.getKey(), ((ShopItem) entry.getValue()).item);
+            inv.setItem((Integer) entry.getKey(), ((ShopItem) entry.getValue()).getItemStack());
         }
         for (Map.Entry entry : recipes.entrySet()) {
             inv.setItem((Integer) entry.getKey(), ((RecipeMenu) entry.getValue()).result);
