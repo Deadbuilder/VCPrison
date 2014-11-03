@@ -54,7 +54,7 @@ public class CandyItems {
             "Used to create some types of candies.");
     public static final ItemStack NETHERSTAR = ItemUtils.build(Material.NETHER_STAR, ChatColor.translateAlternateColorCodes('&', "&5&lCandy&f&lCore"),
             "Used to create some types of candies.");
-    public static final ItemStack NETHERWART = ItemUtils.build(Material.NETHER_WARTS, ChatColor.translateAlternateColorCodes('&', "&4&lFish &7&lScales"),
+    public static final ItemStack NETHERWART = ItemUtils.build(Material.getMaterial(372), ChatColor.translateAlternateColorCodes('&', "&4&lFish &7&lScales"),
             "Used to create some types of candies.");
     public static final ItemStack PINKDYE = ItemUtils.build(Material.INK_SACK, (byte)9, ChatColor.translateAlternateColorCodes('&', "&d&lGum Flavoring"),
             "Used to create gum.");

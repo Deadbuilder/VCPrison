@@ -107,8 +107,9 @@ public class CandyManListener implements Listener {
                 inventory.setItem(0, ingredients.get(0));
                 inventory.setItem(1, new ItemStack(Material.COAL));
                 inventory.setItem(2, result);
+                return inventory;
             }
-            Inventory inventory = Bukkit.createInventory(null, InventoryType.CRAFTING, result.getItemMeta().getDisplayName() + "'s Recipe");
+            Inventory inventory = Bukkit.createInventory(null, InventoryType.WORKBENCH, result.getItemMeta().getDisplayName() + "'s Recipe");
             for (int i = 0; i < ingredients.size() || i < 9; i++) {
                 inventory.setItem(i, ingredients.get(i));
             }
