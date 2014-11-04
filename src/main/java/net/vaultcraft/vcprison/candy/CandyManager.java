@@ -2,7 +2,9 @@ package net.vaultcraft.vcprison.candy;
 
 import net.vaultcraft.vcprison.VCPrison;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
@@ -21,7 +23,12 @@ public class CandyManager {
 
     public static void registerCandy(String name, Candy c) {
         candy.put(name, c);
+        ShapedRecipe recipe = new ShapedRecipe(c.getCandyItem());
+        recipe.shape("xxx", "xyx", "xxx");
+        recipe.setIngredient('x', Material.SNOW_BALL);
+        recipe.setIngredient('y', c.getCandyItem().getData());
         VCPrison.getInstance().getServer().addRecipe(c.getRecipe());
+        VCPrison.getInstance().getServer().addRecipe(recipe);
         Bukkit.getPluginManager().registerEvents(c, VCPrison.getInstance());
     }
 
