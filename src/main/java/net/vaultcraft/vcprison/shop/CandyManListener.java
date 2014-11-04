@@ -109,9 +109,9 @@ public class CandyManListener implements Listener {
             for (int i = 0; i < ingredients.size() && i < 9; i++) {
                 if (i >= 0 || i <= 2)
                     inventory.setItem(i + 3, ingredients.get(i));
-                if(i >= 3 || i <= 5)
+                else if(i >= 3 || i <= 5)
                     inventory.setItem(i + 9, ingredients.get(i));
-                if(i >= 6 || i <= 8)
+                else if(i >= 6 || i <= 8)
                     inventory.setItem(i + 15, ingredients.get(i));
             }
             return inventory;
