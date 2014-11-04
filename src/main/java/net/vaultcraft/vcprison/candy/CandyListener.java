@@ -1,15 +1,20 @@
 package net.vaultcraft.vcprison.candy;
 
 import net.vaultcraft.vcprison.VCPrison;
-import net.vaultcraft.vcutils.logging.Logger;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.CraftingInventory;
+import org.bukkit.inventory.FurnaceRecipe;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
@@ -140,7 +145,6 @@ public class CandyListener implements Listener {
     public void onCraft(PrepareItemCraftEvent event) {
         CraftingInventory inventory = event.getInventory();
         Candy candy = null;
-        Logger.debug(VCPrison.getInstance(), "PICE Called: " + inventory.getContents().length);
         for(int i = 1; i < inventory.getContents().length; i++) {
             if(i <= 4 || i >= 6) {
                 if(inventory.getContents()[i].getType() != Material.SNOW_BALL)
@@ -157,8 +161,10 @@ public class CandyListener implements Listener {
         if(candy == null)
             return;
 
-        if(inventory.getContents()[5].getItemMeta().getLore().contains("Harmful"))
+        if(inventory.getContents()[5].getItemMeta().getLore().contains("Harmful")) {
             inventory.setResult(null);
+            return;
+        }
 
         ItemStack itemStack = candy.getCandyItem().clone();
         ItemMeta itemMeta = itemStack.getItemMeta();

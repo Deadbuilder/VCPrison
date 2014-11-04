@@ -52,13 +52,13 @@ public class SourPatch implements Candy {
             if(thornsMap.containsKey(player.getName()))
                 thornsMap.remove(player.getName());
             player.removePotionEffect(PotionEffectType.POISON);
-            player.addPotionEffect(PotionEffectType.POISON.createEffect(20 * 10, 0));
+            player.addPotionEffect(PotionEffectType.POISON.createEffect(20 * 10 * 5, 0));
         } else {
             if(thornsMap.containsKey(player.getName()))
                 thornsMap.remove(player.getName());
             thornsMap.put(player.getName(), System.currentTimeMillis() + 10000);
+            Form.at(player, Prefix.SUCCESS, "You now have Thorns I effect for 10 seconds.");
         }
-        Form.at(player, Prefix.SUCCESS, "You now have Thorns I effect for 10 seconds.");
         return CandyItems.USEDWRAPPER;
     }
 
