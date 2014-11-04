@@ -66,7 +66,7 @@ public class CandyListener implements Listener {
         boolean harmful = false;
         if(holding.getItemMeta() != null)
             if(holding.getItemMeta().getLore() != null)
-                if(holding.getItemMeta().getLore().contains("harmful"))
+                if(holding.getItemMeta().getLore().contains("Harmful"))
                     harmful = true;
 
         int amount = 1;
@@ -157,7 +157,7 @@ public class CandyListener implements Listener {
         if(candy == null)
             return;
 
-        ItemStack itemStack = candy.getCandyItem();
+        ItemStack itemStack = candy.getCandyItem().clone();
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore = itemMeta.getLore();
         lore.add("Harmful");
