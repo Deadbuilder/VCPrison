@@ -67,10 +67,10 @@ public class Cookie implements Candy {
 
                     Vector set = move.toVector().subtract(boom.toVector()).normalize().multiply(1.2).setY(1.2);
                     world.setVelocity(set);
-                    world.setFireTicks(20 * 3);
+                    world.setFireTicks(20 * 10);
 
                     if (!world.getGameMode().equals(GameMode.CREATIVE) && world.equals(FFAHandler.getRandomSpawnLocation().getWorld()))
-                        world.damage(world.getMaxHealth()/5);
+                        world.damage(6);
                 });
             };
             Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.getInstance(), runnable, (int)(Math.random()*60)+40);
