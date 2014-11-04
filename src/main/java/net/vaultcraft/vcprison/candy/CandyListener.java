@@ -157,6 +157,9 @@ public class CandyListener implements Listener {
         if(candy == null)
             return;
 
+        if(inventory.getContents()[5].getItemMeta().getLore().contains("Harmful"))
+            inventory.setResult(null);
+
         ItemStack itemStack = candy.getCandyItem().clone();
         ItemMeta itemMeta = itemStack.getItemMeta();
         List<String> lore = itemMeta.getLore();
