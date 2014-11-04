@@ -4,7 +4,6 @@ import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.candy.CandyItems;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
-import net.vaultcraft.vcutils.logging.Logger;
 import net.vaultcraft.vcutils.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,7 +12,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -112,9 +110,9 @@ public class CandyManListener implements Listener {
                 if (i >= 0 || i <= 2)
                     inventory.setItem(i + 3, ingredients.get(i));
                 if(i >= 3 || i <= 5)
-                    inventory.setItem(i + 12, ingredients.get(i));
+                    inventory.setItem(i + 9, ingredients.get(i));
                 if(i >= 6 || i <= 8)
-                    inventory.setItem(i + 21, ingredients.get(i));
+                    inventory.setItem(i + 15, ingredients.get(i));
             }
             return inventory;
         }
@@ -193,9 +191,6 @@ public class CandyManListener implements Listener {
         }
 
         if (event.getWhoClicked() instanceof Player && inShop.contains(event.getWhoClicked())) {
-            if(event.getAction() == InventoryAction.PICKUP_HALF) {
-                Logger.debug(VCPrison.getInstance(), "RIGHT CLICK IN INV");
-            }
             event.setCancelled(true);
             if (event.getSlot() != event.getRawSlot()) { //FIXME: This is kinda hackish
                 return;
