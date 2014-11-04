@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
+import net.vaultcraft.vcprison.candy.*;
 import net.vaultcraft.vcprison.cells.CellManager;
 import net.vaultcraft.vcprison.cells.CellsListener;
 import net.vaultcraft.vcprison.cells.VCCell;
@@ -158,16 +159,16 @@ public class VCPrison extends JavaPlugin {
         }
 
         //Candy
-//        new CandyListener();
-//        CandyManager.registerCandy("gum", new Gum());
-//        CandyManager.registerCandy("butterscotch", new Butterscotch());
-//        CandyManager.registerCandy("sugar", new SugarCube());
-//        CandyManager.registerCandy("jawbreaker", new Jawbreaker());
-//        CandyManager.registerCandy("sourpatch", new SourPatch());
-//        CandyManager.registerCandy("warhead", new Warhead());
-//        CandyManager.registerCandy("candyapple", new CandyApple());
-//        CandyManager.registerCandy("chocolatebar", new ChocolateBar());
-//        CandyManager.registerCandy("cookie", new Cookie());
+        new CandyListener();
+        CandyManager.registerCandy("gum", new Gum());
+        CandyManager.registerCandy("butterscotch", new Butterscotch());
+        CandyManager.registerCandy("sugar", new SugarCube());
+        CandyManager.registerCandy("jawbreaker", new Jawbreaker());
+        CandyManager.registerCandy("sourpatch", new SourPatch());
+        CandyManager.registerCandy("warhead", new Warhead());
+        CandyManager.registerCandy("candyapple", new CandyApple());
+        CandyManager.registerCandy("chocolatebar", new ChocolateBar());
+        CandyManager.registerCandy("cookie", new Cookie());
 
         //Add users who are online
         Bukkit.getOnlinePlayers().forEach(net.vaultcraft.vcprison.user.PrisonUser::new);
