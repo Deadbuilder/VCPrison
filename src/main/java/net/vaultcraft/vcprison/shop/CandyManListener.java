@@ -38,7 +38,7 @@ public class CandyManListener implements Listener {
 
     private final HashMap<Integer, RecipeMenu> recipes = new HashMap<Integer, RecipeMenu>() {{
         put(9, new RecipeMenu(CandyItems.SUGARCUBE, new ArrayList<>(Arrays.asList(new ItemStack(Material.SUGAR), new ItemStack(Material.SUGAR), new ItemStack(Material.SUGAR),
-                new ItemStack(Material.SUGAR), new ItemStack(Material.SUGAR), new ItemStack(Material.SUGAR),
+                new ItemStack(Material.SUGAR), new ItemStack(Material.MILK_BUCKET), new ItemStack(Material.SUGAR),
                 new ItemStack(Material.SUGAR), new ItemStack(Material.SUGAR), new ItemStack(Material.SUGAR))), false));
         put(10, new RecipeMenu(CandyItems.WRAPPER, new ArrayList<>(Arrays.asList(CandyItems.RUBBER, CandyItems.RUBBER, CandyItems.RUBBER,
                 CandyItems.RUBBER, CandyItems.SUGARCUBE, CandyItems.RUBBER,

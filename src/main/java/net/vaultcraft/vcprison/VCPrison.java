@@ -1,6 +1,7 @@
 package net.vaultcraft.vcprison;
 
 import com.google.common.collect.Lists;
+import net.vaultcraft.vcessentials.auction.AucManager;
 import net.vaultcraft.vcprison.candy.*;
 import net.vaultcraft.vcprison.cells.CellManager;
 import net.vaultcraft.vcprison.cells.CellsListener;
@@ -217,25 +218,23 @@ public class VCPrison extends JavaPlugin {
         new Warden();
         PrisonScoreboard.init();
 
-        Runnable minePercentUpdate = new Runnable() {
-            public void run() {
-                for (Mine mine : MineLoader.getMines()) {
-                    if (SignManager.fromMeta("mine%" + mine.getRank().toString()) == null)
-                        continue;
+        Runnable minePercentUpdate = () -> {
+            for (Mine mine : MineLoader.getMines()) {
+                if (SignManager.fromMeta("mine%" + mine.getRank().toString()) == null)
+                    continue;
 
-                    SignManager.updateSigns("mine%"+mine.getRank().toString(), "&m---&c=&0&m---", "&5Percent Mined", "&8&l&n"+(df.format(mine.getPercent() * 100))+"%", "&m---&c=&0&m---");
-                }
+                SignManager.updateSigns("mine%"+mine.getRank().toString(), "&m---&c=&0&m---", "&5Percent Mined", "&8&l&n"+(df.format(mine.getPercent() * 100))+"%", "&m---&c=&0&m---");
             }
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, minePercentUpdate, 20, 20);
 
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+        }, 20, 20);
+
         cellManager = new CellManager();
-        cellSaveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
-            @Override
-            public void run() {
-                cellManager.saveCells();
-            }
-        }, (20*60)*5, (20*60)*5);
+        cellSaveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> cellManager.saveCells(), (20*60)*5, (20*60)*5);
+
+        AucManager.isPrison = true;
     }
 
     private static DecimalFormat df = new DecimalFormat("0.00");
