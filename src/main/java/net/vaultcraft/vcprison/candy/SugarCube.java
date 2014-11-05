@@ -14,7 +14,7 @@ public class SugarCube implements Candy {
     @Override
     public ShapedRecipe getRecipe() {
         ItemStack itemStack = this.getCandyItem().clone();
-        itemStack.setAmount(4);
+        itemStack.setAmount(8);
         ShapedRecipe rc = new ShapedRecipe(itemStack);
         rc.shape("XXX", "XYX", "XXX");
         rc.setIngredient('X', Material.SUGAR);
