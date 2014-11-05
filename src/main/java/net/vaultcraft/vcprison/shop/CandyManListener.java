@@ -33,7 +33,7 @@ public class CandyManListener implements Listener {
         put(3, new ShopItem(CandyItems.PINKDYE, 4000, "Quantity: 4", 4));
         put(4, new ShopItem(CandyItems.REDDYE, 8000, "Quantity: 2", 2));
         put(5, new ShopItem(CandyItems.NETHERWART, 16000, "Quantity: 2", 2));
-        put(6, new ShopItem(CandyItems.NETHERSTAR, 1000000000000d, "Quantity: 1", 1));
+        put(6, new ShopItem(CandyItems.NETHERSTAR, 50000000000d, "Quantity: 1", 1));
     }};
 
     private final HashMap<Integer, RecipeMenu> recipes = new HashMap<Integer, RecipeMenu>() {{

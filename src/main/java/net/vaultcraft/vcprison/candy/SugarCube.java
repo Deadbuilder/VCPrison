@@ -13,7 +13,9 @@ import org.bukkit.potion.PotionEffectType;
 public class SugarCube implements Candy {
     @Override
     public ShapedRecipe getRecipe() {
-        ShapedRecipe rc = new ShapedRecipe(getCandyItem());
+        ItemStack itemStack = this.getCandyItem().clone();
+        itemStack.setAmount(4);
+        ShapedRecipe rc = new ShapedRecipe(itemStack);
         rc.shape("XXX", "XYX", "XXX");
         rc.setIngredient('X', Material.SUGAR);
         rc.setIngredient('Y', Material.MILK_BUCKET);
