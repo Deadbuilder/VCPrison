@@ -21,7 +21,6 @@ public class FortunePerk extends PickaxePerk {
         super(icon, name, cost, initLevel, maxLevel, lore);
     }
 
-    @Override
     public ItemMeta changeMeta(Player player, ItemMeta itemMeta, int level) {
         itemMeta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, level, true);
         return itemMeta;
@@ -35,7 +34,6 @@ public class FortunePerk extends PickaxePerk {
             blocked.add(Material.MELON_SEEDS);
     };
 
-    @Override
     public ItemStack onBreak(Player player, BlockBreakEvent event, Block block, ItemStack itemStack, int level) {
         if (MineLoader.fromLocation(block.getLocation()) != null) {
             if (blocked.contains(itemStack.getType()))
