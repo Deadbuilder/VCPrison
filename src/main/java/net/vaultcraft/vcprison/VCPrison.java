@@ -171,6 +171,7 @@ public class VCPrison extends JavaPlugin {
         CandyManager.registerCandy("candyapple", new CandyApple());
         CandyManager.registerCandy("chocolatebar", new ChocolateBar());
         CandyManager.registerCandy("cookie", new Cookie());
+        CandyManager.registerCandy("sweedishfish", new SwedishFish());
 
         //Add users who are online
         Bukkit.getOnlinePlayers().forEach(net.vaultcraft.vcprison.user.PrisonUser::new);
