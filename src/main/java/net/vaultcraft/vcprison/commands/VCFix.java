@@ -66,10 +66,10 @@ public class VCFix extends ICommand {
     private void repairItems(ItemStack[] stacks) {
         for (ItemStack i : stacks) {
             if (i == null)
-                return;
+                continue;
 
             if (i.getType().isBlock() || i.getType().getMaxDurability() < 1)
-                return;
+                continue;
 
             i.setDurability((short)0);
         }
@@ -78,10 +78,10 @@ public class VCFix extends ICommand {
     private void repairItems(PlayerInventory inventory) {
         for (ItemStack i : inventory) {
             if (i == null)
-                return;
+                continue;
 
             if (i.getType().isBlock() || i.getType().getMaxDurability() < 1)
-                return;
+                continue;
 
             i.setDurability((short)0);
         }
