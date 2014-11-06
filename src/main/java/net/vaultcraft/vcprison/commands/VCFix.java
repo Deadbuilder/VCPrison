@@ -37,7 +37,7 @@ public class VCFix extends ICommand {
 
         User.fromPlayer(player).addUserdata("fixCooldown", String.valueOf(System.currentTimeMillis() + (1000 * 60 * getMultiplier(User.fromPlayer(player).getGroup().getHighest()))));
 
-        repairItems(player.getInventory());
+        repairItems(player.getInventory().getContents());
 
         repairItems(player.getInventory().getArmorContents());
 
