@@ -184,7 +184,7 @@ public class Pickaxe {
             fireworkMeta.addEffect(FireworkEffect.builder().withColor(Color.YELLOW).withFade(Color.ORANGE).withTrail().with(FireworkEffect.Type.STAR).build());
             fireworkMeta.setPower(2);
             firework.setFireworkMeta(fireworkMeta);
-            Form.at(player, "Your pickaxe leveled up! Right click with the pickaxe to add new stats to the pickaxe.");
+            Form.at(player, "Your pickaxe leveled up! Right click with the pickaxe to add new stats.");
         }
         player.getInventory().setItem(0, getPickaxe());
     }
