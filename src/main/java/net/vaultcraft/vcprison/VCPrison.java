@@ -59,6 +59,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by tacticalsk8er on 7/30/2014.
@@ -233,7 +234,7 @@ public class VCPrison extends JavaPlugin {
         }, 20, 20);
 
         cellManager = new CellManager();
-        cellSaveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> cellManager.saveCells(), (20*60)*5, (20*60)*5);
+        cellSaveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(this, cellManager::saveCells, (20*60)*5, (20*60)*5);
 
         AucManager.isPrison = true;
     }
@@ -258,11 +259,7 @@ public class VCPrison extends JavaPlugin {
 
     public static List<Player> getStaff() {
         List<Player> staff = Lists.newArrayList();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (User.fromPlayer(player) != null && User.fromPlayer(player).getGroup() != null)
-                if (User.fromPlayer(player).getGroup().hasPermission(Group.HELPER))
-                    staff.add(player);
-        }
+        staff.addAll(Bukkit.getOnlinePlayers().stream().filter(player -> User.fromPlayer(player) != null && User.fromPlayer(player).getGroup() != null).map(player -> player).collect(Collectors.toList()));
         return staff;
     }
 
