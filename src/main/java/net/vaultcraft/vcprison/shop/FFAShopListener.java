@@ -37,7 +37,8 @@ public class FFAShopListener implements Listener {
         add(new ShopItem(Material.IRON_LEGGINGS, 30000, "Quantity: 1", "Iron Leggings", 1));
         add(new ShopItem(Material.IRON_BOOTS, 15000, "Quantity: 1", "Iron Boots", 1));
         add(new ShopItem(Material.GOLDEN_APPLE, 20000, "Quantity: 1", "Golden Apple", 1));
-        add(new ShopItem(Material.FISHING_ROD, 5000, "Quantity: 1", "Fishing Rod", 1));
+        add(new ShopItem(Material.BOW, 10000, "Quantity: 1", "Bow", 1));
+        add(new ShopItem(Material.ARROW, 6000, "Quantity: 6", "Arrow", 6));
     }};
 
 
