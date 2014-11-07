@@ -182,6 +182,7 @@ public class PickaxeListener implements Listener {
             event.setCancelled(true);
     }
 
+    //
     @EventHandler
     public void onCraft(CraftItemEvent event) {
         if(event.getRecipe().getResult().getType() == Material.DIAMOND_PICKAXE
