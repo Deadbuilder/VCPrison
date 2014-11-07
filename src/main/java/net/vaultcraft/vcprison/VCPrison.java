@@ -257,12 +257,6 @@ public class VCPrison extends JavaPlugin {
         }
     }
 
-    public static List<Player> getStaff() {
-        List<Player> staff = Lists.newArrayList();
-        staff.addAll(Bukkit.getOnlinePlayers().stream().filter(player -> User.fromPlayer(player) != null && User.fromPlayer(player).getGroup() != null).map(player -> player).collect(Collectors.toList()));
-        return staff;
-    }
-
     public static VCPrison getInstance() {
         return instance;
     }

@@ -4,9 +4,11 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Dye;
 import org.bukkit.material.MaterialData;
 
 /**
@@ -26,64 +28,135 @@ public class VCBlock extends ICommand {
 
     @Override
     public void processCommand(Player player, String[] strings) {
-        int iron = 0, diamond = 0, coal = 0, emerald = 0, lapis = 0;
-        int ironBlock = 0, diamondBlock = 0, coalBlock = 0, emeraldBlock = 0, lapisBlock = 0;
+        int amountOfDiamonds = 0;
+        int amountOfEmeralds = 0;
+        int amountOfIron = 0;
+        int amountOfGold = 0;
+        int amountOfGlowstone = 0;
+        int coal = 0;
+        int redstone = 0;
+        int lapis = 0;
 
-        for(ItemStack itemStack : player.getInventory().getContents()) {
-            if(itemStack == null)
-                continue;
-            if(itemStack.getType().equals(Material.IRON_INGOT))
-                iron += itemStack.getAmount();
-            if(itemStack.getType().equals(Material.DIAMOND))
-                diamond += itemStack.getAmount();
-            if(itemStack.getType().equals(Material.EMERALD))
-                emerald += itemStack.getAmount();
-            if(itemStack.getType().equals(Material.COAL))
-                coal += itemStack.getAmount();
-            if(itemStack.getData().equals(new MaterialData(Material.INK_SACK, (byte)4)))
-                lapis += itemStack.getAmount();
+        int itemsChanged = 0;
+        for (ItemStack is : player.getInventory().getContents()) {
+            if (is != null)
+            {
+                if (is.getType() == Material.DIAMOND)
+                {
+                    player.getInventory().remove(is);
+                    amountOfDiamonds += is.getAmount();
+                }
+                if (is.getType() == Material.EMERALD)
+                {
+                    amountOfEmeralds += is.getAmount();
+                    player.getInventory().remove(is);
+                }
+                if (is.getType() == Material.IRON_INGOT)
+                {
+                    player.getInventory().remove(is);
+                    amountOfIron += is.getAmount();
+                }
+                if (is.getType() == Material.GLOWSTONE_DUST)
+                {
+                    amountOfGlowstone += is.getAmount();
+                    player.getInventory().remove(is);
+                }
+                if (is.getType() == Material.GOLD_INGOT)
+                {
+                    player.getInventory().remove(is);
+                    amountOfGold += is.getAmount();
+                }
+                if (is.getType() == Material.COAL)
+                {
+                    player.getInventory().remove(is);
+                    coal += is.getAmount();
+                }
+                if (is.getType() == Material.REDSTONE)
+                {
+                    redstone += is.getAmount();
+                    player.getInventory().remove(is);
+                }
+                if ((is.getType() == Material.INK_SACK) &&
+                        (((Dye)is.getData()).getColor() == DyeColor.BLUE))
+                {
+                    player.getInventory().remove(is);
+                    lapis += is.getAmount();
+                }
+            }
         }
+        player.updateInventory();
 
-        if(iron / 9 != 0) {
-            ironBlock = iron / 9;
-            ItemStack itemStack = new ItemStack(Material.IRON_BLOCK, ironBlock);
-            ItemStack itemStack1 = new ItemStack(Material.IRON_INGOT, ironBlock * 9);
-            player.getInventory().remove(itemStack1);
-            player.getInventory().addItem(itemStack);
-        }
+        itemsChanged = amountOfDiamonds + amountOfEmeralds +
+                amountOfGlowstone + amountOfGold + amountOfIron + coal +
+                redstone + lapis;
 
-        if(diamond / 9 != 0) {
-            diamondBlock = diamond / 9;
-            ItemStack itemStack = new ItemStack(Material.DIAMOND_BLOCK, diamondBlock);
-            ItemStack itemStack1 = new ItemStack(Material.DIAMOND, diamondBlock * 9);
-            player.getInventory().remove(itemStack1);
-            player.getInventory().addItem(itemStack);
-        }
+        int diamondsToTransform = amountOfDiamonds / 9;
+        int diamondOverflow = amountOfDiamonds % 9;
+        int emeraldsToTransform = amountOfEmeralds / 9;
+        int emeraldsOverflow = amountOfEmeralds % 9;
+        int ironToTransform = amountOfIron / 9;
+        int ironOverflow = amountOfIron % 9;
+        int goldToTransform = amountOfGold / 9;
+        int goldOverflow = amountOfGold % 9;
+        int glowstoneToTransform = amountOfGlowstone / 9;
+        int glowstoneOverflow = amountOfGlowstone % 9;
 
-        if(coal / 9 != 0) {
-            coalBlock = coal / 9;
-            ItemStack itemStack = new ItemStack(Material.COAL_BLOCK, coalBlock);
-            ItemStack itemStack1 = new ItemStack(Material.COAL, coalBlock * 9);
-            player.getInventory().remove(itemStack1);
-            player.getInventory().addItem(itemStack);
-        }
+        int rT = redstone / 9;
+        int rO = redstone % 9;
+        int lT = lapis / 9;
+        int lO = lapis % 9;
+        int cT = coal / 9;
+        int cO = coal % 9;
 
-        if(emerald / 9 != 0) {
-            emeraldBlock = emerald / 9;
-            ItemStack itemStack = new ItemStack(Material.EMERALD_BLOCK, emeraldBlock);
-            ItemStack itemStack1 = new ItemStack(Material.EMERALD, emerald);
-            player.getInventory().remove(itemStack1);
-            player.getInventory().addItem(itemStack);
-        }
 
-        if(lapis / 9 != 0) {
-            lapisBlock = lapis / 9;
-            ItemStack itemStack = new ItemStack(Material.LAPIS_BLOCK, lapisBlock);
-            ItemStack itemStack1 = new ItemStack(Material.INK_SACK, lapis, (short)0, (byte)4);
-            player.getInventory().remove(itemStack1);
-            player.getInventory().addItem(itemStack);
-        }
+        itemsChanged = itemsChanged - (diamondOverflow + emeraldsOverflow + ironOverflow + goldOverflow + glowstoneOverflow + rO + cO + lO);
 
-        Form.at(player, Prefix.SUCCESS, "You items have turned into blocks!");
+        player.getInventory().addItem(new ItemStack[] {
+                new ItemStack(
+                        diamondsToTransform > 0 ? Material.DIAMOND_BLOCK :
+                                Material.AIR, diamondsToTransform),
+                new ItemStack(
+                        emeraldsToTransform > 0 ? Material.EMERALD_BLOCK :
+                                Material.AIR, emeraldsToTransform),
+                new ItemStack(diamondOverflow > 0 ? Material.DIAMOND :
+                        Material.AIR, diamondOverflow),
+                new ItemStack(emeraldsOverflow > 0 ? Material.EMERALD :
+                        Material.AIR, emeraldsOverflow),
+                new ItemStack(ironToTransform > 0 ? Material.IRON_BLOCK :
+                        Material.AIR, ironToTransform),
+                new ItemStack(goldToTransform > 0 ? Material.GOLD_BLOCK :
+                        Material.AIR, goldToTransform),
+                new ItemStack(glowstoneToTransform > 0 ? Material.GLOWSTONE :
+                        Material.AIR, glowstoneToTransform),
+                new ItemStack(ironOverflow > 0 ? Material.IRON_INGOT :
+                        Material.AIR, ironOverflow),
+                new ItemStack(goldOverflow > 0 ? Material.GOLD_INGOT :
+                        Material.AIR, goldOverflow),
+                new ItemStack(
+                        glowstoneOverflow > 0 ? Material.GLOWSTONE_DUST :
+                                Material.AIR, glowstoneOverflow) });
+
+        player.getInventory().addItem(new ItemStack[] {
+                new ItemStack(rT > 0 ? Material.REDSTONE_BLOCK :
+                        Material.AIR, rT) });
+        player.getInventory().addItem(new ItemStack[] {
+                new ItemStack(lT > 0 ? Material.LAPIS_BLOCK : Material.AIR,
+                        lT) });
+        player.getInventory().addItem(new ItemStack[] {
+                new ItemStack(cT > 0 ? Material.COAL_BLOCK : Material.AIR,
+                        cT) });
+        player.getInventory()
+                .addItem(new ItemStack[] {
+                        new ItemStack(rO > 0 ? Material.REDSTONE :
+                                Material.AIR, rO) });
+        player.getInventory().addItem(new ItemStack[] {
+                new ItemStack(lO > 0 ? Material.INK_SACK : Material.AIR,
+                        lO, (short) 4) });
+
+        player.getInventory().addItem(new ItemStack[] {
+                new ItemStack(cO > 0 ? Material.COAL : Material.AIR, cO) });
+
+        player.updateInventory();
+        Form.at(player, Prefix.SUCCESS, "You items have turned into blocks! " + itemsChanged + " items changed!");
     }
 }
