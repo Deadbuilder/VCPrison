@@ -182,6 +182,7 @@ public class PickaxeListener implements Listener {
             event.setCancelled(true);
     }
 
+    //
     @EventHandler
     public void onCraft(CraftItemEvent event) {
         if(event.getRecipe().getResult().getType() == Material.DIAMOND_PICKAXE
@@ -189,6 +190,7 @@ public class PickaxeListener implements Listener {
                 || event.getRecipe().getResult().getType() == Material.IRON_SWORD
                 || event.getRecipe().getResult().getType() == Material.GOLD_SWORD
                 || event.getRecipe().getResult().getType() == Material.STONE_SWORD
+                || event.getRecipe().getResult().getType() == Material.DIAMOND_AXE
                 || event.getRecipe().getResult().getType() == Material.WOOD_SWORD) {
 
             event.setCancelled(true);
