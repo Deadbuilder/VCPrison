@@ -348,6 +348,11 @@ public class VCGangs extends ICommand {
 
         Gang gang = GangManager.getGangs().get(args[1]);
 
+        if (gang.equals(senderGang)) {
+            sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.WHITE + "You cannot ally yourself!");
+            return;
+        }
+
         if (gang.getAlliedGangs().contains(senderGang.getGangName())) {
             gang.removeAlly(senderGang.getGangName());
             senderGang.removeAlly(gang.getGangName());
