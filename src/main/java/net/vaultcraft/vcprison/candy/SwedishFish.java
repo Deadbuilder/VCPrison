@@ -17,7 +17,7 @@ public class SwedishFish implements Candy {
         ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.SWEDISHFISH);
         shapedRecipe.shape("xyx", "zaz", "xyx");
         shapedRecipe.setIngredient('x', Material.QUARTZ);
-        shapedRecipe.setIngredient('y', Material.NETHER_WARTS);
+        shapedRecipe.setIngredient('y', Material.getMaterial(372));
         shapedRecipe.setIngredient('z', Material.INK_SACK.getNewData((byte)1));
         shapedRecipe.setIngredient('a', Material.SNOW_BLOCK);
         return shapedRecipe;
