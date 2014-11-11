@@ -86,6 +86,9 @@ public class FFAHandler {
             if (at.getType().equals(Material.AIR))
                 continue;
 
+            if (at.getLocation().subtract(0, 1, 0).getBlock().getType().equals(Material.CACTUS))
+                continue;
+
             find = at.getLocation();
         }
 
