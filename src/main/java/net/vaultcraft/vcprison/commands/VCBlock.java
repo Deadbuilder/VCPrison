@@ -157,6 +157,6 @@ public class VCBlock extends ICommand {
                 new ItemStack(cO > 0 ? Material.COAL : Material.AIR, cO) });
 
         player.updateInventory();
-        Form.at(player, Prefix.SUCCESS, "You items have turned into blocks! " + itemsChanged + " items changed!");
+        Form.at(player, Prefix.SUCCESS, "Your items have turned into blocks! " + itemsChanged + " items changed!");
     }
 }
