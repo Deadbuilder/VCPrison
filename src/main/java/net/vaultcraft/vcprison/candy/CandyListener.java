@@ -170,10 +170,24 @@ public class CandyListener implements Listener {
     @EventHandler
     public void onCraft(PrepareItemCraftEvent event) {
         CraftingInventory inventory = event.getInventory();
+
+        //Candy Recipes
+        ItemStack result = inventory.getResult();
+        CandyRecipe candyRecipe = CandyManager.getRecipe(result);
+        if(candyRecipe != null) {
+            if(!candyRecipe.isRecipe(inventory.getMatrix())) {
+                inventory.setResult(new ItemStack(Material.AIR));
+                return;
+            }
+        }
+
+        //Harmful candies
         Candy candy = null;
         for(int i = 1; i < inventory.getContents().length; i++) {
             if(i <= 4 || i >= 6) {
                 if(inventory.getContents()[i].getType() != Material.SNOW_BALL)
+                    return;
+                if(!inventory.getContents()[i].equals(CandyItems.JAWBREAKER))
                     return;
                 continue;
             }

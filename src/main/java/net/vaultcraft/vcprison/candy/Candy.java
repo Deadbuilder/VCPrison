@@ -12,7 +12,7 @@ import org.bukkit.inventory.ShapedRecipe;
  */
 public interface Candy extends Listener {
 
-    public Recipe getRecipe();
+    public CandyRecipe getRecipe();
 
     public ItemStack getCandyItem();
 
