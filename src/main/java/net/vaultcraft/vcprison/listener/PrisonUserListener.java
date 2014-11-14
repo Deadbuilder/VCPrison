@@ -16,6 +16,7 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.protection.ProtectionManager;
 import net.vaultcraft.vcutils.protection.flag.FlagType;
+import net.vaultcraft.vcutils.uncommon.Particles;
 import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -131,7 +132,10 @@ public class PrisonUserListener implements Listener {
                 Form.at((Player) damager, Prefix.ERROR, "You can't hurt players since you just spawned.");
                 return;
             }
+
             FFADamageTracker.setLastDamager((Player) hurt, (Player) damager);
+            hurt.getWorld().playEffect(((Player) hurt).getEyeLocation(), Effect.STEP_SOUND, 152);
+            hurt.getWorld().playEffect(hurt.getLocation(), Effect.STEP_SOUND, 152);
         }
     }
 
