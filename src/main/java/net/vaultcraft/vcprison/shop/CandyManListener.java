@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.shop;
 
+import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.candy.CandyItems;
 import net.vaultcraft.vcutils.chat.Form;
@@ -192,6 +193,7 @@ public class CandyManListener implements Listener {
 
         if (event.getWhoClicked() instanceof Player && inShop.contains(event.getWhoClicked())) {
             event.setCancelled(true);
+            //Connor: event.getRawSlot() >= inv size works too
             if (event.getSlot() != event.getRawSlot()) { //FIXME: This is kinda hackish
                 return;
             }
@@ -219,6 +221,11 @@ public class CandyManListener implements Listener {
 
             ItemStack itemStack = item.getItemStack().clone();
             itemStack.setAmount(item.quantity);
+
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.setLore(Lists.newArrayList());
+            itemStack.setItemMeta(meta);
+
             event.getWhoClicked().getInventory().addItem(itemStack);
             user.setMoney(user.getMoney() - item.price);
             Form.at((Player) event.getWhoClicked(), Prefix.SUCCESS, "You bought a " + item.getItem().getItemMeta().getDisplayName() + " for $" + String.valueOf(item.price) + "!");

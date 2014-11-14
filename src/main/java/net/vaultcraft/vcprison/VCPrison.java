@@ -205,12 +205,9 @@ public class VCPrison extends JavaPlugin {
             @Override
             public void run() {
                 for (Mine mine : MineLoader.getMines()) {
-                    Runnable delay = new Runnable() {
-                        @Override
-                        public void run() {
-                            MineLoader.resetMine(mine);
-                            System.out.println("Mine: "+mine.getRank().toString()+" reset stage: COMPLETE!");
-                        }
+                    Runnable delay = () -> {
+                        MineLoader.resetMine(mine);
+                        System.out.println("Mine: "+mine.getRank().toString()+" reset stage: COMPLETE!");
                     };
                     Bukkit.getScheduler().scheduleSyncDelayedTask(VCPrison.this, delay, pos+=60);
                 }
