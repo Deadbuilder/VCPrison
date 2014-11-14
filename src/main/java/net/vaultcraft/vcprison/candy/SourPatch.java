@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
@@ -22,13 +21,15 @@ public class SourPatch implements Candy {
     HashMap<String, Long> thornsMap = new HashMap<>();
 
     @Override
-    public ShapedRecipe getRecipe() {
-        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.SOURPATCH);
-        shapedRecipe.shape("xyx", "yzy", "xyx");
-        shapedRecipe.setIngredient('x', Material.QUARTZ);
-        shapedRecipe.setIngredient('y', Material.INK_SACK.getNewData((byte)2));
-        shapedRecipe.setIngredient('z', Material.SNOW_BLOCK);
-        return shapedRecipe;
+    public CandyRecipe getRecipe() {
+        CandyShapedRecipe rc = new CandyShapedRecipe(this.getCandyItem());
+        rc.shape('X', 'Y', 'X',
+                 'Y', 'Z', 'Y',
+                 'X', 'Y', 'X');
+        rc.setItem('X', CandyItems.WRAPPER);
+        rc.setItem('Y', new ItemStack(Material.INK_SACK, 1, (short)0, (byte)2));
+        rc.setItem('Z', CandyItems.SUGARCUBE);
+        return rc;
     }
 
     @Override

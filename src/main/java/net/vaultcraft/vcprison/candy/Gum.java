@@ -1,13 +1,11 @@
 package net.vaultcraft.vcprison.candy;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.potion.PotionEffectType;
 
 /**
@@ -25,12 +23,6 @@ public class Gum implements Candy {
         rc.setItem('Y', CandyItems.PINKDYE);
         rc.setItem('Q', CandyItems.RUBBER);
         rc.setItem('Z', CandyItems.SUGARCUBE);
-//        ShapedRecipe rc = new ShapedRecipe(getCandyItem());
-//        rc.shape("XYX", "QZQ", "XYX");
-//        rc.setIngredient('X', Material.QUARTZ);
-//        rc.setIngredient('Y', Material.INK_SACK.getNewData((byte)9));
-//        rc.setIngredient('Q', Material.INK_SACK.getNewData((byte)8));
-//        rc.setIngredient('Z', Material.SNOW_BLOCK);
         return rc;
     }
 

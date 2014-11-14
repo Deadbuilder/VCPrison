@@ -1,10 +1,7 @@
 package net.vaultcraft.vcprison.candy;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.potion.PotionEffectType;
 
 /**
@@ -13,13 +10,15 @@ import org.bukkit.potion.PotionEffectType;
 public class Warhead implements Candy {
 
     @Override
-    public Recipe getRecipe() {
-        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.WARHEAD);
-        shapedRecipe.shape("xyx", "yzy", "xyx");
-        shapedRecipe.setIngredient('x', Material.QUARTZ);
-        shapedRecipe.setIngredient('y', Material.MELON);
-        shapedRecipe.setIngredient('z', Material.SNOW_BLOCK);
-        return shapedRecipe;
+    public CandyRecipe getRecipe() {
+        CandyShapedRecipe rc = new CandyShapedRecipe(this.getCandyItem());
+        rc.shape('X', 'Y', 'X',
+                 'Y', 'Z', 'Y',
+                 'X', 'Y', 'X');
+        rc.setItem('X', CandyItems.WRAPPER);
+        rc.setItem('Y', CandyItems.SOURPATCH);
+        rc.setItem('Z', CandyItems.SUGARCUBE);
+        return rc;
     }
 
     @Override

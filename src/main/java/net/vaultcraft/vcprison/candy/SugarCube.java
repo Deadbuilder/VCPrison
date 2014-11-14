@@ -3,7 +3,6 @@ package net.vaultcraft.vcprison.candy;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.potion.PotionEffectType;
 
 /**
@@ -12,13 +11,13 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class SugarCube implements Candy {
     @Override
-    public ShapedRecipe getRecipe() {
-        ItemStack itemStack = this.getCandyItem().clone();
-        itemStack.setAmount(8);
-        ShapedRecipe rc = new ShapedRecipe(itemStack);
-        rc.shape("XXX", "XYX", "XXX");
-        rc.setIngredient('X', Material.SUGAR);
-        rc.setIngredient('Y', Material.MILK_BUCKET);
+    public CandyRecipe getRecipe() {
+        CandyShapedRecipe rc = new CandyShapedRecipe(this.getCandyItem());
+        rc.shape('X', 'X', 'X',
+                 'X', 'Y', 'X',
+                 'X', 'X', 'X');
+        rc.setItem('X', new ItemStack(Material.SUGAR));
+        rc.setItem('Y', new ItemStack(Material.MILK_BUCKET));
         return rc;
     }
 
