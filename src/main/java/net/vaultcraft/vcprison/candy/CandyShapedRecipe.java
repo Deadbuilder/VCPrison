@@ -72,7 +72,7 @@ public class CandyShapedRecipe implements CandyRecipe {
     public boolean isRecipe(ItemStack[] recipe) {
         List<ItemStack> r = new ArrayList<>();
         for(int i = 0; i < 9; i++) {
-            if(i < parts.length)
+            if(i <= parts.length)
                 if(items.get(parts[i]) != null)
                     r.set(i, items.get(parts[i]));
                 else
