@@ -129,7 +129,7 @@ public class VCPrisonMoney extends ICommand {
                     }
 
                     User.fromPlayer(player1).addMoney(amount);
-                    Form.at(player, Prefix.SUCCESS, player1.getName() + " now has $" + User.fromPlayer(player1).getMoney() + ".");
+                    Form.at(player, Prefix.SUCCESS, player1.getName() + " now has $" + Form.at(User.fromPlayer(player1).getMoney(), true));
                     break;
                 case "set":
                     if(!User.fromPlayer(player).getGroup().hasPermission(Group.ADMIN)) {
@@ -161,7 +161,7 @@ public class VCPrisonMoney extends ICommand {
                     }
 
                     User.fromPlayer(player1).setMoney(amount);
-                    Form.at(player, Prefix.SUCCESS, player1.getName() + " now has $" + User.fromPlayer(player1).getMoney() + ".");
+                    Form.at(player, Prefix.SUCCESS, player1.getName() + " now has $" + Form.at(User.fromPlayer(player1).getMoney(), true));
                     break;
                 default:
                     player1 = Bukkit.getPlayer(args[0]);
@@ -169,7 +169,7 @@ public class VCPrisonMoney extends ICommand {
                         Form.at(player, Prefix.ERROR, "No such player");
                         return;
                     }
-                    Form.at(player, Prefix.VAULT_CRAFT,  player1.getName() + " has &a$" + User.fromPlayer(player1).getMoney() + ".");
+                    Form.at(player, Prefix.VAULT_CRAFT,  player1.getName() + " has &a$" + Form.at(User.fromPlayer(player1).getMoney(), true));
                     break;
             }
         }
