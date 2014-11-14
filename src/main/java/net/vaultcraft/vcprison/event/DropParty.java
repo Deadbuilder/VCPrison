@@ -24,7 +24,7 @@ public class DropParty extends InnerPlugin {
 
     private DropEvent dropEvent;
     private static DropParty instance;
-    private double timeLeft = 60*60;
+    private int timeLeft = 60*60;
 
     private static final ItemStack DP_TOKEN;
     static {
@@ -37,38 +37,34 @@ public class DropParty extends InnerPlugin {
 
     private static HashSet<Integer> warn = new HashSet<>();
     static {
-        warn.add(2);   //1
-        warn.add(4);   //2
-        warn.add(6);   //3
-        warn.add(8);   //4
-        warn.add(10);  //5
-        warn.add(20);  //10
-        warn.add(60);  //30
-        warn.add(120); //1 min
-        warn.add(360); //3 min
-        warn.add(600); //5 min
+        warn.add(1);   //1
+        warn.add(2);   //2
+        warn.add(3);   //3
+        warn.add(4);   //4
+        warn.add(5);  //5
+        warn.add(10);  //10
+        warn.add(30);  //30
+        warn.add(60); //1 min
+        warn.add(180); //3 min
+        warn.add(300); //5 min
     }
-
-    private static boolean went = false;
 
     public void onEnable() {
         instance = this;
         dropEvent = new DropEvent();
 
         Runnable task = () -> {
-            timeLeft-=0.5;
+            timeLeft--;
             if (timeLeft <= 0) {
                 dropEvent.onEvent(VCPrison.getInstance());
                 timeLeft = (60*60);
                 return;
             }
 
-            if (warn.contains((int)(timeLeft)) && !went) {
-                went = true;
-                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party will start in " + format((int)timeLeft) + "!"));
+            if (warn.contains((timeLeft))) {
+                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party will start in " + format(timeLeft) + "!"));
                 return;
             }
-            went = false;
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(VCPrison.getInstance(), task, 20, 20);
     }
@@ -88,10 +84,6 @@ public class DropParty extends InnerPlugin {
 
     public void setTimeLeft(int timeLeft) {
         this.timeLeft = timeLeft;
-    }
-
-    public DropEvent getDropEvent() {
-        return dropEvent;
     }
 
     public static DropParty getInstance() {
