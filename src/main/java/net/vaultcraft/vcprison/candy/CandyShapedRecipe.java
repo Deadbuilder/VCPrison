@@ -82,7 +82,7 @@ public class CandyShapedRecipe implements CandyRecipe {
         }
 
         for(int i = 0; i < recipe.length; i++) {
-            if(!r.get(i).equals(recipe[i]))
+            if(!r.get(i).equals(recipe[i + 1]))
                 return false;
         }
 
