@@ -110,6 +110,11 @@ public class PickaxeListener implements Listener {
             player.performCommand("redir cell");
             return;
         }
+        if(event.getCurrentItem().getItemMeta().getDisplayName().contains(ChatColor.GOLD + ChatColor.BOLD.toString() + "Shop")) {
+            player.closeInventory();
+            player.performCommand("redir shop");
+            return;
+        }
 
         PickaxePerk perk = PickaxePerk.getPerkFromName(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getDisplayName().replace("Toggle Off ", "").replace("Toggle On ", "").replaceAll(" \\d+", "").replace(" Max", "")));
         if(perk == null)
