@@ -41,7 +41,7 @@ public class DropParty extends InnerPlugin {
         warn.add(2);   //2
         warn.add(3);   //3
         warn.add(4);   //4
-        warn.add(5);  //5
+        warn.add(5);   //5
         warn.add(10);  //10
         warn.add(30);  //30
         warn.add(60); //1 min
@@ -54,15 +54,15 @@ public class DropParty extends InnerPlugin {
         dropEvent = new DropEvent();
 
         Runnable task = () -> {
+            if (warn.contains((timeLeft))) {
+                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party will start in " + format(timeLeft) + "!"));
+                return;
+            }
+
             timeLeft--;
             if (timeLeft <= 0) {
                 dropEvent.onEvent(VCPrison.getInstance());
                 timeLeft = (60*60);
-                return;
-            }
-
-            if (warn.contains((timeLeft))) {
-                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party will start in " + format(timeLeft) + "!"));
                 return;
             }
         };
