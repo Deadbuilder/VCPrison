@@ -56,7 +56,6 @@ public class DropParty extends InnerPlugin {
         Runnable task = () -> {
             if (warn.contains((timeLeft))) {
                 Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party will start in " + format(timeLeft) + "!"));
-                return;
             }
 
             timeLeft--;
