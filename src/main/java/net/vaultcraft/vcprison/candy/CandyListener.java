@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashSet;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,9 +60,33 @@ public class CandyListener implements Listener {
         FurnaceRecipe rubber = new FurnaceRecipe(rubberItem, Material.INK_SACK, 7);
         Bukkit.addRecipe(rubber);
     }
+    
+    private static HashSet<Material> blackList = new HashSet<>();
+    static {
+        blackList.add(Material.CHEST);
+        blackList.add(Material.ENDER_CHEST);
+        blackList.add(Material.STONE_BUTTON);
+        blackList.add(Material.WOOD_BUTTON);
+        blackList.add(Material.SIGN);
+        blackList.add(Material.WALL_SIGN);
+        blackList.add(Material.SIGN_POST);
+        blackList.add(Material.IRON_DOOR);
+        blackList.add(Material.TRAP_DOOR);
+        blackList.add(Material.WOOD_DOOR);
+        blackList.add(Material.WOODEN_DOOR);
+        blackList.add(Material.IRON_DOOR_BLOCK);
+        blackList.add(Material.WORKBENCH);
+        blackList.add(Material.ANVIL);
+        blackList.add(Material.ENCHANTMENT_TABLE);
+    }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+            if (blackList.contains(event.getClickedBlock().getType())) {
+                return;
+            }
+        }
         ItemStack holding = event.getItem();
         Player player = event.getPlayer();
         String name = player.getName();
@@ -144,10 +170,24 @@ public class CandyListener implements Listener {
     @EventHandler
     public void onCraft(PrepareItemCraftEvent event) {
         CraftingInventory inventory = event.getInventory();
+
+        //Candy Recipes
+        ItemStack result = inventory.getResult();
+        CandyRecipe candyRecipe = CandyManager.getRecipe(result);
+        if(candyRecipe != null) {
+            if(!candyRecipe.isRecipe(inventory.getMatrix())) {
+                inventory.setResult(new ItemStack(Material.AIR));
+                return;
+            }
+        }
+
+        //Harmful candies
         Candy candy = null;
         for(int i = 1; i < inventory.getContents().length; i++) {
             if(i <= 4 || i >= 6) {
                 if(inventory.getContents()[i].getType() != Material.SNOW_BALL)
+                    return;
+                if(!inventory.getContents()[i].equals(CandyItems.JAWBREAKER))
                     return;
                 continue;
             }

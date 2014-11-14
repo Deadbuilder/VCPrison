@@ -12,12 +12,19 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class Butterscotch implements Candy {
 
-    public ShapedRecipe getRecipe() {
-        ShapedRecipe rc = new ShapedRecipe(getCandyItem());
-        rc.shape("XYX", "YZY", "XYX");
-        rc.setIngredient('X', Material.QUARTZ);
-        rc.setIngredient('Y', Material.INK_SACK.getNewData((byte)11));
-        rc.setIngredient('Z', Material.SNOW_BLOCK);
+    public CandyRecipe getRecipe() {
+        CandyShapedRecipe rc = new CandyShapedRecipe(getCandyItem());
+        rc.shape('X', 'Y', 'X',
+                'Y', 'Z', 'Y',
+                'X', 'Y', 'X');
+        rc.setItem('X', CandyItems.WRAPPER);
+        rc.setItem('Y', CandyItems.BUTTER);
+        rc.setItem('Z', CandyItems.SUGARCUBE);
+//        ShapedRecipe rc = new ShapedRecipe(getCandyItem());
+//        rc.shape("XYX", "YZY", "XYX");
+//        rc.setIngredient('X', Material.QUARTZ);
+//        rc.setIngredient('Y', Material.INK_SACK.getNewData((byte)11));
+//        rc.setIngredient('Z', Material.SNOW_BLOCK);
         return rc;
     }
 

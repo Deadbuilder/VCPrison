@@ -16,13 +16,21 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class Gum implements Candy {
 
-    public ShapedRecipe getRecipe() {
-        ShapedRecipe rc = new ShapedRecipe(getCandyItem());
-        rc.shape("XYX", "QZQ", "XYX");
-        rc.setIngredient('X', Material.QUARTZ);
-        rc.setIngredient('Y', Material.INK_SACK.getNewData((byte)9));
-        rc.setIngredient('Q', Material.INK_SACK.getNewData((byte)8));
-        rc.setIngredient('Z', Material.SNOW_BLOCK);
+    public CandyRecipe getRecipe() {
+        CandyShapedRecipe rc = new CandyShapedRecipe(this.getCandyItem());
+        rc.shape('X', 'Y', 'X',
+                'Q', 'Z', 'Q',
+                'X', 'Y', 'X');
+        rc.setItem('X', CandyItems.WRAPPER);
+        rc.setItem('Y', CandyItems.PINKDYE);
+        rc.setItem('Q', CandyItems.RUBBER);
+        rc.setItem('Z', CandyItems.SUGARCUBE);
+//        ShapedRecipe rc = new ShapedRecipe(getCandyItem());
+//        rc.shape("XYX", "QZQ", "XYX");
+//        rc.setIngredient('X', Material.QUARTZ);
+//        rc.setIngredient('Y', Material.INK_SACK.getNewData((byte)9));
+//        rc.setIngredient('Q', Material.INK_SACK.getNewData((byte)8));
+//        rc.setIngredient('Z', Material.SNOW_BLOCK);
         return rc;
     }
 

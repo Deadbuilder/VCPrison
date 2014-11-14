@@ -338,6 +338,11 @@ public class VCCell extends ICommand {
     }
 
     public void executeBlock(Player player) {
+        if(!player.getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld())) {
+            Form.at(player, Prefix.ERROR, "You have to be in the cell world to use this commnad!");
+            return;
+        }
+
         Cell cell = VCPrison.getInstance().getCellManager().getCellFromLocation(player.getLocation().getBlock().getLocation());
 
         if (cell == null) {

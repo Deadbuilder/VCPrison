@@ -20,13 +20,21 @@ import java.util.Random;
 public class Cookie implements Candy {
 
     @Override
-    public Recipe getRecipe() {
-        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.COOKIE);
-        shapedRecipe.shape("xyz", "yay", "zyx");
-        shapedRecipe.setIngredient('x', Material.INK_SACK.getNewData((byte)11));
-        shapedRecipe.setIngredient('y', Material.CLAY_BRICK);
-        shapedRecipe.setIngredient('z', Material.NETHER_STAR);
-        shapedRecipe.setIngredient('a', Material.SNOW_BLOCK);
+    public CandyRecipe getRecipe() {
+        CandyShapedRecipe shapedRecipe = new CandyShapedRecipe(CandyItems.COOKIE);
+        shapedRecipe.shape('x', 'y', 'z',
+                'y', 'a', 'y',
+                'z', 'y', 'x');
+        shapedRecipe.setItem('x', CandyItems.BUTTER);
+        shapedRecipe.setItem('y', CandyItems.COCOA);
+        shapedRecipe.setItem('z', CandyItems.NETHERSTAR);
+        shapedRecipe.setItem('a', CandyItems.SUGARCUBE);
+//        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.COOKIE);
+//        shapedRecipe.shape("xyz", "yay", "zyx");
+//        shapedRecipe.setIngredient('x', Material.INK_SACK.getNewData((byte)11));
+//        shapedRecipe.setIngredient('y', Material.CLAY_BRICK);
+//        shapedRecipe.setIngredient('z', Material.NETHER_STAR);
+//        shapedRecipe.setIngredient('a', Material.SNOW_BLOCK);
         return shapedRecipe;
     }
 
