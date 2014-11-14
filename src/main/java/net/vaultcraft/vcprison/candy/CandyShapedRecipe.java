@@ -1,5 +1,7 @@
 package net.vaultcraft.vcprison.candy;
 
+import net.vaultcraft.vcprison.VCPrison;
+import net.vaultcraft.vcutils.logging.Logger;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -65,6 +67,10 @@ public class CandyShapedRecipe implements CandyRecipe {
         recipe.shape(this.shape);
         for(Map.Entry<Character, ItemStack> entry : items.entrySet())
             recipe.setIngredient(entry.getKey(), new MaterialData(entry.getValue().getType(), entry.getValue().getData().getData()));
+        String debug = "";
+        for(String s : this.shape)
+            debug += s;
+        Logger.debug(VCPrison.getInstance(), debug);
         return recipe;
     }
 
