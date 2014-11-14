@@ -93,7 +93,7 @@ public class CellsListener implements Listener {
                 && type != Material.DISPENSER && type != Material.HOPPER && type != Material.DROPPER && type != Material.STONE_BUTTON
                 && type != Material.WOOD_BUTTON && type != Material.LEVER)
             return;
-        if(event.getClickedBlock().getRelative(event.getBlockFace()).getType() == Material.FIRE)
+        if(event.getClickedBlock().getRelative(event.getBlockFace()).getType() != Material.FIRE)
             return;
         Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getClickedBlock().getLocation());
         if(possibleCell == null) {
