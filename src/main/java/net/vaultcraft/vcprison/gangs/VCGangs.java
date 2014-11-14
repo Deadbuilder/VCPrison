@@ -302,6 +302,13 @@ public class VCGangs extends ICommand {
         }
         gang.addMember(sender.getUniqueId().toString());
         sender.sendMessage(ChatColor.GREEN + "Success: " + ChatColor.WHITE + "You have joined the " + gang.getGangName() + " gang.");
+
+        for(String uuid : gang.getMemberUUIDs()) {
+            Player p = Bukkit.getPlayer(UUID.fromString(uuid));
+            if(p != null && p.isOnline() && p != sender) {
+                Form.at(p, Prefix.VAULT_CRAFT, sender.getDisplayName() + " has joined your gang!");
+            }
+        }
         gangInvites.remove(sender.getName());
     }
 

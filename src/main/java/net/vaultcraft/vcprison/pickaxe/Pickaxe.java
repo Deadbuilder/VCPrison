@@ -212,6 +212,7 @@ public class Pickaxe {
         inventory.addItem(getWarpIcon());
         inventory.addItem(getCellsIcon());
         inventory.addItem(getFFAIcon());
+        inventory.addItem(getShopIcon());
         return inventory;
     }
 
@@ -247,6 +248,15 @@ public class Pickaxe {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lFF&e&lA"));
         itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&6Click to teleport to the FFA.")));
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    public ItemStack getShopIcon() {
+        ItemStack itemStack = new ItemStack(Material.GOLD_NUGGET);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setDisplayName(ChatColor.GOLD + ChatColor.BOLD.toString() + "Shop");
+        itemMeta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&6Click to teleport to the shop.")));
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
