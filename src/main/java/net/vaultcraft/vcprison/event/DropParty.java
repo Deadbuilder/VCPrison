@@ -49,6 +49,8 @@ public class DropParty extends InnerPlugin {
         warn.add(600); //5 min
     }
 
+    private static boolean went = false;
+
     public void onEnable() {
         instance = this;
         dropEvent = new DropEvent();
@@ -61,9 +63,12 @@ public class DropParty extends InnerPlugin {
                 return;
             }
 
-            if (warn.contains((int)(timeLeft))) {
+            if (warn.contains((int)(timeLeft)) && !went) {
+                went = true;
                 Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party will start in " + format((int)timeLeft) + "!"));
+                return;
             }
+            went = false;
         };
         Bukkit.getScheduler().scheduleSyncRepeatingTask(VCPrison.getInstance(), task, 20, 20);
     }
