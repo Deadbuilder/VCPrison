@@ -44,7 +44,7 @@ public class DropParty extends InnerPlugin {
         warn.add(5);   //5
         warn.add(10);  //10
         warn.add(30);  //30
-        warn.add(60); //1 min
+        warn.add(60);  //1 min
         warn.add(180); //3 min
         warn.add(300); //5 min
     }
@@ -54,7 +54,7 @@ public class DropParty extends InnerPlugin {
         dropEvent = new DropEvent();
 
         Runnable task = () -> {
-            if (warn.contains((timeLeft))) {
+            if (warn.contains(timeLeft)) {
                 Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lDROP-PARTY&7: &fThe drop party will start in " + format(timeLeft) + "!"));
             }
 
@@ -69,8 +69,6 @@ public class DropParty extends InnerPlugin {
     }
 
     private static String format(int seconds) {
-        seconds/=2;
-
         if (seconds/60 >= 1) {
             return (seconds/60) + " minutes";
         } else {
