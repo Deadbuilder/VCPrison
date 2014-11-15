@@ -175,7 +175,7 @@ public class CandyListener implements Listener {
         ItemStack result = inventory.getResult();
         CandyRecipe candyRecipe = CandyManager.getRecipe(result);
         if(candyRecipe != null) {
-            if(!candyRecipe.isRecipe(inventory.getMatrix())) {
+            if(!candyRecipe.isRecipe(inventory.getContents())) {
                 inventory.setResult(new ItemStack(Material.AIR));
                 return;
             }
