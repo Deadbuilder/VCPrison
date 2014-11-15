@@ -155,20 +155,18 @@ public class Warden {
 
             final int finalWorth = (int)(c.worth*getItemWorthMultiplier(user.getGroup()));
 
-            BukkitTask task = Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), new Runnable() {
-                public void run() {
-                    if (!(player.isOnline())) {
-                        //handle players who quit
-                        return;
-                        //ez ^
-                    }
-
-                    user.setMoney(user.getMoney()+(finalWorth));
-                    Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$" + Form.at(finalWorth) + Prefix.SUCCESS.getChatColor() + "!", "GUARD");
-                    player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
-                    resume.remove(player.getName());
-                    selling.remove(player);
+            BukkitTask task = Bukkit.getScheduler().runTaskLater(VCPrison.getInstance(), () -> {
+                if (!(player.isOnline())) {
+                    //handle players who quit
+                    return;
+                    //ez ^
                 }
+
+                user.setMoney(user.getMoney()+(finalWorth));
+                Form.atCharacter(player, Prefix.CHARACTER, "Your items were sold for &e$" + Form.at(finalWorth) + Prefix.SUCCESS.getChatColor() + "!", "GUARD");
+                player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 1, 0);
+                resume.remove(player.getName());
+                selling.remove(player);
             }, c.ticks);
 
             if (selling.containsKey(player))
