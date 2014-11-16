@@ -45,22 +45,20 @@ public class VCFix extends ICommand {
     }
 
     private int getMultiplier(Group group) {
-        switch (group) {
-            case WOLF:
-                return (6 * 60);
-            case SLIME:
-                return (5 * 60);
-            case SKELETON:
-                return (4 * 60);
-            case ENDERMAN:
-                return (3 * 60);
-            case WITHER:
-                return (2 * 60);
-            case ENDERDRAGON:
-                return (60);
-            default:
-                return 1;
-        }
+        if (Group.hasPermission(group, Group.ENDERDRAGON))
+            return (60);
+        if (Group.hasPermission(group, Group.WITHER))
+            return (120);
+        if (Group.hasPermission(group, Group.ENDERMAN))
+            return (180);
+        if (Group.hasPermission(group, Group.SKELETON))
+            return (240);
+        if (Group.hasPermission(group, Group.SLIME))
+            return (300);
+        if (group.hasPermission(group, Group.WOLF))
+            return (360);
+
+        return 600;
     }
 
     private void repairItems(ItemStack[] stacks) {
