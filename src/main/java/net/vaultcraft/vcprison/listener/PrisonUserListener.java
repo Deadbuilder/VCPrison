@@ -2,8 +2,6 @@ package net.vaultcraft.vcprison.listener;
 
 import com.google.common.collect.Lists;
 import net.vaultcraft.vcprison.VCPrison;
-import net.vaultcraft.vcprison.cells.CellManager;
-import net.vaultcraft.vcprison.event.DropParty;
 import net.vaultcraft.vcprison.ffa.FFADamageTracker;
 import net.vaultcraft.vcprison.ffa.FFAHandler;
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
@@ -16,11 +14,9 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.protection.ProtectionManager;
 import net.vaultcraft.vcutils.protection.flag.FlagType;
-import net.vaultcraft.vcutils.uncommon.Particles;
 import net.vaultcraft.vcutils.user.UserLoadedEvent;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,8 +28,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -80,7 +74,7 @@ public class PrisonUserListener implements Listener {
 
             mine.tickBlocks();
 
-            if (mine.getPercent() > 0.3) {
+            if (mine.getPercent() > 0.2) {
                 Runnable sync = () -> {
                     if (mine.isResetting())
                         return;
