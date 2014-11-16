@@ -11,7 +11,6 @@ import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
 import net.vaultcraft.vcutils.user.Group;
-import net.vaultcraft.vcutils.user.User;
 import org.bukkit.*;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -195,6 +194,7 @@ public class VCCell extends ICommand {
 
         if (cell.additionalUUIDs.contains(player1.getUniqueId())) {
             Form.at(player, Prefix.ERROR, player1.getName() + " is already a build in " + cell.name + " cell.");
+            return;
         }
 
         cell.additionalUUIDs.add(player1.getUniqueId());
