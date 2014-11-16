@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class CandyManager {
 
     private static HashMap<String, Candy> candy = new HashMap<>();
-    private static HashMap<ItemStack, CandyRecipe> recipes = new HashMap<>();
+//    private static HashMap<ItemStack, CandyRecipe> recipes = new HashMap<>();
 
     public static Candy getCandy(String name) {
         return candy.get(name);
@@ -24,7 +24,7 @@ public class CandyManager {
 
     public static void registerRecipe(CandyRecipe candyRecipe) {
         VCPrison.getInstance().getServer().addRecipe(candyRecipe.getRecipe());
-        recipes.put(candyRecipe.getResult(), candyRecipe);
+//        recipes.put(candyRecipe.getResult(), candyRecipe);
     }
 
     public static void registerCandy(String name, Candy c) {
@@ -33,8 +33,8 @@ public class CandyManager {
         recipe.shape("xxx", "xyx", "xxx");
         recipe.setIngredient('x', Material.SNOW_BALL);
         recipe.setIngredient('y', c.getCandyItem().getData());
-        recipes.put(c.getRecipe().getResult(), c.getRecipe());
-        VCPrison.getInstance().getServer().addRecipe(c.getRecipe().getRecipe());
+//        recipes.put(c.getRecipe().getResult(), c.getRecipe());
+        VCPrison.getInstance().getServer().addRecipe(c.getRecipe());
         VCPrison.getInstance().getServer().addRecipe(recipe);
         Bukkit.getPluginManager().registerEvents(c, VCPrison.getInstance());
     }
@@ -56,7 +56,7 @@ public class CandyManager {
         return null;
     }
 
-    public static CandyRecipe getRecipe(ItemStack result) {
-        return recipes.get(result);
-    }
+//    public static CandyRecipe getRecipe(ItemStack result) {
+//        return recipes.get(result);
+//    }
 }

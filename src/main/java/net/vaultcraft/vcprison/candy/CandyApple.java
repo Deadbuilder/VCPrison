@@ -10,6 +10,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -22,19 +23,19 @@ import java.util.List;
 public class CandyApple implements Candy {
 
     @Override
-    public CandyRecipe getRecipe() {
-        CandyShapedRecipe shapedRecipe = new CandyShapedRecipe(CandyItems.CANDYAPPLE);
-        shapedRecipe.shape('x', 'y', 'x',
-                'x', 'z', 'x',
-                'x', 'x', 'x');
-        shapedRecipe.setItem('x', CandyItems.REDDYE);
-        shapedRecipe.setItem('y', CandyItems.NETHERSTAR);
-        shapedRecipe.setItem('z', CandyItems.SUGARCUBE);
-//        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.CANDYAPPLE);
-//        shapedRecipe.shape("xyx", "xzx", "xxx");
-//        shapedRecipe.setIngredient('x', Material.INK_SACK.getNewData((byte)1));
-//        shapedRecipe.setIngredient('y', Material.NETHER_STAR);
-//        shapedRecipe.setIngredient('z', Material.SNOW_BLOCK);
+    public Recipe getRecipe() {
+//        CandyShapedRecipe shapedRecipe = new CandyShapedRecipe(CandyItems.CANDYAPPLE);
+//        shapedRecipe.shape('x', 'y', 'x',
+//                'x', 'z', 'x',
+//                'x', 'x', 'x');
+//        shapedRecipe.setItem('x', CandyItems.REDDYE);
+//        shapedRecipe.setItem('y', CandyItems.NETHERSTAR);
+//        shapedRecipe.setItem('z', CandyItems.SUGARCUBE);
+        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.CANDYAPPLE);
+        shapedRecipe.shape("xyx", "xzx", "xxx");
+        shapedRecipe.setIngredient('x', Material.INK_SACK.getNewData((byte)1));
+        shapedRecipe.setIngredient('y', Material.NETHER_STAR);
+        shapedRecipe.setIngredient('z', Material.SNOW_BLOCK);
         return shapedRecipe;
     }
 

@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
 
 /**
  * @author Connor Hollasch
@@ -12,7 +11,7 @@ import org.bukkit.inventory.ShapedRecipe;
  */
 public interface Candy extends Listener {
 
-    public CandyRecipe getRecipe();
+    public Recipe getRecipe();
 
     public ItemStack getCandyItem();
 

@@ -1,5 +1,6 @@
 package net.vaultcraft.vcprison.candy;
 
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -8,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
@@ -18,10 +21,13 @@ import java.util.HashMap;
  */
 public class Jawbreaker implements Candy {
 
-    public CandyRecipe getRecipe() {
-        CandyShapelessRecipe rc = new CandyShapelessRecipe(this.getCandyItem());
-        rc.addIngredient(4, CandyItems.SUGARCUBE);
-        return rc;
+    public Recipe getRecipe() {
+        ShapelessRecipe snowball = new ShapelessRecipe(getCandyItem());
+        snowball.addIngredient(4, Material.SNOW_BLOCK);
+        return snowball;
+//        CandyShapelessRecipe rc = new CandyShapelessRecipe(this.getCandyItem());
+//        rc.addIngredient(4, CandyItems.SUGARCUBE);
+//        return rc;
     }
 
     public ItemStack getCandyItem() {
