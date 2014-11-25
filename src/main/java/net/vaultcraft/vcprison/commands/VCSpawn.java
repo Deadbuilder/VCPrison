@@ -2,6 +2,7 @@ package net.vaultcraft.vcprison.commands;
 
 import net.vaultcraft.vcprison.VCPrison;
 import net.vaultcraft.vcprison.ffa.FFAPlayer;
+import net.vaultcraft.vcprison.ffa.combatlog.FFAWarmup;
 import net.vaultcraft.vcutils.chat.Form;
 import net.vaultcraft.vcutils.chat.Prefix;
 import net.vaultcraft.vcutils.command.ICommand;
@@ -25,6 +26,7 @@ public class VCSpawn extends ICommand {
             return;
         }
 
+        FFAWarmup.addToWarmup(player);
         player.teleport(VCPrison.spawn);
         Form.at(player, Prefix.SUCCESS, "You teleported to spawn!");
     }
