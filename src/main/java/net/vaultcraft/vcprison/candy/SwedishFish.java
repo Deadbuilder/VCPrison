@@ -1,7 +1,10 @@
 package net.vaultcraft.vcprison.candy;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.potion.PotionEffectType;
 
 /**
@@ -10,16 +13,23 @@ import org.bukkit.potion.PotionEffectType;
 public class SwedishFish implements Candy {
 
     @Override
-    public CandyRecipe getRecipe() {
-        CandyShapedRecipe rc = new CandyShapedRecipe(this.getCandyItem());
-        rc.shape('X', 'Y', 'X',
-                 'Z', 'A', 'Z',
-                 'X', 'Y', 'X');
-        rc.setItem('X', CandyItems.WRAPPER);
-        rc.setItem('Y', CandyItems.NETHERWART);
-        rc.setItem('Z', CandyItems.REDDYE);
-        rc.setItem('A', CandyItems.SUGARCUBE);
-        return rc;
+    public Recipe getRecipe() {
+        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.SWEDISHFISH);
+        shapedRecipe.shape("xyx", "zaz", "xyx");
+        shapedRecipe.setIngredient('x', Material.QUARTZ);
+        shapedRecipe.setIngredient('y', Material.getMaterial(372));
+        shapedRecipe.setIngredient('z', Material.INK_SACK.getNewData((byte) 1));
+        shapedRecipe.setIngredient('a', Material.SNOW_BLOCK);
+        return shapedRecipe;
+//        CandyShapedRecipe rc = new CandyShapedRecipe(this.getCandyItem());
+//        rc.shape('X', 'Y', 'X',
+//                 'Z', 'A', 'Z',
+//                 'X', 'Y', 'X');
+//        rc.setItem('X', CandyItems.WRAPPER);
+//        rc.setItem('Y', CandyItems.NETHERWART);
+//        rc.setItem('Z', CandyItems.REDDYE);
+//        rc.setItem('A', CandyItems.SUGARCUBE);
+//        return rc;
     }
 
     @Override
@@ -39,7 +49,7 @@ public class SwedishFish implements Candy {
 
     @Override
     public ItemStack onCandyConsume(Player player, boolean harmful) {
-        if(harmful) {
+        if (harmful) {
             player.removePotionEffect(PotionEffectType.SPEED);
             player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
             player.removePotionEffect(PotionEffectType.SLOW);

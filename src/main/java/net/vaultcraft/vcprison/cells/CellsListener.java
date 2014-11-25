@@ -7,6 +7,7 @@ import net.vaultcraft.vcutils.chat.Prefix;
 import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,6 +17,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.material.Openable;
 
 /**
@@ -132,6 +134,26 @@ public class CellsListener implements Listener {
             }
             state.setData((org.bukkit.material.MaterialData) openable);
             state.update();
+        }
+    }
+
+    @EventHandler
+    public void onVehichleDesoty(VehicleDestroyEvent event) {
+        if(!event.getVehicle().getWorld().equals(VCPrison.getInstance().getCellManager().getPlotWorld()))
+            return;
+        if(!(event.getAttacker() instanceof Player))
+            return;
+
+        Cell possibleCell = VCPrison.getInstance().getCellManager().getCellFromLocation(event.getVehicle().getLocation());
+
+        if(possibleCell == null)
+            return;
+
+        Player player = (Player) event.getAttacker();
+
+        if(!player.getUniqueId().equals(possibleCell.ownerUUID) && !possibleCell.additionalUUIDs.contains(player.getUniqueId())) {
+            event.setCancelled(true);
+            Form.at(player, Prefix.WARNING, "You can't interact with blocks in a cell or area you do not have access to.");
         }
     }
 

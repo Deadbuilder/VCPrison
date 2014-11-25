@@ -3,6 +3,7 @@ package net.vaultcraft.vcprison.candy;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.potion.PotionEffectType;
 
@@ -12,21 +13,21 @@ import org.bukkit.potion.PotionEffectType;
 public class ChocolateBar implements Candy {
 
     @Override
-    public CandyRecipe getRecipe() {
-        CandyShapedRecipe shapedRecipe = new CandyShapedRecipe(CandyItems.CHOCOLATEBAR);
-        shapedRecipe.shape('x', 'y', 'x',
-                'a', 'z', 'a',
-                'x', 'y', 'x');
-        shapedRecipe.setItem('x', CandyItems.WRAPPER);
-        shapedRecipe.setItem('y', new ItemStack(Material.INK_SACK, 1, (short) 0, (byte) 3));
-        shapedRecipe.setItem('z', CandyItems.SUGARCUBE);
-        shapedRecipe.setItem('a', CandyItems.COCOA);
-//        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.CHOCOLATEBAR);
-//        shapedRecipe.shape("xyx", "aza", "xyx");
-//        shapedRecipe.setIngredient('x', Material.QUARTZ);
-//        shapedRecipe.setIngredient('y', Material.INK_SACK.getNewData((byte)3));
-//        shapedRecipe.setIngredient('z', Material.SNOW_BLOCK);
-//        shapedRecipe.setIngredient('a', Material.CLAY_BRICK);
+    public Recipe getRecipe() {
+//        CandyShapedRecipe shapedRecipe = new CandyShapedRecipe(CandyItems.CHOCOLATEBAR);
+//        shapedRecipe.shape('x', 'y', 'x',
+//                'a', 'z', 'a',
+//                'x', 'y', 'x');
+//        shapedRecipe.setItem('x', CandyItems.WRAPPER);
+//        shapedRecipe.setItem('y', new ItemStack(Material.INK_SACK, 1, (short) 0, (byte) 3));
+//        shapedRecipe.setItem('z', CandyItems.SUGARCUBE);
+//        shapedRecipe.setItem('a', CandyItems.COCOA);
+        ShapedRecipe shapedRecipe = new ShapedRecipe(CandyItems.CHOCOLATEBAR);
+        shapedRecipe.shape("xyx", "aza", "xyx");
+        shapedRecipe.setIngredient('x', Material.QUARTZ);
+        shapedRecipe.setIngredient('y', Material.INK_SACK.getNewData((byte)3));
+        shapedRecipe.setIngredient('z', Material.SNOW_BLOCK);
+        shapedRecipe.setIngredient('a', Material.CLAY_BRICK);
         return shapedRecipe;
     }
 

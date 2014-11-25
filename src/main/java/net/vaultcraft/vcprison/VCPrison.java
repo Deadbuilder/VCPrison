@@ -59,7 +59,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by tacticalsk8er on 7/30/2014.
@@ -158,6 +157,10 @@ public class VCPrison extends JavaPlugin {
             if(current.getResult().getType().equals(Material.GOLDEN_APPLE) && current.getResult().getData().getData() == 1)
                 rIterator.remove();
             if(current.getResult().getType().equals(Material.COOKIE))
+                rIterator.remove();
+            if(current.getResult().getType().equals(Material.ITEM_FRAME))
+                rIterator.remove();
+            if(current.getResult().getType().equals(Material.PAINTING))
                 rIterator.remove();
         }
 
