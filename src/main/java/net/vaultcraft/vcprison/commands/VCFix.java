@@ -22,8 +22,6 @@ public class VCFix extends ICommand {
         super(name, permission, aliases);
     }
 
-    private HashMap<Player, Long> cooldown = new HashMap<>();
-
     public void processCommand(Player player, String[] args) {
         if (User.fromPlayer(player).hasUserdata("fixCooldown")) {
             long x = Long.parseLong(User.fromPlayer(player).getUserdata("fixCooldown"));

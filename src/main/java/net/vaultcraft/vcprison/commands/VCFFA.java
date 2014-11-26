@@ -37,8 +37,16 @@ public class VCFFA extends ICommand {
             }
 
             FFAWarmup.addToWarmup(player);
+            final int x, y, z;
+            x = player.getLocation().getBlockX();
+            y = player.getLocation().getBlockY();
+            z = player.getLocation().getBlockZ();
             Runnable go = () -> {
                 FFAWarmup.removeFromWarmup(player);
+                if (player.getLocation().getBlockX() != x || player.getLocation().getBlockY() != y || player.getLocation().getBlockZ() != z) {
+                    Form.at(player, Prefix.ERROR, "You moved! Teleportation cancelled!");
+                    return;
+                }
                 ffa.endFFA();
                 Form.at(player, Prefix.SUCCESS, "You have left the FFA!");
             };
@@ -47,8 +55,16 @@ public class VCFFA extends ICommand {
             Form.at(player, Prefix.SUCCESS, "Teleportation will commence in 4 seconds!");
         } else {
             FFAWarmup.addToWarmup(player);
+            final int x, y, z;
+            x = player.getLocation().getBlockX();
+            y = player.getLocation().getBlockY();
+            z = player.getLocation().getBlockZ();
             Runnable go = () -> {
                 FFAWarmup.removeFromWarmup(player);
+                if (player.getLocation().getBlockX() != x || player.getLocation().getBlockY() != y || player.getLocation().getBlockZ() != z) {
+                    Form.at(player, Prefix.ERROR, "You moved! Teleportation cancelled!");
+                    return;
+                }
                 ffa.beginFFA();
                 Form.at(player, Prefix.SUCCESS, "You have joined the FFA! Use /ffa to leave.");
             };
