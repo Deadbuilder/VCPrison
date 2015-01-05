@@ -29,6 +29,7 @@ import net.vaultcraft.vcprison.shop.FFAShopListener;
 import net.vaultcraft.vcprison.shop.PrisonShopListener;
 import net.vaultcraft.vcprison.sword.*;
 import net.vaultcraft.vcprison.user.PrisonUser;
+import net.vaultcraft.vcprison.vote.MoneyReward;
 import net.vaultcraft.vcprison.worth.ItemWorthLoader;
 import net.vaultcraft.vcprison.worth.Warden;
 import net.vaultcraft.vcutils.chat.Form;
@@ -43,6 +44,7 @@ import net.vaultcraft.vcutils.protection.flag.FlagType;
 import net.vaultcraft.vcutils.sign.SignManager;
 import net.vaultcraft.vcutils.user.Group;
 import net.vaultcraft.vcutils.user.User;
+import net.vaultcraft.vcutils.voting.RewardHandler;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -124,6 +126,9 @@ public class VCPrison extends JavaPlugin {
         new PortalListener();
         new CellsListener();
         new CandyManListener();
+
+        //vote rewards
+        RewardHandler.registerReward(new MoneyReward());
 
         MineUtil.createBlockInjector(new MineCrateInjector());
 

@@ -1,6 +1,5 @@
 package net.vaultcraft.vcprison.user;
 
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import net.vaultcraft.vcprison.VCPrison;
